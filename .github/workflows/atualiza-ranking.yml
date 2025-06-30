@@ -3,7 +3,7 @@ name: Atualiza ranking Tibia
 on:
   schedule:
     - cron: '0 * * * *'  # roda a cada hora
-
+  workflow_dispatch:  
 jobs:
   build:
     runs-on: ubuntu-latest
