@@ -1,20 +1,14 @@
 name: Atualiza ranking Tibia
-permissions:
-  contents: write
-name: Atualiza ranking Tibia
 
+# Garante que o GITHUB_TOKEN tenha permissão de escrita para commitar de volta
 permissions:
   contents: write
 
 on:
   schedule:
-    - cron: '0 * * * *'
-  workflow_dispatch:
+    - cron: '0 * * * *'       # roda todo início de hora
+  workflow_dispatch:         # permite execução manual
 
-on:
-  schedule:
-    - cron: '0 * * * *'  # roda a cada hora
-  workflow_dispatch:  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -30,13 +24,11 @@ jobs:
 
     - name: Instala dependências Python
       run: pip install -r requirements.txt
-    
+
     - name: Instala Playwright e dependências de SO
-        run: |
-          # instala o pacote python-playwright (deve já estar no requirements, mas reforçamos)
-          pip install playwright
-          # instala os navegadores necessários e as libs nativas
-          python3 -m playwright install --with-deps
+      run: |
+        pip install playwright
+        python3 -m playwright install --with-deps
 
     - name: Executa coleta e ranking
       run: |
