@@ -19,6 +19,13 @@ jobs:
 
     - name: Instala dependências Python
       run: pip install -r requirements.txt
+    
+    - name: Instala Playwright e dependências de SO
+        run: |
+          # instala o pacote python-playwright (deve já estar no requirements, mas reforçamos)
+          pip install playwright
+          # instala os navegadores necessários e as libs nativas
+          python3 -m playwright install --with-deps
 
     - name: Executa coleta e ranking
       run: |
