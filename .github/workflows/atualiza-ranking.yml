@@ -1,0 +1,34 @@
+name: Atualiza ranking Tibia
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # roda a cada hora
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Faz checkout do código
+      uses: actions/checkout@v3
+
+    - name: Configura Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
+
+    - name: Instala dependências Python
+      run: pip install -r requirements.txt
+
+    - name: Executa coleta e ranking
+      run: |
+        python3 scripts/coleta_validada_pronto.py
+        python3 scripts/gerar_ranking_ordenado.py
+
+    - name: Comita e envia resultados
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add resultado_validado.csv ranking_final.csv
+        git commit -m "Atualiza ranking automático" || echo "Sem alterações"
+        git push
