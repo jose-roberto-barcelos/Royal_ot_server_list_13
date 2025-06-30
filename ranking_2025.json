@@ -1,0 +1,142 @@
+[
+  {
+    "Servidor": "Alpha OT",
+    "Jogadores Online": 120,
+    "Versão": "8.6",
+    "Origem": "Socket",
+    "Observação": "OK"
+  },
+  {
+    "Servidor": "Beta Real",
+    "Jogadores Online": 450,
+    "Versão": "10.98",
+    "Origem": "HTML",
+    "Observação": "SUSPEITA"
+  },
+  {
+    "Servidor": "Delta Online",
+    "Jogadores Online": 98,
+    "Versão": "7.72",
+    "Origem": "Socket",
+    "Observação": "-"
+  },
+  {
+    "Servidor": "Omega OT",
+    "Jogadores Online": 222,
+    "Versão": "8.0",
+    "Origem": "HTML",
+    "Observação": "FAKE?"
+  },
+  {
+    "Servidor": "Mystera Test",
+    "Jogadores Online": 305,
+    "Versão": "12.10",
+    "Origem": "Socket",
+    "Observação": "-"
+  },
+  {
+    "Servidor": "Oldera",
+    "Jogadores Online": 187,
+    "Versão": "10.00",
+    "Origem": "HTML",
+    "Observação": "NPC/MC"
+  },
+  {
+    "Servidor": "Xeno OT",
+    "Jogadores Online": 67,
+    "Versão": "8.54",
+    "Origem": "Socket",
+    "Observação": "-"
+  },
+  {
+    "Servidor": "Zeta Realm",
+    "Jogadores Online": 311,
+    "Versão": "8.6",
+    "Origem": "Socket",
+    "Observação": "-"
+  },
+  {
+    "Servidor": "Legendaria",
+    "Jogadores Online": 512,
+    "Versão": "12.90",
+    "Origem": "HTML",
+    "Observação": "!"
+  },
+  {
+    "Servidor": "Retro Hero",
+    "Jogadores Online": 65,
+    "Versão": "7.6",
+    "Origem": "Socket",
+    "Observação": "-"
+  },
+  {
+    "Servidor": "Nostalrius",
+    "Jogadores Online": 213,
+    "Versão": "8.1",
+    "Origem": "Socket",
+    "Observação": "-"
+  },
+  {
+    "Servidor": "Azerion",
+    "Jogadores Online": 78,
+    "Versão": "13.0",
+    "Origem": "HTML",
+    "Observação": "-"
+  },
+  {
+    "Servidor": "Ferumbrinha",
+    "Jogadores Online": 999,
+    "Versão": "8.6",
+    "Origem": "Socket",
+    "Observação": "TOP"
+  },
+  {
+    "Servidor": "Crystal OT",
+    "Jogadores Online": 333,
+    "Versão": "10.10",
+    "Origem": "HTML",
+    "Observação": "-"
+  },
+  {
+    "Servidor": "Darkstorm",
+    "Jogadores Online": 275,
+    "Versão": "9.44",
+    "Origem": "Socket",
+    "Observação": "MC"
+  },
+  {
+    "Servidor": "Light Realm",
+    "Jogadores Online": 452,
+    "Versão": "8.5",
+    "Origem": "Socket",
+    "Observação": "-"
+  },
+  {
+    "Servidor": "Fenix OT",
+    "Jogadores Online": 38,
+    "Versão": "7.1",
+    "Origem": "HTML",
+    "Observação": "-"
+  },
+  {
+    "Servidor": "Chaos OT",
+    "Jogadores Online": 496,
+    "Versão": "11.00",
+    "Origem": "Socket",
+    "Observação": "UPTIME 24H"
+  },
+  {
+    "Servidor": "War OT",
+    "Jogadores Online": 142,
+    "Versão": "8.4",
+    "Origem": "HTML",
+    "Observação": "SUSPEITA"
+  },
+  {
+    "Servidor": "Tibia Dino Test",
+    "Jogadores Online": 1,
+    "Versão": "8.6",
+    "Origem": "Socket",
+    "Observação": "Bracinho"
+  }
+]

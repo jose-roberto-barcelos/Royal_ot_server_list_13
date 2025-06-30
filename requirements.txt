@@ -1,0 +1,5 @@
+asyncio
+playwright
+pandas
+requests
+google-cloud-storage

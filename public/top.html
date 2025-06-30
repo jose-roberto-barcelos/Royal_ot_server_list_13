@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Top Streamers/Youtube | Royal OtServlist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="fundo-topstreamers">
+    <div class="background"></div>
+    <video autoplay muted loop class="fog">
+      <source src="./Neblina.webm" type="video/webm" />
+    </video>
+
+    <header class="site-header">
+      <div class="titulo-container">
+        <img
+          src="./tituloprincipal.png"
+          alt="Royal OtServlist"
+          class="titulo-imagem"
+        />
+      </div>
+      <div class="brasao-centro">
+        <a href="destaque.html">
+          <img src="./brasao-novo.png" alt="Brasão" class="header-brasao" />
+        </a>
+      </div>
+      <div class="bloco-direita">
+        <div class="botoes-acesso">
+          <!-- botão único: login ↔ logout -->
+          <button type="button" class="btn-imagem login-btn">
+            <img
+              src="./icon-login.png"
+              alt="Login"
+              width="24"
+              height="24"
+            />
+          </button>
+          <!-- registrar permanece estático, ação via script -->
+          <button type="button" class="btn-imagem registrar-btn">
+            <img
+              src="./icon-registrar.png"
+              alt="Registrar"
+              width="24"
+              height="24"
+            />
+          </button>
+        </div>
+        <nav class="nav-links">
+          <div class="nav-esquerda">
+            <a href="top.html">Top Streamers/Youtube</a>
+            <a href="servicos.html">Serviços & Portfólio</a>
+          </div>
+          <div class="nav-direita">
+            <a href="index.html">Início</a>
+            <a href="regras.html">Regras/ban</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="contato.html">Contato</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="formulario-centro espaco-pos-header">
+      <div class="sobre-conteudo">
+        <h1>🌟 Top Streamers &amp; Canais de Youtube</h1>
+        <p>
+          Conteúdo em destaque para criadores que movimentam a comunidade do
+          Tibia.
+        </p>
+      </div>
+    </main>
+
+    <!-- script único que faz toggle login ↔ logout e ajusta registrar -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+        signOut
+      } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBnzTkzA4KsbvUruYobVEsWFP_upCFGvFM",
+        authDomain: "royalotservlist.firebaseapp.com",
+        projectId: "royalotservlist",
+        storageBucket: "royalotservlist.firebasestorage.app",
+        messagingSenderId: "795611612401",
+        appId: "1:795611612401:web:3f869dcdff2366a0b45550",
+        measurementId: "G-LP54JFLRDT"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      window.addEventListener("DOMContentLoaded", () => {
+        const authBtn = document.querySelector(".login-btn");
+        const authIcon = authBtn.querySelector("img");
+        const registrarBtn = document.querySelector(".registrar-btn");
+
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            // Usuário logado: troca ícone e ação
+            authIcon.src = "./icon-sair.png";
+            authIcon.alt = "Sair";
+            authBtn.onclick = () => {
+              signOut(auth).then(() => {
+                alert("Deslogado com sucesso");
+                window.location.reload();
+              });
+            };
+            // Registrar vai direto à aba servidor
+            registrarBtn.onclick = () =>
+              (window.location.href = "register.html?aba=servidor");
+          } else {
+            // Usuário deslogado: estado inicial
+            authIcon.src = "./icon-login.png";
+            authIcon.alt = "Login";
+            authBtn.onclick = () =>
+              (window.location.href = "login.html");
+            registrarBtn.onclick = () =>
+              (window.location.href = "register.html");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

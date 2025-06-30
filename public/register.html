@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Registrar | Royal OtServlist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Fonte e CSS gerais -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- Estilos apenas para as abas -->
+    <style>
+      .aba-selector {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin: 20px 0;
+      }
+      .aba-selector button {
+        background-color: #2b1e12;
+        color: #ffe97f;
+        border: 1px solid #bfa76f;
+        padding: 8px 20px;
+        font-family: "Cinzel", serif;
+        cursor: pointer;
+      }
+      .aba-selector button.ativo {
+        background-color: #3e2a17;
+      }
+      .formulario-centro form {
+        display: none;
+      }
+      .formulario-centro form.ativo {
+        display: block;
+      }
+    </style>
+  </head>
+
+  <body class="fundo-registrar">
+    <div class="background"></div>
+    <video autoplay muted loop class="fog">
+      <source src="./Neblina.webm" type="video/webm" />
+    </video>
+
+    <!-- HEADER (mesmo do sobre.html) -->
+    <header class="site-header">
+      <div class="titulo-container">
+        <img src="./tituloprincipal.png" alt="Royal OtServlist" class="titulo-imagem" />
+      </div>
+      <div class="brasao-centro">
+        <a href="destaque.html"><img src="./brasao-novo.png" alt="Brasão" class="header-brasao" /></a>
+      </div>
+      <div class="bloco-direita">
+        <div class="botoes-acesso">
+          <button type="button" class="btn-imagem login-btn">
+            <img src="./icon-login.png" alt="Login" width="24" height="24" />
+          </button>
+          <button type="button" class="btn-imagem registrar-btn">
+            <img src="./icon-registrar.png" alt="Registrar" width="24" height="24" />
+          </button>
+        </div>
+        <nav class="nav-links">
+          <div class="nav-esquerda">
+            <a href="top.html">Top Streamers/Youtube</a>
+            <a href="servicos.html">Serviços & Portfólio</a>
+          </div>
+          <div class="nav-direita">
+            <a href="index.html">Início</a>
+            <a href="regras.html">Regras/ban</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="contato.html">Contato</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- FORMULÁRIOS -->
+    <main class="formulario-centro espaco-pos-header">
+      <h1 class="titulo-pagina">REGISTRAR</h1>
+
+      <div class="aba-selector" id="aba-selector">
+        <button id="btn-pessoal" class="ativo" type="button">Cadastro Pessoal</button>
+        <button id="btn-servidor" type="button">Registro de Servidor</button>
+      </div>
+
+      <!-- Cadastro Pessoal -->
+      <form id="form-pessoal" class="ativo">
+        <input type="email" name="email" placeholder="Seu e-mail" required /><br />
+        <input type="password" name="senha" placeholder="Senha" required /><br />
+        <input type="password" name="confirma" placeholder="Confirmar senha" required /><br />
+        <button type="submit">Registrar</button>
+      </form>
+
+      <!-- Registro de Servidor -->
+      <form id="form-servidor">
+        <input type="text"    placeholder="Nome do Servidor" required /><br />
+        <input type="text"    placeholder="IP ou domínio" required /><br />
+        <input type="text"    placeholder="Versão (ex: 8.6)" required /><br />
+        <input type="number"  placeholder="Porta (ex: 7171)" required /><br />
+        <input type="url"     placeholder="Site oficial" required /><br />
+        <input type="email"   placeholder="Email do administrador" required /><br />
+        <textarea placeholder="Observações" rows="4"></textarea><br />
+        <button type="submit">Enviar para Análise</button>
+      </form>
+    </main>
+
+    <!-- 1) Controle de abas -->
+    <script>
+      const btnPessoal  = document.getElementById("btn-pessoal");
+      const btnServidor = document.getElementById("btn-servidor");
+      const formPessoal = document.getElementById("form-pessoal");
+      const formServidor= document.getElementById("form-servidor");
+
+      function mostrarAba(aba) {
+        if (aba === "servidor") {
+          btnServidor .classList.add("ativo");
+          btnPessoal  .classList.remove("ativo");
+          formServidor.classList.add("ativo");
+          formPessoal .classList.remove("ativo");
+        } else {
+          btnPessoal  .classList.add("ativo");
+          btnServidor .classList.remove("ativo");
+          formPessoal .classList.add("ativo");
+          formServidor.classList.remove("ativo");
+        }
+      }
+      btnPessoal .addEventListener("click", () => mostrarAba("pessoal"));
+      btnServidor.addEventListener("click", () => mostrarAba("servidor"));
+      mostrarAba(new URLSearchParams(location.search).get("aba")==="servidor"?"servidor":"pessoal");
+    </script>
+
+    <!-- 2) Auth-handler (login ↔ logout) -->
+    <script type="module" src="./auth-handler.js"></script>
+
+    <!-- 3) Cadastro Pessoal via Firebase Auth -->
+    <script type="module">
+      import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+      const auth = getAuth();
+
+      document.getElementById("form-pessoal").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const f = e.target;
+        const email    = f.email.value.trim();
+        const senha    = f.senha.value;
+        const confirma = f.confirma.value;
+        if (senha !== confirma) {
+          return alert("⚠️ As senhas não conferem.");
+        }
+        try {
+          await createUserWithEmailAndPassword(auth, email, senha);
+          alert("✅ Cadastro pessoal realizado com sucesso!");
+          f.reset();
+          // opcional: redirecionar ou mudar aba
+        } catch (err) {
+          alert("❌ Erro no cadastro: " + err.message);
+        }
+      });
+    </script>
+
+    <!-- 4) Registro de Servidor via Firestore -->
+    <script type="module">
+      import { db } from "./firebase-config.js";
+      import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+
+      document.getElementById("form-servidor").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const vals = e.target.elements;
+        const data = {
+          servidor:    vals[0].value,
+          endereco:    vals[1].value,
+          versao:      vals[2].value,
+          porta:       vals[3].value,
+          site:        vals[4].value,
+          emailAdmin:  vals[5].value,
+          observacoes: vals[6].value,
+          criadoEm:    serverTimestamp()
+        };
+        try {
+          await addDoc(collection(db, "servidores"), data);
+          alert("✅ Servidor enviado para análise!");
+          e.target.reset();
+          mostrarAba("pessoal");
+        } catch (err) {
+          console.error(err);
+          alert("❌ Falha ao enviar servidor. Tente novamente.");
+        }
+      });
+    </script>
+  </body>
+</html>

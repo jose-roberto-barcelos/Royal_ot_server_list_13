@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Top Streamers/Youtube | Royal OtServlist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="fundo-servicos">
+    <div class="background"></div>
+    <video autoplay muted loop class="fog">
+      <source src="./Neblina.webm" type="video/webm" />
+    </video>
+
+    <header class="site-header">
+      <div class="titulo-container">
+        <img
+          src="./tituloprincipal.png"
+          alt="Royal OtServlist"
+          class="titulo-imagem"
+        />
+      </div>
+      <div class="brasao-centro">
+        <a href="destaque.html">
+          <img src="./brasao-novo.png" alt="Brasão" class="header-brasao" />
+        </a>
+      </div>
+      <div class="bloco-direita">
+        <div class="botoes-acesso">
+          <!-- botão único: login ↔ logout -->
+          <button type="button" class="btn-imagem login-btn">
+            <img src="./icon-login.png" alt="Login" width="24" height="24" />
+          </button>
+          <!-- registrar permanece estático, com ação dinâmica via script -->
+          <button type="button" class="btn-imagem registrar-btn">
+            <img
+              src="./icon-registrar.png"
+              alt="Registrar"
+              width="24"
+              height="24"
+            />
+          </button>
+        </div>
+        <nav class="nav-links">
+          <div class="nav-esquerda">
+            <a href="top.html">Top Streamers/Youtube</a>
+            <a href="servicos.html">Serviços & Portfólio</a>
+          </div>
+          <div class="nav-direita">
+            <a href="index.html">Início</a>
+            <a href="regras.html">Regras/ban</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="contato.html">Contato</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="formulario-centro espaco-pos-header">
+      <section class="portfolio-edicao">
+        <button class="botao-pacotes" onclick="mostrarPacotes()">
+          📦 Pacotes e Preços
+        </button>
+
+        <div id="pacotes-info" style="display: none" class="tabela-pacotes">
+          <h2>🎁 Opções de Pacotes</h2>
+          <ul>
+            <li>
+              <strong>Pacote Prince:</strong> Vídeo vertical para redes sociais
+              — <span class="preco">R$ 200</span>
+            </li>
+            <li>
+              <strong>Pacote Princess:</strong> Vídeo Ad (0 a 90s) para YouTube
+              — <span class="preco">R$ 350</span>
+            </li>
+            <li>
+              <strong>Pacote Queen:</strong> Ad + vertical redes sociais —
+              <span class="preco">R$ 500</span>
+            </li>
+            <li>
+              <strong>Pacote King:</strong> Tudo do Queen + banner animado —
+              <span class="preco">R$ 600</span>
+            </li>
+          </ul>
+        </div>
+
+        <h2>🎞️ Meus Trabalhos em Edição</h2>
+        <p>
+          Confira alguns dos vídeos que já editei. Se quiser um trabalho com a
+          mesma qualidade, entre em contato!
+        </p>
+
+        <div class="videos-grid">
+          <iframe
+            src="https://www.youtube.com/embed/SEU_VIDEO_1"
+            frameborder="0"
+            allowfullscreen
+          ></iframe>
+          <iframe
+            src="https://www.youtube.com/embed/SEU_VIDEO_2"
+            frameborder="0"
+            allowfullscreen
+          ></iframe>
+        </div>
+
+        <div class="contratacao-chamada">
+          <p>
+            🎯 Precisa de uma edição épica? Mande uma mensagem na aba
+            <strong><a href="contato.html">Contato</a></strong> ou por Instagram!
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      function mostrarPacotes() {
+        const secao = document.getElementById("pacotes-info");
+        secao.style.display = secao.style.display === "none" ? "block" : "none";
+      }
+    </script>
+
+    <!-- script único que faz toggle login ↔ logout e ajusta registrar -->
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+      import {
+        getAuth,
+        onAuthStateChanged,
+        signOut
+      } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyBnzTkzA4KsbvUruYobVEsWFP_upCFGvFM",
+        authDomain: "royalotservlist.firebaseapp.com",
+        projectId: "royalotservlist",
+        storageBucket: "royalotservlist.firebasestorage.app",
+        messagingSenderId: "795611612401",
+        appId: "1:795611612401:web:3f869dcdff2366a0b45550",
+        measurementId: "G-LP54JFLRDT"
+      };
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+
+      window.addEventListener("DOMContentLoaded", () => {
+        const authBtn = document.querySelector(".login-btn");
+        const authIcon = authBtn.querySelector("img");
+        const registrarBtn = document.querySelector(".registrar-btn");
+
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            // logado: troca ícone e ação
+            authIcon.src = "./icon-sair.png";
+            authIcon.alt = "Sair";
+            authBtn.onclick = () => {
+              signOut(auth).then(() => {
+                alert("Deslogado com sucesso");
+                window.location.reload();
+              });
+            };
+            // registrar vai direto à aba servidor
+            registrarBtn.onclick = () =>
+              (window.location.href = "register.html?aba=servidor");
+          } else {
+            // deslogado: estado inicial
+            authIcon.src = "./icon-login.png";
+            authIcon.alt = "Login";
+            authBtn.onclick = () =>
+              (window.location.href = "login.html");
+            registrarBtn.onclick = () =>
+              (window.location.href = "register.html");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

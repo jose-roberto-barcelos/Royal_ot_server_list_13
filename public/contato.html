@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Contato | Royal OtServlist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Evita cache -->
+    <meta http-equiv="Pragma" content="no-cache"/>
+    <meta http-equiv="Expires" content="0"/>
+    <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate"/>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Seu CSS -->
+    <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      .formulario-centro { padding-top: 40px; }
+      .info-contato   { margin-top: 0; }
+      .tibia-oficial-banner { /* mesmo estilo do index */ }
+      .tibia-oficial-banner .icon-tibia { /* idem */ }
+      .hidden { display: none!important; }
+    </style>
+
+    <!-- Firebase compat -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script>
+      // inicializa Firebase só uma vez
+      if (!firebase.apps.length) {
+        firebase.initializeApp({
+          apiKey: "AIzaSyBnzTkzA4KsbvUruYobVEsWFP_upCFGvFM",
+          authDomain: "royalotservlist.firebaseapp.com",
+          projectId: "royalotservlist",
+          storageBucket: "royalotservlist.firebasestorage.app",
+          messagingSenderId: "795611612401",
+          appId: "1:795611612401:web:3f869dcdff2366a0b45550",
+          measurementId: "G-LP54JFLRDT"
+        });
+      }
+    </script>
+  </head>
+
+  <body class="fundo-contato">
+    <div class="background"></div>
+    <video autoplay muted loop class="fog">
+      <source src="./Neblina.webm" type="video/webm" />
+    </video>
+
+    <!-- Cabeçalho -->
+    <header class="site-header">
+      <div class="titulo-container">
+        <img src="./tituloprincipal.png" alt="Royal OtServlist" class="titulo-imagem"/>
+      </div>
+      <div class="brasao-centro">
+        <a href="destaque.html"><img src="./brasao-novo.png" alt="Brasão" class="header-brasao"/></a>
+      </div>
+      <div class="bloco-direita">
+        <div class="botoes-acesso">
+          <!-- Link de autenticação unificado -->
+          <a id="auth-link" href="login.html" class="btn-imagem">
+            <img id="auth-icon" src="./icon-login.png" alt="Login" width="24" height="24"/>
+          </a>
+          <!-- Registrar -->
+          <a id="register-link" href="register.html" class="btn-imagem">
+            <img src="./icon-registrar.png" alt="Registrar" width="24" height="24"/>
+          </a>
+        </div>
+        <nav class="nav-links">
+          <div class="nav-esquerda">
+            <a href="top.html">Top Streamers/Youtube</a>
+            <a href="servicos.html">Serviços &amp; Portfólio</a>
+          </div>
+          <div class="nav-direita">
+            <a href="index.html">Início</a>
+            <a href="regras.html">Regras/ban</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="contato.html">Contato</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Corpo -->
+    <main class="formulario-centro espaco-pos-header">
+      <div class="info-contato">
+        <h2>Fale com a gente</h2>
+        <p><strong>Email:</strong> contato@royalotservlist.com</p>
+        <p>
+          <strong>Instagram:</strong>
+          <a href="https://instagram.com/royalotservlist" target="_blank">@royalotservlist</a>
+        </p>
+      </div>
+      <form id="contato-form">
+        <h1>Envie uma mensagem</h1>
+        <input type="text" name="nome" placeholder="Seu nome" required/>
+        <input type="email" name="email" placeholder="Seu e-mail" required/>
+        <textarea name="mensagem" placeholder="Sua mensagem" rows="6" required></textarea>
+        <button type="submit">Enviar</button>
+      </form>
+    </main>
+
+    <!-- Envio de formulário -->
+    <script>
+      const db = firebase.firestore();
+      document.getElementById("contato-form").addEventListener("submit", async e => {
+        e.preventDefault();
+        const form = e.target;
+        try {
+          await db.collection("contatos").add({
+            nome: form.nome.value,
+            email: form.email.value,
+            mensagem: form.mensagem.value,
+            criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          alert("Mensagem enviada com sucesso!");
+          form.reset();
+        } catch (err) {
+          console.error("Erro ao gravar:", err);
+          alert("Erro ao enviar mensagem. Veja o console.");
+        }
+      });
+    </script>
+
+    <!-- Toggle Login/Logout -->
+    <script>
+      const auth       = firebase.auth();
+      const authLink   = document.getElementById("auth-link");
+      const authIcon   = document.getElementById("auth-icon");
+      const registerLink = document.getElementById("register-link");
+
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          // logado → mostra logout
+          authIcon.src = "./icon-sair.png";
+          authIcon.alt = "Sair";
+          authLink.href = "#";
+          authLink.onclick = e => { e.preventDefault(); auth.signOut().then(() => location.reload()); };
+          registerLink.href = "register.html?aba=servidor";
+        } else {
+          // deslogado → mostra login
+          authIcon.src = "./icon-login.png";
+          authIcon.alt = "Login";
+          authLink.href = "login.html";
+          authLink.onclick = null;
+          registerLink.href = "register.html";
+        }
+      });
+    </script>
+  </body>
+</html>

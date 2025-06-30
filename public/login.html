@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login | Royal OtServlist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- seu CSS e fontes -->
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="fundo-login">
+    <div class="background"></div>
+    <video autoplay muted loop class="fog">
+      <source src="./Neblina.webm" type="video/webm" />
+    </video>
+
+    <header class="site-header">
+      <div class="titulo-container">
+        <img
+          src="./tituloprincipal.png"
+          alt="Royal OtServlist"
+          class="titulo-imagem"
+        />
+      </div>
+      <div class="brasao-centro">
+        <a href="destaque.html">
+          <img src="./brasao-novo.png" alt="Brasão" class="header-brasao" />
+        </a>
+      </div>
+      <div class="bloco-direita">
+        <div class="botoes-acesso">
+          <button
+            class="btn-imagem login-btn"
+            onclick="window.location.href='login.html'"
+          >
+            <img src="./icon-login.png" alt="Login" />
+          </button>
+          <button
+            class="btn-imagem registrar-btn"
+            onclick="window.location.href='register.html'"
+          >
+            <img src="./icon-registrar.png" alt="Registrar" />
+          </button>
+        </div>
+        <nav class="nav-links">
+          <div class="nav-esquerda">
+            <a href="top.html">Top Streamers/Youtube</a>
+            <a href="servicos.html">Serviços & Portfólio</a>
+          </div>
+          <div class="nav-direita">
+            <a href="index.html">Início</a>
+            <a href="regras.html">Regras/ban</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="contato.html">Contato</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <section class="formulario-centro espaco-pos-header">
+      <h1 class="titulo-pagina">LOGIN</h1>
+      <form id="form-login">
+        <input
+          type="email"
+          id="email"
+          placeholder="Seu e-mail"
+          required
+        /><br />
+        <input type="password" id="senha" placeholder="Senha" required /><br />
+
+        <div class="esqueci-senha">
+          <a href="#" id="forgot-link">Esqueci minha senha</a>
+        </div>
+
+        <button type="submit">Entrar</button>
+      </form>
+    </section>
+
+    <!-- Firebase compat e scripts de autenticação -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script>
+      // Inicializa o Firebase apenas uma vez
+      if (!firebase.apps.length) {
+        firebase.initializeApp({
+          apiKey: "AIzaSyBnzTkzA4KsbvUruYobVEsWFP_upCFGvFM",
+          authDomain: "royalotservlist.firebaseapp.com",
+          projectId: "royalotservlist",
+          storageBucket: "royalotservlist.firebasestorage.app",
+          messagingSenderId: "795611612401",
+          appId: "1:795611612401:web:3f869dcdff2366a0b45550",
+          measurementId: "G-LP54JFLRDT"
+        });
+      }
+
+      const auth = firebase.auth();
+
+      // Login
+      document.getElementById("form-login").addEventListener("submit", function(e) {
+        e.preventDefault();
+        const email = document.getElementById("email").value.trim();
+        const senha = document.getElementById("senha").value;
+        auth.signInWithEmailAndPassword(email, senha)
+          .then(() => {
+            window.location.href = "index.html";
+          })
+          .catch(err => {
+            console.error("Erro no login:", err);
+            alert("Falha no login: " + err.message);
+          });
+      });
+
+      // Esqueci minha senha
+      document.getElementById("forgot-link").addEventListener("click", function(e) {
+        e.preventDefault();
+        // usa o e-mail preenchido ou pede um
+        let email = document.getElementById("email").value.trim();
+        if (!email) {
+          email = prompt("Digite seu e-mail para recuperação de senha:");
+        }
+        if (!email) return;
+        auth.sendPasswordResetEmail(email)
+          .then(() => {
+            alert("E-mail de recuperação enviado! Verifique sua caixa de entrada.");
+          })
+          .catch(err => {
+            console.error("Erro ao enviar e-mail de recuperação:", err);
+            alert("Falha ao enviar e-mail: " + err.message);
+          });
+      });
+    </script>
+
+    <!-- Script para header dinâmico -->
+    <script type="module" src="./auth.js"></script>
+  </body>
+</html>
