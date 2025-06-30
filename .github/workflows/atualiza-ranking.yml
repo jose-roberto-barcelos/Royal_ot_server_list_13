@@ -1,4 +1,15 @@
 name: Atualiza ranking Tibia
+permissions:
+  contents: write
+name: Atualiza ranking Tibia
+
+permissions:
+  contents: write
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 on:
   schedule:
