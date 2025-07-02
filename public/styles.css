@@ -930,4 +930,10 @@ body.fundo-registrar .background {
   position: relative;
 }
 
+.info-update {
+  font-size: 0.8rem;
+  color: #ccc;
+  margin-bottom: 0.5rem;
+  font-weight: normal;
+}
 

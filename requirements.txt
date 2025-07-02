@@ -3,3 +3,4 @@ playwright
 pandas
 requests
 google-cloud-storage
+flask

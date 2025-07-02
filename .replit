@@ -3,7 +3,7 @@ run = "static-web-server -d public -p 3000"
 
 [nix]
 channel = "stable-24_11"
-packages = ["firebase-tools", "static-web-server"]
+packages = ["firebase-tools", "gitFull", "glibcLocales", "playwright-driver", "static-web-server"]
 
 [[ports]]
 localPort = 3000
