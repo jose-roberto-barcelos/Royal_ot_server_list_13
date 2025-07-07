@@ -1,154 +1,179 @@
-// functions/index.js
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Royal OtServlist</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-const { onRequest } = require("firebase-functions/v2/https");
-const { onSchedule } = require("firebase-functions/v2/scheduler");
-const admin = require("firebase-admin");
-const fs = require("fs");
-const path = require("path");
-const axios = require("axios");
-const net = require("net");
-const dns = require("dns").promises;
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Seu CSS -->
+    <link rel="stylesheet" href="styles.css" />
 
-// Inicializa o Firebase Admin SDK
-admin.initializeApp();
-const db = admin.firestore();
-
-// Configurações de timeout e paralelismo
-const TIMEOUT_SOCKET = 2000;  // 2s para handshake socket
-const TIMEOUT_HTTP   = 5000;  // 5s para requests HTTP
-const CHUNK_SIZE     = 50;    // lotes de 50 servidores
-const VERSIONS       = [15,14,13,12,10,8,7,6,3];
-
-// Coleta via socket OTProtocol
-async function collectSocket(domain) {
-  let ip;
-  try {
-    ({ address: ip } = await dns.lookup(domain, { family: 4 }));
-  } catch {
-    return { jogadores: 0, origem: 'socketError', obs: 'DNS fail' };
-  }
-
-  for (const v of VERSIONS) {
-    const result = await new Promise(resolve => {
-      const socket = new net.Socket();
-      let done = false;
-      const timer = setTimeout(() => {
-        if (!done) { done = true; socket.destroy(); resolve(null); }
-      }, TIMEOUT_SOCKET);
-
-      socket.connect(7171, ip, () => {
-        const buf = Buffer.alloc(3);
-        buf.writeUInt8(0x0A, 0);
-        buf.writeUInt16LE(v, 1);
-        socket.write(buf);
-      });
-
-      socket.on('data', data => {
-        if (!done) {
-          clearTimeout(timer);
-          done = true;
-          const players = data.readUInt8(5);
-          resolve({ jogadores: players, origem: 'socket', obs: `v${v}` });
-        }
-        socket.destroy();
-      });
-
-      socket.on('error', () => {
-        if (!done) { clearTimeout(timer); done = true; resolve(null); }
-      });
-    });
-
-    if (result) return result;
-  }
-
-  return { jogadores: 0, origem: 'socketError', obs: 'all versions failed' };
-}
-
-// Coleta via HTTP como fallback
-async function collectHTTP(domain) {
-  try {
-    let response = await axios.get(`http://${domain}/`, { timeout: TIMEOUT_HTTP });
-    let html = response.data;
-    if (!/Online Players|Players online|Jogadores/i.test(html)) {
-      response = await axios.get(`https://${domain}/`, { timeout: TIMEOUT_HTTP });
-      html = response.data;
-    }
-    const match = html.match(/(?:Online Players|Players online|Jogadores)\D*?(\d+)/i);
-    const count = match ? parseInt(match[1], 10) : 0;
-    return { jogadores: count, origem: 'http', obs: '' };
-  } catch {
-    return { jogadores: 0, origem: 'httpError', obs: 'HTTP fail' };
-  }
-}
-
-// Função interna que realiza o scraping completo
-async function doScrape() {
-  const filePath = path.join(__dirname, 'servidores_otserv_socket.txt');
-  const domains = fs.readFileSync(filePath, 'utf-8')
-    .split(/\r?\n/).map(l => l.trim()).filter(Boolean);
-
-  const results = [];
-  for (let i = 0; i < domains.length; i += CHUNK_SIZE) {
-    const chunk = domains.slice(i, i + CHUNK_SIZE);
-    for (const domain of chunk) {
-      let r = await collectSocket(domain);
-      if (r.origem !== 'socket') {
-        r = await collectHTTP(domain);
+    <style>
+      .tibia-oficial-banner {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 8px 16px;
+        border: 1px solid rgba(255, 204, 102, 0.3);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-family: "Cinzel", serif;
+        color: #ffe97f;
+        text-shadow:
+          0 0 4px #000,
+          0 0 6px #ffd700;
+        font-size: 0.95rem;
+        margin: 0 auto 8px auto;
+        width: fit-content;
+        max-width: 100%;
       }
-      results.push({
-        nome: domain,
-        versao: r.obs.startsWith('v') ? r.obs : '',
-        jogadores: r.jogadores,
-        origem: r.origem,
-        obs: r.obs
-      });
-    }
-  }
-
-  await db.collection('rankings').doc('latest').set({
-    updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-    servidores: results
-  });
-  console.log('Scraping finalizado:', results.length);
-}
-
-// Função agendada (Gen2) - executa a cada 5 minutos
-exports.scheduledScrape = onSchedule(
-  { schedule: 'every 5 minutes', timeZone: 'America/Sao_Paulo' },
-  async () => {
-    try {
-      await doScrape();
-    } catch (err) {
-      console.error('Erro no scheduledScrape:', err);
-    }
-  }
-);
-
-// Endpoint HTTP para retornar o ranking atualizado
-exports.getRanking = onRequest(
-  { timeoutSeconds: 60 },
-  async (req, res) => {
-    try {
-      const doc = await db.collection('rankings').doc('latest').get();
-      if (!doc.exists) {
-        return res.status(404).send('Nenhum ranking disponível.');
+      .tibia-oficial-banner .icon-tibia {
+        width: 20px;
+        height: 20px;
+        filter: drop-shadow(1px 1px 1px #000);
       }
-      return res.status(200).json(doc.data().servidores || []);
-    } catch (err) {
-      console.error('Erro no getRanking:', err);
-      return res.status(500).send('Erro interno');
-    }
-  }
-);
+    </style>
+  </head>
 
-// Endpoint HTTP manual para forçar scraping sob demanda
-// Endpoint HTTP manual para forçar scraping sob demanda
-exports.manualScrape = onRequest(
-  { timeoutSeconds: 60 },
-  (req, res) => {
-    // Dispara o scraping em background sem aguardar conclusão
-    doScrape().catch(err => console.error('Erro em manualScrape:', err));
-    // Responde imediatamente
-    return res.status(200).send('Scrape disparado com sucesso!');
-  }
-);
+  <body class="fundo-inicio">
+    <div class="background"></div>
+    <video autoplay muted loop class="fog">
+      <source src="./Neblina.webm" type="video/webm" />
+    </video>
+
+    <header class="site-header">
+      <div class="titulo-container">
+        <img
+          src="./tituloprincipal.png"
+          alt="Royal OtServlist"
+          class="titulo-imagem"
+        />
+      </div>
+
+      <div class="brasao-centro">
+        <a href="destaque.html">
+          <img src="./brasao-novo.png" alt="Brasão" class="header-brasao" />
+        </a>
+      </div>
+
+      <div class="bloco-direita">
+        <!-- dropdown de idioma já existente -->
+        <select
+          id="language-select"
+          style="margin-right: 16px; font-size: 0.9rem; padding: 4px"
+        >
+          <option value="pt">PT</option>
+          <option value="en">EN</option>
+          <option value="es">ES</option>
+          <option value="pl">PL</option>
+        </select>
+
+        <!-- botões login / registrar -->
+        <div class="botoes-acesso">
+          <button type="button" class="btn-imagem login-btn">
+            <img src="./icon-login.png" alt="Login" width="24" height="24" />
+          </button>
+          <button type="button" class="btn-imagem registrar-btn">
+            <img
+              src="./icon-registrar.png"
+              alt="Registrar"
+              width="24"
+              height="24"
+            />
+          </button>
+        </div>
+
+        <nav class="nav-links">
+          <div class="nav-esquerda">
+            <a href="top.html">Top Streamers/Youtube</a>
+            <a href="servicos.html">Serviços & Portfólio</a>
+          </div>
+          <div class="nav-direita">
+            <a href="/">Início</a>
+            <a href="regras.html">Regras/ban</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="contato.html">Contato</a>
+          </div>
+        </nav>
+
+        <!-- PLAYER MINIMALISTA -->
+        <div class="radio-player">
+          <button id="btn-playpause">►</button>
+          <input
+            type="range"
+            id="slider-volume"
+            min="0"
+            max="1"
+            step="0.01"
+            value="1"
+          />
+        </div>
+      </div>
+    </header>
+
+    <section class="ranking aba ativa espaco-pos-header" id="inicio">
+      <div class="titulo-epico">
+        <img
+          src="./espada-esquerda.png"
+          alt="Espada Esquerda"
+          class="espada-decorativa esquerda"
+        />
+        <h1 class="titulo-ranking">Ranking de Servidores</h1>
+        <img
+          src="./espada-direita.png"
+          alt="Espada Direita"
+          class="espada-decorativa direita"
+        />
+      </div>
+
+      <div class="filtros-ranking" style="margin-bottom: 20px">
+        <input
+          type="text"
+          id="filtro-nome"
+          placeholder="🔍 Buscar servidor..."
+        />
+        <select id="filtro-versao">
+          <option value="">Todas as versões</option>
+        </select>
+        <select id="filtro-origem">
+          <option value="">Todas as origens</option>
+          <option value="Socket">Socket</option>
+          <option value="HTML">HTML</option>
+          <option value="Erro">Erro</option>
+        </select>
+      </div>
+
+      <div class="tibia-oficial-banner">
+        <span class="texto-tibia-oficial">
+          <strong>Tibia Oficial:</strong> 13.258 jogadores online
+        </span>
+      </div>
+
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th onclick="ordenarPor('Servidor')">Servidor ⬍</th>
+              <th onclick="ordenarPor('Versão')">Versão ⬍</th>
+              <th onclick="ordenarPor('Jogadores Online')">
+                Jogadores Online ⬍
+              </th>
+              <th>Origem</th>
+              <th>Observação</th>
+            </tr>
+          </thead>
+          <tbody id="tabela-servidores"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- seu script principal -->
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>

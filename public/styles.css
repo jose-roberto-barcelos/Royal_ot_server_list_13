@@ -937,3 +937,39 @@ body.fundo-registrar .background {
   font-weight: normal;
 }
 
+/* ============================= */
+/* RADIO-PLAYER MINIMALISTA      */
+/* ============================= */
+.site-header {
+  position: relative;
+}
+
+.radio-player {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 1000;
+}
+
+.radio-player button {
+  background: rgba(0,0,0,0.5);
+  border: none;
+  color: #ffe97f;
+  font-size: 1.2rem;
+  padding: 0.2rem 0.5rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.radio-player input[type="range"] {
+  width: 80px;
+  cursor: pointer;
+}
+
+
+
+
+

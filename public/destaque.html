@@ -32,6 +32,13 @@
       </div>
 
       <div class="bloco-direita">
+        <select id="language-select" style="margin-right:16px; font-size:0.9rem; padding:4px">
+          <option value="pt">PT</option>
+          <option value="en">EN</option>
+          <option value="es">ES</option>
+          <option value="pl">PL</option>
+        </select>
+
         <div class="botoes-acesso">
           <!-- botão único que troca login ↔ logout -->
           <button type="button" class="btn-imagem login-btn">
@@ -171,5 +178,8 @@
         });
       });
     </script>
+    <!-- já deve existir auth.js se for login/registro -->
+    <script type="module" src="./script.js"></script>
+
   </body>
 </html>

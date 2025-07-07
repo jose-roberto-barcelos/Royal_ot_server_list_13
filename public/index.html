@@ -55,12 +55,26 @@
           class="titulo-imagem"
         />
       </div>
+
       <div class="brasao-centro">
         <a href="destaque.html">
           <img src="./brasao-novo.png" alt="Brasão" class="header-brasao" />
         </a>
       </div>
+
       <div class="bloco-direita">
+        <!-- 1) Dropdown de idioma no canto superior direito -->
+        <select
+          id="language-select"
+          style="margin-right: 16px; font-size: 0.9rem; padding: 4px"
+        >
+          <option value="pt">PT</option>
+          <option value="en">EN</option>
+          <option value="es">ES</option>
+          <option value="pl">PL</option>
+        </select>
+
+        <!-- 2) Botões de login/registrar -->
         <div class="botoes-acesso">
           <button type="button" class="btn-imagem login-btn">
             <img src="./icon-login.png" alt="Login" width="24" height="24" />
@@ -74,6 +88,7 @@
             />
           </button>
         </div>
+
         <nav class="nav-links">
           <div class="nav-esquerda">
             <a href="top.html">Top Streamers/Youtube</a>
@@ -86,6 +101,27 @@
             <a href="contato.html">Contato</a>
           </div>
         </nav>
+
+        <!-- === PLAYER MINIMALISTA === -->
+        <!-- === PLAYER MINIMALISTA === -->
+        <div class="radio-player">
+          <button id="btn-playpause" title="Play/Pause">►</button>
+          <button id="btn-skip"      title="Próxima faixa">»</button>
+          <input
+            id="slider-volume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="1"
+            title="Volume"
+          />
+          <audio id="radio-audio" preload="metadata" style="display:none"></audio>
+        </div>
+        <!-- =========================== -->
+
+        <!-- =========================== -->
+
       </div>
     </header>
 
@@ -145,7 +181,7 @@
       </div>
     </section>
 
-    <!-- Carrega seu script de atualização -->
-    <script type="module" src="script.js"></script>
+    <!-- único script que faz tudo: Auth, tradução, filtros e ranking -->
+    <script type="module" src="./script.js"></script>
   </body>
 </html>

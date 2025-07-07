@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
@@ -30,15 +30,20 @@
         </a>
       </div>
       <div class="bloco-direita">
+        <select
+          id="language-select"
+          style="margin-right: 16px; font-size: 0.9rem; padding: 4px"
+        >
+          <option value="pt">PT</option>
+          <option value="en">EN</option>
+          <option value="es">ES</option>
+          <option value="pl">PL</option>
+        </select>
+
         <div class="botoes-acesso">
           <!-- único botão: login ↔ logout -->
           <button type="button" class="btn-imagem login-btn">
-            <img
-              src="./icon-login.png"
-              alt="Login"
-              width="24"
-              height="24"
-            />
+            <img src="./icon-login.png" alt="Login" width="24" height="24" />
           </button>
           <!-- registrar permanece igual -->
           <button type="button" class="btn-imagem registrar-btn">
@@ -69,34 +74,34 @@
       <div class="sobre-conteudo">
         <h1>📜 Regras do Royal OtServlist</h1>
         <p>
-          Para garantir justiça, transparência e integridade em nosso
-          ranking, todos os servidores listados no Royal OtServlist devem
-          seguir as regras abaixo. O não cumprimento poderá resultar em
-          penalidades, rebaixamento no ranking ou remoção da listagem.
+          Para garantir justiça, transparência e integridade em nosso ranking,
+          todos os servidores listados no Royal OtServlist devem seguir as
+          regras abaixo. O não cumprimento poderá resultar em penalidades,
+          rebaixamento no ranking ou remoção da listagem.
         </p>
 
         <h2>⚖️ Regras Gerais</h2>
         <p>
           <strong>Proibição de manipulação de jogadores online:</strong><br />
-          É estritamente proibido inflar artificialmente o número de
-          jogadores online usando multi-clientes, bots, NPCs conectados ou
-          métodos semelhantes. Servidores flagrados terão sua pontuação
-          severamente reduzida ou serão removidos da lista.
+          É estritamente proibido inflar artificialmente o número de jogadores
+          online usando multi-clientes, bots, NPCs conectados ou métodos
+          semelhantes. Servidores flagrados terão sua pontuação severamente
+          reduzida ou serão removidos da lista.
         </p>
 
         <p>
           <strong>Transparência nos dados do servidor:</strong><br />
           O servidor deve permitir coleta automatizada dos dados reais
           (jogadores online, versão, uptime). Caso o acesso via socket seja
-          bloqueado ou mascarado, a listagem será marcada como "dados
-          suspeitos" e penalizada no score.
+          bloqueado ou mascarado, a listagem será marcada como "dados suspeitos"
+          e penalizada no score.
         </p>
 
         <p>
           <strong>Proibição de suborno ou favorecimento:</strong><br />
-          Não aceitamos qualquer tipo de pagamento ou tentativa de suborno
-          para manipular a colocação no ranking. Se insistir irá resultar
-          em banimento permanente.
+          Não aceitamos qualquer tipo de pagamento ou tentativa de suborno para
+          manipular a colocação no ranking. Se insistir irá resultar em
+          banimento permanente.
         </p>
 
         <p>
@@ -113,12 +118,12 @@
             administrador será notificado.
           </li>
           <li>
-            <strong>Penalização de Score:</strong> Infrações médias resultam
-            em redução parcial da pontuação no ranking.
+            <strong>Penalização de Score:</strong> Infrações médias resultam em
+            redução parcial da pontuação no ranking.
           </li>
           <li>
-            <strong>Banimento Temporário:</strong> Bloqueio da listagem por
-            até 30 dias.
+            <strong>Banimento Temporário:</strong> Bloqueio da listagem por até
+            30 dias.
           </li>
           <li>
             <strong>Banimento Permanente:</strong> Remoção definitiva da
@@ -155,7 +160,7 @@
       import {
         getAuth,
         onAuthStateChanged,
-        signOut
+        signOut,
       } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
 
       const firebaseConfig = {
@@ -165,7 +170,7 @@
         storageBucket: "royalotservlist.firebasestorage.app",
         messagingSenderId: "795611612401",
         appId: "1:795611612401:web:3f869dcdff2366a0b45550",
-        measurementId: "G-LP54JFLRDT"
+        measurementId: "G-LP54JFLRDT",
       };
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
@@ -190,13 +195,14 @@
           } else {
             authIcon.src = "./icon-login.png";
             authIcon.alt = "Login";
-            authBtn.onclick = () =>
-              (window.location.href = "login.html");
+            authBtn.onclick = () => (window.location.href = "login.html");
             registrarBtn.onclick = () =>
               (window.location.href = "register.html");
           }
         });
       });
     </script>
+    <!-- já deve existir auth.js se for login/registro -->
+    <script type="module" src="./script.js"></script>
   </body>
 </html>
