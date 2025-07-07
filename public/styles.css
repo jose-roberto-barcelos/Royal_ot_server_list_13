@@ -39,9 +39,11 @@ body {
 body.fundo-contato .background {
   background-image: url("./backCONTATO.png");
 }
+
 body.fundo-sobre .background {
   background-image: url("./backSOBRE.png");
 }
+
 body.fundo-ranking .background {
   background-image: url("./backRANKING.png");
 }
@@ -50,6 +52,7 @@ body.fundo-ranking .background {
   0% {
     transform: scale(1);
   }
+
   100% {
     transform: scale(1.07);
   }
@@ -109,7 +112,8 @@ body.fundo-ranking .background {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: 10px; /* ajusta verticalmente se quiser */
+  top: 10px;
+  /* ajusta verticalmente se quiser */
 }
 
 .header-brasao {
@@ -117,6 +121,7 @@ body.fundo-ranking .background {
   object-fit: contain;
   transition: filter 0.3s ease;
 }
+
 .header-brasao:hover {
   filter: brightness(1.5) sepia(0.4) saturate(1.8) contrast(1.3);
 }
@@ -138,6 +143,7 @@ body.fundo-ranking .background {
   image-rendering: pixelated;
   transition: filter 0.3s, transform 0.2s;
 }
+
 .btn-imagem:hover img {
   filter: brightness(1.3) drop-shadow(0 0 5px gold);
   transform: scale(1.03);
@@ -160,6 +166,7 @@ body.fundo-ranking .background {
   font-weight: bold;
   transition: color 0.2s;
 }
+
 .nav-links a:hover {
   color: #ffd700;
 }
@@ -241,10 +248,12 @@ tr:hover td {
     filter: brightness(1) sepia(0.2) saturate(1.2) contrast(1);
     box-shadow: 0 0 6px rgba(255, 215, 0, 0.2);
   }
+
   50% {
     filter: brightness(1.5) sepia(0.5) saturate(1.8) contrast(1.3);
     box-shadow: 0 0 18px rgba(255, 215, 0, 0.6), 0 0 24px rgba(255, 200, 0, 0.5);
   }
+
   100% {
     filter: brightness(1) sepia(0.2) saturate(1.2) contrast(1);
     box-shadow: 0 0 6px rgba(255, 215, 0, 0.2);
@@ -254,7 +263,8 @@ tr:hover td {
 /* Esquerda: Título */
 .titulo-container {
   position: absolute;
-  top: -12px; /* ajuste livre */
+  top: -12px;
+  /* ajuste livre */
   left: 50%;
   transform: translateX(-50%);
   z-index: 15;
@@ -270,7 +280,8 @@ tr:hover td {
 
 .brasao-centro {
   position: absolute;
-  top: 30px; /* ajuste livre */
+  top: 30px;
+  /* ajuste livre */
   left: 50%;
   transform: translateX(-50%);
   z-index: 15;
@@ -281,6 +292,7 @@ tr:hover td {
   object-fit: contain;
   transition: filter 0.3s ease;
 }
+
 .header-brasao:hover {
   filter: brightness(1.5) sepia(0.4) saturate(1.8) contrast(1.3);
 }
@@ -297,7 +309,8 @@ tr:hover td {
 .botoes-acesso {
   display: flex;
   gap: 10px;
-  margin-bottom: 50px; /* ajuste fino aqui */
+  margin-bottom: 50px;
+  /* ajuste fino aqui */
 }
 
 .btn-imagem {
@@ -315,8 +328,10 @@ tr:hover td {
   height: auto;
   image-rendering: pixelated;
   transition: filter 0.3s, transform 0.2s;
-  transform: translateY(35px); /* ajuste vertical aqui */
+  transform: translateY(35px);
+  /* ajuste vertical aqui */
 }
+
 .btn-imagem:hover img {
   filter: brightness(1.3) drop-shadow(0 0 5px gold);
   transform: translateY(35px) scale(1.03);
@@ -337,9 +352,11 @@ tr:hover td {
   font-weight: bold;
   transition: color 0.2s;
 }
+
 .nav-links a:hover {
   color: #ffd700;
 }
+
 /* Estilo medieval para formulários */
 form {
   background: rgba(0, 0, 0, 0.5);
@@ -394,6 +411,7 @@ form button:hover {
   transform: scale(1.03);
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
 }
+
 .formulario-centro {
   display: flex;
   flex-direction: column;
@@ -429,6 +447,7 @@ body.fundo-sobre .background {
   text-shadow: 0 0 3px #000, 0 0 5px #ffd700;
   margin-bottom: 20px;
 }
+
 body.fundo-contato .background {
   background-image: url("./backCONTATO.png");
 }
@@ -495,6 +514,7 @@ form button:hover {
   transform: scale(1.03);
   box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
 }
+
 .info-contato {
   background: rgba(0, 0, 0, 0.45);
   padding: 20px;
@@ -525,6 +545,7 @@ form button:hover {
   color: #ffd700;
   text-shadow: 0 0 4px #000;
 }
+
 body.fundo-destaque .background {
   background-image: url("./backDESTAQUE.png");
 }
@@ -583,9 +604,11 @@ body.fundo-destaque .background {
 .tabela-destaque tr:hover td {
   background-color: rgba(255, 255, 255, 0.08);
 }
+
 body.fundo-destaque .background {
   background-image: url("./backDESTAQUE.png");
 }
+
 .estrela-brilhante {
   width: 40px;
   height: 40px;
@@ -596,16 +619,19 @@ body.fundo-destaque .background {
 }
 
 @keyframes brilhoEstrelaPixel {
+
   0%,
   100% {
     filter: brightness(1.2) drop-shadow(0 0 5px gold);
     transform: scale(1);
   }
+
   50% {
     filter: brightness(1.7) drop-shadow(0 0 8px gold);
     transform: scale(1.2);
   }
 }
+
 .tibia-oficial-banner {
   background-color: rgba(0, 0, 0, 0.6);
   padding: 8px 16px;
@@ -633,17 +659,21 @@ body.fundo-destaque .background {
   height: auto;
   animation: brilhoSutil 2.5s infinite ease-in-out;
 }
+
 @keyframes brilhoSutil {
   0% {
     filter: brightness(1) drop-shadow(0 0 1px #ff0000);
   }
+
   50% {
     filter: brightness(1.7) drop-shadow(0 0 2px #ff0000);
   }
+
   100% {
     filter: brightness(1) drop-shadow(0 0 1px #ff0000);
   }
 }
+
 /* Estilo medieval para os filtros */
 .filtros-ranking input,
 .filtros-ranking select {
@@ -672,6 +702,7 @@ body.fundo-destaque .background {
   box-shadow: 0 0 8px #ffd700;
   background-color: rgba(40, 40, 40, 0.95);
 }
+
 .esqueci-senha {
   margin-top: 6px;
   margin-bottom: 10px;
@@ -684,26 +715,37 @@ body.fundo-destaque .background {
   text-decoration: underline;
   cursor: pointer;
 }
+
 .nav-links {
   display: flex;
-  justify-content: space-between; /* Mantém um de cada lado */
+  justify-content: space-between;
+  /* Mantém um de cada lado */
   width: 100%;
   padding: 0 30px 10px 30px;
 }
 
 .nav-esquerda {
-  position: absolute; /* Novo */
-  left: 30px; /* Novo */
-  bottom: 10px; /* Novo */
-  gap: 20px; /* Existente */
+  position: absolute;
+  /* Novo */
+  left: 30px;
+  /* Novo */
+  bottom: 10px;
+  /* Novo */
+  gap: 20px;
+  /* Existente */
 }
 
 .nav-direita {
-  position: absolute; /* Novo */
-  right: 30px; /* Novo */
-  bottom: 10px; /* Novo */
-  gap: 20px; /* Existente */
+  position: absolute;
+  /* Novo */
+  right: 30px;
+  /* Novo */
+  bottom: 10px;
+  /* Novo */
+  gap: 20px;
+  /* Existente */
 }
+
 /* ====== POSICIONAMENTO DOS ITENS ====== */
 /* Menu Esquerdo (TOP STREAMERS e SERVIÇOS) */
 .nav-esquerda {
@@ -738,26 +780,36 @@ body.fundo-destaque .background {
   transform: translateX(-50%);
   bottom: 10px;
   display: flex;
-  gap: 100px; /* Aumente o espaçamento entre os dois botões */
-  padding: 0 60px; /* Afasta ambos ligeiramente para os lados */
+  gap: 100px;
+  /* Aumente o espaçamento entre os dois botões */
+  padding: 0 60px;
+  /* Afasta ambos ligeiramente para os lados */
 }
 
 .login-btn,
 .registrar-btn {
-  position: relative; /* Mantém os botões dentro do cabeçalho */
+  position: relative;
+  /* Mantém os botões dentro do cabeçalho */
   top: 0;
-  transform: none; /* Remove ajustes anteriores */
+  transform: none;
+  /* Remove ajustes anteriores */
 }
 
 .login-btn {
   margin-left: 20px;
-} /* Espaço entre brasão e botão */
+}
+
+/* Espaço entre brasão e botão */
 .registrar-btn {
   margin-right: 20px;
-} /* Espaço entre brasão e botão */
-.espaco-pos-header {
-  padding-top: 30px; /* ajuste esse valor como quiser */
 }
+
+/* Espaço entre brasão e botão */
+.espaco-pos-header {
+  padding-top: 30px;
+  /* ajuste esse valor como quiser */
+}
+
 body.fundo-servicos .background {
   background-image: url("./servicos.png");
 }
@@ -765,6 +817,7 @@ body.fundo-servicos .background {
 body.fundo-topstreamers .background {
   background-image: url("./topstreamers.png");
 }
+
 .portfolio-edicao {
   background: rgba(0, 0, 0, 0.5);
   padding: 40px;
@@ -810,6 +863,7 @@ body.fundo-topstreamers .background {
   color: #ffe97f;
   text-shadow: 0 0 2px #000;
 }
+
 .titulo-epico {
   display: flex;
   align-items: center;
@@ -835,11 +889,14 @@ body.fundo-topstreamers .background {
 .espada-decorativa.esquerda {
   transform: rotateY(180deg);
 }
+
 @keyframes brilhoEspada {
+
   0%,
   100% {
     filter: brightness(1) drop-shadow(0 0 4px gold);
   }
+
   50% {
     filter: brightness(1.7) drop-shadow(0 0 8px gold);
   }
@@ -850,6 +907,7 @@ body.fundo-topstreamers .background {
   height: auto;
   animation: brilhoEspada 2.8s infinite ease-in-out;
 }
+
 .botao-pacotes {
   display: inline-block;
   margin-top: 30px;
@@ -895,16 +953,20 @@ body.fundo-topstreamers .background {
   color: #ffe97f;
   font-weight: bold;
 }
+
 body.fundo-login .background {
   background-image: url("./loginback.png");
   background-position: center 50%;
 }
+
 body.fundo-registrar .background {
   background-image: url("./registrarback.png");
   background-size: cover;
-  background-position: center 30%; /* ajuste se quiser mais alto ou mais baixo */
+  background-position: center 30%;
+  /* ajuste se quiser mais alto ou mais baixo */
   background-repeat: no-repeat;
 }
+
 .titulo-pagina {
   font-family: "Cinzel", serif;
   font-size: 3.2rem;
@@ -955,7 +1017,7 @@ body.fundo-registrar .background {
 }
 
 .radio-player button {
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
   border: none;
   color: #ffe97f;
   font-size: 1.2rem;
@@ -969,7 +1031,95 @@ body.fundo-registrar .background {
   cursor: pointer;
 }
 
+/* === Top Streamers & YouTube === */
+.titulo-streamers {
+  text-align: center;
+  font-size: 2rem;
+  color: #edfa61;
+  font-family: "Cinzel", serif;
+  text-shadow: 0 0 4px #000, 0 0 6px #ffd700;
+  margin: 40px 0 20px;
+}
 
+.streamers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto 60px;
+}
 
+.streamer-card {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #b29762;
+  border-radius: 8px;
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
 
+.streamer-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
 
+.streamer-card a {
+  color: #f0e6d2;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px;
+}
+
+.streamer-card img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 8px;
+  border: 2px solid #edfa61;
+}
+
+.streamer-card span {
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+/* Garante que o bloco top-streamers fique acima do fundo e seja visível */
+.top-streamers {
+  position: relative;
+  z-index: 3;
+}
+
+/* — Dois blocos lado a lado: streamers à esquerda, YouTubers à direita — */
+.streamers-youtube-container {
+  display: flex;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto 60px;
+}
+
+/* Cada coluna ocupa 50% e empilha seus 5 cards verticalmente */
+.streamers-youtube-container>.streamers-column,
+.streamers-youtube-container>.youtubers-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+/* === Fade-in suave para cards de Streamers + YouTubers === */
+.streamer-card,
+.youtuber-card {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* quando a classe .visible for aplicada, dispara o fade */
+.streamer-card.visible,
+.youtuber-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

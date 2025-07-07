@@ -257,4 +257,13 @@ window.addEventListener("DOMContentLoaded", () => {
     audio.volume = Number(slider.value);
   });
 });
+// aplica fade-in staggered nos cards assim que a página carrega
+window.addEventListener('DOMContentLoaded', () => {
+  const cards = document.querySelectorAll('.streamer-card, .youtuber-card');
+  cards.forEach((card, i) => {
+    setTimeout(() => {
+      card.classList.add('visible');
+    }, i * 150); // cada card aparece 150 ms depois do anterior
+  });
+});
 

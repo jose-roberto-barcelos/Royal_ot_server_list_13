@@ -41,11 +41,9 @@
         </select>
 
         <div class="botoes-acesso">
-          <!-- botão único: login ↔ logout -->
           <button type="button" class="btn-imagem login-btn">
             <img src="./icon-login.png" alt="Login" width="24" height="24" />
           </button>
-          <!-- registrar permanece estático, ação via script -->
           <button type="button" class="btn-imagem registrar-btn">
             <img
               src="./icon-registrar.png"
@@ -55,6 +53,7 @@
             />
           </button>
         </div>
+
         <nav class="nav-links">
           <div class="nav-esquerda">
             <a href="top.html">Top Streamers/Youtube</a>
@@ -70,17 +69,89 @@
       </div>
     </header>
 
-    <main class="formulario-centro espaco-pos-header">
-      <div class="sobre-conteudo">
-        <h1>🌟 Top Streamers &amp; Canais de Youtube</h1>
-        <p>
-          Conteúdo em destaque para criadores que movimentam a comunidade do
-          Tibia.
-        </p>
+    <!-- ESTA SEÇÃO É A SUA GRID DE CARDS -->
+    <section class="top-streamers espaco-pos-header">
+      <h2 class="titulo-streamers">Top Streamers &amp; YouTube</h2>
+      <div class="streamers-youtube-container">
+        <div class="streamers-column">
+          <!-- 5 STREAMERS -->
+          <div class="streamer-card">
+            <a href="https://www.twitch.tv/vda_pedro" target="_blank" rel="noopener">
+              <img
+                src="https://static-cdn.jtvnw.net/jtv_user_pictures/229acc83-e9f9-4c30-a5e9-a5cd81fdf50e-profile_image-70x70.png"
+                alt="Streamer 1"
+              />
+              <span>Vda Pedro</span>
+            </a>
+          </div>
+          <div class="streamer-card">
+            <a href="https://www.twitch.tv/mp3playerchannel" target="_blank" rel="noopener">
+              <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/a726e789c37196cd-profile_image-70x70.jpeg" alt="Streamer 2"/>
+              <span>Mp3Player</span>
+            </a>
+          </div>
+          <div class="streamer-card">
+            <a href="https://twitch.tv/streamer3" target="_blank" rel="noopener">
+              <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/streamer3.png" alt="Streamer 3"/>
+              <span>Streamer 3</span>
+            </a>
+          </div>
+          <div class="streamer-card">
+            <a href="https://twitch.tv/streamer4" target="_blank" rel="noopener">
+              <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/streamer4.png" alt="Streamer 4"/>
+              <span>Streamer 4</span>
+            </a>
+          </div>
+          <div class="streamer-card">
+            <a href="https://twitch.tv/streamer5" target="_blank" rel="noopener">
+              <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/streamer5.png" alt="Streamer 5"/>
+              <span>Streamer 5</span>
+            </a>
+          </div>
+        </div>
+        <div class="youtubers-column">
+          <!-- 5 YOUTUBERS -->
+          <div class="streamer-card">
+            <a href="https://www.youtube.com/@tibiadinoclips" target="_blank" rel="noopener">
+              <img
+                src="https://yt3.ggpht.com/zA3H4kMSOqM9SvLnnBbzo6QcNdUDH-TgDAGy5sy11swDoJsnoYPlFT5Dqv6KNbjhRETzouWDYw=s600-c-k-c0x00ffffff-no-rj-rp-mo"
+                alt="TibiaDinoClips"
+              />
+              <span>TibiaDinoClips</span>
+            </a>
+          </div>
+          <div class="streamer-card">
+            <a href="https://youtube.com/c/youtuber2" target="_blank" rel="noopener">
+              <img src="https://yt3.ggpht.com/youtuber2.png" alt="YouTuber 2"/>
+              <span>YouTuber 2</span>
+            </a>
+          </div>
+          <div class="streamer-card">
+            <a href="https://youtube.com/c/youtuber3" target="_blank" rel="noopener">
+              <img src="https://yt3.ggpht.com/youtuber3.png" alt="YouTuber 3"/>
+              <span>YouTuber 3</span>
+            </a>
+          </div>
+          <div class="streamer-card">
+            <a href="https://youtube.com/c/youtuber4" target="_blank" rel="noopener">
+              <img src="https://yt3.ggpht.com/youtuber4.png" alt="YouTuber 4"/>
+              <span>YouTuber 4</span>
+            </a>
+          </div>
+          <div class="streamer-card">
+            <a href="https://youtube.com/c/youtuber5" target="_blank" rel="noopener">
+              <img src="https://yt3.ggpht.com/youtuber5.png" alt="YouTuber 5"/>
+              <span>YouTuber 5</span>
+            </a>
+          </div>
+        </div>
       </div>
-    </main>
+    </section>
 
-    <!-- script único que faz toggle login ↔ logout e ajusta registrar -->
+
+    <!-- REMOVIDO: <main class="formulario-centro…"> anterior, que atrapalhava -->
+
+    <!-- script de toggle login/registrar -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
       import {
@@ -98,7 +169,6 @@
         appId: "1:795611612401:web:3f869dcdff2366a0b45550",
         measurementId: "G-LP54JFLRDT",
       };
-
       const app = initializeApp(firebaseConfig);
       const auth = getAuth(app);
 
@@ -109,30 +179,22 @@
 
         onAuthStateChanged(auth, (user) => {
           if (user) {
-            // Usuário logado: troca ícone e ação
             authIcon.src = "./icon-sair.png";
             authIcon.alt = "Sair";
-            authBtn.onclick = () => {
-              signOut(auth).then(() => {
-                alert("Deslogado com sucesso");
-                window.location.reload();
-              });
-            };
-            // Registrar vai direto à aba servidor
+            authBtn.onclick = () => signOut(auth).then(() => location.reload());
             registrarBtn.onclick = () =>
-              (window.location.href = "register.html?aba=servidor");
+              (location.href = "register.html?aba=servidor");
           } else {
-            // Usuário deslogado: estado inicial
             authIcon.src = "./icon-login.png";
             authIcon.alt = "Login";
-            authBtn.onclick = () => (window.location.href = "login.html");
-            registrarBtn.onclick = () =>
-              (window.location.href = "register.html");
+            authBtn.onclick = () => (location.href = "login.html");
+            registrarBtn.onclick = () => (location.href = "register.html");
           }
         });
       });
     </script>
-    <!-- já deve existir auth.js se for login/registro -->
+
+    <!-- script.js (filtros, ranking e player) -->
     <script type="module" src="./script.js"></script>
   </body>
 </html>
