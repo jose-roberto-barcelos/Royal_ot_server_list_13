@@ -264,6 +264,24 @@ window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       card.classList.add('visible');
     }, i * 150); // cada card aparece 150 ms depois do anterior
+    
   });
 });
+// === ABRIR / FECHAR MENU LATERAL ===
+const menuToggle = document.getElementById('menu-toggle');
+const sideMenu   = document.getElementById('side-menu');
+
+menuToggle.addEventListener('click', () => {
+  sideMenu.classList.toggle('open');
+  const aberto = sideMenu.classList.contains('open');
+  sideMenu.setAttribute('aria-hidden', !aberto);
+});
+
+// FECHAR MENU AO CLICAR NUM LINK
+sideMenu.querySelectorAll('a').forEach(link =>
+  link.addEventListener('click', () => {
+    sideMenu.classList.remove('open');
+    sideMenu.setAttribute('aria-hidden', 'true');
+  })
+);
 

@@ -5,20 +5,134 @@
     <title>Login | Royal OtServlist</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- seu CSS e fontes -->
-    <link rel="stylesheet" href="styles.css" />
+    <!-- Google Font -->
     <link
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap"
       rel="stylesheet"
     />
+    <!-- Seu CSS -->
+    <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      /* ===== tibia-oficial-banner (herdado do Index, embora não usado aqui) ===== */
+      .tibia-oficial-banner {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 8px 16px;
+        border: 1px solid rgba(255, 204, 102, 0.3);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-family: "Cinzel", serif;
+        color: #ffe97f;
+        text-shadow:
+          0 0 4px #000,
+          0 0 6px #ffd700;
+        font-size: 0.95rem;
+        margin: 0 auto 8px auto;
+        width: fit-content;
+        max-width: 100%;
+      }
+      .tibia-oficial-banner .icon-tibia {
+        width: 20px;
+        height: 20px;
+        filter: drop-shadow(1px 1px 1px #000);
+      }
+
+      /* ===== botão MENU no cabeçalho ===== */
+      #menu-toggle {
+        background: none;
+        border: none;
+        padding: 0.5rem;
+        margin-right: auto;            /* empurra os itens seguintes para a direita */
+        color: #f0edd2;                /* mesma cor dos links */
+        font-family: "Cinzel", serif;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      /* ===== MENU LATERAL DRAWER ===== */
+      #side-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 240px;
+        background: rgba(0, 0, 0, 0.9);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 2000;
+        padding: 1rem;
+      }
+      #side-menu[aria-hidden="false"] {
+        transform: translateX(0);
+      }
+      #side-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 2rem 0 0 0;
+      }
+      #side-menu ul li {
+        opacity: 0;
+        margin: 0.5rem 0;
+      }
+      /* fade-in escalonado */
+      #side-menu[aria-hidden="false"] ul li:nth-child(1) {
+        animation: fadeInItem 0.9s forwards 0.1s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(2) {
+        animation: fadeInItem 0.9s forwards 0.2s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(3) {
+        animation: fadeInItem 0.9s forwards 0.3s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(4) {
+        animation: fadeInItem 0.9s forwards 0.4s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(5) {
+        animation: fadeInItem 0.9s forwards 0.5s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(6) {
+        animation: fadeInItem 0.9s forwards 0.6s;
+      }
+      @keyframes fadeInItem {
+        from {
+          opacity: 0;
+          transform: translateX(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      /* botão de fechar menu */
+      #menu-close {
+        background: none;
+        border: none;
+        color: #f0edd2;
+        font-family: "Cinzel", serif;
+        font-size: 1.2rem;
+        cursor: pointer;
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+      }
+    </style>
   </head>
+
   <body class="fundo-login">
     <div class="background"></div>
     <video autoplay muted loop class="fog">
       <source src="./Neblina.webm" type="video/webm" />
     </video>
 
+    <!-- ========= CABEÇALHO COM MENU ======== -->
     <header class="site-header">
+      <!-- botão MENU à esquerda -->
+      <button id="menu-toggle" aria-label="Abrir menu">MENU ☰</button>
+
       <div class="titulo-container">
         <img
           src="./tituloprincipal.png"
@@ -26,13 +140,18 @@
           class="titulo-imagem"
         />
       </div>
+
       <div class="brasao-centro">
         <a href="destaque.html">
           <img src="./brasao-novo.png" alt="Brasão" class="header-brasao" />
         </a>
       </div>
+
       <div class="bloco-direita">
-        <select id="language-select" style="margin-right:16px; font-size:0.9rem; padding:4px">
+        <select
+          id="language-select"
+          style="margin-right:16px; font-size:0.9rem; padding:4px"
+        >
           <option value="pt">PT</option>
           <option value="en">EN</option>
           <option value="es">ES</option>
@@ -44,30 +163,52 @@
             class="btn-imagem login-btn"
             onclick="window.location.href='login.html'"
           >
-            <img src="./icon-login.png" alt="Login" />
+            <img src="./icon-login.png" alt="Login" width="24" height="24" />
           </button>
           <button
             class="btn-imagem registrar-btn"
             onclick="window.location.href='register.html'"
           >
-            <img src="./icon-registrar.png" alt="Registrar" />
+            <img
+              src="./icon-registrar.png"
+              alt="Registrar"
+              width="24"
+              height="24"
+            />
           </button>
         </div>
-        <nav class="nav-links">
-          <div class="nav-esquerda">
-            <a href="top.html">Top Streamers/Youtube</a>
-            <a href="servicos.html">Serviços & Portfólio</a>
-          </div>
-          <div class="nav-direita">
-            <a href="index.html">Início</a>
-            <a href="regras.html">Regras/ban</a>
-            <a href="sobre.html">Sobre</a>
-            <a href="contato.html">Contato</a>
-          </div>
-        </nav>
+
+        <div class="radio-player">
+          <button id="btn-playpause" title="Play/Pause">►</button>
+          <button id="btn-skip" title="Próxima faixa">»</button>
+          <input
+            id="slider-volume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="1"
+            title="Volume"
+          />
+          <audio id="radio-audio" preload="metadata" style="display:none"></audio>
+        </div>
       </div>
     </header>
 
+    <!-- ===== DRAWER LATERAL ===== -->
+    <aside id="side-menu" aria-hidden="true">
+      <button id="menu-close" aria-label="Fechar menu">✕</button>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="top.html">Top Streamers/Youtube</a></li>
+        <li><a href="servicos.html">Serviços &amp; Portfólio</a></li>
+        <li><a href="regras.html">Regras/ban</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </aside>
+
+    <!-- ===== CONTEÚDO ORIGINAL LOGIN ===== -->
     <section class="formulario-centro espaco-pos-header">
       <h1 class="titulo-pagina">LOGIN</h1>
       <form id="form-login">
@@ -87,11 +228,10 @@
       </form>
     </section>
 
-    <!-- Firebase compat e scripts de autenticação -->
+    <!-- ===== FIREBASE COMPAT ===== -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <script>
-      // Inicializa o Firebase apenas uma vez
       if (!firebase.apps.length) {
         firebase.initializeApp({
           apiKey: "AIzaSyBnzTkzA4KsbvUruYobVEsWFP_upCFGvFM",
@@ -103,7 +243,6 @@
           measurementId: "G-LP54JFLRDT"
         });
       }
-
       const auth = firebase.auth();
 
       // Login
@@ -124,7 +263,6 @@
       // Esqueci minha senha
       document.getElementById("forgot-link").addEventListener("click", function(e) {
         e.preventDefault();
-        // usa o e-mail preenchido ou pede um
         let email = document.getElementById("email").value.trim();
         if (!email) {
           email = prompt("Digite seu e-mail para recuperação de senha:");
@@ -141,10 +279,22 @@
       });
     </script>
 
-    <!-- Script para header dinâmico -->
+    <!-- ===== SCRIPTS GLOBAIS ===== -->
     <script type="module" src="./auth.js"></script>
-    <!-- já deve existir auth.js se for login/registro -->
     <script type="module" src="./script.js"></script>
+    <script>
+      // toggle drawer
+      const btnOpen  = document.getElementById("menu-toggle");
+      const btnClose = document.getElementById("menu-close");
+      const drawer   = document.getElementById("side-menu");
 
+      btnOpen.addEventListener("click", () => {
+        const hidden = drawer.getAttribute("aria-hidden") === "true";
+        drawer.setAttribute("aria-hidden", hidden ? "false" : "true");
+      });
+      btnClose.addEventListener("click", () => {
+        drawer.setAttribute("aria-hidden", "true");
+      });
+    </script>
   </body>
 </html>

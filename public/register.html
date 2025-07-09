@@ -12,8 +12,9 @@
     />
     <link rel="stylesheet" href="styles.css" />
 
-    <!-- Estilos apenas para as abas -->
+    <!-- Estilos para abas e drawer menu -->
     <style>
+      /* abas de registro */
       .aba-selector {
         display: flex;
         justify-content: center;
@@ -37,6 +38,86 @@
       .formulario-centro form.ativo {
         display: block;
       }
+
+      /* botão MENU no cabeçalho */
+      #menu-toggle {
+        background: none;
+        border: none;
+        padding: 0.5rem;
+        margin-right: auto;
+        color: #f0edd2;
+        font-family: "Cinzel", serif;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      /* drawer lateral */
+      #side-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 240px;
+        background: rgba(0, 0, 0, 0.9);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 2000;
+        padding: 1rem;
+      }
+      #side-menu[aria-hidden="false"] {
+        transform: translateX(0);
+      }
+      #side-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 2rem 0 0;
+      }
+      #side-menu ul li {
+        opacity: 0;
+        margin: 0.5rem 0;
+      }
+      /* fade-in escalonado */
+      #side-menu[aria-hidden="false"] ul li:nth-child(1) {
+        animation: fadeInItem 0.9s forwards 0.1s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(2) {
+        animation: fadeInItem 0.9s forwards 0.2s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(3) {
+        animation: fadeInItem 0.9s forwards 0.3s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(4) {
+        animation: fadeInItem 0.9s forwards 0.4s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(5) {
+        animation: fadeInItem 0.9s forwards 0.5s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(6) {
+        animation: fadeInItem 0.9s forwards 0.6s;
+      }
+      @keyframes fadeInItem {
+        from {
+          opacity: 0;
+          transform: translateX(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      /* fechar menu */
+      #menu-close {
+        background: none;
+        border: none;
+        color: #f0edd2;
+        font-family: "Cinzel", serif;
+        font-size: 1.2rem;
+        cursor: pointer;
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+      }
     </style>
   </head>
 
@@ -46,159 +127,228 @@
       <source src="./Neblina.webm" type="video/webm" />
     </video>
 
-    <!-- HEADER (mesmo do sobre.html) -->
+    <!-- cabeçalho idêntico ao index -->
     <header class="site-header">
+      <!-- menu toggle -->
+      <button id="menu-toggle" aria-label="Abrir menu">MENU ☰</button>
+
       <div class="titulo-container">
-        <img src="./tituloprincipal.png" alt="Royal OtServlist" class="titulo-imagem" />
+        <img
+          src="./tituloprincipal.png"
+          alt="Royal OtServlist"
+          class="titulo-imagem"
+        />
       </div>
+
       <div class="brasao-centro">
-        <a href="destaque.html"><img src="./brasao-novo.png" alt="Brasão" class="header-brasao" /></a>
+        <a href="destaque.html">
+          <img src="./brasao-novo.png" alt="Brasão" class="header-brasao" />
+        </a>
       </div>
+
       <div class="bloco-direita">
-        <select id="language-select" style="margin-right:16px; font-size:0.9rem; padding:4px">
+        <!-- idioma -->
+        <select
+          id="language-select"
+          style="margin-right:16px; font-size:0.9rem; padding:4px"
+        >
           <option value="pt">PT</option>
           <option value="en">EN</option>
           <option value="es">ES</option>
           <option value="pl">PL</option>
         </select>
 
+        <!-- login/registrar -->
         <div class="botoes-acesso">
           <button type="button" class="btn-imagem login-btn">
             <img src="./icon-login.png" alt="Login" width="24" height="24" />
           </button>
           <button type="button" class="btn-imagem registrar-btn">
-            <img src="./icon-registrar.png" alt="Registrar" width="24" height="24" />
+            <img
+              src="./icon-registrar.png"
+              alt="Registrar"
+              width="24"
+              height="24"
+            />
           </button>
         </div>
-        <nav class="nav-links">
-          <div class="nav-esquerda">
-            <a href="top.html">Top Streamers/Youtube</a>
-            <a href="servicos.html">Serviços & Portfólio</a>
-          </div>
-          <div class="nav-direita">
-            <a href="index.html">Início</a>
-            <a href="regras.html">Regras/ban</a>
-            <a href="sobre.html">Sobre</a>
-            <a href="contato.html">Contato</a>
-          </div>
-        </nav>
+
+        <!-- player minimalista -->
+        <div class="radio-player">
+          <button id="btn-playpause" title="Play/Pause">►</button>
+          <button id="btn-skip" title="Próxima faixa">»</button>
+          <input
+            id="slider-volume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="1"
+            title="Volume"
+          />
+          <audio id="radio-audio" preload="metadata" style="display:none"></audio>
+        </div>
       </div>
     </header>
 
-    <!-- FORMULÁRIOS -->
+    <!-- drawer lateral -->
+    <aside id="side-menu" aria-hidden="true">
+      <button id="menu-close" aria-label="Fechar menu">✕</button>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="top.html">Top Streamers/Youtube</a></li>
+        <li><a href="servicos.html">Serviços &amp; Portfólio</a></li>
+        <li><a href="regras.html">Regras/ban</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </aside>
+
+    <!-- conteúdo de registro permanece igual -->
     <main class="formulario-centro espaco-pos-header">
       <h1 class="titulo-pagina">REGISTRAR</h1>
 
       <div class="aba-selector" id="aba-selector">
-        <button id="btn-pessoal" class="ativo" type="button">Cadastro Pessoal</button>
+        <button id="btn-pessoal" class="ativo" type="button">
+          Cadastro Pessoal
+        </button>
         <button id="btn-servidor" type="button">Registro de Servidor</button>
       </div>
 
-      <!-- Cadastro Pessoal -->
       <form id="form-pessoal" class="ativo">
-        <input type="email" name="email" placeholder="Seu e-mail" required /><br />
-        <input type="password" name="senha" placeholder="Senha" required /><br />
-        <input type="password" name="confirma" placeholder="Confirmar senha" required /><br />
+        <input
+          type="email"
+          name="email"
+          placeholder="Seu e-mail"
+          required
+        /><br />
+        <input
+          type="password"
+          name="senha"
+          placeholder="Senha"
+          required
+        /><br />
+        <input
+          type="password"
+          name="confirma"
+          placeholder="Confirmar senha"
+          required
+        /><br />
         <button type="submit">Registrar</button>
       </form>
 
-      <!-- Registro de Servidor -->
       <form id="form-servidor">
-        <input type="text"    placeholder="Nome do Servidor" required /><br />
-        <input type="text"    placeholder="IP ou domínio" required /><br />
-        <input type="text"    placeholder="Versão (ex: 8.6)" required /><br />
-        <input type="number"  placeholder="Porta (ex: 7171)" required /><br />
-        <input type="url"     placeholder="Site oficial" required /><br />
-        <input type="email"   placeholder="Email do administrador" required /><br />
+        <input type="text" placeholder="Nome do Servidor" required /><br />
+        <input type="text" placeholder="IP ou domínio" required /><br />
+        <input type="text" placeholder="Versão (ex: 8.6)" required /><br />
+        <input type="number" placeholder="Porta (ex: 7171)" required /><br />
+        <input type="url" placeholder="Site oficial" required /><br />
+        <input
+          type="email"
+          placeholder="Email do administrador"
+          required
+        /><br />
         <textarea placeholder="Observações" rows="4"></textarea><br />
         <button type="submit">Enviar para Análise</button>
       </form>
     </main>
 
-    <!-- 1) Controle de abas -->
+    <!-- controle de abas -->
     <script>
-      const btnPessoal  = document.getElementById("btn-pessoal");
+      const btnPessoal = document.getElementById("btn-pessoal");
       const btnServidor = document.getElementById("btn-servidor");
       const formPessoal = document.getElementById("form-pessoal");
-      const formServidor= document.getElementById("form-servidor");
-
+      const formServidor = document.getElementById("form-servidor");
       function mostrarAba(aba) {
         if (aba === "servidor") {
-          btnServidor .classList.add("ativo");
-          btnPessoal  .classList.remove("ativo");
+          btnServidor.classList.add("ativo");
+          btnPessoal.classList.remove("ativo");
           formServidor.classList.add("ativo");
-          formPessoal .classList.remove("ativo");
+          formPessoal.classList.remove("ativo");
         } else {
-          btnPessoal  .classList.add("ativo");
-          btnServidor .classList.remove("ativo");
-          formPessoal .classList.add("ativo");
+          btnPessoal.classList.add("ativo");
+          btnServidor.classList.remove("ativo");
+          formPessoal.classList.add("ativo");
           formServidor.classList.remove("ativo");
         }
       }
-      btnPessoal .addEventListener("click", () => mostrarAba("pessoal"));
+      btnPessoal.addEventListener("click", () => mostrarAba("pessoal"));
       btnServidor.addEventListener("click", () => mostrarAba("servidor"));
-      mostrarAba(new URLSearchParams(location.search).get("aba")==="servidor"?"servidor":"pessoal");
+      mostrarAba(
+        new URLSearchParams(location.search).get("aba") === "servidor"
+          ? "servidor"
+          : "pessoal"
+      );
     </script>
 
-    <!-- 2) Auth-handler (login ↔ logout) -->
+    <!-- auth-handler e form submissions -->
     <script type="module" src="./auth-handler.js"></script>
-
-    <!-- 3) Cadastro Pessoal via Firebase Auth -->
     <script type="module">
       import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
       const auth = getAuth();
-
-      document.getElementById("form-pessoal").addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const f = e.target;
-        const email    = f.email.value.trim();
-        const senha    = f.senha.value;
-        const confirma = f.confirma.value;
-        if (senha !== confirma) {
-          return alert("⚠️ As senhas não conferem.");
-        }
-        try {
-          await createUserWithEmailAndPassword(auth, email, senha);
-          alert("✅ Cadastro pessoal realizado com sucesso!");
-          f.reset();
-          // opcional: redirecionar ou mudar aba
-        } catch (err) {
-          alert("❌ Erro no cadastro: " + err.message);
-        }
-      });
+      document
+        .getElementById("form-pessoal")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const f = e.target;
+          const email = f.email.value.trim();
+          const senha = f.senha.value;
+          const confirma = f.confirma.value;
+          if (senha !== confirma) {
+            return alert("⚠️ As senhas não conferem.");
+          }
+          try {
+            await createUserWithEmailAndPassword(auth, email, senha);
+            alert("✅ Cadastro pessoal realizado com sucesso!");
+            f.reset();
+          } catch (err) {
+            alert("❌ Erro no cadastro: " + err.message);
+          }
+        });
     </script>
-
-    <!-- 4) Registro de Servidor via Firestore -->
     <script type="module">
       import { db } from "./firebase-config.js";
       import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js";
+      document
+        .getElementById("form-servidor")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const vals = e.target.elements;
+          const data = {
+            servidor: vals[0].value,
+            endereco: vals[1].value,
+            versao: vals[2].value,
+            porta: vals[3].value,
+            site: vals[4].value,
+            emailAdmin: vals[5].value,
+            observacoes: vals[6].value,
+            criadoEm: serverTimestamp(),
+          };
+          try {
+            await addDoc(collection(db, "servidores"), data);
+            alert("✅ Servidor enviado para análise!");
+            e.target.reset();
+            mostrarAba("pessoal");
+          } catch (err) {
+            console.error(err);
+            alert("❌ Falha ao enviar servidor. Tente novamente.");
+          }
+        });
+    </script>
 
-      document.getElementById("form-servidor").addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const vals = e.target.elements;
-        const data = {
-          servidor:    vals[0].value,
-          endereco:    vals[1].value,
-          versao:      vals[2].value,
-          porta:       vals[3].value,
-          site:        vals[4].value,
-          emailAdmin:  vals[5].value,
-          observacoes: vals[6].value,
-          criadoEm:    serverTimestamp()
-        };
-        try {
-          await addDoc(collection(db, "servidores"), data);
-          alert("✅ Servidor enviado para análise!");
-          e.target.reset();
-          mostrarAba("pessoal");
-        } catch (err) {
-          console.error(err);
-          alert("❌ Falha ao enviar servidor. Tente novamente.");
-        }
+    <!-- scripts gerais -->
+    <script type="module" src="./script.js"></script>
+    <script>
+      const btnOpen = document.getElementById("menu-toggle");
+      const btnClose = document.getElementById("menu-close");
+      const drawer = document.getElementById("side-menu");
+      btnOpen.addEventListener("click", () => {
+        const open = drawer.getAttribute("aria-hidden") === "true";
+        drawer.setAttribute("aria-hidden", open ? "false" : "true");
+      });
+      btnClose.addEventListener("click", () => {
+        drawer.setAttribute("aria-hidden", "true");
       });
     </script>
-    <!-- já deve existir auth.js se for login/registro -->
-    <script type="module" src="./script.js"></script>
-
   </body>
 </html>

@@ -19,19 +19,123 @@
     <link rel="stylesheet" href="styles.css" />
 
     <style>
+      /* Seu banner de tibia oficial, inalterado */
+      .tibia-oficial-banner {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 8px 16px;
+        border: 1px solid rgba(255, 204, 102, 0.3);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-family: "Cinzel", serif;
+        color: #ffe97f;
+        text-shadow:
+          0 0 4px #000,
+          0 0 6px #ffd700;
+        font-size: 0.95rem;
+        margin: 0 auto 8px auto;
+        width: fit-content;
+        max-width: 100%;
+      }
+      .tibia-oficial-banner .icon-tibia {
+        width: 20px;
+        height: 20px;
+        filter: drop-shadow(1px 1px 1px #000);
+      }
+
+      /* Botão MENU à esquerda no cabeçalho */
+      #menu-toggle {
+        background: none;
+        border: none;
+        padding: 0.5rem;
+        margin-right: auto;
+        color: #f0edd2;
+        font-family: "Cinzel", serif;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      /* ---------- MENU LATERAL ---------- */
+      #side-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 240px;
+        background: rgba(0, 0, 0, 0.9);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 2000;
+        padding: 1rem;
+      }
+      #side-menu[aria-hidden="false"] {
+        transform: translateX(0);
+      }
+      #side-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 2rem 0 0 0;
+      }
+      #side-menu ul li {
+        opacity: 0;
+        margin: 0.5rem 0;
+      }
+      /* fade-in escalonado */
+      #side-menu[aria-hidden="false"] ul li:nth-child(1) {
+        animation: fadeInItem 0.9s forwards 0.1s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(2) {
+        animation: fadeInItem 0.9s forwards 0.2s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(3) {
+        animation: fadeInItem 0.9s forwards 0.3s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(4) {
+        animation: fadeInItem 0.9s forwards 0.4s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(5) {
+        animation: fadeInItem 0.9s forwards 0.5s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(6) {
+        animation: fadeInItem 0.9s forwards 0.6s;
+      }
+      @keyframes fadeInItem {
+        from {
+          opacity: 0;
+          transform: translateX(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      /* botão de fechar menu */
+      #menu-close {
+        background: none;
+        border: none;
+        color: #f0edd2;
+        font-family: "Cinzel", serif;
+        font-size: 1.2rem;
+        cursor: pointer;
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+      }
+
+      /* Ajustes específicos da página de contato */
       .formulario-centro { padding-top: 40px; }
       .info-contato   { margin-top: 0; }
-      .tibia-oficial-banner { /* mesmo estilo do index */ }
-      .tibia-oficial-banner .icon-tibia { /* idem */ }
       .hidden { display: none!important; }
     </style>
 
-    <!-- Firebase compat -->
+    <!-- Firebase compat (mantido) -->
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
     <script>
-      // inicializa Firebase só uma vez
       if (!firebase.apps.length) {
         firebase.initializeApp({
           apiKey: "AIzaSyBnzTkzA4KsbvUruYobVEsWFP_upCFGvFM",
@@ -52,14 +156,20 @@
       <source src="./Neblina.webm" type="video/webm" />
     </video>
 
-    <!-- Cabeçalho -->
+    <!-- ===== CABEÇALHO (idêntico ao index) ===== -->
     <header class="site-header">
+      <button id="menu-toggle" aria-label="Abrir menu">MENU ☰</button>
+
       <div class="titulo-container">
         <img src="./tituloprincipal.png" alt="Royal OtServlist" class="titulo-imagem"/>
       </div>
+
       <div class="brasao-centro">
-        <a href="destaque.html"><img src="./brasao-novo.png" alt="Brasão" class="header-brasao"/></a>
+        <a href="destaque.html">
+          <img src="./brasao-novo.png" alt="Brasão" class="header-brasao"/>
+        </a>
       </div>
+
       <div class="bloco-direita">
         <select id="language-select" style="margin-right:16px; font-size:0.9rem; padding:4px">
           <option value="pt">PT</option>
@@ -69,31 +179,45 @@
         </select>
 
         <div class="botoes-acesso">
-          <!-- Link de autenticação unificado -->
           <a id="auth-link" href="login.html" class="btn-imagem">
             <img id="auth-icon" src="./icon-login.png" alt="Login" width="24" height="24"/>
           </a>
-          <!-- Registrar -->
           <a id="register-link" href="register.html" class="btn-imagem">
             <img src="./icon-registrar.png" alt="Registrar" width="24" height="24"/>
           </a>
         </div>
-        <nav class="nav-links">
-          <div class="nav-esquerda">
-            <a href="top.html">Top Streamers/Youtube</a>
-            <a href="servicos.html">Serviços &amp; Portfólio</a>
-          </div>
-          <div class="nav-direita">
-            <a href="index.html">Início</a>
-            <a href="regras.html">Regras/ban</a>
-            <a href="sobre.html">Sobre</a>
-            <a href="contato.html">Contato</a>
-          </div>
-        </nav>
+
+        <div class="radio-player">
+          <button id="btn-playpause" title="Play/Pause">►</button>
+          <button id="btn-skip"      title="Próxima faixa">»</button>
+          <input
+            id="slider-volume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="1"
+            title="Volume"
+          />
+          <audio id="radio-audio" preload="metadata" style="display:none"></audio>
+        </div>
       </div>
     </header>
 
-    <!-- Corpo -->
+    <!-- ===== MENU LATERAL ===== -->
+    <aside id="side-menu" aria-hidden="true">
+      <button id="menu-close" aria-label="Fechar menu">✕</button>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="top.html">Top Streamers/Youtube</a></li>
+        <li><a href="servicos.html">Serviços &amp; Portfólio</a></li>
+        <li><a href="regras.html">Regras/ban</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </aside>
+
+    <!-- ===== CONTEÚDO ORIGINAL DA PÁGINA ===== -->
     <main class="formulario-centro espaco-pos-header">
       <div class="info-contato">
         <h2>Fale com a gente</h2>
@@ -112,10 +236,11 @@
       </form>
     </main>
 
-    <!-- Envio de formulário -->
+    <!-- ===== SCRIPTS DA PÁGINA ===== -->
     <script>
+      // Envio do formulário (mantido)
       const db = firebase.firestore();
-      document.getElementById("contato-form").addEventListener("submit", async e => {
+      document.getElementById("contato-form").addEventListener("submit", async (e) => {
         e.preventDefault();
         const form = e.target;
         try {
@@ -123,7 +248,7 @@
             nome: form.nome.value,
             email: form.email.value,
             mensagem: form.mensagem.value,
-            criadoEm: firebase.firestore.FieldValue.serverTimestamp()
+            criadoEm: firebase.firestore.FieldValue.serverTimestamp(),
           });
           alert("Mensagem enviada com sucesso!");
           form.reset();
@@ -134,8 +259,8 @@
       });
     </script>
 
-    <!-- Toggle Login/Logout -->
     <script>
+      // Toggle Login/Logout (mantido)
       const auth       = firebase.auth();
       const authLink   = document.getElementById("auth-link");
       const authIcon   = document.getElementById("auth-icon");
@@ -143,14 +268,15 @@
 
       auth.onAuthStateChanged(user => {
         if (user) {
-          // logado → mostra logout
           authIcon.src = "./icon-sair.png";
           authIcon.alt = "Sair";
           authLink.href = "#";
-          authLink.onclick = e => { e.preventDefault(); auth.signOut().then(() => location.reload()); };
+          authLink.onclick = e => {
+            e.preventDefault();
+            auth.signOut().then(() => location.reload());
+          };
           registerLink.href = "register.html?aba=servidor";
         } else {
-          // deslogado → mostra login
           authIcon.src = "./icon-login.png";
           authIcon.alt = "Login";
           authLink.href = "login.html";
@@ -159,8 +285,22 @@
         }
       });
     </script>
-    <!-- já deve existir auth.js se for login/registro -->
+
     <script type="module" src="./script.js"></script>
 
+    <script>
+      // Controle de abertura/fechamento do drawer
+      const btnOpen  = document.getElementById("menu-toggle");
+      const btnClose = document.getElementById("menu-close");
+      const drawer   = document.getElementById("side-menu");
+
+      btnOpen.addEventListener("click", () => {
+        const hidden = drawer.getAttribute("aria-hidden") === "true";
+        drawer.setAttribute("aria-hidden", hidden ? "false" : "true");
+      });
+      btnClose.addEventListener("click", () => {
+        drawer.setAttribute("aria-hidden", "true");
+      });
+    </script>
   </body>
 </html>

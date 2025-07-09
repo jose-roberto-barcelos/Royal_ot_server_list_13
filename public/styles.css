@@ -880,33 +880,7 @@ body.fundo-topstreamers .background {
   margin: 0;
 }
 
-.espada-decorativa {
-  width: 40px;
-  height: auto;
-  filter: drop-shadow(0 0 5px #000);
-}
 
-.espada-decorativa.esquerda {
-  transform: rotateY(180deg);
-}
-
-@keyframes brilhoEspada {
-
-  0%,
-  100% {
-    filter: brightness(1) drop-shadow(0 0 4px gold);
-  }
-
-  50% {
-    filter: brightness(1.7) drop-shadow(0 0 8px gold);
-  }
-}
-
-.espada-decorativa {
-  width: 40px;
-  height: auto;
-  animation: brilhoEspada 2.8s infinite ease-in-out;
-}
 
 .botao-pacotes {
   display: inline-block;
@@ -1122,4 +1096,106 @@ body.fundo-registrar .background {
 .youtuber-card.visible {
   opacity: 1;
   transform: translateY(0);
+}
+/* === Animação Fade-In para o título Ranking de Servidores === */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.titulo-ranking {
+  /* começa invisível */
+  opacity: 0;
+  /* dispara a animação: duração 0.8s, ease-out, atraso 0.3s, e mantém o estado final */
+  animation: fadeInUp 0.8s ease-out 0.3s forwards;
+}
+/* Estilo “login‐like” para o título Ranking de Servidores */
+.titulo-ranking {
+  display: inline-block;             /* para o fundo envolver o texto */
+  background: linear-gradient(to right, #3b2d0c, #1f1a0b);
+  padding: 20px 30px;
+  border: 3px solid #a6791f;
+  border-radius: 12px;
+  box-shadow:
+    0 0 20px rgba(0, 0, 0, 0.8),
+    inset 0 0 8px rgba(255, 215, 0, 0.2);
+  text-shadow:
+    0 0 2px #000,
+    0 0 8px #000,
+    2px 2px 6px #000;
+  color: #d6b542;
+  font-size: 2.2rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 40px auto 20px;           /* centraliza e dá espaçamento */
+  opacity: 0;                        /* mantém o fade-in */
+  animation: fadeInUp 0.8s ease-out 0.3s forwards;
+}
+
+/* =============================
+   MENU LATERAL (drawer)       
+   ============================= */
+#menu-toggle {
+  background: none;
+  border: none;
+  color: #f0e6d2;
+  font-size: 1.8rem;
+  cursor: pointer;
+  margin-left: 16px;
+}
+
+#side-menu {
+  position: fixed;
+  top: 0; left: -260px;
+  width: 260px; height: 100vh;
+  background: rgba(10,8,5,0.95);
+  box-shadow: 2px 0 12px #000;
+  transition: left 0.4s ease;
+  z-index: 50;
+  padding-top: 80px; /* abaixo do header */
+}
+#side-menu.open {
+  left: 0;
+}
+
+#side-menu ul {
+  list-style: none;
+  padding: 0; margin: 0;
+}
+#side-menu li {
+  opacity: 0;
+  transform: translateX(-10px);
+  margin: 12px 0;
+  animation: fadeIn 0.4s forwards;
+}
+#side-menu li:nth-child(1) { animation-delay: 0.08s; }
+#side-menu li:nth-child(2) { animation-delay: 0.16s; }
+#side-menu li:nth-child(3) { animation-delay: 0.24s; }
+#side-menu li:nth-child(4) { animation-delay: 0.32s; }
+#side-menu li:nth-child(5) { animation-delay: 0.40s; }
+#side-menu li:nth-child(6) { animation-delay: 0.48s; }
+
+#side-menu a {
+  display: block;
+  padding: 6px 16px;
+  color: #f0e6d2;
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: background 0.2s;
+}
+#side-menu a:hover {
+  background: rgba(255,229,127,0.1);
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

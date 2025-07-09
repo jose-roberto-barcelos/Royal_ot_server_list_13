@@ -4,11 +4,92 @@
     <meta charset="UTF-8" />
     <title>Regras | Royal OtServlist</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Google Font -->
     <link
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap"
       rel="stylesheet"
     />
+    <!-- Seu CSS -->
     <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      /* MENU LATERAL DRAWER */
+      #menu-toggle {
+        background: none;
+        border: none;
+        padding: 0.5rem;
+        margin-right: auto;
+        color: #f0edd2;
+        font-family: "Cinzel", serif;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      #side-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 240px;
+        background: rgba(0, 0, 0, 0.9);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 2000;
+        padding: 1rem;
+      }
+      #side-menu[aria-hidden="false"] {
+        transform: translateX(0);
+      }
+      #side-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 2rem 0 0;
+      }
+      #side-menu ul li {
+        opacity: 0;
+        margin: 0.5rem 0;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(1) {
+        animation: fadeInItem 0.9s forwards 0.1s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(2) {
+        animation: fadeInItem 0.9s forwards 0.2s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(3) {
+        animation: fadeInItem 0.9s forwards 0.3s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(4) {
+        animation: fadeInItem 0.9s forwards 0.4s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(5) {
+        animation: fadeInItem 0.9s forwards 0.5s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(6) {
+        animation: fadeInItem 0.9s forwards 0.6s;
+      }
+      @keyframes fadeInItem {
+        from {
+          opacity: 0;
+          transform: translateX(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      #menu-close {
+        background: none;
+        border: none;
+        color: #f0edd2;
+        font-family: "Cinzel", serif;
+        font-size: 1.2rem;
+        cursor: pointer;
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+      }
+    </style>
   </head>
   <body class="fundo-ranking">
     <div class="background"></div>
@@ -16,7 +97,10 @@
       <source src="./Neblina.webm" type="video/webm" />
     </video>
 
+    <!-- cabeçalho com drawer -->
     <header class="site-header">
+      <button id="menu-toggle" aria-label="Abrir menu">MENU ☰</button>
+
       <div class="titulo-container">
         <img
           src="./tituloprincipal.png"
@@ -24,11 +108,13 @@
           class="titulo-imagem"
         />
       </div>
+
       <div class="brasao-centro">
         <a href="destaque.html">
           <img src="./brasao-novo.png" alt="Brasão" class="header-brasao" />
         </a>
       </div>
+
       <div class="bloco-direita">
         <select
           id="language-select"
@@ -39,13 +125,10 @@
           <option value="es">ES</option>
           <option value="pl">PL</option>
         </select>
-
         <div class="botoes-acesso">
-          <!-- único botão: login ↔ logout -->
           <button type="button" class="btn-imagem login-btn">
             <img src="./icon-login.png" alt="Login" width="24" height="24" />
           </button>
-          <!-- registrar permanece igual -->
           <button type="button" class="btn-imagem registrar-btn">
             <img
               src="./icon-registrar.png"
@@ -55,21 +138,37 @@
             />
           </button>
         </div>
-        <nav class="nav-links">
-          <div class="nav-esquerda">
-            <a href="top.html">Top Streamers/Youtube</a>
-            <a href="servicos.html">Serviços & Portfólio</a>
-          </div>
-          <div class="nav-direita">
-            <a href="index.html">Início</a>
-            <a href="regras.html">Regras/ban</a>
-            <a href="sobre.html">Sobre</a>
-            <a href="contato.html">Contato</a>
-          </div>
-        </nav>
+        <div class="radio-player">
+          <button id="btn-playpause" title="Play/Pause">►</button>
+          <button id="btn-skip" title="Próxima faixa">»</button>
+          <input
+            id="slider-volume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="1"
+            title="Volume"
+          />
+          <audio id="radio-audio" preload="metadata" style="display:none"></audio>
+        </div>
       </div>
     </header>
 
+    <!-- drawer lateral -->
+    <aside id="side-menu" aria-hidden="true">
+      <button id="menu-close" aria-label="Fechar menu">✕</button>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="top.html">Top Streamers/Youtube</a></li>
+        <li><a href="servicos.html">Serviços &amp; Portfólio</a></li>
+        <li><a href="regras.html">Regras/ban</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </aside>
+
+    <!-- conteúdo da página regras -->
     <main class="formulario-centro espaco-pos-header">
       <div class="sobre-conteudo">
         <h1>📜 Regras do Royal OtServlist</h1>
@@ -154,7 +253,7 @@
       </div>
     </main>
 
-    <!-- script único que faz toggle login ↔ logout -->
+    <!-- toggle login/logout -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
       import {
@@ -202,7 +301,23 @@
         });
       });
     </script>
-    <!-- já deve existir auth.js se for login/registro -->
+
+    <!-- drawer toggle -->
+    <script>
+      const openBtn = document.getElementById("menu-toggle");
+      const closeBtn = document.getElementById("menu-close");
+      const drawer = document.getElementById("side-menu");
+
+      openBtn.addEventListener("click", () => {
+        const hidden = drawer.getAttribute("aria-hidden") === "true";
+        drawer.setAttribute("aria-hidden", hidden ? "false" : "true");
+      });
+      closeBtn.addEventListener("click", () => {
+        drawer.setAttribute("aria-hidden", "true");
+      });
+    </script>
+
+    <!-- scripts gerais -->
     <script type="module" src="./script.js"></script>
   </body>
 </html>

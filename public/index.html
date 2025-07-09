@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="styles.css" />
 
     <style>
+      /* Seu banner de tibia oficial, inalterado */
       .tibia-oficial-banner {
         background-color: rgba(0, 0, 0, 0.6);
         padding: 8px 16px;
@@ -38,6 +39,88 @@
         height: 20px;
         filter: drop-shadow(1px 1px 1px #000);
       }
+
+      /* Estilo do botão MENU para herdar fonte e ficar à esquerda */
+      #menu-toggle {
+        background: none;
+        border: none;
+        padding: 0.5rem;
+        margin-right: auto;
+        color: #f0edd2;
+        font-family: "Cinzel", serif;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      /* ---------- MENU LATERAL ---------- */
+      #side-menu {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 240px;
+        background: rgba(0, 0, 0, 0.9);
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 2000;
+        padding: 1rem;
+      }
+      /* abre quando aria-hidden="false" */
+      #side-menu[aria-hidden="false"] {
+        transform: translateX(0);
+      }
+      /* botões do menu (lista) */
+      #side-menu ul {
+        list-style: none;
+        padding: 0;
+        margin: 2rem 0 0 0;
+      }
+      #side-menu ul li {
+        opacity: 0;
+        margin: 0.5rem 0;
+      }
+      /* fade-in escalonado */
+      #side-menu[aria-hidden="false"] ul li:nth-child(1) {
+        animation: fadeInItem 0.9s forwards 0.1s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(2) {
+        animation: fadeInItem 0.9s forwards 0.2s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(3) {
+        animation: fadeInItem 0.9s forwards 0.3s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(4) {
+        animation: fadeInItem 0.9s forwards 0.4s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(5) {
+        animation: fadeInItem 0.9s forwards 0.5s;
+      }
+      #side-menu[aria-hidden="false"] ul li:nth-child(6) {
+        animation: fadeInItem 0.9s forwards 0.6s;
+      }
+      @keyframes fadeInItem {
+        from {
+          opacity: 0;
+          transform: translateX(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      /* botão de fechar menu */
+      #menu-close {
+        background: none;
+        border: none;
+        color: #f0edd2;
+        font-family: "Cinzel", serif;
+        font-size: 1.2rem;
+        cursor: pointer;
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+      }
     </style>
   </head>
 
@@ -48,6 +131,9 @@
     </video>
 
     <header class="site-header">
+      <!-- 1) Botão MENU à esquerda -->
+      <button id="menu-toggle" aria-label="Abrir menu">MENU ☰</button>
+
       <div class="titulo-container">
         <img
           src="./tituloprincipal.png"
@@ -63,7 +149,7 @@
       </div>
 
       <div class="bloco-direita">
-        <!-- 1) Dropdown de idioma no canto superior direito -->
+        <!-- 2) Dropdown de idioma -->
         <select
           id="language-select"
           style="margin-right: 16px; font-size: 0.9rem; padding: 4px"
@@ -74,7 +160,7 @@
           <option value="pl">PL</option>
         </select>
 
-        <!-- 2) Botões de login/registrar -->
+        <!-- 3) Login/Registrar -->
         <div class="botoes-acesso">
           <button type="button" class="btn-imagem login-btn">
             <img src="./icon-login.png" alt="Login" width="24" height="24" />
@@ -89,24 +175,10 @@
           </button>
         </div>
 
-        <nav class="nav-links">
-          <div class="nav-esquerda">
-            <a href="top.html">Top Streamers/Youtube</a>
-            <a href="servicos.html">Serviços & Portfólio</a>
-          </div>
-          <div class="nav-direita">
-            <a href="/">Início</a>
-            <a href="regras.html">Regras/ban</a>
-            <a href="sobre.html">Sobre</a>
-            <a href="contato.html">Contato</a>
-          </div>
-        </nav>
-
-        <!-- === PLAYER MINIMALISTA === -->
-        <!-- === PLAYER MINIMALISTA === -->
+        <!-- 4) Player minimalista -->
         <div class="radio-player">
           <button id="btn-playpause" title="Play/Pause">►</button>
-          <button id="btn-skip"      title="Próxima faixa">»</button>
+          <button id="btn-skip" title="Próxima faixa">»</button>
           <input
             id="slider-volume"
             type="range"
@@ -118,26 +190,25 @@
           />
           <audio id="radio-audio" preload="metadata" style="display:none"></audio>
         </div>
-        <!-- =========================== -->
-
-        <!-- =========================== -->
-
       </div>
     </header>
 
+    <!-- 5) Menu lateral drawer -->
+    <aside id="side-menu" aria-hidden="true">
+      <button id="menu-close" aria-label="Fechar menu">✕</button>
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="top.html">Top Streamers/Youtube</a></li>
+        <li><a href="servicos.html">Serviços & Portfólio</a></li>
+        <li><a href="regras.html">Regras/ban</a></li>
+        <li><a href="sobre.html">Sobre</a></li>
+        <li><a href="contato.html">Contato</a></li>
+      </ul>
+    </aside>
+
     <section class="ranking aba ativa espaco-pos-header" id="inicio">
       <div class="titulo-epico">
-        <img
-          src="./espada-esquerda.png"
-          alt="Espada Esquerda"
-          class="espada-decorativa esquerda"
-        />
         <h1 class="titulo-ranking">Ranking de Servidores</h1>
-        <img
-          src="./espada-direita.png"
-          alt="Espada Direita"
-          class="espada-decorativa direita"
-        />
       </div>
 
       <div class="filtros-ranking" style="margin-bottom: 20px">
@@ -181,7 +252,21 @@
       </div>
     </section>
 
-    <!-- único script que faz tudo: Auth, tradução, filtros e ranking -->
+    <!-- seu script de auth, filtros, ranking e toggle de menu -->
     <script type="module" src="./script.js"></script>
+    <script>
+      // toggle drawer
+      const menuToggle = document.getElementById("menu-toggle");
+      const menuClose = document.getElementById("menu-close");
+      const sideMenu = document.getElementById("side-menu");
+
+      menuToggle.addEventListener("click", () => {
+        const hidden = sideMenu.getAttribute("aria-hidden") === "true";
+        sideMenu.setAttribute("aria-hidden", hidden ? "false" : "true");
+      });
+      menuClose.addEventListener("click", () => {
+        sideMenu.setAttribute("aria-hidden", "true");
+      });
+    </script>
   </body>
 </html>
