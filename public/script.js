@@ -285,3 +285,18 @@ sideMenu.querySelectorAll('a').forEach(link =>
   })
 );
 
+document.addEventListener('DOMContentLoaded', () => {
+  const btn = document.getElementById('toggle-table');
+  const wrap = document.getElementById('servidores-wrapper');
+
+  // Inicializa o texto do botão de acordo com o estado atual
+  btn.textContent = wrap.classList.contains('collapsed') ? 'Expandir' : 'Recolher';
+
+  btn.addEventListener('click', () => {
+    // Alterna collapsed
+    wrap.classList.toggle('collapsed');
+    // Atualiza o texto: se agora está recolhido, mostrar "Expandir", senão "Recolher"
+    btn.textContent = wrap.classList.contains('collapsed') ? 'Expandir' : 'Recolher';
+  });
+});
+

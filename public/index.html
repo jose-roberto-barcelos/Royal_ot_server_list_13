@@ -14,6 +14,26 @@
     <link rel="stylesheet" href="styles.css" />
 
     <style>
+      /* scroll só quando recolhido */
+      #servidores-wrapper.collapsed {
+        max-height: 400px;
+        overflow-y: auto;
+      }
+      /* sticky no cabeçalho */
+      #servidores-wrapper thead th {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: linear-gradient(to bottom, #1f2002dc, #0b0b0b);
+      }
+    </style>
+
+
+
+
+
+
+    <style>
       /* Seu banner de tibia oficial, inalterado */
       .tibia-oficial-banner {
         background-color: rgba(0, 0, 0, 0.6);
@@ -200,17 +220,17 @@
       <button id="menu-close" aria-label="Fechar menu">✕</button>
       <ul>
         <li><a href="index.html">Início</a></li>
-        <li><a href="top.html">Top Streamers/Youtube</a></li>
-        <li><a href="servicos.html">Serviços & Portfólio</a></li>
+        <li><a href="top.html">Top Live</a></li>
+        <li><a href="servicos.html">Produto/Serviço</a></li>
         <li><a href="regras.html">Regras/ban</a></li>
-        <li><a href="sobre.html">Sobre</a></li>
+        <li><a href="sobre.html">Quem Somos</a></li>
         <li><a href="contato.html">Contato</a></li>
       </ul>
     </aside>
 
     <section class="ranking aba ativa espaco-pos-header" id="inicio">
       <div class="titulo-epico">
-        <h1 class="titulo-ranking">Ranking de Servidores</h1>
+       
       </div>
 
       <div class="filtros-ranking" style="margin-bottom: 20px">
@@ -230,27 +250,33 @@
         </select>
       </div>
 
-      <div class="tibia-oficial-banner">
-        <span class="texto-tibia-oficial">
-          <strong>Tibia Oficial:</strong> 13.258 jogadores online
-        </span>
-      </div>
 
+
+
+      
       <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th onclick="ordenarPor('Servidor')">Servidor ⬍</th>
-              <th onclick="ordenarPor('Versão')">Versão ⬍</th>
-              <th onclick="ordenarPor('Jogadores Online')">
-                Jogadores Online ⬍
-              </th>
-              <th>Origem</th>
-              <th>Observação</th>
-            </tr>
-          </thead>
-          <tbody id="tabela-servidores"></tbody>
-        </table>
+        <h2 class="titulo-dentro">Tibia OtServers Ranking</h2>
+
+        <!-- wrapper passa a envolver a tabela e recebe a classe collapsed -->
+        <div id="servidores-wrapper" class="collapsed">
+          <table>
+            <thead>
+              <tr>
+                <th onclick="ordenarPor('Servidor')">Servidor ⬍</th>
+                <th onclick="ordenarPor('Versão')">Versão ⬍</th>
+                <th onclick="ordenarPor('Jogadores Online')">Jogadores Online ⬍</th>
+                <th>Origem</th>
+                <th>Observação</th>
+              </tr>
+            </thead>
+            <tbody id="tabela-servidores">
+              <!-- seu script.js vai continuar injetando as linhas aqui -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="table-controls outside">
+        <button id="toggle-table" type="button">Expandir</button>
       </div>
     </section>
 
@@ -270,5 +296,6 @@
         sideMenu.setAttribute("aria-hidden", "true");
       });
     </script>
+    
   </body>
 </html>

@@ -8,16 +8,6 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "/getRanking",
-        "function": "getRanking"
-      },
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
     ]
   }
 }

@@ -203,7 +203,7 @@ table {
   color: #f0e6d2;
   border: 1px solid #2c2c2c;
   border-radius: 8px;
-  overflow: hidden;
+  overflow: visibl;
 }
 
 thead {
@@ -215,14 +215,13 @@ th {
   background: linear-gradient(to bottom, #1f2002dc, #0b0b0b);
   color: #edfa61;
   border-bottom: 2px solid #8b5e3c;
-  text-shadow: 0 0 2px #ffd700, 0 0 5px #ffd700, 1px 1px 2px #000;
   font-weight: bold;
 }
 
 td {
   padding: 12px;
   text-align: center;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid #787878;
   background-color: rgba(255, 255, 255, 0.03);
 }
 
@@ -1188,23 +1187,8 @@ body.fundo-registrar .background {
 
 .titulo-ranking {
   /* Mantém todo o seu estilo “login‐like” + fadeInUp */
-  display: inline-block;
-  background: linear-gradient(to right, #3b2d0c, #1f1a0b);
-  padding: 20px 30px;
-  border: 3px solid #a6791f;
-  border-radius: 12px;
-  /* aqui adicionamos o glow extra */
-  box-shadow:
-    0 0 20px rgba(0, 0, 0, 0.8),
-    inset 0 0 8px rgba(255, 215, 0, 0.2),
-    0 0 10px rgba(255, 215, 0, 0.6),
-    0 0 20px rgba(255, 215, 0, 0.4);
-  text-shadow:
-    0 0 2px #000,
-    0 0 8px #000,
-    2px 2px 6px #000;
-  color: #d6b542;
-  font-size: 2.2rem;
+
+  font-size: 1.5rem;
   letter-spacing: 3px;
   text-transform: uppercase;
   margin: 40px auto 20px;
@@ -1214,22 +1198,7 @@ body.fundo-registrar .background {
     glowBorder 2s ease-in-out 1s infinite alternate;
 }
 
-/* Keyframes do brilho pulsante na borda */
-@keyframes glowBorder {
-  from {
-    box-shadow:
-      0 0 20px rgba(0, 0, 0, 0.8),
-      inset 0 0 8px rgba(255, 215, 0, 0.2),
-      0 0 8px rgba(255, 215, 0, 0.6),
-      0 0 16px rgba(255, 215, 0, 0.4);
-  }
-  to {
-    box-shadow:
-      0 0 20px rgba(0, 0, 0, 0.8),
-      inset 0 0 8px rgba(255, 255, 0, 0.4),
-      0 0 16px rgba(255, 255, 0, 0.8),
-      0 0 24px rgba(255, 255, 0, 0.6);
-  }
+
 }
 
 
@@ -1335,4 +1304,206 @@ body.fundo-registrar .background {
     transform: translateX(0);
   }
 }
+/* ── CONTROLES DO TOGGLE ─────────────────────────── */
+.table-controls {
+  text-align: center;      /* centraliza o botão */
+  margin: 20px 0 10px;     /* espaço acima/abaixo */
+  z-index: 3;              /* acima do fog/video */
+  position: relative;
+}
+.table-controls button {
+  cursor: pointer;
+  background: linear-gradient(to bottom, #1f2002dc, #0b0b0b);
+  color: #edfa61;
+  border: 2px solid #8b5e3c;
+  padding: 6px 14px;
+  font-family: "Cinzel", serif;
+  font-size: 1rem;
+  border-radius: 6px;
+  transition: background 0.2s, transform 0.1s;
+}
+.table-controls button:hover {
+  background: linear-gradient(to bottom, #292200, #0f0f0f);
+  transform: scale(1.05);
+}
+
+/* ====== Fix definitivo: header sticky + corpo rolável ====== */
+.table-container.collapsed {
+  position: relative;       /* cria contexto de empilhamento */
+  max-height: 300px;        /* altura do corpo visível ao recolher */
+  overflow-y: auto;         /* só o container rola */
+}
+
+.table-container.collapsed table {
+  width: 100%;
+  border-collapse: separate; /* evita que células vazem uma na outra */
+  border-spacing: 0;
+  position: relative;        /* para o sticky funcionar dentro dele */
+}
+
+/* Cada <th> ficará “grudado” no topo do container rolável */
+.table-container.collapsed th {
+  position: sticky;
+  top: 0;
+  z-index: 5;                   /* acima das linhas do corpo */
+  background-color: #1a1a1a;    /* cor sólida idêntica ao seu header */
+  background-clip: padding-box; /* garante que o fundo cubra toda a célula */
+  border-bottom: 2px solid #8b5e3c; /* permite ver bem a separação */
+}
+
+/* (Opcional) Sutil sombra interna para destacar o header */
+.table-container.collapsed thead {
+  box-shadow: inset 0 -4px 4px -4px rgba(0, 0, 0, 0.7);
+}
+
+
+}
+/* 1) Torna a seção contexto de posicionamento */
+#inicio {
+  position: relative;
+}
+
+/* 2) Posiciona o botão fora da tabela, no canto inferior direito da seção */
+.table-controls.outside {
+  position: fixed;
+  bottom: 20px;   /* ajuste conforme desejar */
+  right: 20px;    /* ajuste conforme desejar */
+  margin: 0;
+}
+
+/* 3) Deixa o botão um pouco menor para não sobresair demais */
+.table-controls.outside button {
+  font-size: 0.85rem;
+  padding: 4px 8px;
+}
+/* ========== CORREÇÃO DA FRESTA NO STICKY ========== */
+
+/* 1) O scroll fica no wrapper, não na tabela */
+#servidores-wrapper {
+  position: relative;
+  max-height: 300px;    /* altura “fechada” */
+  overflow-y: auto;     /* só este rola, mantendo header fixo */
+  z-index: 1;
+}
+
+/* 2) A tabela volta ao display normal, sem separar header/body */
+/* ========== collapse só quando tem a classe ========== */
+#servidores-wrapper.collapsed {
+  position: relative;
+  max-height: 300px;    /* altura “fechada” */
+  overflow-y: auto;     /* só este rola, mantendo header fixo */
+  z-index: 1;
+}
+
+/* estado expandido: nada de limite de altura */
+#servidores-wrapper {
+  overflow: visible;
+  max-height: none;
+}
+
+/* fixa a borda do table-top só quando recolhido */
+#servidores-wrapper.collapsed table {
+  border-top: none;
+}
+
+/* ==== Scrollbar customizado no wrapper que de fato rola ==== */
+/* WebKit (Chrome, Edge, Safari) */
+#servidores-wrapper.collapsed::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+#servidores-wrapper.collapsed::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+}
+
+#servidores-wrapper.collapsed::-webkit-scrollbar-thumb {
+  background: rgba(255, 215, 0, 0.6);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+#servidores-wrapper.collapsed::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 215, 0, 0.8);
+}
+
+/* Firefox */
+#servidores-wrapper.collapsed {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,215,0,0.6) rgba(0,0,0,0.3);
+}
+
+/* 1) Garante espaço extra no topo da tabela para título + timestamp */
+.table-container {
+  position: relative;
+  padding-top: 50px; /* ajuste conforme tamanho da fonte */
+}
+
+/* 2) Título sozinho dentro da tabela, canto superior esquerdo */
+.table-container .titulo-dentro {
+  position: absolute;
+  top: 12px;
+  left: 20px;
+  margin: 0;
+  font-size: 1.0rem;           /* ajuste conforme desejar */
+  color: #edfa61;
+  font-family: "Cinzel", serif;
+  text-shadow: 0 0 2px #000;
+}
+
+/* 3) Timestamp (*.info-update*) passa a ser absoluto no topo direito */
+.table-container .info-update {
+  position: absolute !important;
+  top: 12px;
+  right: 20px;
+  margin: 0;
+  font-size: 0.7rem;            /* ou 0.8rem, se quiser menor */
+  color: #ccc;
+}
+
+/* Centraliza apenas o título dentro da table-container */
+.table-container .titulo-dentro {
+  display: block;        /* garante que o margin auto funcione */
+  width: 100%;           /* ocupa toda a largura do container */
+  text-align: center;    /* centraliza o texto */
+  margin: 0 0 16px;      /* ajuste o espaço abaixo, se quiser */
+}
+/* ==== Título entalhado em ouro envelhecido ==== */
+/* ======= NOVO TÍTULO MEDIEVAL COM FADE ======= */
+.titulo-dentro {
+  font-family: 'Ringbearer', serif;   /* ou Cinzel, se preferir */
+  font-size: 3rem;
+  background: linear-gradient(
+    45deg,
+    #ffd700 0%,
+    #e0b000 50%,
+    #b58e00 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  display: inline-block;
+  text-shadow:
+    0 0 4px rgba(255,215,0,0.6),
+    0 0 8px rgba(255,200,0,0.4);
+  animation:
+    fadeMedieval 4s ease-in-out infinite alternate,
+    zoomMedieval 4s ease-in-out infinite alternate;
+  
+}
+
+@keyframes fadeMedieval {
+  0%   { opacity: 0.6; text-shadow: 0 0 4px rgba(255,215,0,0.6); }
+  50%  { opacity: 1;   text-shadow: 0 0 12px rgba(255,215,0,1.0); }
+  100% { opacity: 0.6; text-shadow: 0 0 4px rgba(255,215,0,0.6); }
+}
+@keyframes zoomMedieval {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+
 
