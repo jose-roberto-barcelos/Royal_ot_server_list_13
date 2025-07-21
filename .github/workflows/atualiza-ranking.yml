@@ -1,5 +1,9 @@
 name: Atualiza ranking Tibia
 
+concurrency:
+  group: 'atualiza-ranking-tibia'
+  cancel-in-progress: false   # ← garante que novas runs esperem, não cancelem
+
 # Garante que o GITHUB_TOKEN tenha permissão de escrita para commitar de volta
 permissions:
   contents: write
