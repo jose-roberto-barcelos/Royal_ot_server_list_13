@@ -10,7 +10,7 @@ permissions:
 
 on:
   schedule:
-    - cron: '0 */3 * * *'       # roda todo início de hora
+    - cron: '0 */6 * * *'       # roda todo início de hora
   workflow_dispatch:         # permite execução manual
 
 jobs:
