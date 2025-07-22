@@ -13,19 +13,33 @@ VERSOES = [(860, "8.60"), (1098, "10.98"), (1270, "12.70")]
 PORTAS = [7171, 7172, 7000]
 TIMEOUT = 3
 
-def tentar_socket(ip, porta, versao_num):
+# Função de coleta via socket com handshake estrito e validações
+def tentar_socket(host, porta, versao_num):
     try:
-        with socket.create_connection((ip, porta), timeout=TIMEOUT) as sock:
-            payload = struct.pack('<BHHI', 0x0A, versao_num, 0, 0)
-            sock.sendall(payload)
-            data = sock.recv(1024)
-            if len(data) >= 3:
-                jogadores = struct.unpack('>H', data[1:3])[0]
-                return jogadores
-    except:
+        # 1) Resolução DNS: falha se o host não existir
+        ip = socket.gethostbyname(host)
+    except socket.gaierror:
         return None
-    return None
+    try:
+        # 2) Conexão TCP ao port listener OTServ
+        with socket.create_connection((ip, porta), timeout=TIMEOUT) as sock:
+            # 3) Handshake: opcode 0x0A + protocolo (big-endian)
+            payload = struct.pack('>BH', 0x0A, versao_num)
+            sock.sendall(payload)
+            # 4) Espera resposta mínima (opcode + 2 bytes de player count)
+            data = sock.recv(5)
+            if len(data) < 3 or data[0] != 0x0A:
+                return None
+            # 5) Extrai número de jogadores (big-endian)
+            jogadores = struct.unpack('>H', data[1:3])[0]
+            # 6) Valida contagem plausível, evitando portas e valores absurdos
+            if jogadores < 0 or jogadores > 10000 or jogadores in PORTAS:
+                return None
+            return jogadores
+    except Exception:
+        return None
 
+# Funções de fallback HTML permanecem iguais
 async def tentar_texto(site, resolver_captcha_flag=False):
     try:
         async with async_playwright() as p:
@@ -40,7 +54,7 @@ async def tentar_texto(site, resolver_captcha_flag=False):
 
             if "recaptcha" in html.lower() and resolver_captcha_flag:
                 print("  🧱 CAPTCHA detectado, tentando resolver...")
-                sitekey_match = re.search(r'data-sitekey=["\'](.+?)["\']', html)
+                sitekey_match = re.search(r'data-sitekey=["'](.+?)["']', html)
                 if sitekey_match:
                     token = resolver_captcha(site, sitekey_match.group(1))
                     if token:
@@ -83,28 +97,30 @@ def resolver_captcha(site_url, sitekey):
     return None
 
 async def processar(servidor):
-    ip = servidor.strip().replace("https://", "").replace("http://", "").split("/")[0]
-    print(f"➡️  Verificando {ip}...")
+    host = servidor.strip().replace("https://", "").replace("http://", "").split("/")[0]
+    print(f"➡️  Verificando {host}...")
 
+    # Tenta socket estrito em múltiplas portas/versões
     for porta in PORTAS:
         for versao_num, versao_str in VERSOES:
-            jogadores = tentar_socket(ip, porta, versao_num)
-            if jogadores is not None:
+            jogadores = tentar_socket(host, porta, versao_num)
+            if isinstance(jogadores, int):
                 print(f"  ✅ Socket OK ({jogadores} jogadores) - Versão {versao_str}")
-                return {"Servidor": ip, "Jogadores Online": jogadores, "Versão": versao_str, "Origem": "Socket"}
+                return {"Servidor": host, "Jogadores Online": jogadores, "Versão": versao_str, "Origem": "Socket"}
 
-    jogadores_texto, versao_detectada = await tentar_texto("http://" + ip)
-    if jogadores_texto is not None:
+    # Fallback HTML se socket falhar (controverso, mas mantido)
+    jogadores_texto, versao_detectada = await tentar_texto("http://" + host)
+    if isinstance(jogadores_texto, int):
         print(f"  ⚠️ HTML detectado ({jogadores_texto} jogadores)")
-        return {"Servidor": ip, "Jogadores Online": jogadores_texto, "Versão": versao_detectada or "N/A", "Origem": "HTML"}
+        return {"Servidor": host, "Jogadores Online": jogadores_texto, "Versão": versao_detectada or "N/A", "Origem": "HTML"}
 
-    jogadores_captcha, versao_detectada = await tentar_texto("http://" + ip, resolver_captcha_flag=True)
-    if jogadores_captcha is not None:
+    jogadores_captcha, versao_detectada = await tentar_texto("http://" + host, resolver_captcha_flag=True)
+    if isinstance(jogadores_captcha, int):
         print(f"  ⚠️ CAPTCHA resolvido ({jogadores_captcha} jogadores)")
-        return {"Servidor": ip, "Jogadores Online": jogadores_captcha, "Versão": versao_detectada or "N/A", "Origem": "HTML"}
+        return {"Servidor": host, "Jogadores Online": jogadores_captcha, "Versão": versao_detectada or "N/A", "Origem": "HTML"}
 
-    print(f"  ❌ Falha total em {ip}")
-    return {"Servidor": ip, "Jogadores Online": "N/A", "Versão": "N/A", "Origem": "Erro"}
+    print(f"  ❌ Falha total em {host}")
+    return {"Servidor": host, "Jogadores Online": "N/A", "Versão": "N/A", "Origem": "Erro"}
 
 async def main():
     entrada = Path("servidores_otserv_socket.txt")
@@ -122,20 +138,17 @@ async def main():
     for servidor in servidores:
         resultado = await processar(servidor)
 
-        # Filtro: valores claramente inválidos
-        if isinstance(resultado["Jogadores Online"], int):
-            if resultado["Jogadores Online"] in [0, 7171, 7172, 7000] or resultado["Jogadores Online"] > 100000:
-                print(f"  🚫 Valor inválido ({resultado['Jogadores Online']}) ignorado.")
-                continue
+        # Filtro de valores claros inválidos
+        val = resultado["Jogadores Online"]
+        if isinstance(val, int) and (val in [0, *PORTAS] or val > 10000):
+            print(f"  🚫 Valor inválido ({val}) ignorado.")
+            continue
 
-        # Marcar observação se possível fake/NPC
         observacao = ""
-        if resultado["Origem"] == "HTML":
-            if isinstance(resultado["Jogadores Online"], int) and resultado["Jogadores Online"] > 100:
-                termos_suspeitos = ["god", "tutor", "cm ", "gm ", "npc", "account manager", "sample"]
-                if any(term in resultado["Servidor"].lower() for term in termos_suspeitos):
-                    observacao = "⚠️ Possível Fake/NPC"
-
+        if resultado["Origem"] == "HTML" and isinstance(val, int) and val > 100:
+            termos_suspeitos = ["god", "tutor", "cm ", "gm ", "npc", "account manager", "sample"]
+            if any(term in resultado["Servidor"].lower() for term in termos_suspeitos):
+                observacao = "⚠️ Possível Fake/NPC"
         resultado["Observação"] = observacao
 
         if resultado["Origem"] == "Socket":
@@ -143,6 +156,7 @@ async def main():
         else:
             dados_html.append(resultado)
 
+    # Grava CSV
     with open(saida, "w", newline="", encoding="utf-8") as f:
         campos = ["Servidor", "Jogadores Online", "Versão", "Origem", "Observação"]
         writer = csv.DictWriter(f, fieldnames=campos)
@@ -152,14 +166,14 @@ async def main():
         writer.writerow({"Servidor": "", "Jogadores Online": "", "Versão": "", "Origem": "", "Observação": ""})
         writer.writerow({"Servidor": "=== VIA HTML (POTENCIALMENTE FALSO) ===", "Jogadores Online": "", "Versão": "", "Origem": "", "Observação": ""})
         writer.writerows(dados_html)
-    # Gerar o JSON pro site
+
+    # JSON para o site
     ranking_completo = dados_socket + dados_html
     import json
     with open("ranking.json", "w", encoding="utf-8") as json_file:
         json.dump(ranking_completo, json_file, ensure_ascii=False, indent=2)
+
     print("\n✅ Coleta finalizada com versão e observação incluídas. Veja resultado_validado.csv")
-
-
 
 if __name__ == "__main__":
     asyncio.run(main())
