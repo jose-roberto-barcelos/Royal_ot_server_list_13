@@ -54,7 +54,7 @@ async def tentar_texto(site, resolver_captcha_flag=False):
 
             if "recaptcha" in html.lower() and resolver_captcha_flag:
                 print("  🧱 CAPTCHA detectado, tentando resolver...")
-                sitekey_match = re.search(r'data-sitekey=["'](.+?)["']', html)
+                sitekey_match = re.search(r"data-sitekey=[\"'](.+?)[\"']", html)
                 if sitekey_match:
                     token = resolver_captcha(site, sitekey_match.group(1))
                     if token:
