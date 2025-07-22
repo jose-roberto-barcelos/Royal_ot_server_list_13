@@ -1,13 +1,11 @@
 Servidor,Jogadores Online,Versão,Origem,Observação
-=== VIA SOCKET (CONFIÁVEL) ===,,,,
-warteam.com.br,163,8.60,Socket,
-exaltera-ot.com,80,8.60,Socket,
-acidsot.com,38,8.60,Socket,
-sv.demolidores.com.br,110,8.60,Socket,
-,,,,
-=== VIA HTML (POTENCIALMENTE FALSO) ===,,,,
-kingot.com.br,N/A,N/A,Erro,
-aqueleot.com,11,N/A,HTML,
-aura.taleon.online,N/A,N/A,Erro,
-exia.pl,N/A,N/A,Erro,
-deusot.com,10,N/A,HTML,
+kingot.com.br,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
+aqueleot.com,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
+aura.taleon.online,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
+warteam.com.br,116,8.60,Socket,
+exaltera-ot.com,204,8.60,Socket,
+acidsot.com,215,8.60,Socket,
+sv.demolidores.com.br,152,8.60,Socket,
+exia.pl,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
+deusot.com,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
+tibia.canob.us,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
