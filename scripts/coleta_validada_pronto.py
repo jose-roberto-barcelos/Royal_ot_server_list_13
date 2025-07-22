@@ -13,7 +13,7 @@ VERSOES = [(860, "8.60"), (1098, "10.98"), (1270, "12.70")]
 PORTAS = [7171, 7172, 7000]
 TIMEOUT = 3
 
-# Função de coleta via socket com handshake estrito e validações
+# Função de coleta via socket com handshake estrito e validações e debug
 def tentar_socket(host, porta, versao_num):
     try:
         # 1) Resolução DNS: falha se o host não existir
@@ -26,16 +26,11 @@ def tentar_socket(host, porta, versao_num):
             # 3) Handshake: opcode 0x0A + protocolo (big-endian)
             payload = struct.pack('>BH', 0x0A, versao_num)
             sock.sendall(payload)
-            # 4) Espera resposta mínima (opcode + 2 bytes de player count)
-data = sock.recv(1024)
-print(f"[DEBUG] {host}:{porta} raw response:", data.hex(), data)
-# então bloqueie imediatamente para ver só o dump:
-return None
-
-            # 6) Valida contagem plausível, evitando portas e valores absurdos
-            if jogadores < 0 or jogadores > 10000 or jogadores in PORTAS:
-                return None
-            return jogadores
+            # 4) Recebe dados para debug
+            data = sock.recv(1024)
+            print(f"[DEBUG] {host}:{porta} raw response: {data.hex()} {data}")
+            # Bloqueio imediato para inspecionar dump
+            return None
     except Exception:
         return None
 
@@ -78,6 +73,7 @@ async def tentar_texto(site, resolver_captcha_flag=False):
         print(f"  ❌ Erro navegador: {e}")
     return None, None
 
+
 def resolver_captcha(site_url, sitekey):
     payload = {
         'key': API_KEY_2CAPTCHA,
@@ -108,7 +104,7 @@ async def processar(servidor):
                 print(f"  ✅ Socket OK ({jogadores} jogadores) - Versão {versao_str}")
                 return {"Servidor": host, "Jogadores Online": jogadores, "Versão": versao_str, "Origem": "Socket"}
 
-    # Fallback HTML se socket falhar (controverso, mas mantido)
+    # Fallback HTML se socket falhar
     jogadores_texto, versao_detectada = await tentar_texto("http://" + host)
     if isinstance(jogadores_texto, int):
         print(f"  ⚠️ HTML detectado ({jogadores_texto} jogadores)")
