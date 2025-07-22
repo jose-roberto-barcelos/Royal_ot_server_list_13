@@ -27,11 +27,11 @@ def tentar_socket(host, porta, versao_num):
             payload = struct.pack('>BH', 0x0A, versao_num)
             sock.sendall(payload)
             # 4) Espera resposta mínima (opcode + 2 bytes de player count)
-            data = sock.recv(5)
-            if len(data) < 3 or data[0] != 0x0A:
-                return None
-            # 5) Extrai número de jogadores (big-endian)
-            jogadores = struct.unpack('>H', data[1:3])[0]
+data = sock.recv(1024)
+print(f"[DEBUG] {host}:{porta} raw response:", data.hex(), data)
+# então bloqueie imediatamente para ver só o dump:
+return None
+
             # 6) Valida contagem plausível, evitando portas e valores absurdos
             if jogadores < 0 or jogadores > 10000 or jogadores in PORTAS:
                 return None
