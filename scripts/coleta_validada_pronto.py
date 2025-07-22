@@ -13,28 +13,32 @@ VERSOES = [(860, "8.60"), (1098, "10.98"), (1270, "12.70")]
 PORTAS = [7171, 7172, 7000]
 TIMEOUT = 3
 
-# Função de coleta via socket com handshake estrito e validações e debug
+# Coleta via socket com handshake estrito e suporte a opcode 0x0C
 def tentar_socket(host, porta, versao_num):
     try:
-        # 1) Resolução DNS: falha se o host não existir
+        # Resolução DNS
         ip = socket.gethostbyname(host)
     except socket.gaierror:
         return None
     try:
-        # 2) Conexão TCP ao port listener OTServ
         with socket.create_connection((ip, porta), timeout=TIMEOUT) as sock:
-            # 3) Handshake: opcode 0x0A + protocolo (big-endian)
+            # Envia handshake oficial
             payload = struct.pack('>BH', 0x0A, versao_num)
             sock.sendall(payload)
-            # 4) Recebe dados para debug
-            data = sock.recv(1024)
-            print(f"[DEBUG] {host}:{porta} raw response: {data.hex()} {data}")
-            # Bloqueio imediato para inspecionar dump
-            return None
+            # Lê resposta mínima (opcode + 2 bytes count)
+            data = sock.recv(5)
+            # Aceita opcode 0x0A ou 0x0C conforme resposta de OTServ
+            if len(data) < 3 or data[0] not in (0x0A, 0x0C):
+                return None
+            jogadores = struct.unpack('>H', data[1:3])[0]
+            # Filtra counts inválidos
+            if jogadores < 0 or jogadores > 10000 or jogadores in PORTAS:
+                return None
+            return jogadores
     except Exception:
         return None
 
-# Funções de fallback HTML permanecem iguais
+# Fallback HTML tradicional (mantido se desejar)
 async def tentar_texto(site, resolver_captcha_flag=False):
     try:
         async with async_playwright() as p:
@@ -46,9 +50,7 @@ async def tentar_texto(site, resolver_captcha_flag=False):
             await page.wait_for_timeout(10000)
 
             html = await page.content()
-
             if "recaptcha" in html.lower() and resolver_captcha_flag:
-                print("  🧱 CAPTCHA detectado, tentando resolver...")
                 sitekey_match = re.search(r"data-sitekey=[\"'](.+?)[\"']", html)
                 if sitekey_match:
                     token = resolver_captcha(site, sitekey_match.group(1))
@@ -96,7 +98,7 @@ async def processar(servidor):
     host = servidor.strip().replace("https://", "").replace("http://", "").split("/")[0]
     print(f"➡️  Verificando {host}...")
 
-    # Tenta socket estrito em múltiplas portas/versões
+    # Tenta socket estrito
     for porta in PORTAS:
         for versao_num, versao_str in VERSOES:
             jogadores = tentar_socket(host, porta, versao_num)
@@ -104,7 +106,7 @@ async def processar(servidor):
                 print(f"  ✅ Socket OK ({jogadores} jogadores) - Versão {versao_str}")
                 return {"Servidor": host, "Jogadores Online": jogadores, "Versão": versao_str, "Origem": "Socket"}
 
-    # Fallback HTML se socket falhar
+    # Fallback HTML
     jogadores_texto, versao_detectada = await tentar_texto("http://" + host)
     if isinstance(jogadores_texto, int):
         print(f"  ⚠️ HTML detectado ({jogadores_texto} jogadores)")
@@ -134,7 +136,7 @@ async def main():
     for servidor in servidores:
         resultado = await processar(servidor)
 
-        # Filtro de valores claros inválidos
+        # Filtro de valores inválidos
         val = resultado["Jogadores Online"]
         if isinstance(val, int) and (val in [0, *PORTAS] or val > 10000):
             print(f"  🚫 Valor inválido ({val}) ignorado.")
