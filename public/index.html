@@ -28,11 +28,6 @@
       }
     </style>
 
-
-
-
-
-
     <style>
       /* Seu banner de tibia oficial, inalterado */
       .tibia-oficial-banner {
@@ -197,9 +192,10 @@
 
         <!-- 4) Player minimalista -->
         <!-- Player Medieval (substitua sua .radio-player atual) -->
-        <div class="radio-player">
+        <!-- player de rádio no canto inferior esquerdo -->
+        <div class="radio-player-bottom" aria-label="Player de rádio">
           <button id="btn-playpause" aria-label="Play/Pause">▶</button>
-          <button id="btn-skip"      aria-label="Próxima faixa">⏭</button>
+          <button id="btn-skip" aria-label="Próxima faixa">⏭</button>
           <input
             id="slider-volume"
             type="range"
@@ -212,7 +208,9 @@
           <audio id="radio-audio" preload="metadata" style="display:none"></audio>
         </div>
 
+
       </div>
+      
     </header>
 
     <!-- 5) Menu lateral drawer -->
@@ -277,7 +275,9 @@
       </div>
       <div class="table-controls outside">
         <button id="toggle-table" type="button">Expandir</button>
+        <button id="btn-envie-clips" class="btn-contraste" type="button">Envie Clips</button>
       </div>
+
     </section>
 
     <!-- seu script de auth, filtros, ranking e toggle de menu -->

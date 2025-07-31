@@ -106,11 +106,9 @@ function mostrarTimestamp(utcString) {
 function popularFiltroVersao() {
   const sel = document.getElementById("filtro-versao");
   if (!sel) return;
-  // Limpa opções antigas
   Array.from(sel.options)
     .slice(1)
     .forEach(opt => opt.remove());
-  // Adiciona únicas
   const versoes = [
     ...new Set(serversData.map(s => s.versao).filter(v => v))
   ].sort();
@@ -177,7 +175,7 @@ window.ordenarPor = column => {
 };
 
 // 5) Inicialização
-window.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
   // Auth buttons
   onAuthStateChanged(auth, user => {
     const btn = document.querySelector(".login-btn");
@@ -204,99 +202,68 @@ window.addEventListener("DOMContentLoaded", () => {
 
   // Carrega ranking
   carregarRanking();
-});
 
-// === RADIO PLAYER CUSTOM ===
-window.addEventListener("DOMContentLoaded", () => {
+  // Toggle tabela expandir/recolher
+  const btn = document.getElementById('toggle-table');
+  const wrap = document.getElementById('servidores-wrapper');
+  // Inicializa texto conforme estado
+  btn.textContent = wrap.classList.contains('collapsed') ? 'Expandir' : 'Recolher';
+  btn.addEventListener('click', () => {
+    wrap.classList.toggle('collapsed');
+    btn.textContent = wrap.classList.contains('collapsed') ? 'Expandir' : 'Recolher';
+  });
+
+  // Botão Envie Clips registrado uma única vez
+  const btnEnvie = document.getElementById('btn-envie-clips');
+  if (btnEnvie) {
+    btnEnvie.addEventListener('click', () => {
+      window.location.href = '/envie-clips';
+    });
+  }
+
+  // RADIO PLAYER CUSTOM
   const playlist = [
     "assets/music/track1.mp3",
     "assets/music/track2.mp3",
     "assets/music/track3.mp3"
   ];
   let currentTrack = 0;
-
   const audio  = document.getElementById("radio-audio");
   const playBtn= document.getElementById("btn-playpause");
   const skipBtn= document.getElementById("btn-skip");
   const slider = document.getElementById("slider-volume");
-
-  // se não encontrou algum elemento, aborta sem quebrar nada
-  if (!audio || !playBtn || !skipBtn || !slider) return;
-
-  // carrega a primeira faixa
-  audio.src = playlist[currentTrack];
-
-  audio.addEventListener("error", e =>
-    console.error("Erro carregando áudio:", e)
-  );
-  audio.addEventListener("ended", () => {
-    playBtn.textContent = "►";
-  });
-
-  // play / pause
-  playBtn.addEventListener("click", () => {
-    if (audio.paused) {
-      audio.play().catch(err => console.error("play() falhou:", err));
-      playBtn.textContent = "❚❚";
-    } else {
-      audio.pause();
-      playBtn.textContent = "►";
-    }
-  });
-
-  // pular faixa
-  skipBtn.addEventListener("click", () => {
-    currentTrack = (currentTrack + 1) % playlist.length;
+  if (audio && playBtn && skipBtn && slider) {
     audio.src = playlist[currentTrack];
-    audio.play().catch(err => console.error("play() falhou:", err));
-    playBtn.textContent = "❚❚";
+    audio.addEventListener("error", e => console.error("Erro carregando áudio:", e));
+    audio.addEventListener("ended", () => { playBtn.textContent = "►"; });
+    playBtn.addEventListener("click", () => {
+      if (audio.paused) { audio.play().catch(err => console.error(err)); playBtn.textContent = "❚❚"; }
+      else { audio.pause(); playBtn.textContent = "►"; }
+    });
+    skipBtn.addEventListener("click", () => {
+      currentTrack = (currentTrack + 1) % playlist.length;
+      audio.src = playlist[currentTrack];
+      audio.play().catch(err => console.error(err));
+      playBtn.textContent = "❚❚";
+    });
+    slider.addEventListener("input", () => { audio.volume = Number(slider.value); });
+  }
+
+  // Fade-in stagger nos cards
+  document.querySelectorAll('.streamer-card, .youtuber-card').forEach((card, i) => {
+    setTimeout(() => card.classList.add('visible'), i * 150);
   });
 
-  // volume
-  slider.addEventListener("input", () => {
-    audio.volume = Number(slider.value);
+  // Menu lateral drawer
+  const menuToggle = document.getElementById('menu-toggle');
+  const sideMenu   = document.getElementById('side-menu');
+  menuToggle.addEventListener('click', () => {
+    sideMenu.classList.toggle('open');
+    const aberto = sideMenu.classList.contains('open');
+    sideMenu.setAttribute('aria-hidden', !aberto);
   });
-});
-// aplica fade-in staggered nos cards assim que a página carrega
-window.addEventListener('DOMContentLoaded', () => {
-  const cards = document.querySelectorAll('.streamer-card, .youtuber-card');
-  cards.forEach((card, i) => {
-    setTimeout(() => {
-      card.classList.add('visible');
-    }, i * 150); // cada card aparece 150 ms depois do anterior
-    
-  });
-});
-// === ABRIR / FECHAR MENU LATERAL ===
-const menuToggle = document.getElementById('menu-toggle');
-const sideMenu   = document.getElementById('side-menu');
-
-menuToggle.addEventListener('click', () => {
-  sideMenu.classList.toggle('open');
-  const aberto = sideMenu.classList.contains('open');
-  sideMenu.setAttribute('aria-hidden', !aberto);
-});
-
-// FECHAR MENU AO CLICAR NUM LINK
-sideMenu.querySelectorAll('a').forEach(link =>
-  link.addEventListener('click', () => {
+  sideMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
     sideMenu.classList.remove('open');
     sideMenu.setAttribute('aria-hidden', 'true');
-  })
-);
-
-document.addEventListener('DOMContentLoaded', () => {
-  const btn = document.getElementById('toggle-table');
-  const wrap = document.getElementById('servidores-wrapper');
-
-  // Inicializa o texto do botão de acordo com o estado atual
-  btn.textContent = wrap.classList.contains('collapsed') ? 'Expandir' : 'Recolher';
-
-  btn.addEventListener('click', () => {
-    // Alterna collapsed
-    wrap.classList.toggle('collapsed');
-    // Atualiza o texto: se agora está recolhido, mostrar "Expandir", senão "Recolher"
-    btn.textContent = wrap.classList.contains('collapsed') ? 'Expandir' : 'Recolher';
-  });
+  }));
 });
-

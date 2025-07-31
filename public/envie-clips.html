@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Envie seus Clips</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* Reset e base */
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html, body { width:100%; height:100%; background:#0f0f0f; font-family:'Cinzel', serif; color:#ffe97f; }
+    body.envie-clips { overflow:hidden; }
+    a { color: inherit; text-decoration:none; }
+
+    /* vídeo de fundo: cobre toda a viewport e fica atrás do conteúdo */
+    #bg-video {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0; /* fica atrás do form (que terá z-index maior) mas na frente de elementos sem z-index elevado */
+      opacity: 0;
+      transition: opacity 1s ease;
+      pointer-events: none;
+      will-change: transform;
+      animation: zoomBg 30s infinite alternate ease-in-out;
+      background: black;
+    }
+    @keyframes zoomBg {
+      from { transform: scale(1); }
+      to   { transform: scale(1.15); }
+    }
+
+    /* Estado enquanto carrega */
+    body.video-loading { background: linear-gradient(135deg,#0f0f0f 0%,#1a1a1a 70%); }
+
+    /* Botão voltar */
+    .btn-voltar {
+      position: absolute;
+      top:1rem;
+      left:1rem;
+      z-index:10;
+      font-size:1rem;
+      color:#ffe97f;
+      text-decoration:none;
+      text-shadow:1px 1px 2px rgba(0,0,0,0.7);
+      transition: color .2s;
+      background: rgba(0,0,0,0.4);
+      padding:6px 10px;
+      border-radius:4px;
+      border:1px solid rgba(255,204,102,0.6);
+      font-weight:600;
+    }
+    .btn-voltar:hover { color:#e6b655; }
+
+    /* Wrapper central */
+    .page-wrapper {
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:1rem;
+      position:relative;
+      z-index:1;
+    }
+
+    /* Formulário */
+    .form-container {
+      position: relative;
+      width:90%;
+      max-width:480px;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(4px);
+      border:2px solid rgba(255,204,102,0.8);
+      border-radius:1rem;
+      padding:1.5rem 1.8rem;
+      box-shadow:0 0 16px rgba(0,0,0,0.6);
+      z-index:5; /* acima do vídeo */
+      display:flex;
+      flex-direction:column;
+      gap:1rem;
+    }
+    .form-container h1 {
+      text-align:center;
+      margin-bottom:1rem;
+      font-size:1.8rem;
+      text-shadow:2px 2px 4px rgba(0,0,0,0.8);
+    }
+    form { display:flex; flex-direction:column; gap:1rem; }
+    label.group { display:flex; flex-direction:column; gap:0.4rem; font-size:1rem; }
+    input[type="text"], input[type="url"] {
+      height:2.8rem;
+      padding:0 0.8rem;
+      font-size:.95rem;
+      background: rgba(31,32,2,0.6);
+      border:1px solid rgba(255,204,102,0.7);
+      border-radius:.4rem;
+      color:#fff;
+      transition:border-color .2s;
+    }
+    input::placeholder { color:#bbb; }
+    input:focus { border-color:#ffe97f; outline:none; }
+
+    .radio-group {
+      display:flex;
+      justify-content: space-between;
+      font-size:1rem;
+      gap:10px;
+    }
+    .radio-group label { display:flex; align-items:center; gap:6px; flex:1; }
+    .radio-group input { transform:scale(1.2); accent-color:#ffe97f; }
+
+    .checkbox-authorize {
+      display:none;
+      margin-left:0;
+      gap:.4rem;
+      align-items:center;
+      font-size:1rem;
+    }
+    .checkbox-authorize input { transform:scale(1.2); accent-color:#ffe97f; margin-right:6px; }
+
+    .btn-contraste {
+      margin-top:0.8rem;
+      padding:.9rem;
+      font-size:1rem;
+      font-weight:bold;
+      background-color: rgba(255,204,102,0.9);
+      border:2px solid #ffe97f;
+      border-radius:.4rem;
+      color:#0b0b0b;
+      cursor:pointer;
+      transition: background-color .2s;
+      box-shadow:0 1px 4px rgba(0,0,0,0.4);
+      text-shadow:1px 1px 2px rgba(0,0,0,0.7);
+    }
+    .btn-contraste:hover { background-color:#e6b655; }
+
+    /* responsivo */
+    @media (max-width:600px){
+      .form-container { padding:1rem; }
+      .radio-group { flex-direction:column; }
+    }
+  </style>
+</head>
+
+<body class="envie-clips video-loading">
+  <!-- vídeo de fundo -->
+  <video id="bg-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+    <source src="/seu-video.mp4" type="video/mp4">
+    Seu navegador não suporta vídeo de fundo.
+  </video>
+
+  <a href="/" class="btn-voltar">← Voltar</a>
+  <!-- Bloco de texto acima do formulário -->
+  <!-- Bloco de texto fora do container com controle fácil de altura -->
+  <!-- Bloco de texto flutuante, independente do container -->
+  <div style="
+    position: absolute;
+    top: 590px; /* <<< AQUI você controla livremente a altura vertical */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 6;
+    width: 90%;
+    max-width: 600px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #ffe97f;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #ffe97f;
+    box-shadow: 0 0 8px rgba(0,0,0,0.6);
+  ">
+    <span style="color: #ffae00;">Estamos juntos! Tibia Dino terá o prazer de colaborar com seu crescimento como gerador de conteúdo!</span>🎬 Envie seu clip e apareça no canal oficial!</strong><br>
+   Se for uma jogada 'fail total', irá concorrer ao troféu <span style="color: #ffae00;">Bracinho de Dino</span> ^^
+  
+  </div>
+
+
+
+  <div class="page-wrapper">
+    <div class="form-container" aria-label="Envie seus clips">
+      <h1>Envie seus Clips Aqui</h1>
+      <form id="clipForm" novalidate>
+        <label class="group" for="title">Título (opcional):
+          <input type="text" id="title" name="title" placeholder="Dê um título ao seu clip" />
+        </label>
+
+        <label class="group" for="link">Link do Clip:
+          <input type="url" id="link" name="link" placeholder="https://..." required />
+        </label>
+
+        <div class="radio-group">
+          <label><input type="radio" name="type" value="proprio" id="optProprio" /> Conteúdo próprio</label>
+          <label><input type="radio" name="type" value="outros" id="optOutros" /> Conteúdo de outros</label>
+        </div>
+
+        <div class="checkbox-authorize" id="authorizeDiv">
+          <input type="checkbox" id="autorizaUso" name="autorizaUso" />
+          <label for="autorizaUso">Autorizo uso da minha imagem para entretenimento</label>
+        </div>
+
+        <button type="submit" class="btn-contraste">Enviar Clip</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- controle do vídeo: só mostra quando pronto -->
+  <script>
+    const video = document.getElementById("bg-video");
+
+    video.addEventListener("canplaythrough", () => {
+      document.body.classList.remove("video-loading");
+      video.style.opacity = "1";
+      console.log("Vídeo: canplaythrough.");
+    });
+
+    // fallback caso demore demais
+    setTimeout(() => {
+      document.body.classList.remove("video-loading");
+      video.style.opacity = "1";
+      console.warn("Timeout: forçando mostrar fundo."); // igual ao que você já viu
+    }, 5000);
+
+    video.addEventListener("error", (e) => {
+      console.error("Erro no vídeo de background:", e);
+    });
+
+    // tenta tocar explicitamente (geralmente desnecessário porque está muted/autoplay)
+    video.play().then(() => {
+      console.log("Vídeo: play() bem-sucedido.");
+    }).catch(err => {
+      console.warn("play() falhou:", err);
+    });
+  </script>
+
+  <!-- mostrar/ocultar autorização -->
+  <script>
+    const optProprio = document.getElementById("optProprio");
+    const optOutros = document.getElementById("optOutros");
+    const authorizeDiv = document.getElementById("authorizeDiv");
+
+    optProprio.addEventListener("change", () => {
+      authorizeDiv.style.display = "flex";
+    });
+    optOutros.addEventListener("change", () => {
+      authorizeDiv.style.display = "none";
+      document.getElementById("autorizaUso").checked = false;
+    });
+  </script>
+
+  <!-- Firebase + envio (mantém igual) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "SUA_APIKEY",
+      authDomain: "royalotservlist.firebaseapp.com",
+      projectId: "royalotservlist",
+      storageBucket: "royalotservlist.firebasestorage.app",
+      messagingSenderId: "795611612401",
+      appId: "1:795611612401:web:3f869dcdff2366a0b45550",
+      measurementId: "G-LP54JFLRDT"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const form = document.getElementById("clipForm");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const title = document.getElementById("title").value.trim();
+      const link = document.getElementById("link").value.trim();
+      const tipo = document.querySelector('input[name="type"]:checked')?.value;
+      const autorizaUso = document.getElementById("autorizaUso")?.checked || false;
+
+      if (!link) {
+        alert("O link do clip é obrigatório.");
+        return;
+      }
+      if (!tipo) {
+        alert("Selecione se é conteúdo próprio ou de outros.");
+        return;
+      }
+      if (tipo === "proprio" && !autorizaUso) {
+        alert("Você precisa autorizar o uso da imagem para conteúdo próprio.");
+        return;
+      }
+
+      const doc = {
+        link,
+        tipo,
+        titulo: title || null,
+        autorizaUso: tipo === "proprio" ? true : false,
+        criadoEm: serverTimestamp()
+      };
+
+      try {
+        await addDoc(collection(db, "clips"), doc);
+        alert("Clip enviado com sucesso. Obrigado!");
+        form.reset();
+        authorizeDiv.style.display = "none";
+      } catch (err) {
+        console.error("Erro ao enviar clip:", err);
+        alert("Falha ao enviar. Verifique o console e tente novamente.");
+      }
+    });
+  </script>
+</body>
+</html>
