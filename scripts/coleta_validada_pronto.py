@@ -14,23 +14,23 @@ PORTAS = [7171, 7172, 7000]
 # Lista de todas as versões puramente numéricas de Tibia (maior.menor)
 raw_versions = [
     # 15.x (mais prováveis primeiro)
-    "15.10", "15.00",
+    "15.00",
     # 14.x
     "14.00",
     # 13.x
-    "13.0"
+ 
     # 12.x
-    "12.00",
+
     # 11.x
-    "11.00",
+
     # 10.x
-    "10.98","10.97","10.0",
+    "10.98",
     # 9.x
-    "9.86","9.0"
+
     # 8.x
-    "8.6",
+    "8.6","8.0",
     # 7.x
-    "7.4","7.6",
+    "7.4","7.6","7.7","7.1",
 ]
 # Converte string de versão para código de handshake (e ordena do maior ao menor)
 VERSOES = sorted(
