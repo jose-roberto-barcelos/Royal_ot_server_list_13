@@ -10,7 +10,7 @@ from pathlib import Path
 # Timeout de conexão em segundos
 TIMEOUT = 3
 # Portas OTServ mais comuns
-PORTAS = [7171, 7172, 7000]
+PORTAS = [7171, 7172, 7010]
 # Lista de todas as versões puramente numéricas de Tibia (maior.menor)
 raw_versions = [
     # 15.x (mais prováveis primeiro)
