@@ -2,41 +2,17 @@ import socket
 import struct
 import asyncio
 import csv
-import re
-import time
 from pathlib import Path
 
 # --- Configurações ---
-# Timeout de conexão em segundos
 TIMEOUT = 3
-# Portas OTServ mais comuns
 PORTAS = [7171, 7172, 7010]
-# Lista de todas as versões puramente numéricas de Tibia (maior.menor)
-raw_versions = [
-    # 15.x (mais prováveis primeiro)
-    "15.00",
-    # 14.x
-    "14.00",
-    # 13.x
- 
-    # 12.x
-
-    # 11.x
-
-    # 10.x
-    "10.98",
-    # 9.x
-
-    # 8.x
-    "8.6","8.0",
-    # 7.x
-    "7.4","7.6","7.7","7.1",
+VERSOES = [
+    (1098, "10.98"),
+    (1500, "15.00"),
+    (860, "8.6"),
+    (740, "7.4"),
 ]
-# Converte string de versão para código de handshake (e ordena do maior ao menor)
-VERSOES = sorted(
-    [(int("".join(v.split("."))), v) for v in raw_versions],
-    key=lambda x: x[0], reverse=True
-)
 
 # --- Função de coleta via socket estrito ---
 def tentar_socket(host, porta, versao_num):
@@ -46,10 +22,8 @@ def tentar_socket(host, porta, versao_num):
         return None
     try:
         with socket.create_connection((ip, porta), timeout=TIMEOUT) as sock:
-            # 0x0A handshake + versão
             sock.sendall(struct.pack('>BH', 0x0A, versao_num))
             data = sock.recv(5)
-            # aceita opcode válido
             if len(data) < 3 or data[0] not in (0x0A, 0x0C):
                 return None
             jogadores = struct.unpack('>H', data[1:3])[0]
@@ -64,7 +38,6 @@ async def processar(servidor):
     host = servidor.strip().split("/")[0]
     print(f"➡️  Verificando {host}...")
 
-    # Tenta, na ordem DESC de versões, até encontrar o primeiro que responda
     for versao_num, versao_str in VERSOES:
         for porta in PORTAS:
             jogadores = tentar_socket(host, porta, versao_num)
@@ -78,7 +51,6 @@ async def processar(servidor):
                     "Observação": ""
                 }
 
-    # Nenhuma combinação funcionou
     print(f"  ⚠️ Sem resposta socket, pendente de validação")
     return {
         "Servidor": host,
@@ -108,14 +80,12 @@ async def main():
         if res["Origem"] == "Pendência":
             pendentes.append(srv)
 
-    # Grava CSV
     campos = ["Servidor", "Jogadores Online", "Versão", "Origem", "Observação"]
     with open(saida, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=campos)
         writer.writeheader()
         writer.writerows(resultados)
 
-    # Grava pendentes
     with open(pendentes_txt, "w", encoding="utf-8") as f:
         for p in pendentes:
             f.write(p + "\n")
