@@ -1,7 +1,7 @@
 # scripts/coleta_validada_pronto.py
-# Coleta robusta via Status Protocol (porta 7171/variantes), com leitura "exact length"
-# Gera: resultado_validado.csv e ranking_final.xlsx
-# Compatível com GitHub Actions (Python 3.10+)
+# Coleta robusta via Status Protocol (7171/variantes) com leitura "exact length"
+# Saídas: resultado_validado.csv e, se possível, ranking_final.xlsx (openpyxl ou xlsxwriter)
+# Autor: você
 
 import asyncio
 import socket
@@ -12,6 +12,19 @@ from pathlib import Path
 from typing import Optional, Tuple, List, Dict
 import pandas as pd
 from collections import Counter
+
+# ===== Tentativa de engines para XLSX =====
+try:
+    import openpyxl  # noqa: F401
+    HAVE_OPENPYXL = True
+except Exception:
+    HAVE_OPENPYXL = False
+
+try:
+    import xlsxwriter  # noqa: F401
+    HAVE_XLSXWRITER = True
+except Exception:
+    HAVE_XLSXWRITER = False
 
 # ==========================
 # Configurações
@@ -108,10 +121,6 @@ class Buf:
 # Parser defensivo
 # ==========================
 def parse_status_response(full_data: bytes) -> Dict:
-    """
-    Lê resposta com cabeçalho u16 length + payload.
-    Retorna dict com o que conseguiu extrair. Tolerante a blocos truncados.
-    """
     out = {
         "players_info": None,    # (online, max, record)
         "players_list": [],      # [(name, level), ...]
@@ -122,8 +131,7 @@ def parse_status_response(full_data: bytes) -> Dict:
     if len(full_data) < 2:
         return out
 
-    # Remove cabeçalho de 2 bytes (já garantimos leitura exata na recepção)
-    data = full_data[2:]
+    data = full_data[2:]  # remove cabeçalho u16 length
     b = Buf(data)
 
     while True:
@@ -133,56 +141,42 @@ def parse_status_response(full_data: bytes) -> Dict:
             code = b.u8()
         except ValueError:
             break
-
         try:
             if code == 0x20:
-                # Players Info
                 online = b.u32()
                 maxp = b.u32()
                 record = b.u32()
                 out["players_info"] = (online, maxp, record)
-
             elif code == 0x21:
-                # Extended Players List
                 count = b.u32()
                 lst = []
-                # Evita estouro em servers que mandam contagem absurda
                 safe_count = min(count, 5000)
                 for _ in range(safe_count):
                     nm = b.str16()
                     lvl = b.u32()
                     lst.append((nm, lvl))
                 out["players_list"] = lst
-
             elif code == 0x10:
-                # Basic Info
                 name = b.str16()
                 ip = b.str16()
                 login_port = b.str16()
                 out["basic_info"] = {"name": name, "ip": ip, "login_port": login_port}
-
             elif code == 0x2B:
-                # Software Info
                 sname = b.str16()
                 vers = b.str16()
                 vstr = b.str16()
                 out["software_info"] = {"name": sname, "version": vers, "version_str": vstr}
-
             elif code == 0x30:
-                # Map Info
                 mname = b.str16()
                 author = b.str16()
                 sx = b.u16()
                 sy = b.u16()
                 out["map_info"] = {"name": mname, "author": author, "size": f"{sx}x{sy}"}
-
             else:
-                # Código desconhecido: não sabemos o layout => aborta parsing silenciosamente
-                # (melhor ignorar do que arriscar desalinhamento)
+                # bloco desconhecido → aborta parsing silenciosamente
                 break
-
         except ValueError:
-            # Bloco truncado => paramos e devolvemos o que já temos
+            # bloco truncado → devolve o que já tem
             break
 
     return out
@@ -191,7 +185,6 @@ def parse_status_response(full_data: bytes) -> Dict:
 # Recepção "exact length"
 # ==========================
 def recv_exact(s: socket.socket, n: int) -> Optional[bytes]:
-    """Lê exatamente n bytes (ou None se fechar/timeout)."""
     data = bytearray()
     while len(data) < n:
         try:
@@ -204,7 +197,6 @@ def recv_exact(s: socket.socket, n: int) -> Optional[bytes]:
     return bytes(data)
 
 async def fetch_once(host: str, port: int, flag: int) -> Optional[bytes]:
-    """Abre TCP, envia 1 pedido de status (flag) e lê exatamente 1 resposta (len+payload)."""
     try:
         loop = asyncio.get_running_loop()
         def _do():
@@ -234,23 +226,19 @@ async def consulta_status(host: str, porta: int) -> Tuple[Optional[Tuple[int,int
     software_info = {}
     sample_players: List[Tuple[str,int]] = []
 
-    # 1) Players Info
     data = await fetch_once(host, porta, 0x08)
     if data:
         parsed = parse_status_response(data)
         players_info = parsed.get("players_info")
 
-        # 2) Software info (opcional)
         if players_info:
             await asyncio.sleep(ESPERA_ANTES_DA_LISTA_S)
             data_sw = await fetch_once(host, porta, 0x80)
             if data_sw:
                 p2 = parse_status_response(data_sw)
                 software_info = p2.get("software_info") or {}
-
             return players_info, software_info, sample_players
 
-    # se não veio players info, tenta só software pra detectar "vida"
     data_sw = await fetch_once(host, porta, 0x80)
     if data_sw:
         p2 = parse_status_response(data_sw)
@@ -284,7 +272,6 @@ async def processar_host(hostline: str, sem: asyncio.Semaphore) -> Dict:
     if not host:
         return {}
 
-    # tenta porta informada
     async with sem:
         players_info, software_info, _ = await consulta_status(host, porta)
 
@@ -295,7 +282,6 @@ async def processar_host(hostline: str, sem: asyncio.Semaphore) -> Dict:
                 versao_str = software_info[k]
                 break
 
-    # se falhou, tenta portas padrão
     if not players_info:
         for palt in PORTAS_PADRAO:
             if palt == porta:
@@ -325,7 +311,6 @@ async def processar_host(hostline: str, sem: asyncio.Semaphore) -> Dict:
         }
 
     online, maxp, record = players_info
-
     nomes = []
     if FAZER_VERIFICACAO_LISTA_SE_SUSPEITO and online >= 100:
         async with sem:
@@ -382,14 +367,32 @@ async def main():
     cols_csv = ["Servidor","Jogadores Online","Max","Record","Versão","Origem","Observação","AmostraJogadores"]
     df[cols_csv].to_csv(CSV_SAIDA, index=False, encoding="utf-8")
 
-    with pd.ExcelWriter(XLSX_SAIDA, engine="openpyxl") as writer:
-        df_socket.to_excel(writer, index=False, sheet_name="Socket")
-        if not df_sus.empty:
-            df_sus.to_excel(writer, index=False, sheet_name="Suspeitas")
-        if not df_pend.empty:
-            df_pend.to_excel(writer, index=False, sheet_name="Pendencias")
+    # ===== XLSX com fallback de engine =====
+    xlsx_ok = False
+    try:
+        if HAVE_OPENPYXL:
+            with pd.ExcelWriter(XLSX_SAIDA, engine="openpyxl") as writer:
+                df_socket.to_excel(writer, index=False, sheet_name="Socket")
+                if not df_sus.empty:
+                    df_sus.to_excel(writer, index=False, sheet_name="Suspeitas")
+                if not df_pend.empty:
+                    df_pend.to_excel(writer, index=False, sheet_name="Pendencias")
+            xlsx_ok = True
+        elif HAVE_XLSXWRITER:
+            with pd.ExcelWriter(XLSX_SAIDA, engine="xlsxwriter") as writer:
+                df_socket.to_excel(writer, index=False, sheet_name="Socket")
+                if not df_sus.empty:
+                    df_sus.to_excel(writer, index=False, sheet_name="Suspeitas")
+                if not df_pend.empty:
+                    df_pend.to_excel(writer, index=False, sheet_name="Pendencias")
+            xlsx_ok = True
+        else:
+            print("⚠️ Nenhuma engine de XLSX instalada (openpyxl/xlsxwriter). Pulando XLSX.")
+    except Exception as e:
+        print(f"⚠️ Falha ao gerar XLSX: {e}. Seguindo com CSV apenas.")
 
-    print(f"\n✅ Planilha gerada: {XLSX_SAIDA}")
+    if xlsx_ok:
+        print(f"\n✅ Planilha gerada: {XLSX_SAIDA}")
     print(f"✅ CSV gerado: {CSV_SAIDA}")
     print(f"ℹ️  Socket OK: {len(df_socket)} | Suspeitas: {len(df_sus)} | Pendências: {len(df_pend)}")
 
