@@ -1,45 +1,17 @@
-Servidor,Jogadores Online,Versão,Origem,Observação
-3dragons.games,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-absoluthero.servegame.com,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-acidsot.com,95,10.98,Socket,
-alastera.com,85,10.98,Socket,
-ambrussouls.com,228,10.98,Socket,
-amera.fun,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-amirots.com,141,10.98,Socket,
-antica-global.net,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-arcanis-ots.net,132,10.98,Socket,
-arenaot.com.br,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-Kingot.com.br,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-aqueleot.com,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-aura.taleon.online,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-arenaserver.com.br,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-aurabaiak.com,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-aurapvp.taleon.online,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-auroria.rubinot.com.br,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-baikinhobr.zapto.org,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-barcelog.myvnc.com,28,10.98,Socket,
-baxpia.pl,194,10.98,Socket,
-bellum.rubinot.com.br,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-demolidores2.com.br,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-eloria.pl,195,10.98,Socket,
-elysian.rubinot.com.br,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-elythia.zapto.org,129,10.98,Socket,
-epic-serve.ddns.net,133,10.98,Socket,
-game.ankh-ot.online,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-game.aqueleot.com,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-game.archlightonline,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-game.exordion.com.br,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-game.faloria.online,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-game.jimba.pl,153,10.98,Socket,
-game.kingsvale.org,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-game.modukot.com,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-game.ots76.org,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-gelviria.com,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-globera.net,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-gloryidle.com,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-go.auraot.com.br,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-go.baiaktitan.com,41,10.98,Socket,
-go.cyleria.pl,237,10.98,Socket,
-go.exoria74.com,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-login.realesta74.net,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
-www.valdraken.com.br,PENDENTE,PENDENTE,Pendência,⚠️ Validar manualmente
+Servidor,Jogadores Online,Max,Record,Versão,Origem,Observação,AmostraJogadores
+absoluthero.servegame.com:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
+amera.fun:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
+arenaot.com.br:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
+antica-global.net:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
+3dragons.games:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
+auroria.rubinot.com.br:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
+alastera.com:7171,82,1000,183,,Socket,SUSPEITA: Sem lista estendida mesmo com online alto,
+arcanis-ots.net:7171,0,500,9,,Socket,,
+ambrussouls.com:7171,5,0,10,,Socket,,
+amirots.com:7171,30,1000,76,,Socket,,
+acidsot.com:7171,0,0,45,,Socket,,
+login.realesta74.net:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
+aqueleot.com:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
+www.valdraken.com.br:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
+Kingot.com.br:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
+aura.taleon.online:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
