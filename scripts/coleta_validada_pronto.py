@@ -1,7 +1,9 @@
 # scripts/coleta_validada_pronto.py
-# Coleta robusta via Status Protocol (7171/variantes) com leitura "exact length"
-# Saídas: resultado_validado.csv e, se possível, ranking_final.xlsx (openpyxl ou xlsxwriter)
-# Autor: você
+# Coleta via Status Protocol (7171/variantes) com leitura "exact length"
+# Saídas:
+#   - resultado_validado_detalhado.csv  (com Max/Record etc.)
+#   - ranking_site.csv                  (compatível com o layout do seu site)
+#   - ranking_final.xlsx                (se openpyxl/xlsxwriter disponíveis)
 
 import asyncio
 import socket
@@ -13,15 +15,15 @@ from typing import Optional, Tuple, List, Dict
 import pandas as pd
 from collections import Counter
 
-# ===== Tentativa de engines para XLSX =====
+# ===== XLSX engines (fallback) =====
 try:
-    import openpyxl  # noqa: F401
+    import openpyxl  # noqa
     HAVE_OPENPYXL = True
 except Exception:
     HAVE_OPENPYXL = False
 
 try:
-    import xlsxwriter  # noqa: F401
+    import xlsxwriter  # noqa
     HAVE_XLSXWRITER = True
 except Exception:
     HAVE_XLSXWRITER = False
@@ -30,12 +32,12 @@ except Exception:
 # Configurações
 # ==========================
 ARQ_ENTRADA = "servidores_otserv_socket.txt"
-CSV_SAIDA = "resultado_validado.csv"
+CSV_DETALHADO = "resultado_validado_detalhado.csv"  # novo nome p/ não conflitar
+CSV_SITE = "ranking_site.csv"                        # ordem compatível com seu front
 XLSX_SAIDA = "ranking_final.xlsx"
 
 TIMEOUT_S = 4.5
 CONCORRENCIA = 60
-
 PORTAS_PADRAO = [7171, 7170, 7172, 7010]
 
 FAZER_VERIFICACAO_LISTA_SE_SUSPEITO = True
@@ -94,25 +96,14 @@ class Buf:
         if self.left() < n:
             raise ValueError("short buffer")
     def u8(self) -> int:
-        self._need(1)
-        v = self.d[self.i]
-        self.i += 1
-        return int(v)
+        self._need(1); v = self.d[self.i]; self.i += 1; return int(v)
     def u16(self) -> int:
-        self._need(2)
-        v = struct.unpack_from("<H", self.d, self.i)[0]
-        self.i += 2
-        return v
+        self._need(2); v = struct.unpack_from("<H", self.d, self.i)[0]; self.i += 2; return v
     def u32(self) -> int:
-        self._need(4)
-        v = struct.unpack_from("<I", self.d, self.i)[0]
-        self.i += 4
-        return v
+        self._need(4); v = struct.unpack_from("<I", self.d, self.i)[0]; self.i += 4; return v
     def str16(self) -> str:
-        ln = self.u16()
-        self._need(ln)
-        if ln <= 0:
-            return ""
+        ln = self.u16(); self._need(ln)
+        if ln <= 0: return ""
         v = bytes(self.d[self.i:self.i+ln]).decode("utf-8", errors="ignore")
         self.i += ln
         return v
@@ -124,14 +115,13 @@ def parse_status_response(full_data: bytes) -> Dict:
     out = {
         "players_info": None,    # (online, max, record)
         "players_list": [],      # [(name, level), ...]
-        "basic_info": {},        # name, ip, login_port
+        "basic_info": {},
         "software_info": {},     # name, version, version_str
-        "map_info": {},          # name, author, size
+        "map_info": {},
     }
     if len(full_data) < 2:
         return out
-
-    data = full_data[2:]  # remove cabeçalho u16 length
+    data = full_data[2:]  # remove u16 length
     b = Buf(data)
 
     while True:
@@ -142,43 +132,28 @@ def parse_status_response(full_data: bytes) -> Dict:
         except ValueError:
             break
         try:
-            if code == 0x20:
-                online = b.u32()
-                maxp = b.u32()
-                record = b.u32()
+            if code == 0x20:  # Players Info
+                online = b.u32(); maxp = b.u32(); record = b.u32()
                 out["players_info"] = (online, maxp, record)
-            elif code == 0x21:
-                count = b.u32()
-                lst = []
-                safe_count = min(count, 5000)
-                for _ in range(safe_count):
-                    nm = b.str16()
-                    lvl = b.u32()
+            elif code == 0x21:  # Extended Players List
+                count = b.u32(); lst = []
+                for _ in range(min(count, 5000)):
+                    nm = b.str16(); lvl = b.u32()
                     lst.append((nm, lvl))
                 out["players_list"] = lst
-            elif code == 0x10:
-                name = b.str16()
-                ip = b.str16()
-                login_port = b.str16()
+            elif code == 0x10:  # Basic Info
+                name = b.str16(); ip = b.str16(); login_port = b.str16()
                 out["basic_info"] = {"name": name, "ip": ip, "login_port": login_port}
-            elif code == 0x2B:
-                sname = b.str16()
-                vers = b.str16()
-                vstr = b.str16()
+            elif code == 0x2B:  # Software Info
+                sname = b.str16(); vers = b.str16(); vstr = b.str16()
                 out["software_info"] = {"name": sname, "version": vers, "version_str": vstr}
-            elif code == 0x30:
-                mname = b.str16()
-                author = b.str16()
-                sx = b.u16()
-                sy = b.u16()
+            elif code == 0x30:  # Map Info
+                mname = b.str16(); author = b.str16(); sx = b.u16(); sy = b.u16()
                 out["map_info"] = {"name": mname, "author": author, "size": f"{sx}x{sy}"}
             else:
-                # bloco desconhecido → aborta parsing silenciosamente
-                break
+                break  # bloco desconhecido → aborta parsing silenciosamente
         except ValueError:
-            # bloco truncado → devolve o que já tem
-            break
-
+            break  # bloco truncado → devolve o que já tem
     return out
 
 # ==========================
@@ -204,17 +179,13 @@ async def fetch_once(host: str, port: int, flag: int) -> Optional[bytes]:
                 s.settimeout(TIMEOUT_S)
                 s.sendall(make_packet(flag))
                 hdr = recv_exact(s, 2)
-                if not hdr:
-                    return None
+                if not hdr: return None
                 (plen,) = struct.unpack("<H", hdr)
-                if plen <= 0 or plen > 65535:
-                    return None
+                if plen <= 0 or plen > 65535: return None
                 payload = recv_exact(s, plen)
-                if not payload:
-                    return None
+                if not payload: return None
                 return hdr + payload
-        data = await loop.run_in_executor(None, _do)
-        return data
+        return await loop.run_in_executor(None, _do)
     except Exception:
         return None
 
@@ -230,7 +201,6 @@ async def consulta_status(host: str, porta: int) -> Tuple[Optional[Tuple[int,int
     if data:
         parsed = parse_status_response(data)
         players_info = parsed.get("players_info")
-
         if players_info:
             await asyncio.sleep(ESPERA_ANTES_DA_LISTA_S)
             data_sw = await fetch_once(host, porta, 0x80)
@@ -239,11 +209,11 @@ async def consulta_status(host: str, porta: int) -> Tuple[Optional[Tuple[int,int
                 software_info = p2.get("software_info") or {}
             return players_info, software_info, sample_players
 
+    # sem players_info, tenta só software_info p/ detectar "vida"
     data_sw = await fetch_once(host, porta, 0x80)
     if data_sw:
         p2 = parse_status_response(data_sw)
         software_info = p2.get("software_info") or {}
-
     return None, software_info, sample_players
 
 async def consulta_validacao_lista(host: str, porta: int) -> List[Tuple[str,int]]:
@@ -311,11 +281,12 @@ async def processar_host(hostline: str, sem: asyncio.Semaphore) -> Dict:
         }
 
     online, maxp, record = players_info
+
     nomes = []
     if FAZER_VERIFICACAO_LISTA_SE_SUSPEITO and online >= 100:
         async with sem:
             lst = await consulta_validacao_lista(host, porta)
-        nomes = [n for (n, _lvl) in lst]
+        nomes = [n for (n,_lvl) in lst]
 
     suspeito, motivo = avalia_suspeita(online, nomes)
     observacao = f"SUSPEITA: {motivo}" if suspeito else ""
@@ -339,61 +310,75 @@ async def main():
         sys.exit(1)
 
     servidores = [l.strip() for l in entrada.read_text(encoding="utf-8").splitlines() if l.strip()]
-    seen = set()
-    srv = []
+    seen = set(); srv = []
     for s in servidores:
         if s not in seen:
-            seen.add(s)
-            srv.append(s)
+            seen.add(s); srv.append(s)
 
     sem = asyncio.Semaphore(CONCORRENCIA)
     tasks = [processar_host(h, sem) for h in srv]
     resultados: List[Dict] = []
-    pendencias = []
-
     for coro in asyncio.as_completed(tasks):
         res = await coro
-        if not res:
-            continue
-        resultados.append(res)
-        if res.get("Origem") == "Pendência":
-            pendencias.append(res.get("Servidor",""))
+        if res:
+            resultados.append(res)
 
     df = pd.DataFrame(resultados)
+
+    # -------- CSV detalhado (para auditoria) --------
+    cols_detalhe = ["Servidor","Jogadores Online","Max","Record","Versão","Origem","Observação","AmostraJogadores"]
+    df[cols_detalhe].to_csv(CSV_DETALHADO, index=False, encoding="utf-8")
+
+    # -------- CSV do site (ordem compatível) --------
+    def linha_site(row):
+        # Jogadores Online no site deve ser número; se pendência, envia 0
+        jog = row["Jogadores Online"]
+        jog_num = int(jog) if isinstance(jog, (int, float)) and not pd.isna(jog) else 0
+        if row["Origem"] != "Socket":
+            jog_num = 0
+        vers = str(row["Versão"]) if row["Versão"] is not None else ""
+        return pd.Series({
+            "Servidor": row["Servidor"],
+            "Versão": vers,
+            "Jogadores Online": jog_num,
+            "Origem": row["Origem"],
+            "Observação": row["Observação"] or ""
+        })
+
+    df_site = df.apply(linha_site, axis=1)
+    # ordena por jogadores desc no site
+    df_site = df_site.sort_values(by=["Jogadores Online"], ascending=False, na_position="last")
+    df_site.to_csv(CSV_SITE, index=False, encoding="utf-8")
+
+    # -------- XLSX (se possível) --------
     df_socket = df[df["Origem"] == "Socket"].sort_values(by=["Jogadores Online"], ascending=False, na_position='last')
     df_sus = df_socket[df_socket["Observação"].str.contains("SUSPEITA", na=False)]
     df_pend = df[df["Origem"] == "Pendência"]
 
-    cols_csv = ["Servidor","Jogadores Online","Max","Record","Versão","Origem","Observação","AmostraJogadores"]
-    df[cols_csv].to_csv(CSV_SAIDA, index=False, encoding="utf-8")
-
-    # ===== XLSX com fallback de engine =====
     xlsx_ok = False
     try:
         if HAVE_OPENPYXL:
-            with pd.ExcelWriter(XLSX_SAIDA, engine="openpyxl") as writer:
-                df_socket.to_excel(writer, index=False, sheet_name="Socket")
-                if not df_sus.empty:
-                    df_sus.to_excel(writer, index=False, sheet_name="Suspeitas")
-                if not df_pend.empty:
-                    df_pend.to_excel(writer, index=False, sheet_name="Pendencias")
+            with pd.ExcelWriter(XLSX_SAIDA, engine="openpyxl") as w:
+                df_socket.to_excel(w, index=False, sheet_name="Socket")
+                if not df_sus.empty: df_sus.to_excel(w, index=False, sheet_name="Suspeitas")
+                if not df_pend.empty: df_pend.to_excel(w, index=False, sheet_name="Pendencias")
             xlsx_ok = True
         elif HAVE_XLSXWRITER:
-            with pd.ExcelWriter(XLSX_SAIDA, engine="xlsxwriter") as writer:
-                df_socket.to_excel(writer, index=False, sheet_name="Socket")
-                if not df_sus.empty:
-                    df_sus.to_excel(writer, index=False, sheet_name="Suspeitas")
-                if not df_pend.empty:
-                    df_pend.to_excel(writer, index=False, sheet_name="Pendencias")
+            with pd.ExcelWriter(XLSX_SAIDA, engine="xlsxwriter") as w:
+                df_socket.to_excel(w, index=False, sheet_name="Socket")
+                if not df_sus.empty: df_sus.to_excel(w, index=False, sheet_name="Suspeitas")
+                if not df_pend.empty: df_pend.to_excel(w, index=False, sheet_name="Pendencias")
             xlsx_ok = True
         else:
             print("⚠️ Nenhuma engine de XLSX instalada (openpyxl/xlsxwriter). Pulando XLSX.")
     except Exception as e:
         print(f"⚠️ Falha ao gerar XLSX: {e}. Seguindo com CSV apenas.")
 
+    # Logs finais
     if xlsx_ok:
         print(f"\n✅ Planilha gerada: {XLSX_SAIDA}")
-    print(f"✅ CSV gerado: {CSV_SAIDA}")
+    print(f"✅ CSV detalhado: {CSV_DETALHADO}")
+    print(f"✅ CSV do site: {CSV_SITE}")
     print(f"ℹ️  Socket OK: {len(df_socket)} | Suspeitas: {len(df_sus)} | Pendências: {len(df_pend)}")
 
 if __name__ == "__main__":
