@@ -1,17 +1,17 @@
-Servidor,Jogadores Online,Max,Record,Versão,Origem,Observação,AmostraJogadores
-absoluthero.servegame.com:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
-amera.fun:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
-arenaot.com.br:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
-antica-global.net:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
-3dragons.games:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
-auroria.rubinot.com.br:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
-alastera.com:7171,82,1000,183,,Socket,SUSPEITA: Sem lista estendida mesmo com online alto,
-arcanis-ots.net:7171,0,500,9,,Socket,,
-ambrussouls.com:7171,5,0,10,,Socket,,
-amirots.com:7171,30,1000,76,,Socket,,
-acidsot.com:7171,0,0,45,,Socket,,
-login.realesta74.net:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
-aqueleot.com:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
-www.valdraken.com.br:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
-Kingot.com.br:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
-aura.taleon.online:7171,PENDENTE,,,,Pendência,Status bloqueado/indisponível,
+Servidor,Versão,Jogadores Online,Origem,Observação
+absoluthero.servegame.com:7171,,0,Pendência,Status bloqueado/indisponível
+arenaot.com.br:7171,,0,Pendência,Status bloqueado/indisponível
+amera.fun:7171,,0,Pendência,Status bloqueado/indisponível
+3dragons.games:7171,,0,Pendência,Status bloqueado/indisponível
+antica-global.net:7171,,0,Pendência,Status bloqueado/indisponível
+auroria.rubinot.com.br:7171,,0,Pendência,Status bloqueado/indisponível
+arcanis-ots.net:7171,,0,Socket,
+alastera.com:7171,,91,Socket,
+ambrussouls.com:7171,,63,Socket,
+amirots.com:7171,,28,Socket,
+acidsot.com:7171,,0,Socket,
+login.realesta74.net:7171,,0,Pendência,Status bloqueado/indisponível
+kingot.com.br:7171,,0,Pendência,Status bloqueado/indisponível
+www.valdraken.com.br:7171,,0,Pendência,Status bloqueado/indisponível
+aqueleot.com:7171,,0,Pendência,Status bloqueado/indisponível
+aura.taleon.online:7171,,0,Pendência,Status bloqueado/indisponível
