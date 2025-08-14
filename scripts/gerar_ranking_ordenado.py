@@ -46,6 +46,14 @@ csv_text = df_ordenado.to_csv(index=False)
 with open(saida, 'w', encoding='utf-8', newline='') as f:
     # 1) timestamp na primeira linha
     f.write(f"# Gerado em: {timestamp}\n")
+
+# ... depois de df_ordenado = df.sort_values(...).drop(...)
+
+# 🔧 FIX: força a ordem de colunas ANTES do to_csv
+df_ordenado = df_ordenado[["Servidor","Versão","Jogadores Online","Origem","Observação"]]
+
+csv_text = df_ordenado.to_csv(index=False)
+
     # 2) CSV completo a partir da segunda linha
     f.write(csv_text)
 
