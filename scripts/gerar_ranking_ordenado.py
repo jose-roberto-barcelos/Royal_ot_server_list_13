@@ -1,59 +1,82 @@
 # scripts/gerar_ranking_ordenado.py
-import pandas as pd
+# Lê resultado_validado.csv e gera ranking_final.csv
+# Regras:
+#  - prioriza Origem=Socket, depois HTML, depois outros
+#  - ordena por Jogadores Online (desc) e, em empate, por Servidor (asc)
+#  - força a ORDEM DE COLUNAS: Servidor, Versão, Jogadores Online, Origem, Observação
+#  - escreve timestamp na 1a linha começando com "# "
+
+import sys
 from pathlib import Path
 from datetime import datetime
+import pandas as pd
 
-# Caminhos de entrada e saída
-entrada = Path("resultado_validado.csv")
-saida = Path("ranking_final.csv")
+IN_ARQ  = Path("resultado_validado.csv")
+OUT_ARQ = Path("ranking_final.csv")
 
-# Verifica se o arquivo de entrada existe
-if not entrada.exists():
-    print("❌ Arquivo 'resultado_validado.csv' não encontrado.")
-    exit()
+def to_int(v):
+    try:
+        if pd.isna(v):
+            return 0
+        s = str(v).strip().replace(",", ".")
+        if s == "":
+            return 0
+        return int(float(s))
+    except Exception:
+        return 0
 
-# Gera timestamp UTC para inclusão no CSV
-timestamp = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S UTC')
+def origem_prio(v: str) -> int:
+    v = (v or "").strip().lower()
+    if v == "socket": return 0
+    if v == "html":   return 1
+    return 2
 
-# Carrega o CSV original em DataFrame (ignora linhas de separação)
-df = pd.read_csv(entrada)
+def main():
+    if not IN_ARQ.exists():
+        print("❌ Arquivo 'resultado_validado.csv' não encontrado.")
+        sys.exit(1)
 
-# evita warning do regex: usa raw string
-df = df[
-    df["Servidor"].notnull() &
-    ~df["Servidor"].astype(str).str.contains(r"===|^\s*$", na=False)
-]
+    # carrega como texto pra não bagunçar colunas
+    df = pd.read_csv(IN_ARQ, dtype=str, encoding="utf-8")
 
-# Converte coluna 'Jogadores Online' para inteiro
-df["Jogadores Online"] = pd.to_numeric(
-    df["Jogadores Online"], errors="coerce"
-).fillna(0).astype(int)
+    # garante colunas obrigatórias
+    cols = ["Servidor", "Versão", "Jogadores Online", "Origem", "Observação"]
+    for c in cols:
+        if c not in df.columns:
+            print(f"❌ Coluna ausente no CSV de entrada: {c}")
+            sys.exit(1)
 
-# Define prioridade: Socket = 0, HTML = 1, outros = 2
-df["Origem_Prioridade"] = (
-    df["Origem"].str.lower()
-      .map({"socket": 0, "html": 1})
-      .fillna(2)
-)
+    # remove linhas vazias/de separador
+    df = df[
+        df["Servidor"].notnull() &
+        ~df["Servidor"].astype(str).str.contains(r"===|^\s*$", na=False, regex=True)
+    ]
 
-# Ordena: primeiro por Origem_Prioridade, depois por jogadores decrescentes
-df_ordenado = df.sort_values(
-    by=["Origem_Prioridade", "Jogadores Online"],
-    ascending=[True, False]
-).drop(columns=["Origem_Prioridade"])
+    # normaliza 'Jogadores Online' para inteiro
+    df["Jogadores Online"] = df["Jogadores Online"].apply(to_int).astype(int)
 
-# 🔧 FIX FINAL: força a ordem de colunas ANTES de salvar
-ordem = ["Servidor","Versão","Jogadores Online","Origem","Observação"]
-df_ordenado = df_ordenado[ordem]
+    # prioridade de origem
+    df["_prio"] = df["Origem"].apply(origem_prio).astype(int)
 
-# Gera o CSV via pandas em uma string, para garantir separação correta
-csv_text = df_ordenado.to_csv(index=False)
+    # ordena: prioridade (menor melhor), online desc, servidor asc
+    df_ord = df.sort_values(
+        by=["_prio", "Jogadores Online", "Servidor"],
+        ascending=[True, False, True]
+    ).drop(columns=["_prio"])
 
-# Salva o novo ranking com timestamp próprio em linha separada
-with open(saida, 'w', encoding='utf-8', newline='') as f:
-    # 1) timestamp na primeira linha
-    f.write(f"# Gerado em: {timestamp}\n")
-    # 2) CSV completo a partir da segunda linha
-    f.write(csv_text)
+    # 🔧 força ORDEM EXATA de colunas antes de salvar
+    df_ord = df_ord[cols]
 
-print("✅ Arquivo 'ranking_final.csv' gerado com sucesso.")
+    # monta CSV em memória (com cabeçalho)
+    csv_text = df_ord.to_csv(index=False, lineterminator="\n", encoding="utf-8")
+
+    # escreve com timestamp na 1ª linha (mantém seu formato atual)
+    timestamp = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
+    with open(OUT_ARQ, "w", encoding="utf-8", newline="") as f:
+        f.write(f"# Gerado em: {timestamp}\n")
+        f.write(csv_text)
+
+    print("✅ Arquivo 'ranking_final.csv' gerado com sucesso.")
+
+if __name__ == "__main__":
+    main()
