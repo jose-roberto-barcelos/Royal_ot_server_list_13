@@ -201,15 +201,37 @@ async def _query_port(host: str, port: int) -> Optional[Tuple[int, Tuple[int,int
     try:
         while tasks:
             done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+            ok = None
             for t in done:
-                res = t.result()
+                try:
+                    res = t.result()
+                except asyncio.CancelledError:
+                    res = None
+                except Exception:
+                    res = None
                 if res:
-                    for p in pending: p.cancel()
-                    players, sw = res
-                    return port, players, sw
+                    ok = res
+                    break
+            if ok:
+                # cancela quem sobrou e drena
+                for p in pending: p.cancel()
+                if pending:
+                    await asyncio.gather(*pending, return_exceptions=True)
+                players, sw = ok
+                return port, players, sw
+            # segue tentando com os pendentes
             tasks = list(pending)
-    finally:
+    except asyncio.CancelledError:
+        # cancelado por chamada superior -> finalize silenciosamente
         for t in tasks: t.cancel()
+        if tasks:
+            await asyncio.gather(*tasks, return_exceptions=True)
+        return None
+    finally:
+        # cleanup
+        for t in tasks: t.cancel()
+        if tasks:
+            await asyncio.gather(*tasks, return_exceptions=True)
     return None
 
 def _parse_host_port(line: str) -> Tuple[str,int]:
@@ -273,20 +295,47 @@ async def processar_host(line: str, sem: asyncio.Semaphore) -> Dict:
         try:
             while tasks:
                 done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+                winning = None
                 for t in done:
-                    res = t.result()
+                    try:
+                        res = t.result()
+                    except asyncio.CancelledError:
+                        res = None
+                    except Exception:
+                        res = None
                     if res:
-                        porta_ok, players_info, swinfo = res
+                        winning = res
                         # descobrir qual host respondeu
-                        idxs = [i for i, tt in enumerate(tasks) if tt == t]
-                        if idxs:
-                            host_ok = combos[idxs[0]][0]
-                        for p in pending: p.cancel()
-                        tasks = []
+                        # encontra o índice em "tasks" original (done faz cópia)
+                        idx = None
+                        for i, tt in enumerate(tasks):
+                            if tt is t:
+                                idx = i; break
+                        if idx is not None:
+                            host_ok = combos[idx][0]
                         break
+                if winning:
+                    for p in pending: p.cancel()
+                    if pending:
+                        await asyncio.gather(*pending, return_exceptions=True)
+                    porta_ok, players_info, swinfo = winning
+                    break
                 tasks = list(pending)
+        except asyncio.CancelledError:
+            for t in tasks: t.cancel()
+            if tasks:
+                await asyncio.gather(*tasks, return_exceptions=True)
+            return {
+                "Servidor": f"{host}:{porta_hint}",
+                "Versão": "",
+                "Jogadores Online": 0,
+                "Origem": "Pendência",
+                "Observação": OBS_BLOCKED,
+            }
         finally:
             for t in tasks: t.cancel()
+            if tasks:
+                await asyncio.gather(*tasks, return_exceptions=True)
 
     versao = ""
     for k in ("version", "version_str"):
@@ -308,10 +357,10 @@ async def processar_host(line: str, sem: asyncio.Semaphore) -> Dict:
     print(f"OK: {hshow}:{(porta_ok or porta_hint)} => {online} ({versao})")
     return {
         "Servidor": f"{hshow}:{(porta_ok or porta_hint)}",
-        "Versão": versao,
-        "Jogadores Online": int(online),
-        "Origem": "Socket",
-        "Observação": "",
+            "Versão": versao,
+            "Jogadores Online": int(online),
+            "Origem": "Socket",
+            "Observação": "",
     }
 
 async def main():
@@ -331,7 +380,10 @@ async def main():
     tarefas = [processar_host(s, sem) for s in lista]
     resultados: List[Dict] = []
     for coro in asyncio.as_completed(tarefas):
-        r = await coro
+        try:
+            r = await coro
+        except asyncio.CancelledError:
+            continue
         if r: resultados.append(r)
 
     header = ["Servidor","Versão","Jogadores Online","Origem","Observação"]
