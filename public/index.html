@@ -1,301 +1,76 @@
-<!doctype html>
-<html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
   <head>
-    <meta charset="UTF-8" />
-    <title>Royal OtServlist</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Votação – Bracinho de Dino</title>
 
-    <!-- Google Font -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Seu CSS -->
-    <link rel="stylesheet" href="styles.css" />
+    <!-- Firebase SDKs (compat) – mantém como está no seu projeto -->
+    <script defer src="/__/firebase/11.10.0/firebase-app-compat.js"></script>
+    <script defer src="/__/firebase/11.10.0/firebase-auth-compat.js"></script>
+    <script defer src="/__/firebase/11.10.0/firebase-firestore-compat.js"></script>
 
-    <style>
-      /* scroll só quando recolhido */
-      #servidores-wrapper.collapsed {
-        max-height: 400px;
-        overflow-y: auto;
-      }
-      /* sticky no cabeçalho */
-      #servidores-wrapper thead th {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        background: linear-gradient(to bottom, #1f2002dc, #0b0b0b);
-      }
-    </style>
+    <!-- ❗ IMPORTANTE: REMOVA a linha init.js do emulador -->
+    <!-- (Se existir no seu arquivo antigo) NÃO use:
+         <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+         Isso conecta nos EMULADORES e vai quebrar a votação online. -->
+
+    <!-- Seu config real (você já tem esse arquivo no projeto) -->
+    <script defer src="/firebase-config.js"></script>
 
     <style>
-      /* Seu banner de tibia oficial, inalterado */
-      .tibia-oficial-banner {
-        background-color: rgba(0, 0, 0, 0.6);
-        padding: 8px 16px;
-        border: 1px solid rgba(255, 204, 102, 0.3);
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        font-family: "Cinzel", serif;
-        color: #ffe97f;
-        text-shadow:
-          0 0 4px #000,
-          0 0 6px #ffd700;
-        font-size: 0.95rem;
-        margin: 0 auto 8px auto;
-        width: fit-content;
-        max-width: 100%;
-      }
-      .tibia-oficial-banner .icon-tibia {
-        width: 20px;
-        height: 20px;
-        filter: drop-shadow(1px 1px 1px #000);
-      }
-
-      /* Estilo do botão MENU para herdar fonte e ficar à esquerda */
-      #menu-toggle {
-        background: none;
-        border: none;
-        padding: 0.5rem;
-        margin-right: auto;
-        color: #f0edd2;
-        font-family: "Cinzel", serif;
-        font-size: 1rem;
-        cursor: pointer;
-      }
-
-      /* ---------- MENU LATERAL ---------- */
-      #side-menu {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 240px;
-        background: rgba(0, 0, 0, 0.9);
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        z-index: 2000;
-        padding: 1rem;
-      }
-      /* abre quando aria-hidden="false" */
-      #side-menu[aria-hidden="false"] {
-        transform: translateX(0);
-      }
-      /* botões do menu (lista) */
-      #side-menu ul {
-        list-style: none;
-        padding: 0;
-        margin: 2rem 0 0 0;
-      }
-      #side-menu ul li {
-        opacity: 0;
-        margin: 0.5rem 0;
-      }
-      /* fade-in escalonado */
-      #side-menu[aria-hidden="false"] ul li:nth-child(1) {
-        animation: fadeInItem 0.9s forwards 0.1s;
-      }
-      #side-menu[aria-hidden="false"] ul li:nth-child(2) {
-        animation: fadeInItem 0.9s forwards 0.2s;
-      }
-      #side-menu[aria-hidden="false"] ul li:nth-child(3) {
-        animation: fadeInItem 0.9s forwards 0.3s;
-      }
-      #side-menu[aria-hidden="false"] ul li:nth-child(4) {
-        animation: fadeInItem 0.9s forwards 0.4s;
-      }
-      #side-menu[aria-hidden="false"] ul li:nth-child(5) {
-        animation: fadeInItem 0.9s forwards 0.5s;
-      }
-      #side-menu[aria-hidden="false"] ul li:nth-child(6) {
-        animation: fadeInItem 0.9s forwards 0.6s;
-      }
-      @keyframes fadeInItem {
-        from {
-          opacity: 0;
-          transform: translateX(-10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
-      /* botão de fechar menu */
-      #menu-close {
-        background: none;
-        border: none;
-        color: #f0edd2;
-        font-family: "Cinzel", serif;
-        font-size: 1.2rem;
-        cursor: pointer;
-        position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-      }
+      body{margin:0;background:#0e0e0e;color:#eee;font-family:system-ui,Segoe UI,Roboto,Arial}
+      .container{max-width:1100px;margin:0 auto;padding:20px}
+      .titulo{margin:10px 0 6px;font-size:24px;text-transform:uppercase;letter-spacing:.5px}
+      .sub{opacity:.9;margin-bottom:18px}
+      .painel{display:flex;justify-content:space-between;align-items:center;margin:12px 0}
+      .badge{padding:6px 10px;border:1px solid rgba(255,215,0,.6);border-radius:999px}
+      .btn{padding:8px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.15);cursor:pointer}
+      .btn-ouro{background:linear-gradient(#d6b14d,#a47f1f)}
+      .btn-escuro{background:#1a1a1a}
+      .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+      @media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+      @media(max-width:560px){.grid{grid-template-columns:1fr}}
+      .card{background:#171717;border:1px solid rgba(255,255,255,.08);border-radius:16px;overflow:hidden}
+      .thumb{aspect-ratio:16/9;width:100%;display:block}
+      .miolo{padding:10px}
+      .titulo-card{font-weight:600;margin-bottom:6px}
+      .acoes{display:flex;gap:8px;align-items:center;justify-content:space-between}
+      .prog{margin-top:8px;height:8px;background:#222;border-radius:999px;overflow:hidden}
+      .barra{height:100%;width:0}
+      .status{min-height:22px;margin-top:8px}
+      .box-result{margin-top:18px;background:#121212;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px}
     </style>
   </head>
 
-  <body class="fundo-inicio">
-    <div class="background"></div>
-    <video autoplay muted loop class="fog">
-      <source src="./Neblina.webm" type="video/webm" />
-    </video>
+  <body>
+    <main class="container">
+      <h1 class="titulo">Votação – Bracinho de Dino (mês atual)</h1>
+      <p class="sub">Escolha a jogada mais “burra” entre as 8 finalistas. 1 voto por conta.</p>
 
-    <header class="site-header">
-      <!-- 1) Botão MENU à esquerda -->
-      <button id="menu-toggle" aria-label="Abrir menu">MENU ☰</button>
-
-      <div class="titulo-container">
-        <img
-          src="./tituloprincipal.png"
-          alt="Royal OtServlist"
-          class="titulo-imagem"
-        />
-      </div>
-
-      <div class="brasao-centro">
-        <a href="destaque.html">
-          <img src="./brasao-novo.png" alt="Brasão" class="header-brasao" />
-        </a>
-      </div>
-
-      <div class="bloco-direita">
-        <!-- 2) Dropdown de idioma -->
-        <select
-          id="language-select"
-          style="margin-right: 16px; font-size: 0.9rem; padding: 4px"
-        >
-          <option value="pt">PT</option>
-          <option value="en">EN</option>
-          <option value="es">ES</option>
-          <option value="pl">PL</option>
-        </select>
-
-        <!-- 3) Login/Registrar -->
-        <div class="botoes-acesso">
-          <button type="button" class="btn-imagem login-btn">
-            <img src="./icon-login.png" alt="Login" width="24" height="24" />
-          </button>
-          <button type="button" class="btn-imagem registrar-btn">
-            <img
-              src="./icon-registrar.png"
-              alt="Registrar"
-              width="24"
-              height="24"
-            />
-          </button>
-        </div>
-
-        <!-- 4) Player minimalista -->
-        <!-- Player Medieval (substitua sua .radio-player atual) -->
-        <!-- player de rádio no canto inferior esquerdo -->
-        <div class="radio-player-bottom" aria-label="Player de rádio">
-          <button id="btn-playpause" aria-label="Play/Pause">▶</button>
-          <button id="btn-skip" aria-label="Próxima faixa">⏭</button>
-          <input
-            id="slider-volume"
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value="1"
-            aria-label="Volume"
-          />
-          <audio id="radio-audio" preload="metadata" style="display:none"></audio>
-        </div>
-
-
-      </div>
-      
-    </header>
-
-    <!-- 5) Menu lateral drawer -->
-    <aside id="side-menu" aria-hidden="true">
-      <button id="menu-close" aria-label="Fechar menu">✕</button>
-      <ul>
-        <li><a href="index.html">Início</a></li>
-        <li><a href="top.html">Top Live</a></li>
-        <li><a href="servicos.html">Produto/Serviço</a></li>
-        <li><a href="regras.html">Regras/ban</a></li>
-        <li><a href="sobre.html">Quem Somos</a></li>
-        <li><a href="contato.html">Contato</a></li>
-      </ul>
-    </aside>
-
-    <section class="ranking aba ativa espaco-pos-header" id="inicio">
-      <div class="titulo-epico">
-       
-      </div>
-
-      <div class="filtros-ranking" style="margin-bottom: 20px">
-        <input
-          type="text"
-          id="filtro-nome"
-          placeholder="🔍 Buscar servidor..."
-        />
-        <select id="filtro-versao">
-          <option value="">Todas as versões</option>
-        </select>
-        <select id="filtro-origem">
-          <option value="">Todas as origens</option>
-          <option value="Socket">Socket</option>
-          <option value="HTML">HTML</option>
-          <option value="Erro">Erro</option>
-        </select>
-      </div>
-
-
-
-
-      
-      <div class="table-container">
-        <h2 class="titulo-dentro">Tibia OtServers Ranking</h2>
-
-        <!-- wrapper passa a envolver a tabela e recebe a classe collapsed -->
-        <div id="servidores-wrapper" class="collapsed">
-          <table>
-            <thead>
-              <tr>
-                <th onclick="ordenarPor('Servidor')">Servidor ⬍</th>
-                <th onclick="ordenarPor('Versão')">Versão ⬍</th>
-                <th onclick="ordenarPor('Jogadores Online')">Jogadores Online ⬍</th>
-                <th>Origem</th>
-                <th>Observação</th>
-              </tr>
-            </thead>
-            <tbody id="tabela-servidores">
-              <!-- seu script.js vai continuar injetando as linhas aqui -->
-            </tbody>
-          </table>
+      <div class="painel">
+        <span id="poll-label" class="badge">Carregando votação…</span>
+        <div>
+          <button id="btn-login" class="btn btn-ouro">Entrar</button>
+          <button id="btn-logout" class="btn btn-escuro" style="display:none">Sair</button>
         </div>
       </div>
-      <div class="table-controls outside">
-        <button id="toggle-table" type="button">Expandir</button>
-        <button id="btn-envie-clips" class="btn-contraste" type="button">Envie Clips</button>
+
+      <section id="grid" class="grid"></section>
+
+      <div style="margin-top:12px">
+        <button id="btn-votar" class="btn btn-ouro" disabled>Escolha uma jogada para votar</button>
+        <div id="msg" class="status"></div>
       </div>
 
-    </section>
+      <div class="box-result">
+        <h3>Resultados parciais</h3>
+        <div id="resultados"></div>
+        <small>Contagem em tempo real (1 voto por usuário).</small>
+      </div>
+    </main>
 
-    <!-- seu script de auth, filtros, ranking e toggle de menu -->
-    <script type="module" src="./script.js"></script>
-    <script>
-      // toggle drawer
-      const menuToggle = document.getElementById("menu-toggle");
-      const menuClose = document.getElementById("menu-close");
-      const sideMenu = document.getElementById("side-menu");
-
-      menuToggle.addEventListener("click", () => {
-        const hidden = sideMenu.getAttribute("aria-hidden") === "true";
-        sideMenu.setAttribute("aria-hidden", hidden ? "false" : "true");
-      });
-      menuClose.addEventListener("click", () => {
-        sideMenu.setAttribute("aria-hidden", "true");
-      });
-    </script>
-    
+    <!-- Script da votação -->
+    <script defer src="/js/polls.js"></script>
   </body>
 </html>
