@@ -138,11 +138,6 @@
       }
     </style>
   </head>
-<script>
-  document.getElementById("btn-envie-clips").addEventListener("click", () => {
-    window.location.href = "/envie-clips.html";
-  });
-</script>
 
   <body class="fundo-inicio">
     <div class="background"></div>
@@ -196,8 +191,6 @@
         </div>
 
         <!-- 4) Player minimalista -->
-        <!-- Player Medieval (substitua sua .radio-player atual) -->
-        <!-- player de rádio no canto inferior esquerdo -->
         <div class="radio-player-bottom" aria-label="Player de rádio">
           <button id="btn-playpause" aria-label="Play/Pause">▶</button>
           <button id="btn-skip" aria-label="Próxima faixa">⏭</button>
@@ -212,10 +205,7 @@
           />
           <audio id="radio-audio" preload="metadata" style="display:none"></audio>
         </div>
-
-
       </div>
-      
     </header>
 
     <!-- 5) Menu lateral drawer -->
@@ -232,9 +222,7 @@
     </aside>
 
     <section class="ranking aba ativa espaco-pos-header" id="inicio">
-      <div class="titulo-epico">
-       
-      </div>
+      <div class="titulo-epico"></div>
 
       <div class="filtros-ranking" style="margin-bottom: 20px">
         <input
@@ -253,10 +241,6 @@
         </select>
       </div>
 
-
-
-
-      
       <div class="table-container">
         <h2 class="titulo-dentro">Tibia OtServers Ranking</h2>
 
@@ -278,11 +262,12 @@
           </table>
         </div>
       </div>
+
       <div class="table-controls outside">
         <button id="toggle-table" type="button">Expandir</button>
-        <button id="btn-envie-clips" class="btn-contraste" type="button">Envie Clips</button>
+        <!-- link direto pra página de envio -->
+        <a id="btn-envie-clips" class="btn-contraste" href="/envie-clips.html">Envie Clips</a>
       </div>
-
     </section>
 
     <!-- seu script de auth, filtros, ranking e toggle de menu -->
@@ -301,6 +286,5 @@
         sideMenu.setAttribute("aria-hidden", "true");
       });
     </script>
-    
   </body>
 </html>
