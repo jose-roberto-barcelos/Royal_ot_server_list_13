@@ -237,10 +237,8 @@
 
       <div class="table-controls outside">
         <button id="toggle-table" type="button">Expandir</button>
-        <!-- botão original, sem mudar layout -->
-        <button id="btn-envie-clips" class="btn-contraste" type="button">
-          Envie Clips
-        </button>
+        <!-- botão substituído por link direto -->
+        <a class="btn-contraste" href="/envie-clips.html">Envie Clips</a>
       </div>
     </section>
 
@@ -257,13 +255,6 @@
       menuClose.addEventListener("click", () => {
         sideMenu.setAttribute("aria-hidden", "true");
       });
-
-      // redirecionamento do botão "Envie Clips"
-      document
-        .getElementById("btn-envie-clips")
-        .addEventListener("click", () => {
-          window.location.href = "/envie-clips.html";
-        });
     </script>
   </body>
 </html>
