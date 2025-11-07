@@ -10,26 +10,20 @@
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap"
       rel="stylesheet"
     />
-    <!-- Seu CSS -->
     <link rel="stylesheet" href="styles.css" />
 
     <style>
-      /* scroll só quando recolhido */
       #servidores-wrapper.collapsed {
         max-height: 400px;
         overflow-y: auto;
       }
-      /* sticky no cabeçalho */
       #servidores-wrapper thead th {
         position: sticky;
         top: 0;
         z-index: 10;
         background: linear-gradient(to bottom, #1f2002dc, #0b0b0b);
       }
-    </style>
 
-    <style>
-      /* Seu banner de tibia oficial, inalterado */
       .tibia-oficial-banner {
         background-color: rgba(0, 0, 0, 0.6);
         padding: 8px 16px;
@@ -41,21 +35,13 @@
         gap: 10px;
         font-family: "Cinzel", serif;
         color: #ffe97f;
-        text-shadow:
-          0 0 4px #000,
-          0 0 6px #ffd700;
+        text-shadow: 0 0 4px #000, 0 0 6px #ffd700;
         font-size: 0.95rem;
         margin: 0 auto 8px auto;
         width: fit-content;
         max-width: 100%;
       }
-      .tibia-oficial-banner .icon-tibia {
-        width: 20px;
-        height: 20px;
-        filter: drop-shadow(1px 1px 1px #000);
-      }
 
-      /* Estilo do botão MENU para herdar fonte e ficar à esquerda */
       #menu-toggle {
         background: none;
         border: none;
@@ -67,7 +53,6 @@
         cursor: pointer;
       }
 
-      /* ---------- MENU LATERAL ---------- */
       #side-menu {
         position: fixed;
         top: 0;
@@ -80,11 +65,9 @@
         z-index: 2000;
         padding: 1rem;
       }
-      /* abre quando aria-hidden="false" */
       #side-menu[aria-hidden="false"] {
         transform: translateX(0);
       }
-      /* botões do menu (lista) */
       #side-menu ul {
         list-style: none;
         padding: 0;
@@ -94,7 +77,6 @@
         opacity: 0;
         margin: 0.5rem 0;
       }
-      /* fade-in escalonado */
       #side-menu[aria-hidden="false"] ul li:nth-child(1) {
         animation: fadeInItem 0.9s forwards 0.1s;
       }
@@ -124,7 +106,6 @@
         }
       }
 
-      /* botão de fechar menu */
       #menu-close {
         background: none;
         border: none;
@@ -146,7 +127,6 @@
     </video>
 
     <header class="site-header">
-      <!-- 1) Botão MENU à esquerda -->
       <button id="menu-toggle" aria-label="Abrir menu">MENU ☰</button>
 
       <div class="titulo-container">
@@ -164,7 +144,6 @@
       </div>
 
       <div class="bloco-direita">
-        <!-- 2) Dropdown de idioma -->
         <select
           id="language-select"
           style="margin-right: 16px; font-size: 0.9rem; padding: 4px"
@@ -175,7 +154,6 @@
           <option value="pl">PL</option>
         </select>
 
-        <!-- 3) Login/Registrar -->
         <div class="botoes-acesso">
           <button type="button" class="btn-imagem login-btn">
             <img src="./icon-login.png" alt="Login" width="24" height="24" />
@@ -190,7 +168,6 @@
           </button>
         </div>
 
-        <!-- 4) Player minimalista -->
         <div class="radio-player-bottom" aria-label="Player de rádio">
           <button id="btn-playpause" aria-label="Play/Pause">▶</button>
           <button id="btn-skip" aria-label="Próxima faixa">⏭</button>
@@ -208,7 +185,6 @@
       </div>
     </header>
 
-    <!-- 5) Menu lateral drawer -->
     <aside id="side-menu" aria-hidden="true">
       <button id="menu-close" aria-label="Fechar menu">✕</button>
       <ul>
@@ -243,8 +219,6 @@
 
       <div class="table-container">
         <h2 class="titulo-dentro">Tibia OtServers Ranking</h2>
-
-        <!-- wrapper passa a envolver a tabela e recebe a classe collapsed -->
         <div id="servidores-wrapper" class="collapsed">
           <table>
             <thead>
@@ -256,24 +230,20 @@
                 <th>Observação</th>
               </tr>
             </thead>
-            <tbody id="tabela-servidores">
-              <!-- seu script.js vai continuar injetando as linhas aqui -->
-            </tbody>
+            <tbody id="tabela-servidores"></tbody>
           </table>
         </div>
       </div>
 
       <div class="table-controls outside">
         <button id="toggle-table" type="button">Expandir</button>
-        <!-- link direto pra página de envio -->
-        <a id="btn-envie-clips" class="btn-contraste" href="/envie-clips.html">Envie Clips</a>
+        <!-- botão substituído por link direto -->
+        <a class="btn-contraste" href="/envie-clips.html">Envie Clips</a>
       </div>
     </section>
 
-    <!-- seu script de auth, filtros, ranking e toggle de menu -->
     <script type="module" src="./script.js"></script>
     <script>
-      // toggle drawer
       const menuToggle = document.getElementById("menu-toggle");
       const menuClose = document.getElementById("menu-close");
       const sideMenu = document.getElementById("side-menu");
