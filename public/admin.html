@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin • Royal Tibia Dino</title>
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="index-home.css" />
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+
+  <script defer src="admin.js"></script>
+</head>
+
+<body>
+  <header class="home-header">
+    <div class="home-header__left">
+      <a class="home-pill home-pill--ghost" href="index.html">← Voltar</a>
+      <div class="home-brand">
+        <div class="home-brand__title">Admin</div>
+        <div class="home-brand__subtitle">Cadastrar conteúdo do mês</div>
+      </div>
+    </div>
+    <div class="home-header__right">
+      <a class="home-pill" href="login.html">Login</a>
+      <button class="home-pill home-pill--ghost" id="btnSair">Sair</button>
+    </div>
+  </header>
+
+  <main class="home-wrap">
+    <div class="home-notice" id="adminStatus">Faça login para usar o Admin.</div>
+
+    <section class="home-block">
+      <div class="home-block__header">
+        <h2 class="home-block__title">Mês ativo</h2>
+        <div class="home-block__meta">
+          <span class="home-tag">Ex: 2025-12</span>
+          <span class="home-tag">Ex: Dezembro 2025</span>
+        </div>
+      </div>
+
+      <div class="home-list">
+        <div class="home-card">
+          <div class="home-card__title">Configurar mês</div>
+          <div class="home-card__sub">
+            Isso define em qual “pasta” os votos e cadastros entram.
+          </div>
+
+          <div class="home-card__actions" style="gap:10px;">
+            <input id="monthId" placeholder="monthId (ex: 2025-12)" style="padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.25);color:inherit;min-width:220px;">
+            <input id="monthLabel" placeholder="label (ex: Dezembro 2025)" style="padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.25);color:inherit;min-width:220px;">
+            <input id="monthEndsAt" placeholder="fecha em (AAAA-MM-DD) ex: 2025-12-31" style="padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.25);color:inherit;min-width:260px;">
+            <button class="home-btn" id="btnSalvarMes">Salvar mês ativo</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-block">
+      <div class="home-block__header">
+        <h2 class="home-block__title">Cadastrar “Pior jogada do mês”</h2>
+        <div class="home-block__meta">
+          <span class="home-tag">Nome do personagem</span>
+          <span class="home-tag">Link da stream</span>
+          <span class="home-tag">Link do seu vídeo (com timestamp)</span>
+        </div>
+      </div>
+
+      <div class="home-list">
+        <div class="home-card">
+          <div class="home-card__actions" style="gap:10px;">
+            <input id="bpPersonagem" placeholder="Personagem (ex: KnightX)" style="padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.25);color:inherit;min-width:220px;">
+            <input id="bpStream" placeholder="Link da stream" style="padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.25);color:inherit;min-width:260px;">
+            <input id="bpVideo" placeholder="Link do seu vídeo (ex: https://youtu.be/... ?t=83)" style="padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.25);color:inherit;min-width:320px;">
+            <button class="home-btn" id="btnAddBadplay">Adicionar jogada</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="home-list" id="badplaysAdminList"></div>
+    </section>
+
+    <section class="home-block">
+      <div class="home-block__header">
+        <h2 class="home-block__title">Criadores (pool do duelo)</h2>
+        <div class="home-block__meta">
+          <span class="home-tag">Nome</span>
+          <span class="home-tag">Link do canal (Twitch/YouTube)</span>
+        </div>
+      </div>
+
+      <div class="home-list">
+        <div class="home-card">
+          <div class="home-card__actions" style="gap:10px;">
+            <input id="crNome" placeholder="Nome do criador" style="padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.25);color:inherit;min-width:240px;">
+            <input id="crCanal" placeholder="Link do canal (https://...)" style="padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.25);color:inherit;min-width:320px;">
+            <button class="home-btn" id="btnAddCreator">Adicionar criador</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="home-list" id="creatorsAdminList"></div>
+    </section>
+
+    <section class="home-block">
+      <div class="home-block__header">
+        <h2 class="home-block__title">OTServers</h2>
+        <div class="home-block__meta">
+          <span class="home-tag">Nome</span>
+          <span class="home-tag">Site</span>
+          <span class="home-tag">Discord</span>
+        </div>
+      </div>
+
+      <div class="home-list">
+        <div class="home-card">
+          <div class="home-card__actions" style="gap:10px;">
+            <input id="otNome" placeholder="Nome do OTServer" style="padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.25);color:inherit;min-width:240px;">
+            <input id="otSite" placeholder="Link do site" style="padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.25);color:inherit;min-width:300px;">
+            <input id="otDiscord" placeholder="Link do discord" style="padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.12);background:rgba(0,0,0,0.25);color:inherit;min-width:300px;">
+            <button class="home-btn" id="btnAddOt">Adicionar OTServer</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="home-list" id="otAdminList"></div>
+    </section>
+  </main>
+</body>
+</html>
