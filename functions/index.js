@@ -1,179 +1,126 @@
-<!doctype html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Royal OtServlist</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+const functions = require("firebase-functions");
+const admin = require("firebase-admin");
 
-    <!-- Google Font -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Seu CSS -->
-    <link rel="stylesheet" href="styles.css" />
+admin.initializeApp();
+const db = admin.firestore();
 
-    <style>
-      .tibia-oficial-banner {
-        background-color: rgba(0, 0, 0, 0.6);
-        padding: 8px 16px;
-        border: 1px solid rgba(255, 204, 102, 0.3);
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        font-family: "Cinzel", serif;
-        color: #ffe97f;
-        text-shadow:
-          0 0 4px #000,
-          0 0 6px #ffd700;
-        font-size: 0.95rem;
-        margin: 0 auto 8px auto;
-        width: fit-content;
-        max-width: 100%;
+function getWeight(context) {
+  // anonymous = 1 / logado = 2
+  const provider = context?.auth?.token?.firebase?.sign_in_provider;
+  return provider === "anonymous" ? 1 : 2;
+}
+
+function requireAuth(context) {
+  if (!context.auth || !context.auth.uid) {
+    throw new functions.https.HttpsError("unauthenticated", "Você precisa estar autenticado (o voto livre usa login anônimo automático).");
+  }
+}
+
+function requireAppCheck(context) {
+  // Quando App Check estiver configurado, context.app existe.
+  // Se você ainda não configurou, comente este bloqueio para testar,
+  // mas para segurança real deixe ativo.
+  if (!context.app) {
+    throw new functions.https.HttpsError("failed-precondition", "App Check obrigatório (anti-bot). Configure no Firebase Console.");
+  }
+}
+
+function cooldownKey(monthId, type, uid) {
+  return `${monthId}__${type}__${uid}`;
+}
+
+exports.vote = functions.https.onCall(async (data, context) => {
+  requireAuth(context);
+  requireAppCheck(context);
+
+  const uid = context.auth.uid;
+  const monthId = String(data.monthId || "").trim();
+  const type = String(data.type || "").trim(); // "badplay" | "duel" | "otserver"
+  const targetId = String(data.targetId || "").trim();
+
+  const cooldownHours = Number(data.cooldownHours || 6);
+
+  if (!monthId || !type || !targetId) {
+    throw new functions.https.HttpsError("invalid-argument", "Dados inválidos para voto.");
+  }
+
+  if (!["badplay", "duel", "otserver"].includes(type)) {
+    throw new functions.https.HttpsError("invalid-argument", "Tipo de voto inválido.");
+  }
+
+  const weight = getWeight(context);
+  const now = admin.firestore.Timestamp.now();
+
+  // alvo
+  let targetRef;
+  if (type === "badplay") {
+    targetRef = db.collection("months").doc(monthId).collection("badplays").doc(targetId);
+  } else if (type === "otserver") {
+    targetRef = db.collection("months").doc(monthId).collection("otservers").doc(targetId);
+  } else {
+    // duel: targetId = creatorId (pontua o criador)
+    targetRef = db.collection("months").doc(monthId).collection("creators").doc(targetId);
+  }
+
+  const cdRef = db.collection("voteCooldowns").doc(cooldownKey(monthId, type, uid));
+  const logRef = db.collection("voteLogs").doc(); // histórico (opcional)
+
+  const nextAllowedAt = admin.firestore.Timestamp.fromMillis(
+    now.toMillis() + cooldownHours * 60 * 60 * 1000
+  );
+
+  // transação: checa cooldown e soma pontos
+  await db.runTransaction(async (tx) => {
+    const [cdSnap, tSnap] = await Promise.all([tx.get(cdRef), tx.get(targetRef)]);
+
+    if (cdSnap.exists) {
+      const cd = cdSnap.data() || {};
+      const na = cd.nextAllowedAt;
+      if (na && na.toMillis && now.toMillis() < na.toMillis()) {
+        const diff = na.toMillis() - now.toMillis();
+        throw new functions.https.HttpsError(
+          "resource-exhausted",
+          `Aguarde ${Math.ceil(diff / 60000)} min para votar novamente (${type}).`
+        );
       }
-      .tibia-oficial-banner .icon-tibia {
-        width: 20px;
-        height: 20px;
-        filter: drop-shadow(1px 1px 1px #000);
-      }
-    </style>
-  </head>
+    }
 
-  <body class="fundo-inicio">
-    <div class="background"></div>
-    <video autoplay muted loop class="fog">
-      <source src="./Neblina.webm" type="video/webm" />
-    </video>
+    if (!tSnap.exists) {
+      throw new functions.https.HttpsError("not-found", "Alvo do voto não encontrado.");
+    }
 
-    <header class="site-header">
-      <div class="titulo-container">
-        <img
-          src="./tituloprincipal.png"
-          alt="Royal OtServlist"
-          class="titulo-imagem"
-        />
-      </div>
+    const currentScore = Number((tSnap.data() || {}).score || 0);
+    tx.update(targetRef, {
+      score: currentScore + weight,
+      updatedAt: now
+    });
 
-      <div class="brasao-centro">
-        <a href="destaque.html">
-          <img src="./brasao-novo.png" alt="Brasão" class="header-brasao" />
-        </a>
-      </div>
+    tx.set(cdRef, {
+      uid,
+      monthId,
+      type,
+      lastTargetId: targetId,
+      weightLast: weight,
+      nextAllowedAt,
+      updatedAt: now
+    }, { merge: true });
 
-      <div class="bloco-direita">
-        <!-- dropdown de idioma já existente -->
-        <select
-          id="language-select"
-          style="margin-right: 16px; font-size: 0.9rem; padding: 4px"
-        >
-          <option value="pt">PT</option>
-          <option value="en">EN</option>
-          <option value="es">ES</option>
-          <option value="pl">PL</option>
-        </select>
+    tx.set(logRef, {
+      uid,
+      monthId,
+      type,
+      targetId,
+      weight,
+      createdAt: now
+    });
+  });
 
-        <!-- botões login / registrar -->
-        <div class="botoes-acesso">
-          <button type="button" class="btn-imagem login-btn">
-            <img src="./icon-login.png" alt="Login" width="24" height="24" />
-          </button>
-          <button type="button" class="btn-imagem registrar-btn">
-            <img
-              src="./icon-registrar.png"
-              alt="Registrar"
-              width="24"
-              height="24"
-            />
-          </button>
-        </div>
-
-        <nav class="nav-links">
-          <div class="nav-esquerda">
-            <a href="top.html">Top Streamers/Youtube</a>
-            <a href="servicos.html">Serviços & Portfólio</a>
-          </div>
-          <div class="nav-direita">
-            <a href="/">Início</a>
-            <a href="regras.html">Regras/ban</a>
-            <a href="sobre.html">Sobre</a>
-            <a href="contato.html">Contato</a>
-          </div>
-        </nav>
-
-        <!-- PLAYER MINIMALISTA -->
-        <div class="radio-player">
-          <button id="btn-playpause">►</button>
-          <input
-            type="range"
-            id="slider-volume"
-            min="0"
-            max="1"
-            step="0.01"
-            value="1"
-          />
-        </div>
-      </div>
-    </header>
-
-    <section class="ranking aba ativa espaco-pos-header" id="inicio">
-      <div class="titulo-epico">
-        <img
-          src="./espada-esquerda.png"
-          alt="Espada Esquerda"
-          class="espada-decorativa esquerda"
-        />
-        <h1 class="titulo-ranking">Ranking de Servidores</h1>
-        <img
-          src="./espada-direita.png"
-          alt="Espada Direita"
-          class="espada-decorativa direita"
-        />
-      </div>
-
-      <div class="filtros-ranking" style="margin-bottom: 20px">
-        <input
-          type="text"
-          id="filtro-nome"
-          placeholder="🔍 Buscar servidor..."
-        />
-        <select id="filtro-versao">
-          <option value="">Todas as versões</option>
-        </select>
-        <select id="filtro-origem">
-          <option value="">Todas as origens</option>
-          <option value="Socket">Socket</option>
-          <option value="HTML">HTML</option>
-          <option value="Erro">Erro</option>
-        </select>
-      </div>
-
-      <div class="tibia-oficial-banner">
-        <span class="texto-tibia-oficial">
-          <strong>Tibia Oficial:</strong> 13.258 jogadores online
-        </span>
-      </div>
-
-      <div class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th onclick="ordenarPor('Servidor')">Servidor ⬍</th>
-              <th onclick="ordenarPor('Versão')">Versão ⬍</th>
-              <th onclick="ordenarPor('Jogadores Online')">
-                Jogadores Online ⬍
-              </th>
-              <th>Origem</th>
-              <th>Observação</th>
-            </tr>
-          </thead>
-          <tbody id="tabela-servidores"></tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- seu script principal -->
-    <script type="module" src="./script.js"></script>
-  </body>
-</html>
+  // Resposta
+  const mins = Math.ceil((cooldownHours * 60));
+  return {
+    ok: true,
+    weight,
+    nextAllowedIn: `${cooldownHours}h (~${mins} min)`,
+    nextAllowedAt: nextAllowedAt.toDate().toISOString()
+  };
+});
