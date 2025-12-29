@@ -1,0 +1,248 @@
+/* Este CSS só complementa seu styles.css, não substitui. */
+
+.home-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(6px);
+  z-index: 50;
+}
+
+.home-header__left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.home-menu-btn {
+  cursor: pointer;
+  font-size: 18px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.25);
+  color: inherit;
+}
+
+.home-brand__title {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.home-brand__subtitle {
+  opacity: 0.8;
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.home-header__right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.home-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.25);
+  color: inherit;
+}
+.home-pill--ghost {
+  background: transparent;
+}
+
+.home-sidemenu {
+  display: none;
+  position: fixed;
+  top: 54px;
+  left: 12px;
+  width: 220px;
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.55);
+  backdrop-filter: blur(8px);
+  z-index: 60;
+}
+.home-sidemenu a {
+  display: block;
+  padding: 10px 10px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.92;
+}
+.home-sidemenu a:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+.home-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 14px;
+}
+
+.home-notice {
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.25);
+  margin-bottom: 14px;
+  opacity: 0.95;
+}
+
+.home-block {
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.18);
+  margin-bottom: 14px;
+}
+
+.home-block__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.home-block__title {
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: 0.2px;
+}
+
+.home-block__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.home-tag {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.25);
+  font-size: 12px;
+  opacity: 0.95;
+}
+.home-tag--accent {
+  font-weight: 700;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+@media (max-width: 900px) {
+  .home-grid { grid-template-columns: 1fr; }
+}
+
+.home-card {
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.22);
+  padding: 12px;
+}
+.home-card__title {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.home-card__sub {
+  opacity: 0.9;
+  font-size: 13px;
+  margin-bottom: 10px;
+  word-break: break-word;
+}
+.home-card__score {
+  opacity: 0.92;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.home-card__actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.home-btn {
+  cursor: pointer;
+  padding: 9px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.25);
+  color: inherit;
+}
+.home-btn--ghost {
+  background: transparent;
+}
+.home-btn--wide {
+  width: 100%;
+}
+
+.home-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.home-list {
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.home-duel {
+  display: grid;
+  grid-template-columns: 1fr 90px 1fr;
+  gap: 10px;
+  align-items: stretch;
+}
+@media (max-width: 900px) {
+  .home-duel { grid-template-columns: 1fr; }
+  .home-duel__vs { display:none; }
+}
+
+.home-duel__side {
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.22);
+  padding: 12px;
+}
+.home-duel__name {
+  font-weight: 800;
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+.home-duel__links a {
+  opacity: 0.92;
+  text-decoration: none;
+}
+.home-duel__vs {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight: 900;
+  opacity: 0.85;
+}
+
+.home-footer {
+  opacity: 0.85;
+  font-size: 12px;
+  padding: 10px 2px 4px 2px;
+}
+.home-footer__line { margin-top: 6px; }
