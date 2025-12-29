@@ -1,260 +1,152 @@
-<!doctype html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Royal OtServlist</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Royal • Tibia Dino</title>
 
-    <!-- Google Font -->
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
+  <!-- Mantém seu estilo atual -->
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Estilo extra só para a home (não quebra nada do seu CSS) -->
+  <link rel="stylesheet" href="index-home.css" />
 
-    <style>
-      #servidores-wrapper.collapsed {
-        max-height: 400px;
-        overflow-y: auto;
-      }
-      #servidores-wrapper thead th {
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        background: linear-gradient(to bottom, #1f2002dc, #0b0b0b);
-      }
+  <!-- Firebase (compat, pra funcionar com seu firebase-config.js clássico) -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-functions-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-check-compat.js"></script>
 
-      .tibia-oficial-banner {
-        background-color: rgba(0, 0, 0, 0.6);
-        padding: 8px 16px;
-        border: 1px solid rgba(255, 204, 102, 0.3);
-        border-radius: 6px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        font-family: "Cinzel", serif;
-        color: #ffe97f;
-        text-shadow: 0 0 4px #000, 0 0 6px #ffd700;
-        font-size: 0.95rem;
-        margin: 0 auto 8px auto;
-        width: fit-content;
-        max-width: 100%;
-      }
+  <!-- Seu config atual -->
+  <script src="firebase-config.js"></script>
 
-      #menu-toggle {
-        background: none;
-        border: none;
-        padding: 0.5rem;
-        margin-right: auto;
-        color: #f0edd2;
-        font-family: "Cinzel", serif;
-        font-size: 1rem;
-        cursor: pointer;
-      }
+  <!-- Home -->
+  <script defer src="votacao.js"></script>
+</head>
 
-      #side-menu {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 240px;
-        background: rgba(0, 0, 0, 0.9);
-        transform: translateX(-100%);
-        transition: transform 0.3s ease;
-        z-index: 2000;
-        padding: 1rem;
-      }
-      #side-menu[aria-hidden="false"] {
-        transform: translateX(0);
-      }
-      #side-menu ul {
-        list-style: none;
-        padding: 0;
-        margin: 2rem 0 0 0;
-      }
-      #side-menu ul li {
-        opacity: 0;
-        margin: 0.5rem 0;
-      }
-      #side-menu[aria-hidden="false"] ul li:nth-child(1) {
-        animation: fadeInItem 0.9s forwards 0.1s;
-      }
-      #side-menu[aria-hidden="false"] ul li:nth-child(2) {
-        animation: fadeInItem 0.9s forwards 0.2s;
-      }
-      #side-menu[aria-hidden="false"] ul li:nth-child(3) {
-        animation: fadeInItem 0.9s forwards 0.3s;
-      }
-      #side-menu[aria-hidden="false"] ul li:nth-child(4) {
-        animation: fadeInItem 0.9s forwards 0.4s;
-      }
-      #side-menu[aria-hidden="false"] ul li:nth-child(5) {
-        animation: fadeInItem 0.9s forwards 0.5s;
-      }
-      #side-menu[aria-hidden="false"] ul li:nth-child(6) {
-        animation: fadeInItem 0.9s forwards 0.6s;
-      }
-      @keyframes fadeInItem {
-        from {
-          opacity: 0;
-          transform: translateX(-10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
-      #menu-close {
-        background: none;
-        border: none;
-        color: #f0edd2;
-        font-family: "Cinzel", serif;
-        font-size: 1.2rem;
-        cursor: pointer;
-        position: absolute;
-        top: 0.5rem;
-        right: 0.5rem;
-      }
-    </style>
-  </head>
-
-  <body class="fundo-inicio">
-    <div class="background"></div>
-    <video autoplay muted loop class="fog">
-      <source src="./Neblina.webm" type="video/webm" />
-    </video>
-
-    <header class="site-header">
-      <button id="menu-toggle" aria-label="Abrir menu">MENU ☰</button>
-
-      <div class="titulo-container">
-        <img
-          src="./tituloprincipal.png"
-          alt="Royal OtServlist"
-          class="titulo-imagem"
-        />
+<body>
+  <!-- Header simples (mantém vibe do seu site; se você já tem outro header, posso adaptar depois) -->
+  <header class="home-header">
+    <div class="home-header__left">
+      <button id="btnMenu" class="home-menu-btn" aria-label="Abrir menu">☰</button>
+      <div class="home-brand">
+        <div class="home-brand__title">Royal Tibia Dino</div>
+        <div class="home-brand__subtitle">Awards, Duels e OTServer</div>
       </div>
+    </div>
 
-      <div class="brasao-centro">
-        <a href="destaque.html">
-          <img src="./brasao-novo.png" alt="Brasão" class="header-brasao" />
-        </a>
-      </div>
+    <div class="home-header__right">
+      <a class="home-pill" href="envie-clips.html">Enviar clips</a>
+      <a class="home-pill home-pill--ghost" href="login.html" id="btnLogin">Login</a>
+      <a class="home-pill home-pill--ghost" href="painel.html" id="btnPainel" style="display:none;">Painel</a>
+    </div>
+  </header>
 
-      <div class="bloco-direita">
-        <select
-          id="language-select"
-          style="margin-right: 16px; font-size: 0.9rem; padding: 4px"
-        >
-          <option value="pt">PT</option>
-          <option value="en">EN</option>
-          <option value="es">ES</option>
-          <option value="pl">PL</option>
-        </select>
+  <!-- Menu lateral -->
+  <nav id="sideMenu" class="home-sidemenu">
+    <a href="index.html">Início</a>
+    <a href="destaque.html">Destaques</a>
+    <a href="top.html">Top Live</a>
+    <a href="servicos.html">Serviços</a>
+    <a href="pacotes.html">Pacotes</a>
+    <a href="envie-clips.html">Envie Clips</a>
+    <a href="sobre.html">Sobre</a>
+    <a href="regras.html">Regras</a>
+    <a href="contato.html">Contato</a>
+    <a href="admin.html">Admin</a>
+  </nav>
 
-        <div class="botoes-acesso">
-          <button type="button" class="btn-imagem login-btn">
-            <img src="./icon-login.png" alt="Login" width="24" height="24" />
-          </button>
-          <button type="button" class="btn-imagem registrar-btn">
-            <img
-              src="./icon-registrar.png"
-              alt="Registrar"
-              width="24"
-              height="24"
-            />
-          </button>
-        </div>
+  <main class="home-wrap">
+    <div class="home-notice" id="statusTopo">Carregando...</div>
 
-        <div class="radio-player-bottom" aria-label="Player de rádio">
-          <button id="btn-playpause" aria-label="Play/Pause">▶</button>
-          <button id="btn-skip" aria-label="Próxima faixa">⏭</button>
-          <input
-            id="slider-volume"
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value="1"
-            aria-label="Volume"
-          />
-          <audio id="radio-audio" preload="metadata" style="display:none"></audio>
-        </div>
-      </div>
-    </header>
-
-    <aside id="side-menu" aria-hidden="true">
-      <button id="menu-close" aria-label="Fechar menu">✕</button>
-      <ul>
-        <li><a href="index.html">Início</a></li>
-        <li><a href="top.html">Top Live</a></li>
-        <li><a href="servicos.html">Produto/Serviço</a></li>
-        <li><a href="regras.html">Regras/ban</a></li>
-        <li><a href="sobre.html">Quem Somos</a></li>
-        <li><a href="contato.html">Contato</a></li>
-      </ul>
-    </aside>
-
-    <section class="ranking aba ativa espaco-pos-header" id="inicio">
-      <div class="titulo-epico"></div>
-
-      <div class="filtros-ranking" style="margin-bottom: 20px">
-        <input
-          type="text"
-          id="filtro-nome"
-          placeholder="🔍 Buscar servidor..."
-        />
-        <select id="filtro-versao">
-          <option value="">Todas as versões</option>
-        </select>
-        <select id="filtro-origem">
-          <option value="">Todas as origens</option>
-          <option value="Socket">Socket</option>
-          <option value="HTML">HTML</option>
-          <option value="Erro">Erro</option>
-        </select>
-      </div>
-
-      <div class="table-container">
-        <h2 class="titulo-dentro">Tibia OtServers Ranking</h2>
-        <div id="servidores-wrapper" class="collapsed">
-          <table>
-            <thead>
-              <tr>
-                <th onclick="ordenarPor('Servidor')">Servidor ⬍</th>
-                <th onclick="ordenarPor('Versão')">Versão ⬍</th>
-                <th onclick="ordenarPor('Jogadores Online')">Jogadores Online ⬍</th>
-                <th>Origem</th>
-                <th>Observação</th>
-              </tr>
-            </thead>
-            <tbody id="tabela-servidores"></tbody>
-          </table>
+    <!-- =========================
+         BLOCO 1 — PIOR JOGADA
+    ========================== -->
+    <section class="home-block">
+      <div class="home-block__header">
+        <h2 class="home-block__title">Pior jogada do mês</h2>
+        <div class="home-block__meta">
+          <span class="home-tag" id="mesAtualTag">—</span>
+          <span class="home-tag" id="fechaEmTag">—</span>
+          <span class="home-tag home-tag--accent" id="pesoVotoTag">Voto livre: +1 • Logado: +2</span>
         </div>
       </div>
 
-      <div class="table-controls outside">
-        <button id="toggle-table" type="button">Expandir</button>
-        <!-- botão substituído por link direto -->
-        <a class="btn-contraste" href="/envie-clips.html">Envie Clips</a>
+      <div class="home-grid" id="badplaysTop3"></div>
+
+      <div class="home-actions">
+        <button class="home-btn" id="btnVerTodosBadplays">Ver todos do mês</button>
+      </div>
+
+      <div class="home-list" id="badplaysLista" style="display:none;"></div>
+    </section>
+
+    <!-- =========================
+         BLOCO 2 — DUELO RÁPIDO
+    ========================== -->
+    <section class="home-block">
+      <div class="home-block__header">
+        <h2 class="home-block__title">Duelo rápido (criadores Tibia)</h2>
+        <div class="home-block__meta">
+          <span class="home-tag">A cada voto aparece outro</span>
+          <span class="home-tag">Cooldown: 6h</span>
+        </div>
+      </div>
+
+      <div class="home-duel" id="duelBox">
+        <div class="home-duel__side" id="duelA">
+          <div class="home-duel__name" id="duelAName">—</div>
+          <div class="home-duel__links">
+            <a href="#" target="_blank" rel="noopener" id="duelALink">Abrir canal</a>
+          </div>
+          <button class="home-btn home-btn--wide" id="btnVotarA">Votar neste</button>
+        </div>
+
+        <div class="home-duel__vs">VS</div>
+
+        <div class="home-duel__side" id="duelB">
+          <div class="home-duel__name" id="duelBName">—</div>
+          <div class="home-duel__links">
+            <a href="#" target="_blank" rel="noopener" id="duelBLink">Abrir canal</a>
+          </div>
+          <button class="home-btn home-btn--wide" id="btnVotarB">Votar neste</button>
+        </div>
+      </div>
+
+      <div class="home-actions">
+        <button class="home-btn home-btn--ghost" id="btnTrocarDuelo">Trocar duelo</button>
       </div>
     </section>
 
-    <script type="module" src="./script.js"></script>
-    <script>
-      const menuToggle = document.getElementById("menu-toggle");
-      const menuClose = document.getElementById("menu-close");
-      const sideMenu = document.getElementById("side-menu");
+    <!-- =========================
+         BLOCO 3 — MELHOR OTSERVER
+    ========================== -->
+    <section class="home-block">
+      <div class="home-block__header">
+        <h2 class="home-block__title">Melhor OTServer da atualidade</h2>
+        <div class="home-block__meta">
+          <span class="home-tag">Top do mês</span>
+          <span class="home-tag">Cooldown: 6h</span>
+        </div>
+      </div>
 
-      menuToggle.addEventListener("click", () => {
-        const hidden = sideMenu.getAttribute("aria-hidden") === "true";
-        sideMenu.setAttribute("aria-hidden", hidden ? "false" : "true");
-      });
-      menuClose.addEventListener("click", () => {
-        sideMenu.setAttribute("aria-hidden", "true");
-      });
-    </script>
-  </body>
+      <div class="home-grid" id="otTop3"></div>
+
+      <div class="home-actions">
+        <button class="home-btn" id="btnVerTodosOts">Ver todos</button>
+      </div>
+
+      <div class="home-list" id="otLista" style="display:none;"></div>
+    </section>
+
+    <footer class="home-footer">
+      <div class="home-footer__line">
+        Dica: vote logado pra valer <b>2 pontos</b>. Voto livre vale <b>1 ponto</b>.
+      </div>
+      <div class="home-footer__line">
+        Anti-bot: limite de 6h + App Check + validação na Function.
+      </div>
+    </footer>
+  </main>
+</body>
 </html>
