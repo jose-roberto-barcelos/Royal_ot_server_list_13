@@ -100,11 +100,9 @@
         right: 0.5rem;
       }
 
-      .hidden-compat {
-        display: none !important;
-      }
-
       /* ====== HOME ====== */
+      .hidden-compat { display: none !important; }
+
       .home-wrap {
         max-width: 1120px;
         margin: 0 auto;
@@ -117,7 +115,6 @@
         margin: 10px 0 18px 0;
       }
 
-      /* Badges mais “vivas” */
       .home-badges {
         display: flex;
         gap: 10px;
@@ -125,12 +122,8 @@
         flex-wrap: wrap;
       }
       .home-badge {
-        background: linear-gradient(
-          to bottom,
-          rgba(0, 0, 0, 0.72),
-          rgba(0, 0, 0, 0.55)
-        );
-        border: 1px solid rgba(255, 204, 102, 0.34);
+        background: linear-gradient(to bottom, rgba(0,0,0,0.78), rgba(0,0,0,0.58));
+        border: 1px solid rgba(255, 204, 102, 0.38);
         border-radius: 10px;
         padding: 8px 12px;
         font-family: "Cinzel", serif;
@@ -148,101 +141,40 @@
         flex-wrap: wrap;
       }
 
-      /* ===== Botões “ouro Tibia” (sem mexer no CSS global) ===== */
-      .btn-gold {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-
-        font-family: "Cinzel", serif;
-        text-decoration: none;
-        cursor: pointer;
-
-        min-width: 170px;
-        padding: 11px 16px;
-
-        color: #2b1a00;
-        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
-
-        border-radius: 10px;
-        border: 1px solid rgba(95, 52, 0, 0.75);
-
-        background: linear-gradient(to bottom, #ffe89a, #d7a73b 55%, #8f6215);
-        box-shadow:
-          0 10px 18px rgba(0,0,0,0.35),
-          inset 0 1px 0 rgba(255,255,255,0.35),
-          inset 0 -10px 18px rgba(0,0,0,0.20);
-
-        transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease;
-      }
-      .btn-gold:hover {
-        transform: translateY(-1px);
-        filter: brightness(1.08);
-        box-shadow:
-          0 14px 24px rgba(0,0,0,0.45),
-          0 0 18px rgba(255,233,127,0.18),
-          inset 0 1px 0 rgba(255,255,255,0.38),
-          inset 0 -10px 18px rgba(0,0,0,0.18);
-      }
-      .btn-gold:active {
-        transform: translateY(0px);
-        filter: brightness(0.98);
-      }
-
-      .btn-gold-secondary {
-        color: #f3e9d2;
-        text-shadow: 0 0 4px #000;
-        border: 1px solid rgba(255, 204, 102, 0.35);
-        background: linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.35));
-        box-shadow:
-          0 10px 18px rgba(0,0,0,0.35),
-          inset 0 1px 0 rgba(255,255,255,0.12),
-          inset 0 -10px 18px rgba(0,0,0,0.35);
-      }
-      .btn-gold-secondary:hover {
-        box-shadow:
-          0 14px 24px rgba(0,0,0,0.45),
-          0 0 18px rgba(255,233,127,0.10),
-          inset 0 1px 0 rgba(255,255,255,0.14),
-          inset 0 -10px 18px rgba(0,0,0,0.32);
-      }
-
-      /* ====== BLOCO com fundo mais sólido (“menos transparente”) ====== */
-      .home-block {
-        margin-top: 16px;
+      /* ====== BLOCO: fundo sólido (override BRUTO) ======
+         O seu styles.css provavelmente define background/opacity.
+         Aqui eu forço com background + !important e ainda adiciono vinheta interna. */
+      .home-block.table-container {
         position: relative;
         overflow: hidden;
-      }
 
-      /* AQUI é o principal: “corpo” mais escuro e com vinheta interna */
-      .home-block.table-container {
-        border: 1px solid rgba(255, 204, 102, 0.32);
-        box-shadow: 0 0 36px rgba(0, 0, 0, 0.65);
-        background: rgba(0, 0, 0, 0.55) !important; /* << menos transparente */
-        backdrop-filter: blur(2px);
+        background: linear-gradient(to bottom, rgba(0,0,0,0.72), rgba(0,0,0,0.55)) !important;
+        border: 1px solid rgba(255, 204, 102, 0.38) !important;
+
+        box-shadow: 0 0 46px rgba(0,0,0,0.78) !important;
         transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+        backdrop-filter: blur(2px);
+        margin-top: 16px;
       }
       .home-block.table-container:hover {
         transform: translateY(-2px);
-        border-color: rgba(255, 204, 102, 0.45);
-        box-shadow: 0 0 46px rgba(0, 0, 0, 0.75);
+        border-color: rgba(255, 204, 102, 0.50) !important;
+        box-shadow: 0 0 60px rgba(0,0,0,0.85) !important;
       }
-
-      /* vinheta interna pra dar “profundidade” */
-      .home-block.table-container::after {
+      .home-block.table-container::before {
         content: "";
         position: absolute;
         inset: 0;
         pointer-events: none;
         background:
-          radial-gradient(circle at top, rgba(255,233,127,0.14), rgba(0,0,0,0) 40%),
-          radial-gradient(circle at bottom, rgba(0,0,0,0.35), rgba(0,0,0,0) 55%);
+          radial-gradient(circle at top, rgba(255,233,127,0.18), rgba(0,0,0,0) 45%),
+          radial-gradient(circle at bottom, rgba(0,0,0,0.55), rgba(0,0,0,0) 60%);
         opacity: 1;
       }
 
       .home-title {
         margin: 0;
+        padding-top: 8px;
         text-align: center;
         font-family: "Cinzel", serif;
         color: #ffe97f;
@@ -257,7 +189,6 @@
         position: relative;
         z-index: 2;
       }
-
       .home-seal {
         display: inline-flex;
         align-items: center;
@@ -265,35 +196,33 @@
         width: 30px;
         height: 30px;
         border-radius: 50%;
-        border: 1px solid rgba(255, 204, 102, 0.45);
-        background: rgba(0, 0, 0, 0.50);
-        box-shadow: 0 0 16px rgba(0, 0, 0, 0.55);
+        border: 1px solid rgba(255, 204, 102, 0.55);
+        background: rgba(0, 0, 0, 0.55);
+        box-shadow: 0 0 18px rgba(0, 0, 0, 0.55);
         color: #ffe97f;
         text-shadow: 0 0 4px #000;
         font-size: 0.95rem;
         flex: 0 0 auto;
       }
-
       .home-headerline {
-        width: min(620px, 92%);
+        width: min(640px, 92%);
         height: 2px;
         margin: 10px auto 0 auto;
         background: linear-gradient(
           to right,
           rgba(255, 233, 127, 0),
-          rgba(255, 233, 127, 0.70),
+          rgba(255, 233, 127, 0.85),
           rgba(255, 233, 127, 0)
         );
-        box-shadow: 0 0 14px rgba(255, 233, 127, 0.10);
+        box-shadow: 0 0 18px rgba(255, 233, 127, 0.12);
         position: relative;
         z-index: 2;
       }
-
       .home-subtitle {
         margin: 10px auto 0 auto;
-        max-width: 860px;
+        max-width: 880px;
         text-align: center;
-        color: rgba(240, 237, 210, 0.92);
+        color: rgba(240, 237, 210, 0.94);
         line-height: 1.45;
         font-size: clamp(0.95rem, 1.05vw, 1.05rem);
         text-transform: none !important;
@@ -311,17 +240,9 @@
         z-index: 2;
       }
       @media (max-width: 860px) {
-        .home-form {
-          grid-template-columns: 1fr;
-        }
+        .home-form { grid-template-columns: 1fr; }
       }
-
-      .home-field {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-      }
-
+      .home-field { display: flex; flex-direction: column; gap: 6px; }
       .home-field label {
         font-family: "Cinzel", serif;
         color: #ffe97f;
@@ -329,22 +250,95 @@
         font-size: 0.9rem;
         text-transform: none !important;
       }
-
       .home-field input {
         width: 100%;
         box-sizing: border-box;
-        background: rgba(0, 0, 0, 0.55);
-        border: 1px solid rgba(255, 204, 102, 0.28);
+        background: rgba(0,0,0,0.62) !important;
+        border: 1px solid rgba(255, 204, 102, 0.32) !important;
         border-radius: 10px;
         padding: 11px 12px;
         color: rgba(240, 237, 210, 0.92);
         font-size: 0.95rem;
         outline: none;
-        box-shadow: inset 0 0 18px rgba(0, 0, 0, 0.35);
+        box-shadow: inset 0 0 22px rgba(0,0,0,0.45);
+      }
+      .span-2 { grid-column: 1 / -1; }
+
+      /* ====== BOTÕES: override BRUTO (para impedir ficar branco) ======
+         Aplique o visual “ouro vivo” em qualquer botão/link dentro dos blocos.
+      */
+      .home-actions a,
+      .home-controls a,
+      .home-controls button,
+      .duelo-card a,
+      .duelo-card button,
+      .mini-table-wrap button {
+        appearance: none !important;
+        -webkit-appearance: none !important;
+
+        font-family: "Cinzel", serif !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.2px !important;
+
+        min-width: 170px;
+        padding: 11px 16px !important;
+
+        border-radius: 10px !important;
+        border: 1px solid rgba(95, 52, 0, 0.78) !important;
+
+        color: #2b1a00 !important;
+        text-shadow: 0 1px 0 rgba(255,255,255,0.35) !important;
+
+        background: linear-gradient(to bottom, #ffe89a, #d7a73b 55%, #8f6215) !important;
+
+        box-shadow:
+          0 12px 20px rgba(0,0,0,0.38),
+          inset 0 1px 0 rgba(255,255,255,0.38),
+          inset 0 -12px 18px rgba(0,0,0,0.22) !important;
+
+        cursor: pointer !important;
+        text-decoration: none !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 8px !important;
+
+        transition: transform 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease !important;
+      }
+      .home-actions a:hover,
+      .home-controls a:hover,
+      .home-controls button:hover,
+      .duelo-card a:hover,
+      .duelo-card button:hover,
+      .mini-table-wrap button:hover {
+        transform: translateY(-1px) !important;
+        filter: brightness(1.08) !important;
+        box-shadow:
+          0 16px 26px rgba(0,0,0,0.50),
+          0 0 18px rgba(255,233,127,0.22),
+          inset 0 1px 0 rgba(255,255,255,0.42),
+          inset 0 -12px 18px rgba(0,0,0,0.20) !important;
+      }
+      .home-actions a:active,
+      .home-controls a:active,
+      .home-controls button:active,
+      .duelo-card a:active,
+      .duelo-card button:active,
+      .mini-table-wrap button:active {
+        transform: translateY(0px) !important;
+        filter: brightness(0.98) !important;
       }
 
-      .span-2 {
-        grid-column: 1 / -1;
+      /* Variante “escura” (secundário): só adicionar class="btn-secondary" no HTML */
+      .btn-secondary {
+        color: rgba(240,237,210,0.95) !important;
+        text-shadow: 0 0 6px #000 !important;
+        border: 1px solid rgba(255,204,102,0.42) !important;
+        background: linear-gradient(to bottom, rgba(0,0,0,0.62), rgba(0,0,0,0.38)) !important;
+        box-shadow:
+          0 12px 20px rgba(0,0,0,0.38),
+          inset 0 1px 0 rgba(255,255,255,0.14),
+          inset 0 -12px 18px rgba(0,0,0,0.42) !important;
       }
 
       .home-controls {
@@ -369,22 +363,18 @@
         z-index: 2;
       }
       @media (max-width: 860px) {
-        .duelo-grid {
-          grid-template-columns: 1fr;
-        }
+        .duelo-grid { grid-template-columns: 1fr; }
       }
-
       .duelo-card {
-        background: rgba(0, 0, 0, 0.50);
-        border: 1px solid rgba(255, 204, 102, 0.25);
+        background: rgba(0,0,0,0.60) !important;
+        border: 1px solid rgba(255,204,102,0.30) !important;
         border-radius: 12px;
         padding: 14px;
         text-align: center;
         box-shadow:
-          0 14px 22px rgba(0,0,0,0.35),
-          inset 0 0 24px rgba(0, 0, 0, 0.45);
+          0 16px 26px rgba(0,0,0,0.42),
+          inset 0 0 26px rgba(0,0,0,0.55);
       }
-
       .duelo-name {
         margin: 0 0 8px 0;
         font-family: "Cinzel", serif;
@@ -392,15 +382,13 @@
         text-shadow: 0 0 4px #000;
         font-size: 1.05rem;
       }
-
       .duelo-desc {
         margin: 0 0 12px 0;
-        color: rgba(240, 237, 210, 0.9);
+        color: rgba(240, 237, 210, 0.92);
         line-height: 1.35;
         font-size: 0.98rem;
         text-transform: none !important;
       }
-
       .duelo-vs {
         text-align: center;
         font-family: "Cinzel", serif;
@@ -419,15 +407,11 @@
         position: relative;
         z-index: 2;
       }
-      .mini-table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      .mini-table th,
-      .mini-table td {
+      .mini-table { width: 100%; border-collapse: collapse; }
+      .mini-table th, .mini-table td {
         padding: 10px 10px;
-        border-bottom: 1px solid rgba(255, 204, 102, 0.14);
-        color: rgba(240, 237, 210, 0.92);
+        border-bottom: 1px solid rgba(255,204,102,0.16);
+        color: rgba(240,237,210,0.94);
         font-size: 0.98rem;
         text-transform: none !important;
       }
@@ -435,7 +419,7 @@
         font-family: "Cinzel", serif;
         color: #ffe97f;
         text-shadow: 0 0 4px #000;
-        background: rgba(0, 0, 0, 0.35);
+        background: rgba(0,0,0,0.42);
         font-size: 0.95rem;
       }
       .mini-table td strong {
@@ -443,9 +427,7 @@
         color: #ffe97f;
         text-shadow: 0 0 4px #000;
       }
-      .mini-table td:last-child {
-        text-align: right;
-      }
+      .mini-table td:last-child { text-align: right; }
     </style>
 
     <script>
@@ -469,11 +451,7 @@
       <button id="menu-toggle" aria-label="Abrir menu">MENU ☰</button>
 
       <div class="titulo-container">
-        <img
-          src="./tituloprincipal.png"
-          alt="Royal OtServlist"
-          class="titulo-imagem"
-        />
+        <img src="./tituloprincipal.png" alt="Royal OtServlist" class="titulo-imagem" />
       </div>
 
       <div class="brasao-centro">
@@ -483,10 +461,7 @@
       </div>
 
       <div class="bloco-direita">
-        <select
-          id="language-select"
-          style="margin-right: 16px; font-size: 0.9rem; padding: 4px"
-        >
+        <select id="language-select" style="margin-right: 16px; font-size: 0.9rem; padding: 4px">
           <option value="pt">PT</option>
           <option value="en">EN</option>
           <option value="es">ES</option>
@@ -498,27 +473,14 @@
             <img src="./icon-login.png" alt="Login" width="24" height="24" />
           </button>
           <button type="button" class="btn-imagem registrar-btn">
-            <img
-              src="./icon-registrar.png"
-              alt="Registrar"
-              width="24"
-              height="24"
-            />
+            <img src="./icon-registrar.png" alt="Registrar" width="24" height="24" />
           </button>
         </div>
 
         <div class="radio-player-bottom" aria-label="Player de rádio">
           <button id="btn-playpause" aria-label="Play/Pause">▶</button>
           <button id="btn-skip" aria-label="Próxima faixa">⏭</button>
-          <input
-            id="slider-volume"
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            value="1"
-            aria-label="Volume"
-          />
+          <input id="slider-volume" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volume" />
           <audio id="radio-audio" preload="metadata" style="display:none"></audio>
         </div>
       </div>
@@ -537,7 +499,7 @@
     </aside>
 
     <section class="ranking aba ativa espaco-pos-header" id="inicio">
-      <!-- COMPAT invisível -->
+      <!-- compat invisível -->
       <div class="hidden-compat">
         <div class="table-container">
           <h2 class="titulo-dentro">Tibia OtServers Ranking</h2>
@@ -558,9 +520,7 @@
         </div>
         <div class="filtros-ranking" style="margin-bottom: 20px">
           <input type="text" id="filtro-nome" placeholder="🔍 Buscar servidor..." />
-          <select id="filtro-versao">
-            <option value="">Todas as versões</option>
-          </select>
+          <select id="filtro-versao"><option value="">Todas as versões</option></select>
           <select id="filtro-origem">
             <option value="">Todas as origens</option>
             <option value="Socket">Socket</option>
@@ -574,7 +534,6 @@
         </div>
       </div>
 
-      <!-- HOME -->
       <div class="home-wrap">
         <div class="home-top">
           <div class="home-badges">
@@ -584,8 +543,8 @@
           </div>
 
           <div class="home-actions">
-            <a class="btn-gold" href="./envie-clips.html">📩 Envie Clips</a>
-            <a class="btn-gold btn-gold-secondary" href="top.html">📺 Top Live</a>
+            <a href="./envie-clips.html">📩 Envie Clips</a>
+            <a class="btn-secondary" href="top.html">📺 Top Live</a>
           </div>
         </div>
 
@@ -617,8 +576,8 @@
           </div>
 
           <div class="home-controls">
-            <a class="btn-gold btn-gold-secondary" href="#" onclick="return false;">▶ Ver jogada</a>
-            <button class="btn-gold" id="btn-votar-bloco1" type="button">🗳 Votar</button>
+            <a class="btn-secondary" href="#" onclick="return false;">▶ Ver jogada</a>
+            <button id="btn-votar-bloco1" type="button">🗳 Votar</button>
           </div>
         </div>
 
@@ -636,8 +595,8 @@
               <div class="duelo-name">Criador A</div>
               <p class="duelo-desc">Nome/canal + mini descrição.</p>
               <div class="home-controls" style="margin-top: 0;">
-                <button class="btn-gold" id="btn-votar-a" type="button">🗳 Votar A</button>
-                <a class="btn-gold btn-gold-secondary" href="#" onclick="return false;">Abrir canal</a>
+                <button id="btn-votar-a" type="button">🗳 Votar A</button>
+                <a class="btn-secondary" href="#" onclick="return false;">Abrir canal</a>
               </div>
             </div>
 
@@ -647,8 +606,8 @@
               <div class="duelo-name">Criador B</div>
               <p class="duelo-desc">Nome/canal + mini descrição.</p>
               <div class="home-controls" style="margin-top: 0;">
-                <button class="btn-gold" id="btn-votar-b" type="button">🗳 Votar B</button>
-                <a class="btn-gold btn-gold-secondary" href="#" onclick="return false;">Abrir canal</a>
+                <button id="btn-votar-b" type="button">🗳 Votar B</button>
+                <a class="btn-secondary" href="#" onclick="return false;">Abrir canal</a>
               </div>
             </div>
           </div>
@@ -683,26 +642,26 @@
                   <td><strong>OT Exemplo #1</strong></td>
                   <td>7.6</td>
                   <td>120</td>
-                  <td><button class="btn-gold" type="button">Votar</button></td>
+                  <td><button type="button">Votar</button></td>
                 </tr>
                 <tr>
                   <td><strong>OT Exemplo #2</strong></td>
                   <td>8.0</td>
                   <td>80</td>
-                  <td><button class="btn-gold" type="button">Votar</button></td>
+                  <td><button type="button">Votar</button></td>
                 </tr>
                 <tr>
                   <td><strong>OT Exemplo #3</strong></td>
                   <td>7.4</td>
                   <td>45</td>
-                  <td><button class="btn-gold" type="button">Votar</button></td>
+                  <td><button type="button">Votar</button></td>
                 </tr>
               </tbody>
             </table>
           </div>
 
           <div class="home-controls">
-            <a class="btn-gold" href="servicos.html">✨ Divulgar meu servidor</a>
+            <a href="servicos.html">✨ Divulgar meu servidor</a>
           </div>
         </div>
       </div>
