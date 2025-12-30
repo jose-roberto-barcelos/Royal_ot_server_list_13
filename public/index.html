@@ -141,9 +141,14 @@
         flex-wrap: wrap;
       }
 
-      /* ====== BLOCO: fundo sólido (override BRUTO) ======
-         O seu styles.css provavelmente define background/opacity.
-         Aqui eu forço com background + !important e ainda adiciono vinheta interna. */
+      /* Ações do topo: menor e “banner” mais contido */
+      .home-actions a {
+        font-size: 0.95rem !important;
+        padding: 9px 14px !important;
+        min-width: 150px !important;
+      }
+
+      /* ====== BLOCO: fundo sólido (override) ====== */
       .home-block.table-container {
         position: relative;
         overflow: hidden;
@@ -180,7 +185,7 @@
         color: #ffe97f;
         text-shadow: 0 0 4px #000, 0 0 10px rgba(0, 0, 0, 0.6);
         letter-spacing: 0.8px;
-        font-size: clamp(1.05rem, 1.2vw, 1.35rem);
+        font-size: clamp(1.02rem, 1.15vw, 1.25rem);
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -193,15 +198,15 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 28px;
         border-radius: 50%;
         border: 1px solid rgba(255, 204, 102, 0.55);
         background: rgba(0, 0, 0, 0.55);
         box-shadow: 0 0 18px rgba(0, 0, 0, 0.55);
         color: #ffe97f;
         text-shadow: 0 0 4px #000;
-        font-size: 0.95rem;
+        font-size: 0.9rem;
         flex: 0 0 auto;
       }
       .home-headerline {
@@ -224,7 +229,7 @@
         text-align: center;
         color: rgba(240, 237, 210, 0.94);
         line-height: 1.45;
-        font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+        font-size: clamp(0.93rem, 1.02vw, 1.02rem);
         text-transform: none !important;
         position: relative;
         z-index: 2;
@@ -247,7 +252,7 @@
         font-family: "Cinzel", serif;
         color: #ffe97f;
         text-shadow: 0 0 4px #000;
-        font-size: 0.9rem;
+        font-size: 0.88rem;
         text-transform: none !important;
       }
       .home-field input {
@@ -256,7 +261,7 @@
         background: rgba(0,0,0,0.62) !important;
         border: 1px solid rgba(255, 204, 102, 0.32) !important;
         border-radius: 10px;
-        padding: 11px 12px;
+        padding: 10px 12px;
         color: rgba(240, 237, 210, 0.92);
         font-size: 0.95rem;
         outline: none;
@@ -264,9 +269,17 @@
       }
       .span-2 { grid-column: 1 / -1; }
 
-      /* ====== BOTÕES: override BRUTO (para impedir ficar branco) ======
-         Aplique o visual “ouro vivo” em qualquer botão/link dentro dos blocos.
-      */
+      .home-controls {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 12px;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* ====== BOTÕES (tamanho reduzido) ====== */
       .home-actions a,
       .home-controls a,
       .home-controls button,
@@ -278,10 +291,12 @@
 
         font-family: "Cinzel", serif !important;
         font-weight: 600 !important;
-        letter-spacing: 0.2px !important;
+        letter-spacing: 0.15px !important;
 
-        min-width: 170px;
-        padding: 11px 16px !important;
+        /* >>> AQUI está o “menor” */
+        min-width: 132px !important;
+        padding: 8px 12px !important;
+        font-size: 0.92rem !important;
 
         border-radius: 10px !important;
         border: 1px solid rgba(95, 52, 0, 0.78) !important;
@@ -292,9 +307,9 @@
         background: linear-gradient(to bottom, #ffe89a, #d7a73b 55%, #8f6215) !important;
 
         box-shadow:
-          0 12px 20px rgba(0,0,0,0.38),
-          inset 0 1px 0 rgba(255,255,255,0.38),
-          inset 0 -12px 18px rgba(0,0,0,0.22) !important;
+          0 10px 16px rgba(0,0,0,0.32),
+          inset 0 1px 0 rgba(255,255,255,0.35),
+          inset 0 -10px 16px rgba(0,0,0,0.22) !important;
 
         cursor: pointer !important;
         text-decoration: none !important;
@@ -312,43 +327,24 @@
       .duelo-card button:hover,
       .mini-table-wrap button:hover {
         transform: translateY(-1px) !important;
-        filter: brightness(1.08) !important;
+        filter: brightness(1.06) !important;
         box-shadow:
-          0 16px 26px rgba(0,0,0,0.50),
-          0 0 18px rgba(255,233,127,0.22),
-          inset 0 1px 0 rgba(255,255,255,0.42),
-          inset 0 -12px 18px rgba(0,0,0,0.20) !important;
-      }
-      .home-actions a:active,
-      .home-controls a:active,
-      .home-controls button:active,
-      .duelo-card a:active,
-      .duelo-card button:active,
-      .mini-table-wrap button:active {
-        transform: translateY(0px) !important;
-        filter: brightness(0.98) !important;
+          0 14px 22px rgba(0,0,0,0.44),
+          0 0 14px rgba(255,233,127,0.18),
+          inset 0 1px 0 rgba(255,255,255,0.38),
+          inset 0 -10px 16px rgba(0,0,0,0.20) !important;
       }
 
-      /* Variante “escura” (secundário): só adicionar class="btn-secondary" no HTML */
+      /* Secundário (escuro) */
       .btn-secondary {
         color: rgba(240,237,210,0.95) !important;
         text-shadow: 0 0 6px #000 !important;
         border: 1px solid rgba(255,204,102,0.42) !important;
         background: linear-gradient(to bottom, rgba(0,0,0,0.62), rgba(0,0,0,0.38)) !important;
         box-shadow:
-          0 12px 20px rgba(0,0,0,0.38),
+          0 10px 16px rgba(0,0,0,0.34),
           inset 0 1px 0 rgba(255,255,255,0.14),
-          inset 0 -12px 18px rgba(0,0,0,0.42) !important;
-      }
-
-      .home-controls {
-        display: flex;
-        gap: 12px;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-top: 14px;
-        position: relative;
-        z-index: 2;
+          inset 0 -10px 16px rgba(0,0,0,0.42) !important;
       }
 
       /* BLOCO 2 */
@@ -380,13 +376,13 @@
         font-family: "Cinzel", serif;
         color: #ffe97f;
         text-shadow: 0 0 4px #000;
-        font-size: 1.05rem;
+        font-size: 1.02rem;
       }
       .duelo-desc {
         margin: 0 0 12px 0;
         color: rgba(240, 237, 210, 0.92);
         line-height: 1.35;
-        font-size: 0.98rem;
+        font-size: 0.96rem;
         text-transform: none !important;
       }
       .duelo-vs {
@@ -394,7 +390,7 @@
         font-family: "Cinzel", serif;
         color: #ffe97f;
         text-shadow: 0 0 6px #000;
-        font-size: 1.2rem;
+        font-size: 1.15rem;
         position: relative;
         z-index: 2;
       }
@@ -420,7 +416,7 @@
         color: #ffe97f;
         text-shadow: 0 0 4px #000;
         background: rgba(0,0,0,0.42);
-        font-size: 0.95rem;
+        font-size: 0.94rem;
       }
       .mini-table td strong {
         font-family: "Cinzel", serif;
@@ -499,7 +495,6 @@
     </aside>
 
     <section class="ranking aba ativa espaco-pos-header" id="inicio">
-      <!-- compat invisível -->
       <div class="hidden-compat">
         <div class="table-container">
           <h2 class="titulo-dentro">Tibia OtServers Ranking</h2>
@@ -548,7 +543,6 @@
           </div>
         </div>
 
-        <!-- BLOCO 1 -->
         <div class="table-container home-block">
           <h2 class="home-title"><span class="home-seal">👑</span>Bloco 1 — Pior jogada do mês</h2>
           <div class="home-headerline"></div>
@@ -581,7 +575,6 @@
           </div>
         </div>
 
-        <!-- BLOCO 2 -->
         <div class="table-container home-block">
           <h2 class="home-title"><span class="home-seal">⚔</span>Bloco 2 — Duelo rápido (A vs B)</h2>
           <div class="home-headerline"></div>
@@ -618,7 +611,6 @@
           </p>
         </div>
 
-        <!-- BLOCO 3 -->
         <div class="table-container home-block">
           <h2 class="home-title"><span class="home-seal">🏰</span>Bloco 3 — Melhor OTServer da atualidade</h2>
           <div class="home-headerline"></div>
