@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="styles.css" />
 
     <style>
-      /* ====== Mantido do seu index ====== */
+      /* ====== Mantido do seu index (compatibilidade) ====== */
       #servidores-wrapper.collapsed {
         max-height: 400px;
         overflow-y: auto;
@@ -307,17 +307,13 @@
         }
       }
 
-      /* =======================
-         FIX DOS CARDS SUMIDOS
-         =======================
-         O flip usa faces ABSOLUTE -> precisa altura no card.
-      */
+      /* ====== FLIP CARD (com altura fixa -> não some) ====== */
       .flip-card {
         perspective: 1000px;
         position: relative;
         width: 100%;
-        height: 420px;           /* <<< FIX PRINCIPAL */
-        min-height: 420px;       /* <<< garante que não colapsa */
+        height: 420px;
+        min-height: 420px;
       }
       @media (max-width: 980px) {
         .flip-card {
@@ -335,12 +331,11 @@
       .flip-inner {
         position: relative;
         width: 100%;
-        height: 100%;            /* <<< FIX COMPLEMENTAR */
+        height: 100%;
         transform-style: preserve-3d;
         transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
         border-radius: 14px;
       }
-
       .flip-card:hover .flip-inner {
         transform: rotateY(180deg);
       }
@@ -359,7 +354,6 @@
         border: 1px solid rgba(255, 204, 102, 0.3);
         box-shadow: 0 18px 28px rgba(0, 0, 0, 0.46), inset 0 0 30px rgba(0, 0, 0, 0.52);
       }
-
       .flip-front {
         transform: rotateY(0deg);
       }
@@ -564,6 +558,7 @@
     </aside>
 
     <section class="ranking aba ativa espaco-pos-header" id="inicio">
+      <!-- compatibilidade antiga, escondida -->
       <div class="hidden-compat">
         <div class="table-container">
           <h2 class="titulo-dentro">Tibia OtServers Ranking</h2>
@@ -582,20 +577,6 @@
             </table>
           </div>
         </div>
-        <div class="filtros-ranking" style="margin-bottom: 20px">
-          <input type="text" id="filtro-nome" placeholder="🔍 Buscar servidor..." />
-          <select id="filtro-versao"><option value="">Todas as versões</option></select>
-          <select id="filtro-origem">
-            <option value="">Todas as origens</option>
-            <option value="Socket">Socket</option>
-            <option value="HTML">HTML</option>
-            <option value="Erro">Erro</option>
-          </select>
-        </div>
-        <div class="table-controls outside">
-          <button id="toggle-table" type="button">Expandir</button>
-          <a class="btn-contraste" href="./envie-clips.html">Envie Clips</a>
-        </div>
       </div>
 
       <div class="home-wrap">
@@ -612,16 +593,15 @@
           </div>
         </div>
 
-        <!-- BLOCO 1 -->
+        <!-- ===================== BLOCO 1 ===================== -->
         <div class="table-container home-block">
           <h2 class="home-title"><span class="home-seal">👑</span>Bloco 1 — Pior jogada do mês (3 jogadas)</h2>
           <div class="home-headerline"></div>
           <p class="home-subtitle">
-            Aqui são <strong>3 jogadas concorrendo</strong>. Passe o mouse (ou toque) pra virar e ver os detalhes.
+            Três jogadas concorrem. Vire o card pra ver <b>personagem</b>, <b>stream</b> e o <b>link do seu vídeo</b>.
           </p>
 
           <div class="tri-grid">
-            <!-- Jogada 1 -->
             <article class="flip-card" data-flip>
               <div class="flip-inner">
                 <div class="flip-face flip-front">
@@ -631,22 +611,19 @@
                   </div>
                   <div class="photo-body">
                     <div class="pill">🎬 Jogada 1</div>
-                    <div class="photo-title">Clique/hover pra ver detalhes</div>
-                    <p class="photo-desc">Passe o mouse (ou toque) pra virar.</p>
+                    <div class="photo-title">Passe o mouse pra virar</div>
+                    <p class="photo-desc">A pior decisão do mês (candidata).</p>
                   </div>
                 </div>
-
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
                     <p class="back-title">Jogada 1 — Detalhes</p>
                     <p class="back-text">Descrição curta do que aconteceu.</p>
-
                     <div class="back-meta">
                       <div class="meta-row"><b>Personagem:</b> Knight Zika</div>
                       <div class="meta-row"><b>Stream:</b> twitch.tv/...</div>
                       <div class="meta-row"><b>Seu vídeo:</b> youtube.com/...&t=123</div>
                     </div>
-
                     <div class="flip-actions">
                       <a class="btn-secondary" href="#" onclick="return false;">▶ Ver no YouTube</a>
                       <button type="button" data-vote data-type="jogadaMes" data-id="1">🗳 Votar</button>
@@ -656,7 +633,6 @@
               </div>
             </article>
 
-            <!-- Jogada 2 -->
             <article class="flip-card" data-flip>
               <div class="flip-inner">
                 <div class="flip-face flip-front">
@@ -666,22 +642,19 @@
                   </div>
                   <div class="photo-body">
                     <div class="pill">🎬 Jogada 2</div>
-                    <div class="photo-title">Clique/hover pra ver detalhes</div>
-                    <p class="photo-desc">Passe o mouse (ou toque) pra virar.</p>
+                    <div class="photo-title">Passe o mouse pra virar</div>
+                    <p class="photo-desc">Candidata do mês.</p>
                   </div>
                 </div>
-
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
                     <p class="back-title">Jogada 2 — Detalhes</p>
                     <p class="back-text">Descrição curta do que aconteceu.</p>
-
                     <div class="back-meta">
                       <div class="meta-row"><b>Personagem:</b> ...</div>
                       <div class="meta-row"><b>Stream:</b> twitch.tv/...</div>
                       <div class="meta-row"><b>Seu vídeo:</b> youtube.com/...&t=...</div>
                     </div>
-
                     <div class="flip-actions">
                       <a class="btn-secondary" href="#" onclick="return false;">▶ Ver no YouTube</a>
                       <button type="button" data-vote data-type="jogadaMes" data-id="2">🗳 Votar</button>
@@ -691,7 +664,6 @@
               </div>
             </article>
 
-            <!-- Jogada 3 -->
             <article class="flip-card" data-flip>
               <div class="flip-inner">
                 <div class="flip-face flip-front">
@@ -701,22 +673,19 @@
                   </div>
                   <div class="photo-body">
                     <div class="pill">🎬 Jogada 3</div>
-                    <div class="photo-title">Clique/hover pra ver detalhes</div>
-                    <p class="photo-desc">Passe o mouse (ou toque) pra virar.</p>
+                    <div class="photo-title">Passe o mouse pra virar</div>
+                    <p class="photo-desc">Candidata do mês.</p>
                   </div>
                 </div>
-
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
                     <p class="back-title">Jogada 3 — Detalhes</p>
                     <p class="back-text">Descrição curta do que aconteceu.</p>
-
                     <div class="back-meta">
                       <div class="meta-row"><b>Personagem:</b> ...</div>
                       <div class="meta-row"><b>Stream:</b> twitch.tv/...</div>
                       <div class="meta-row"><b>Seu vídeo:</b> youtube.com/...&t=...</div>
                     </div>
-
                     <div class="flip-actions">
                       <a class="btn-secondary" href="#" onclick="return false;">▶ Ver no YouTube</a>
                       <button type="button" data-vote data-type="jogadaMes" data-id="3">🗳 Votar</button>
@@ -730,6 +699,226 @@
           <div class="home-controls">
             <a class="btn-secondary" href="#" onclick="return false;">📜 Ver ranking do mês</a>
             <a href="./envie-clips.html">📩 Enviar clip</a>
+          </div>
+        </div>
+
+        <!-- ===================== BLOCO 2 ===================== -->
+        <div class="table-container home-block">
+          <h2 class="home-title"><span class="home-seal">⚔️</span>Bloco 2 — Duelo rápido (A vs B)</h2>
+          <div class="home-headerline"></div>
+          <p class="home-subtitle">
+            Três duelos em destaque (ex.: semana 1, semana 2, semana 3). Vire pra ver descrição e votar.
+          </p>
+
+          <div class="tri-grid">
+            <article class="flip-card" data-flip>
+              <div class="flip-inner">
+                <div class="flip-face flip-front">
+                  <div class="photo-top">
+                    <img src="./duelo1.jpg" alt="Duelo 1" onerror="this.style.display='none';" />
+                    <div class="photo-action">⚔</div>
+                  </div>
+                  <div class="photo-body">
+                    <div class="pill">⚔ Duelo 1</div>
+                    <div class="photo-title">Criador A vs Criador B</div>
+                    <p class="photo-desc">Passe o mouse pra virar e votar.</p>
+                  </div>
+                </div>
+                <div class="flip-face flip-back">
+                  <div class="back-wrap">
+                    <p class="back-title">Duelo 1 — Detalhes</p>
+                    <p class="back-text">Mini descrição do duelo (por que está rolando).</p>
+                    <div class="back-meta">
+                      <div class="meta-row"><b>A:</b> Nome/Canal</div>
+                      <div class="meta-row"><b>B:</b> Nome/Canal</div>
+                      <div class="meta-row"><b>Regra:</b> Quem tiver mais votos vence o mês.</div>
+                    </div>
+                    <div class="flip-actions">
+                      <button type="button" data-vote data-type="duelo" data-id="1A">🗳 Votar A</button>
+                      <button type="button" data-vote data-type="duelo" data-id="1B">🗳 Votar B</button>
+                      <a class="btn-secondary" href="#" onclick="return false;">🔗 Abrir canais</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="flip-card" data-flip>
+              <div class="flip-inner">
+                <div class="flip-face flip-front">
+                  <div class="photo-top">
+                    <img src="./duelo2.jpg" alt="Duelo 2" onerror="this.style.display='none';" />
+                    <div class="photo-action">⚔</div>
+                  </div>
+                  <div class="photo-body">
+                    <div class="pill">⚔ Duelo 2</div>
+                    <div class="photo-title">Criador A vs Criador B</div>
+                    <p class="photo-desc">Passe o mouse pra virar e votar.</p>
+                  </div>
+                </div>
+                <div class="flip-face flip-back">
+                  <div class="back-wrap">
+                    <p class="back-title">Duelo 2 — Detalhes</p>
+                    <p class="back-text">Mini descrição do duelo.</p>
+                    <div class="back-meta">
+                      <div class="meta-row"><b>A:</b> Nome/Canal</div>
+                      <div class="meta-row"><b>B:</b> Nome/Canal</div>
+                      <div class="meta-row"><b>Regra:</b> Votação mensal.</div>
+                    </div>
+                    <div class="flip-actions">
+                      <button type="button" data-vote data-type="duelo" data-id="2A">🗳 Votar A</button>
+                      <button type="button" data-vote data-type="duelo" data-id="2B">🗳 Votar B</button>
+                      <a class="btn-secondary" href="#" onclick="return false;">🔗 Abrir canais</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="flip-card" data-flip>
+              <div class="flip-inner">
+                <div class="flip-face flip-front">
+                  <div class="photo-top">
+                    <img src="./duelo3.jpg" alt="Duelo 3" onerror="this.style.display='none';" />
+                    <div class="photo-action">⚔</div>
+                  </div>
+                  <div class="photo-body">
+                    <div class="pill">⚔ Duelo 3</div>
+                    <div class="photo-title">Criador A vs Criador B</div>
+                    <p class="photo-desc">Passe o mouse pra virar e votar.</p>
+                  </div>
+                </div>
+                <div class="flip-face flip-back">
+                  <div class="back-wrap">
+                    <p class="back-title">Duelo 3 — Detalhes</p>
+                    <p class="back-text">Mini descrição do duelo.</p>
+                    <div class="back-meta">
+                      <div class="meta-row"><b>A:</b> Nome/Canal</div>
+                      <div class="meta-row"><b>B:</b> Nome/Canal</div>
+                      <div class="meta-row"><b>Regra:</b> Votação mensal.</div>
+                    </div>
+                    <div class="flip-actions">
+                      <button type="button" data-vote data-type="duelo" data-id="3A">🗳 Votar A</button>
+                      <button type="button" data-vote data-type="duelo" data-id="3B">🗳 Votar B</button>
+                      <a class="btn-secondary" href="#" onclick="return false;">🔗 Abrir canais</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="home-controls">
+            <a class="btn-secondary" href="#" onclick="return false;">📨 Indicar criador pro próximo duelo</a>
+          </div>
+        </div>
+
+        <!-- ===================== BLOCO 3 ===================== -->
+        <div class="table-container home-block">
+          <h2 class="home-title"><span class="home-seal">🏰</span>Bloco 3 — Melhor OTServer da atualidade</h2>
+          <div class="home-headerline"></div>
+          <p class="home-subtitle">
+            Três servidores em destaque. Vire o card pra ver IP/site/versão e votar no melhor.
+          </p>
+
+          <div class="tri-grid">
+            <article class="flip-card" data-flip>
+              <div class="flip-inner">
+                <div class="flip-face flip-front">
+                  <div class="photo-top">
+                    <img src="./ot1.jpg" alt="OT 1" onerror="this.style.display='none';" />
+                    <div class="photo-action">🏰</div>
+                  </div>
+                  <div class="photo-body">
+                    <div class="pill">🏰 OT 1</div>
+                    <div class="photo-title">Nome do servidor</div>
+                    <p class="photo-desc">Passe o mouse pra virar e votar.</p>
+                  </div>
+                </div>
+                <div class="flip-face flip-back">
+                  <div class="back-wrap">
+                    <p class="back-title">OT 1 — Detalhes</p>
+                    <p class="back-text">Descrição curta do servidor.</p>
+                    <div class="back-meta">
+                      <div class="meta-row"><b>Versão:</b> 8.6</div>
+                      <div class="meta-row"><b>Site:</b> exemplo.com</div>
+                      <div class="meta-row"><b>IP:</b> play.exemplo.com:7171</div>
+                    </div>
+                    <div class="flip-actions">
+                      <a class="btn-secondary" href="#" onclick="return false;">🌐 Abrir site</a>
+                      <button type="button" data-vote data-type="ot" data-id="1">🗳 Votar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="flip-card" data-flip>
+              <div class="flip-inner">
+                <div class="flip-face flip-front">
+                  <div class="photo-top">
+                    <img src="./ot2.jpg" alt="OT 2" onerror="this.style.display='none';" />
+                    <div class="photo-action">🏰</div>
+                  </div>
+                  <div class="photo-body">
+                    <div class="pill">🏰 OT 2</div>
+                    <div class="photo-title">Nome do servidor</div>
+                    <p class="photo-desc">Passe o mouse pra virar e votar.</p>
+                  </div>
+                </div>
+                <div class="flip-face flip-back">
+                  <div class="back-wrap">
+                    <p class="back-title">OT 2 — Detalhes</p>
+                    <p class="back-text">Descrição curta do servidor.</p>
+                    <div class="back-meta">
+                      <div class="meta-row"><b>Versão:</b> 10.x</div>
+                      <div class="meta-row"><b>Site:</b> exemplo.com</div>
+                      <div class="meta-row"><b>IP:</b> play.exemplo.com:7171</div>
+                    </div>
+                    <div class="flip-actions">
+                      <a class="btn-secondary" href="#" onclick="return false;">🌐 Abrir site</a>
+                      <button type="button" data-vote data-type="ot" data-id="2">🗳 Votar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="flip-card" data-flip>
+              <div class="flip-inner">
+                <div class="flip-face flip-front">
+                  <div class="photo-top">
+                    <img src="./ot3.jpg" alt="OT 3" onerror="this.style.display='none';" />
+                    <div class="photo-action">🏰</div>
+                  </div>
+                  <div class="photo-body">
+                    <div class="pill">🏰 OT 3</div>
+                    <div class="photo-title">Nome do servidor</div>
+                    <p class="photo-desc">Passe o mouse pra virar e votar.</p>
+                  </div>
+                </div>
+                <div class="flip-face flip-back">
+                  <div class="back-wrap">
+                    <p class="back-title">OT 3 — Detalhes</p>
+                    <p class="back-text">Descrição curta do servidor.</p>
+                    <div class="back-meta">
+                      <div class="meta-row"><b>Versão:</b> 7.4</div>
+                      <div class="meta-row"><b>Site:</b> exemplo.com</div>
+                      <div class="meta-row"><b>IP:</b> play.exemplo.com:7171</div>
+                    </div>
+                    <div class="flip-actions">
+                      <a class="btn-secondary" href="#" onclick="return false;">🌐 Abrir site</a>
+                      <button type="button" data-vote data-type="ot" data-id="3">🗳 Votar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="home-controls">
+            <a href="servicos.html">📢 Divulgar meu servidor</a>
+            <a class="btn-secondary" href="#" onclick="return false;">🏆 Ver vencedores anteriores</a>
           </div>
         </div>
       </div>
@@ -770,7 +959,7 @@
         });
       }
 
-      // Botões de voto (simulação)
+      // Voto (simulação)
       function votar(tipo, id) {
         alert(`Voto registrado (simulação)\nTipo: ${tipo}\nID: ${id}\n\nDepois a gente liga no Firestore/Functions.`);
       }
