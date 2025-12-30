@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="styles.css" />
 
     <style>
-      /* ====== (Mantido do seu index) ====== */
+      /* ====== Mantido do seu index ====== */
       #servidores-wrapper.collapsed {
         max-height: 400px;
         overflow-y: auto;
@@ -119,262 +119,146 @@
         right: 0.5rem;
       }
 
-      /* ====== (Novo: Home de votação mantendo o estilo) ====== */
-      .home-wrapper {
-        max-width: 1180px;
-        margin: 0 auto;
-        padding: 0 14px;
-      }
-
-      .home-topbar {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin: 14px 0 16px 0;
-      }
-
-      .home-badges {
+      /* ====== Novo: Home organizada (usando sua “cara”) ====== */
+      .home-badges-row {
         display: flex;
         gap: 10px;
-        align-items: center;
-        flex-wrap: wrap;
-      }
-
-      .badge-dourada {
-        background: rgba(0, 0, 0, 0.55);
-        border: 1px solid rgba(255, 204, 102, 0.35);
-        border-radius: 8px;
-        padding: 8px 12px;
-        color: #ffe97f;
-        font-family: "Cinzel", serif;
-        text-shadow: 0 0 4px #000;
-        font-size: 0.92rem;
-      }
-
-      .home-actions {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        align-items: center;
-      }
-
-      .btn-home {
-        display: inline-flex;
-        align-items: center;
         justify-content: center;
-        gap: 8px;
-        padding: 10px 14px;
-        border-radius: 8px;
-        text-decoration: none;
-        font-family: "Cinzel", serif;
-        cursor: pointer;
-        border: 1px solid rgba(255, 204, 102, 0.35);
-        background: rgba(0, 0, 0, 0.55);
-        color: #ffe97f;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.45);
-      }
-      .btn-home:hover {
-        filter: brightness(1.08);
+        align-items: center;
+        flex-wrap: wrap;
+        margin-bottom: 6px;
       }
 
-      .home-grid {
-        display: grid;
-        grid-template-columns: 1.25fr 0.95fr;
-        gap: 16px;
-        align-items: start;
+      .home-actions-row {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        margin: 12px 0 18px 0;
       }
 
-      @media (max-width: 980px) {
-        .home-grid {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      .card-epica {
-        background: rgba(0, 0, 0, 0.55);
-        border: 1px solid rgba(255, 204, 102, 0.25);
-        border-radius: 12px;
-        padding: 14px;
-        box-shadow: 0 0 18px rgba(0, 0, 0, 0.45);
-      }
-
-      .card-titulo {
-        margin: 0 0 10px 0;
-        font-family: "Cinzel", serif;
-        color: #ffe97f;
-        text-shadow: 0 0 4px #000, 0 0 6px rgba(255, 215, 0, 0.25);
-        letter-spacing: 0.5px;
-        font-size: 1.05rem;
-      }
-
-      .card-sub {
-        margin: 0 0 12px 0;
-        color: rgba(240, 237, 210, 0.88);
-        font-size: 0.95rem;
-        line-height: 1.35;
-      }
-
-      .mini-linha {
-        height: 1px;
-        background: rgba(255, 204, 102, 0.18);
-        margin: 12px 0;
-      }
-
-      .linha-info {
+      /* Inputs da home com a mesma pegada dos filtros */
+      .home-form {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 10px;
+        gap: 12px;
+        margin-top: 12px;
       }
-      @media (max-width: 640px) {
-        .linha-info {
+      @media (max-width: 860px) {
+        .home-form {
           grid-template-columns: 1fr;
         }
       }
 
-      .campo {
+      .home-form .campo {
         display: flex;
         flex-direction: column;
         gap: 6px;
       }
-      .campo label {
+      .home-form label {
         font-family: "Cinzel", serif;
-        color: rgba(255, 233, 127, 0.95);
-        font-size: 0.85rem;
-        text-shadow: 0 0 4px #000;
-      }
-      .campo input {
-        background: rgba(10, 10, 10, 0.75);
-        border: 1px solid rgba(255, 204, 102, 0.22);
-        border-radius: 8px;
-        color: #f0edd2;
-        padding: 10px 10px;
-        outline: none;
-        font-size: 0.95rem;
-      }
-      .campo input::placeholder {
-        color: rgba(240, 237, 210, 0.55);
-      }
-
-      .acoes {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        align-items: center;
-        margin-top: 10px;
-      }
-
-      .btn-acao {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 10px 14px;
-        border-radius: 8px;
-        border: 1px solid rgba(255, 204, 102, 0.35);
-        background: rgba(0, 0, 0, 0.55);
         color: #ffe97f;
-        font-family: "Cinzel", serif;
-        cursor: pointer;
-        text-decoration: none;
-      }
-      .btn-acao:hover {
-        filter: brightness(1.08);
-      }
-
-      .tag-regra {
-        margin-left: auto;
-        color: rgba(240, 237, 210, 0.8);
+        text-shadow: 0 0 4px #000;
         font-size: 0.9rem;
       }
-      .tag-regra strong {
-        color: #ffe97f;
+      .home-form input {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .home-form .span-2 {
+        grid-column: 1 / -1;
+      }
+
+      .home-texto {
+        color: rgba(240, 237, 210, 0.9);
+        line-height: 1.4;
+        margin: 8px 0 0 0;
+        text-align: center;
       }
 
       .duelo-grid {
         display: grid;
-        grid-template-columns: 1fr 80px 1fr;
-        gap: 12px;
-        align-items: center;
+        grid-template-columns: 1fr 120px 1fr;
+        gap: 14px;
+        align-items: stretch;
+        margin-top: 10px;
       }
-      @media (max-width: 720px) {
+      @media (max-width: 860px) {
         .duelo-grid {
           grid-template-columns: 1fr;
         }
       }
 
-      .duelo-vs {
+      .duelo-col {
+        background: rgba(0, 0, 0, 0.35);
+        border: 1px solid rgba(255, 204, 102, 0.18);
+        border-radius: 10px;
+        padding: 14px;
         text-align: center;
-        font-family: "Cinzel", serif;
-        color: rgba(255, 233, 127, 0.9);
-        text-shadow: 0 0 6px #000;
-        font-size: 1.1rem;
       }
 
-      .mini-card {
-        background: rgba(0, 0, 0, 0.45);
-        border: 1px solid rgba(255, 204, 102, 0.2);
-        border-radius: 12px;
-        padding: 12px;
-      }
-
-      .mini-card h4 {
-        margin: 0 0 6px 0;
+      .duelo-vs {
+        display: flex;
+        justify-content: center;
+        align-items: center;
         font-family: "Cinzel", serif;
         color: #ffe97f;
-        font-size: 0.98rem;
+        text-shadow: 0 0 6px #000;
+        font-size: 1.3rem;
       }
-      .mini-card p {
-        margin: 0 0 10px 0;
-        color: rgba(240, 237, 210, 0.85);
-        font-size: 0.92rem;
+
+      .duelo-nome {
+        font-family: "Cinzel", serif;
+        color: #ffe97f;
+        text-shadow: 0 0 4px #000;
+        margin: 0 0 8px 0;
+        font-size: 1.05rem;
+      }
+
+      .duelo-desc {
+        color: rgba(240, 237, 210, 0.88);
+        margin: 0 0 12px 0;
         line-height: 1.35;
       }
 
-      .lista-top {
-        display: grid;
-        gap: 10px;
+      /* Lista estilo tabela (pra manter “organização”) */
+      .mini-tabela {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
       }
-
-      .item-top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        padding: 10px 12px;
-        background: rgba(0, 0, 0, 0.45);
-        border: 1px solid rgba(255, 204, 102, 0.2);
-        border-radius: 10px;
+      .mini-tabela th,
+      .mini-tabela td {
+        padding: 10px 10px;
+        border-bottom: 1px solid rgba(255, 204, 102, 0.14);
+        color: rgba(240, 237, 210, 0.92);
       }
-
-      .item-top strong {
+      .mini-tabela th {
+        font-family: "Cinzel", serif;
+        color: #ffe97f;
+        text-shadow: 0 0 4px #000;
+        background: rgba(0, 0, 0, 0.25);
+      }
+      .mini-tabela td strong {
         font-family: "Cinzel", serif;
         color: #ffe97f;
         text-shadow: 0 0 4px #000;
       }
-      .item-top span {
-        color: rgba(240, 237, 210, 0.85);
-        font-size: 0.92rem;
-      }
 
-      .rodape-home {
-        margin-top: 16px;
-        text-align: center;
-        color: rgba(240, 237, 210, 0.8);
-        font-size: 0.9rem;
+      /* Não mostrar o ranking antigo, mas manter IDs pro script.js não quebrar */
+      .hidden-compat {
+        display: none !important;
       }
     </style>
 
-    <!-- Ajuste automático só pro GitHub Pages (pra não quebrar links/arquivos) -->
+    <!-- Ajuste automático só pro GitHub Pages (pra não quebrar caminhos) -->
     <script>
       (function () {
         const isGithubPages = location.hostname.endsWith("github.io");
         if (!isGithubPages) return;
-
-        // Ajuste o nome do repo se você trocar no futuro
-        const repoBase = "/Royal_ot_server_list_13/";
         const base = document.createElement("base");
-        base.href = repoBase;
+        base.href = "/Royal_ot_server_list_13/";
         document.head.prepend(base);
       })();
     </script>
@@ -457,169 +341,197 @@
       </ul>
     </aside>
 
-    <!-- ====== NOVA HOME (somente o miolo foi trocado) ====== -->
+    <!-- ====== HOME NOVA (organizada) ====== -->
     <section class="ranking aba ativa espaco-pos-header" id="inicio">
-      <div class="home-wrapper">
-        <div class="home-topbar">
-          <div class="home-badges">
-            <div class="badge-dourada">🏆 Votação <strong>mensal</strong></div>
-            <div class="badge-dourada">
-              ⏳ 1 voto a cada <strong>6 horas</strong>
-            </div>
-            <div class="badge-dourada">
-              🔐 Logado vale <strong>2 pontos</strong>
-            </div>
+      <div class="titulo-epico"></div>
+
+      <!-- “Faixa” superior (no lugar dos filtros do ranking) -->
+      <div class="home-badges-row">
+        <div class="tibia-oficial-banner">🏆 VOTAÇÃO MENSAL</div>
+        <div class="tibia-oficial-banner">⏳ 1 VOTO A CADA 6 HORAS</div>
+        <div class="tibia-oficial-banner">🔐 LOGADO VALE 2 PONTOS</div>
+      </div>
+
+      <div class="home-actions-row">
+        <a class="btn-contraste" href="./envie-clips.html">Envie Clips</a>
+        <a class="btn-contraste" href="top.html">Top Live</a>
+      </div>
+
+      <!-- BLOCO 1 -->
+      <div class="table-container">
+        <h2 class="titulo-dentro">Bloco 1 — Pior jogada do mês</h2>
+
+        <p class="home-texto">
+          Cada mês tem <strong>1 jogada ruim</strong> (de um dos seus vídeos). A
+          galera vota e o campeão vira o “Bracinho de Dino” do mês.
+        </p>
+
+        <div class="home-form filtros-ranking" style="margin-top: 14px;">
+          <div class="campo">
+            <label>Personagem</label>
+            <input type="text" placeholder="Ex: Knight Zika" disabled />
           </div>
 
-          <div class="home-actions">
-            <a class="btn-home" href="./envie-clips.html">📩 Envie Clips</a>
-            <a class="btn-home" href="top.html">📺 Top Live</a>
+          <div class="campo">
+            <label>Link da stream</label>
+            <input type="text" placeholder="https://twitch.tv/..." disabled />
+          </div>
+
+          <div class="campo span-2">
+            <label>Link do seu vídeo (ponto exato da jogada)</label>
+            <input
+              type="text"
+              placeholder="https://youtube.com/...&t=123"
+              disabled
+            />
           </div>
         </div>
 
-        <div class="home-grid">
-          <!-- BLOCO 1 -->
-          <div class="card-epica">
-            <h2 class="card-titulo">Bloco 1 — Pior jogada do mês</h2>
-            <p class="card-sub">
-              Aqui entra a jogada ruim do mês (1 jogada). A galera vota e o
-              resultado fica registrado até virar o “Bracinho de Dino” oficial.
+        <div class="table-controls outside" style="justify-content: center;">
+          <a class="btn-contraste" href="#" onclick="return false;">Ver jogada no YouTube</a>
+          <button id="btn-votar-bloco1" type="button">Votar</button>
+        </div>
+      </div>
+
+      <!-- BLOCO 2 -->
+      <div class="table-container" style="margin-top: 18px;">
+        <h2 class="titulo-dentro">Bloco 2 — Duelo rápido (A vs B)</h2>
+
+        <p class="home-texto">
+          Dois criadores de conteúdo de Tibia se enfrentam. A votação decide o
+          vencedor do mês.
+        </p>
+
+        <div class="duelo-grid">
+          <div class="duelo-col">
+            <div class="duelo-nome">Criador A</div>
+            <p class="duelo-desc">
+              Nome/canal + mini descrição.
             </p>
 
-            <div class="linha-info">
-              <div class="campo">
-                <label>Personagem</label>
-                <input type="text" placeholder="Ex: Knight Zika" disabled />
-              </div>
-              <div class="campo">
-                <label>Link da stream</label>
-                <input type="text" placeholder="https://twitch.tv/..." disabled />
-              </div>
-              <div class="campo" style="grid-column: 1 / -1">
-                <label>Link do seu vídeo (ponto exato da jogada)</label>
-                <input
-                  type="text"
-                  placeholder="https://youtube.com/...&t=123"
-                  disabled
-                />
-              </div>
+            <div class="table-controls outside" style="justify-content:center;">
+              <button id="btn-votar-a" type="button">Votar A</button>
+              <a class="btn-contraste" href="#" onclick="return false;">Abrir canal</a>
             </div>
+          </div>
 
-            <div class="acoes">
-              <a class="btn-acao" href="#" onclick="return false;">▶ Ver jogada no YouTube</a>
-              <button class="btn-acao" type="button" onclick="alert('Aqui vai a votação do Bloco 1 (mensal).');">
-                🗳️ Votar: “Pior jogada do mês”
-              </button>
-              <span class="tag-regra"
-                >Votação livre, com segurança anti-bot.</span
-              >
-            </div>
+          <div class="duelo-vs">VS</div>
 
-            <div class="mini-linha"></div>
-
-            <p class="card-sub" style="margin: 0;">
-              <strong>Dica:</strong> depois a gente liga isso no seu sistema real (Firestore/Functions),
-              mas aqui você já consegue ver o layout certinho no navegador.
+          <div class="duelo-col">
+            <div class="duelo-nome">Criador B</div>
+            <p class="duelo-desc">
+              Nome/canal + mini descrição.
             </p>
-          </div>
 
-          <!-- COLUNA DIREITA: BLOCO 2 + BLOCO 3 -->
-          <div style="display: grid; gap: 16px;">
-            <!-- BLOCO 2 -->
-            <div class="card-epica">
-              <h2 class="card-titulo">Bloco 2 — Duelo rápido (A vs B)</h2>
-              <p class="card-sub">
-                Dois criadores de Tibia se enfrentam por popularidade do mês.
-              </p>
-
-              <div class="duelo-grid">
-                <div class="mini-card">
-                  <h4>Criador A</h4>
-                  <p>
-                    Nome/Canal do criador + mini descrição.
-                  </p>
-                  <div class="acoes" style="margin-top: 0;">
-                    <button class="btn-acao" type="button" onclick="alert('Voto no Criador A');">
-                      Votar A
-                    </button>
-                    <a class="btn-acao" href="#" onclick="return false;">Abrir canal</a>
-                  </div>
-                </div>
-
-                <div class="duelo-vs">VS</div>
-
-                <div class="mini-card">
-                  <h4>Criador B</h4>
-                  <p>
-                    Nome/Canal do criador + mini descrição.
-                  </p>
-                  <div class="acoes" style="margin-top: 0;">
-                    <button class="btn-acao" type="button" onclick="alert('Voto no Criador B');">
-                      Votar B
-                    </button>
-                    <a class="btn-acao" href="#" onclick="return false;">Abrir canal</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="mini-linha"></div>
-
-              <p class="card-sub" style="margin: 0;">
-                <strong>Ideia pra escolher os duelistas:</strong> “Desafio da Semana”
-                — entram os 2 criadores mais citados pela comunidade (formulário rápido) ou os 2
-                com maior engajamento em clips enviados.
-              </p>
-            </div>
-
-            <!-- BLOCO 3 -->
-            <div class="card-epica">
-              <h2 class="card-titulo">Bloco 3 — Melhor OTServer da atualidade</h2>
-              <p class="card-sub">
-                Lista do mês com votação simples (logado vale 2 pontos).
-              </p>
-
-              <div class="lista-top">
-                <div class="item-top">
-                  <div>
-                    <strong>OTServer Exemplo #1</strong><br />
-                    <span>Versão: 7.6 • Online: 120 • Tipo: Retro</span>
-                  </div>
-                  <button class="btn-acao" type="button" onclick="alert('Voto no OT #1');">
-                    Votar
-                  </button>
-                </div>
-
-                <div class="item-top">
-                  <div>
-                    <strong>OTServer Exemplo #2</strong><br />
-                    <span>Versão: 8.0 • Online: 80 • Tipo: Custom</span>
-                  </div>
-                  <button class="btn-acao" type="button" onclick="alert('Voto no OT #2');">
-                    Votar
-                  </button>
-                </div>
-
-                <div class="item-top">
-                  <div>
-                    <strong>OTServer Exemplo #3</strong><br />
-                    <span>Versão: 7.4 • Online: 45 • Tipo: Hard</span>
-                  </div>
-                  <button class="btn-acao" type="button" onclick="alert('Voto no OT #3');">
-                    Votar
-                  </button>
-                </div>
-              </div>
-
-              <div class="rodape-home">
-                Quer entrar na lista? Divulgue o servidor e peça pra comunidade votar.
-              </div>
+            <div class="table-controls outside" style="justify-content:center;">
+              <button id="btn-votar-b" type="button">Votar B</button>
+              <a class="btn-contraste" href="#" onclick="return false;">Abrir canal</a>
             </div>
           </div>
+        </div>
+
+        <p class="home-texto" style="margin-top: 14px;">
+          <strong>Como escolher quem entra no duelo:</strong> “desafio da comunidade”
+          — entra quem tiver mais indicações via formulário (ou os 2 mais citados nos clips do mês).
+        </p>
+      </div>
+
+      <!-- BLOCO 3 -->
+      <div class="table-container" style="margin-top: 18px;">
+        <h2 class="titulo-dentro">Bloco 3 — Melhor OTServer da atualidade</h2>
+
+        <p class="home-texto">
+          Votação mensal de OTServer. Logado vale 2 pontos. Livre vale 1 ponto.
+        </p>
+
+        <div style="overflow-x:auto;">
+          <table class="mini-tabela">
+            <thead>
+              <tr>
+                <th>Servidor</th>
+                <th>Versão</th>
+                <th>Online</th>
+                <th style="text-align:right;">Ação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>OT Exemplo #1</strong></td>
+                <td>7.6</td>
+                <td>120</td>
+                <td style="text-align:right;">
+                  <button type="button">Votar</button>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>OT Exemplo #2</strong></td>
+                <td>8.0</td>
+                <td>80</td>
+                <td style="text-align:right;">
+                  <button type="button">Votar</button>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>OT Exemplo #3</strong></td>
+                <td>7.4</td>
+                <td>45</td>
+                <td style="text-align:right;">
+                  <button type="button">Votar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="table-controls outside" style="justify-content:center;">
+          <a class="btn-contraste" href="servicos.html">Divulgar meu servidor</a>
+        </div>
+      </div>
+
+      <!-- ===== Compat: elementos antigos escondidos pra não quebrar o script.js ===== -->
+      <div class="hidden-compat">
+        <div class="filtros-ranking" style="margin-bottom: 20px">
+          <input type="text" id="filtro-nome" placeholder="🔍 Buscar servidor..." />
+          <select id="filtro-versao">
+            <option value="">Todas as versões</option>
+          </select>
+          <select id="filtro-origem">
+            <option value="">Todas as origens</option>
+            <option value="Socket">Socket</option>
+            <option value="HTML">HTML</option>
+            <option value="Erro">Erro</option>
+          </select>
+        </div>
+
+        <div class="table-container">
+          <h2 class="titulo-dentro">Tibia OtServers Ranking</h2>
+          <div id="servidores-wrapper" class="collapsed">
+            <table>
+              <thead>
+                <tr>
+                  <th onclick="ordenarPor('Servidor')">Servidor ⬍</th>
+                  <th onclick="ordenarPor('Versão')">Versão ⬍</th>
+                  <th onclick="ordenarPor('Jogadores Online')">Jogadores Online ⬍</th>
+                  <th>Origem</th>
+                  <th>Observação</th>
+                </tr>
+              </thead>
+              <tbody id="tabela-servidores"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="table-controls outside">
+          <button id="toggle-table" type="button">Expandir</button>
+          <a class="btn-contraste" href="./envie-clips.html">Envie Clips</a>
         </div>
       </div>
     </section>
 
-    <!-- Mantido: JS só do menu lateral -->
+    <!-- Mantém seu JS principal (pra login/radio/etc) -->
+    <script type="module" src="./script.js"></script>
+
+    <!-- Mantido: JS do menu lateral -->
     <script>
       const menuToggle = document.getElementById("menu-toggle");
       const menuClose = document.getElementById("menu-close");
@@ -631,6 +543,17 @@
       });
       menuClose.addEventListener("click", () => {
         sideMenu.setAttribute("aria-hidden", "true");
+      });
+
+      // placeholders (não quebra nada)
+      document.getElementById("btn-votar-bloco1")?.addEventListener("click", () => {
+        alert("Votação do Bloco 1 (mensal) — aqui vamos ligar no sistema depois.");
+      });
+      document.getElementById("btn-votar-a")?.addEventListener("click", () => {
+        alert("Voto no Criador A — aqui vamos ligar no sistema depois.");
+      });
+      document.getElementById("btn-votar-b")?.addEventListener("click", () => {
+        alert("Voto no Criador B — aqui vamos ligar no sistema depois.");
       });
     </script>
   </body>
