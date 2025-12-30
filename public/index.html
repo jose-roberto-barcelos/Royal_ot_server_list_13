@@ -119,13 +119,16 @@
         right: 0.5rem;
       }
 
-      /* ====== Home nova (controle TOTAL de tipografia e organização) ====== */
+      /* ====== Home nova: “vida” sem bagunçar ====== */
+      .hidden-compat {
+        display: none !important;
+      }
+
       .home-wrap {
         max-width: 1120px;
         margin: 0 auto;
       }
 
-      /* Barra superior (badges + botões) */
       .home-top {
         display: grid;
         grid-template-columns: 1fr;
@@ -143,13 +146,14 @@
       .home-badge {
         background: rgba(0, 0, 0, 0.55);
         border: 1px solid rgba(255, 204, 102, 0.28);
-        border-radius: 8px;
+        border-radius: 9px;
         padding: 8px 12px;
         font-family: "Cinzel", serif;
         color: #ffe97f;
         text-shadow: 0 0 4px #000;
         font-size: 0.9rem;
         letter-spacing: 0.3px;
+        box-shadow: 0 0 18px rgba(0, 0, 0, 0.35);
       }
 
       .home-actions {
@@ -158,18 +162,62 @@
         justify-content: center;
         flex-wrap: wrap;
       }
-
-      /* Botões do seu CSS já são grandes; aqui eu piso em cima só na HOME */
       .home-actions .btn-contraste {
         font-size: 0.95rem !important;
         padding: 10px 14px !important;
         min-width: 160px;
         text-align: center;
+        transition: filter 0.15s ease, transform 0.15s ease;
+      }
+      .home-actions .btn-contraste:hover {
+        filter: brightness(1.08);
+        transform: translateY(-1px);
       }
 
-      /* Blocos usando o seu "table-container", mas com título nosso (não usa titulo-dentro) */
+      /* BLOCO: glow, runa-line, hover */
       .home-block {
         margin-top: 16px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      /* aplica um “aura” só na home sem mexer no styles.css */
+      .home-block.table-container {
+        border: 1px solid rgba(255, 204, 102, 0.22);
+        box-shadow: 0 0 26px rgba(0, 0, 0, 0.45);
+        transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      }
+      .home-block.table-container:hover {
+        transform: translateY(-2px);
+        border-color: rgba(255, 204, 102, 0.35);
+        box-shadow: 0 0 34px rgba(0, 0, 0, 0.55);
+      }
+
+      /* brilho dourado suave no topo do bloco */
+      .home-block::before {
+        content: "";
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        width: 520px;
+        height: 120px;
+        transform: translateX(-50%);
+        background: radial-gradient(circle, rgba(255, 233, 127, 0.18), rgba(0, 0, 0, 0));
+        pointer-events: none;
+        opacity: 0.9;
+      }
+
+      .home-headerline {
+        width: min(620px, 92%);
+        height: 2px;
+        margin: 10px auto 0 auto;
+        background: linear-gradient(
+          to right,
+          rgba(255, 233, 127, 0),
+          rgba(255, 233, 127, 0.55),
+          rgba(255, 233, 127, 0)
+        );
+        box-shadow: 0 0 10px rgba(255, 233, 127, 0.08);
       }
 
       .home-title {
@@ -179,7 +227,28 @@
         color: #ffe97f;
         text-shadow: 0 0 4px #000, 0 0 10px rgba(0, 0, 0, 0.6);
         letter-spacing: 0.8px;
-        font-size: clamp(1.05rem, 1.2vw, 1.35rem); /* << diminui títulos */
+        font-size: clamp(1.05rem, 1.2vw, 1.35rem);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+      }
+
+      .home-seal {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 204, 102, 0.35);
+        background: rgba(0, 0, 0, 0.45);
+        box-shadow: 0 0 14px rgba(0, 0, 0, 0.35);
+        color: #ffe97f;
+        text-shadow: 0 0 4px #000;
+        font-size: 0.95rem;
+        flex: 0 0 auto;
       }
 
       .home-subtitle {
@@ -188,11 +257,10 @@
         text-align: center;
         color: rgba(240, 237, 210, 0.92);
         line-height: 1.45;
-        font-size: clamp(0.95rem, 1.05vw, 1.05rem); /* << texto sob controle */
-        text-transform: none !important; /* evita CAPS gigante de CSS externo */
+        font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+        text-transform: none !important;
       }
 
-      /* Form do bloco 1 */
       .home-form {
         max-width: 920px;
         margin: 14px auto 0 auto;
@@ -236,7 +304,6 @@
         grid-column: 1 / -1;
       }
 
-      /* Ações */
       .home-controls {
         display: flex;
         gap: 12px;
@@ -249,9 +316,14 @@
         font-size: 0.95rem !important;
         padding: 10px 14px !important;
         min-width: 160px;
+        transition: filter 0.15s ease, transform 0.15s ease;
+      }
+      .home-controls .btn-contraste:hover,
+      .home-controls button:hover {
+        filter: brightness(1.08);
+        transform: translateY(-1px);
       }
 
-      /* Bloco 2 (duelo) */
       .duelo-grid {
         max-width: 980px;
         margin: 14px auto 0 auto;
@@ -272,6 +344,7 @@
         border-radius: 10px;
         padding: 14px;
         text-align: center;
+        box-shadow: inset 0 0 22px rgba(0, 0, 0, 0.35);
       }
 
       .duelo-name {
@@ -279,7 +352,7 @@
         font-family: "Cinzel", serif;
         color: #ffe97f;
         text-shadow: 0 0 4px #000;
-        font-size: 1.05rem; /* menor */
+        font-size: 1.05rem;
       }
 
       .duelo-desc {
@@ -298,7 +371,6 @@
         font-size: 1.2rem;
       }
 
-      /* Bloco 3 (mini tabela) */
       .mini-table-wrap {
         max-width: 980px;
         margin: 12px auto 0 auto;
@@ -330,11 +402,6 @@
       }
       .mini-table td:last-child {
         text-align: right;
-      }
-
-      /* Compat hidden: script.js mexe aqui e NÃO estraga os blocos visíveis */
-      .hidden-compat {
-        display: none !important;
       }
     </style>
 
@@ -428,7 +495,7 @@
     </aside>
 
     <section class="ranking aba ativa espaco-pos-header" id="inicio">
-      <!-- ===== COMPAT (invisível) pra script.js mexer e não quebrar tua home) ===== -->
+      <!-- COMPAT (invisível) -->
       <div class="hidden-compat">
         <div class="table-container">
           <h2 class="titulo-dentro">Tibia OtServers Ranking</h2>
@@ -447,7 +514,6 @@
             </table>
           </div>
         </div>
-
         <div class="filtros-ranking" style="margin-bottom: 20px">
           <input type="text" id="filtro-nome" placeholder="🔍 Buscar servidor..." />
           <select id="filtro-versao">
@@ -460,14 +526,13 @@
             <option value="Erro">Erro</option>
           </select>
         </div>
-
         <div class="table-controls outside">
           <button id="toggle-table" type="button">Expandir</button>
           <a class="btn-contraste" href="./envie-clips.html">Envie Clips</a>
         </div>
       </div>
 
-      <!-- ===== HOME VISÍVEL ===== -->
+      <!-- HOME -->
       <div class="home-wrap">
         <div class="home-top">
           <div class="home-badges">
@@ -475,7 +540,6 @@
             <div class="home-badge">⏳ 1 voto a cada 6 horas</div>
             <div class="home-badge">🔐 Logado vale 2 pontos</div>
           </div>
-
           <div class="home-actions">
             <a class="btn-contraste" href="./envie-clips.html">Envie Clips</a>
             <a class="btn-contraste" href="top.html">Top Live</a>
@@ -484,7 +548,12 @@
 
         <!-- BLOCO 1 -->
         <div class="table-container home-block">
-          <h2 class="home-title">Bloco 1 — Pior jogada do mês</h2>
+          <h2 class="home-title">
+            <span class="home-seal">👑</span>
+            Bloco 1 — Pior jogada do mês
+          </h2>
+          <div class="home-headerline"></div>
+
           <p class="home-subtitle">
             Todo mês entra <strong>1 jogada ruim</strong> (de um dos seus vídeos).
             A galera vota e o campeão vira o “Bracinho de Dino” do mês.
@@ -519,7 +588,12 @@
 
         <!-- BLOCO 2 -->
         <div class="table-container home-block">
-          <h2 class="home-title">Bloco 2 — Duelo rápido (A vs B)</h2>
+          <h2 class="home-title">
+            <span class="home-seal">⚔</span>
+            Bloco 2 — Duelo rápido (A vs B)
+          </h2>
+          <div class="home-headerline"></div>
+
           <p class="home-subtitle">
             Dois criadores de conteúdo de Tibia se enfrentam. A votação decide o vencedor do mês.
           </p>
@@ -554,7 +628,12 @@
 
         <!-- BLOCO 3 -->
         <div class="table-container home-block">
-          <h2 class="home-title">Bloco 3 — Melhor OTServer da atualidade</h2>
+          <h2 class="home-title">
+            <span class="home-seal">🏰</span>
+            Bloco 3 — Melhor OTServer da atualidade
+          </h2>
+          <div class="home-headerline"></div>
+
           <p class="home-subtitle">
             Votação mensal de OTServer. Logado vale 2 pontos. Livre vale 1 ponto.
           </p>
@@ -599,10 +678,8 @@
       </div>
     </section>
 
-    <!-- Mantém seu JS principal (login/radio/etc) -->
     <script type="module" src="./script.js"></script>
 
-    <!-- Mantido: JS do menu lateral + placeholders -->
     <script>
       const menuToggle = document.getElementById("menu-toggle");
       const menuClose = document.getElementById("menu-close");
