@@ -99,64 +99,39 @@
         right: 0.5rem;
       }
 
-      /* ====== Ouro brilhante (NOVO) ====== */
+      /* ====== NEON DOURADO (NOVO) ======
+         - Sem texto transparente
+         - Cor sólida muito viva + glow forte
+      */
       :root {
-        --gold-1: #fff6bf;  /* highlight */
-        --gold-2: #ffe77a;  /* main */
-        --gold-3: #ffcf3a;  /* edge */
-        --gold-4: #b26a00;  /* deep */
+        --gold-neon: #fff14a;    /* amarelo neon */
+        --gold-hot:  #ffd400;    /* amarelo quente */
+        --gold-core: #ffea79;    /* brilho central */
       }
 
-      .gold-shine {
-        color: var(--gold-2);
-        text-shadow:
-          0 1px 0 rgba(0,0,0,0.85),
-          0 0 6px rgba(0,0,0,0.75),
-          0 0 10px rgba(255,231,122,0.35),
-          0 0 18px rgba(255,207,58,0.22);
-      }
-
-      .gold-gradient-text {
-        background: linear-gradient(to bottom, var(--gold-1), var(--gold-2) 45%, var(--gold-3));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        text-shadow:
-          0 1px 0 rgba(0,0,0,0.85),
-          0 0 6px rgba(0,0,0,0.75),
-          0 0 10px rgba(255,231,122,0.35),
-          0 0 18px rgba(255,207,58,0.22);
-      }
-
-      /* aplicar brilho em pontos-chave */
+      /* aplica neon nos títulos principais */
       .home-title,
       .photo-title,
       .back-title,
       .pill,
-      .meta-row b {
-        background: linear-gradient(to bottom, var(--gold-1), var(--gold-2) 45%, var(--gold-3));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        text-shadow:
-          0 1px 0 rgba(0,0,0,0.88),
-          0 0 6px rgba(0,0,0,0.75),
-          0 0 10px rgba(255,231,122,0.35),
-          0 0 18px rgba(255,207,58,0.22);
-      }
-
-      /* negritos nos parágrafos ficam mais “ouro” */
+      .meta-row b,
       .home-subtitle b,
       .back-text b {
-        background: linear-gradient(to bottom, var(--gold-1), var(--gold-2) 45%, var(--gold-3));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
+        color: var(--gold-neon) !important;
         text-shadow:
-          0 1px 0 rgba(0,0,0,0.88),
-          0 0 6px rgba(0,0,0,0.75),
-          0 0 10px rgba(255,231,122,0.35),
-          0 0 18px rgba(255,207,58,0.22);
+          0 0 2px rgba(255,255,255,0.55),
+          0 0 8px rgba(255,241,74,0.55),
+          0 0 16px rgba(255,212,0,0.45),
+          0 0 26px rgba(255,170,0,0.30),
+          0 0 40px rgba(255,212,0,0.20) !important;
+      }
+
+      /* linha do bloco mais viva */
+      .home-headerline {
+        filter: brightness(1.25);
+        box-shadow:
+          0 0 10px rgba(255,241,74,0.22),
+          0 0 18px rgba(255,212,0,0.18);
       }
 
       .hidden-compat {
@@ -287,7 +262,7 @@
         inset: 0;
         pointer-events: none;
         background: radial-gradient(circle at top, rgba(255, 233, 127, 0.18), rgba(0, 0, 0, 0) 45%),
-          radial-gradient(circle at bottom, rgba(0, 0, 0, 0.6), rgba(0,  0, 0, 0) 60%);
+          radial-gradient(circle at bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 60%);
       }
 
       .home-title {
@@ -316,8 +291,10 @@
         border: 1px solid rgba(255, 204, 102, 0.55);
         background: rgba(0, 0, 0, 0.55);
         box-shadow: 0 0 18px rgba(0, 0, 0, 0.55);
-        color: #ffe97f;
-        text-shadow: 0 0 4px #000;
+        color: var(--gold-core);
+        text-shadow:
+          0 0 6px rgba(255,241,74,0.35),
+          0 0 14px rgba(255,212,0,0.25);
         font-size: 0.9rem;
         flex: 0 0 auto;
       }
@@ -329,10 +306,9 @@
         background: linear-gradient(
           to right,
           rgba(255, 233, 127, 0),
-          rgba(255, 233, 127, 0.85),
+          rgba(255, 241, 74, 0.95),
           rgba(255, 233, 127, 0)
         );
-        box-shadow: 0 0 18px rgba(255, 233, 127, 0.12);
         position: relative;
         z-index: 2;
       }
@@ -424,7 +400,7 @@
       .photo-top {
         position: relative;
         height: 55%;
-        background: radial-gradient(circle at 30% 20%, rgba(255, 233, 127, 0.12), rgba(0, 0, 0, 0) 42%),
+        background: radial-gradient(circle at 30% 20%, rgba(255, 241, 74, 0.12), rgba(0, 0, 0, 0) 42%),
           linear-gradient(to bottom, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.75));
       }
       .photo-top img {
@@ -444,12 +420,16 @@
         border-radius: 10px;
         background: rgba(0, 0, 0, 0.62);
         border: 1px solid rgba(255, 204, 102, 0.35);
-        color: #ffe97f;
+        color: var(--gold-neon);
         display: grid;
         place-items: center;
         font-size: 1.15rem;
-        box-shadow: 0 10px 16px rgba(0, 0, 0, 0.45);
-        text-shadow: 0 0 6px #000;
+        box-shadow:
+          0 10px 16px rgba(0, 0, 0, 0.45),
+          0 0 18px rgba(255,241,74,0.18);
+        text-shadow:
+          0 0 10px rgba(255,241,74,0.35),
+          0 0 18px rgba(255,212,0,0.22);
       }
 
       .photo-body {
@@ -466,12 +446,14 @@
         gap: 8px;
         padding: 6px 10px;
         border-radius: 999px;
-        border: 1px solid rgba(255, 204, 102, 0.26);
+        border: 1px solid rgba(255, 241, 74, 0.28);
         background: rgba(0, 0, 0, 0.45);
         font-family: "Cinzel", serif;
         font-size: 0.82rem;
         margin: 0 auto 2px auto;
-        box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.5);
+        box-shadow:
+          inset 0 0 14px rgba(0, 0, 0, 0.5),
+          0 0 18px rgba(255,241,74,0.12);
       }
       .photo-title {
         margin: 2px 0;
@@ -516,7 +498,7 @@
       }
       .meta-row {
         background: rgba(0, 0, 0, 0.4);
-        border: 1px solid rgba(255, 204, 102, 0.22);
+        border: 1px solid rgba(255, 241, 74, 0.18);
         border-radius: 10px;
         padding: 8px 10px;
         text-align: left;
@@ -643,6 +625,7 @@
           </div>
         </div>
 
+        <!-- BLOCO 1 -->
         <div class="table-container home-block">
           <h2 class="home-title"><span class="home-seal">👑</span>Bloco 1 — Pior jogada do mês (3 jogadas)</h2>
           <div class="home-headerline"></div>
@@ -751,11 +734,12 @@
           </div>
         </div>
 
+        <!-- BLOCO 2 -->
         <div class="table-container home-block">
           <h2 class="home-title"><span class="home-seal">⚔️</span>Bloco 2 — Duelo rápido (A vs B)</h2>
           <div class="home-headerline"></div>
           <p class="home-subtitle">
-            Três duelos em destaque (ex.: semana 1, semana 2, semana 3). Vire pra ver descrição e votar.
+            Três duelos em destaque. Vire pra ver descrição e votar.
           </p>
 
           <div class="tri-grid">
@@ -775,7 +759,7 @@
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
                     <p class="back-title">Duelo 1 — Detalhes</p>
-                    <p class="back-text">Mini descrição do duelo (por que está rolando).</p>
+                    <p class="back-text">Mini descrição do duelo.</p>
                     <div class="back-meta">
                       <div class="meta-row"><b>A:</b> Nome/Canal</div>
                       <div class="meta-row"><b>B:</b> Nome/Canal</div>
@@ -861,6 +845,7 @@
           </div>
         </div>
 
+        <!-- BLOCO 3 -->
         <div class="table-container home-block">
           <h2 class="home-title"><span class="home-seal">🏰</span>Bloco 3 — Melhor OTServer da atualidade</h2>
           <div class="home-headerline"></div>
