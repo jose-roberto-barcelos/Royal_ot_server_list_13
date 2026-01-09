@@ -5,7 +5,7 @@
     <title>Royal OtServlist</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Google Font (já existia no seu index) -->
+    <!-- Google Font -->
     <link
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap"
       rel="stylesheet"
@@ -101,20 +101,28 @@
         right: 0.5rem;
       }
 
-      /* ===== NOVO: só o necessário (sem mudar tipografia do site inteiro) ===== */
+      /* ===== NOVO ESTILO “PILL” (igual seu print) ===== */
       :root {
-        --gold: #ffe97f;
-        --gold2: #ffd15a;
+        --goldA: #ffe7a6;
+        --goldB: #f1c45c;
+        --goldC: #b57a1f;
+
+        --lineGold: rgba(255, 210, 110, 0.85);
+        --lineGoldSoft: rgba(255, 210, 110, 0.42);
+
+        --pillBgTop: rgba(0, 0, 0, 0.52);
+        --pillBgMid: rgba(0, 0, 0, 0.38);
+        --pillBgBot: rgba(0, 0, 0, 0.30);
+
+        --textGold: #f7d98a;
+        --textGold2: #ffd27a;
         --text: rgba(240, 237, 210, 0.92);
         --muted: rgba(240, 237, 210, 0.78);
 
-        --panel: rgba(0, 0, 0, 0.36);
-        --panel2: rgba(0, 0, 0, 0.24);
-        --edge: rgba(255, 204, 102, 0.42);
-        --edge2: rgba(255, 204, 102, 0.25);
+        --panelBg: rgba(0, 0, 0, 0.28);
+        --panelBg2: rgba(0, 0, 0, 0.18);
       }
 
-      /* Wrapper da HOME */
       .home-area {
         max-width: 1120px;
         margin: 0 auto;
@@ -123,7 +131,6 @@
         text-shadow: 0 2px 0 rgba(0, 0, 0, 0.55);
       }
 
-      /* Evita azul/roxo de link dentro da home sem forçar fonte/tamanho */
       .home-area a,
       .home-area a:visited,
       .home-area a:hover,
@@ -131,26 +138,67 @@
         color: inherit;
         text-decoration: none;
       }
-      .home-area strong,
-      .home-area b {
-        color: inherit;
-      }
 
-      .gold {
-        color: var(--gold);
-        text-shadow:
-          0 2px 0 rgba(0,0,0,0.75),
-          0 0 10px rgba(255, 233, 127, 0.18);
-      }
-      .gold-strong {
-        color: var(--gold2);
-        font-weight: 700;
+      .gold-text {
+        color: var(--textGold2);
         text-shadow:
           0 2px 0 rgba(0,0,0,0.78),
-          0 0 12px rgba(255, 233, 127, 0.22);
+          0 0 10px rgba(255, 210, 110, 0.12);
       }
 
-      /* ===== Topo (BADGES) — 3 iguais e alinhadas ===== */
+      /* O “pill” igual ao print */
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+
+        padding: 10px 18px;
+        border-radius: 14px;
+
+        font-family: "Cinzel", serif;
+        font-size: 1rem;
+        letter-spacing: 0.6px;
+
+        color: var(--textGold);
+
+        background: linear-gradient(
+          to bottom,
+          var(--pillBgTop),
+          var(--pillBgMid),
+          var(--pillBgBot)
+        );
+
+        border: 2px solid var(--lineGoldSoft);
+
+        box-shadow:
+          0 14px 22px rgba(0, 0, 0, 0.26),
+          inset 0 1px 0 rgba(255, 255, 255, 0.08),
+          inset 0 -10px 18px rgba(0, 0, 0, 0.22),
+          0 0 18px rgba(255, 210, 110, 0.08);
+      }
+
+      .pill strong {
+        color: var(--textGold2);
+        font-weight: 700;
+      }
+
+      .pill .pill-ico {
+        display: inline-flex;
+        width: 20px;
+        align-items: center;
+        justify-content: center;
+        filter: drop-shadow(0 2px 0 rgba(0,0,0,0.7));
+      }
+
+      /* versão “pill grande” pros títulos */
+      .pill-title {
+        padding: 12px 22px;
+        font-size: 1.02rem; /* NÃO aumenta exagerado */
+        border-color: rgba(255, 210, 110, 0.55);
+      }
+
+      /* ===== Topo ===== */
       .home-top {
         display: grid;
         gap: 12px;
@@ -164,28 +212,9 @@
         align-items: stretch;
       }
 
-      .home-badge {
+      .badge-wrap {
         display: flex;
-        align-items: center;
         justify-content: center;
-        gap: 10px;
-
-        padding: 10px 12px;
-        border-radius: 12px;
-
-        background: linear-gradient(to bottom, rgba(0,0,0,0.42), rgba(0,0,0,0.26));
-        border: 1px solid var(--edge);
-
-        box-shadow:
-          0 14px 22px rgba(0,0,0,0.22),
-          inset 0 1px 0 rgba(255,255,255,0.06),
-          0 0 16px rgba(255,233,127,0.06);
-      }
-
-      .home-badge span {
-        font-family: "Cinzel", serif;
-        font-size: 1rem; /* discreto (sem exagero) */
-        letter-spacing: 0.4px;
       }
 
       @media (max-width: 980px) {
@@ -194,7 +223,6 @@
         }
       }
 
-      /* ===== Ações topo ===== */
       .home-actions {
         display: flex;
         gap: 12px;
@@ -202,6 +230,7 @@
         flex-wrap: wrap;
       }
 
+      /* Botões de ação (não gigantes) */
       .btn-gold,
       .btn-dark {
         display: inline-flex;
@@ -212,7 +241,7 @@
         padding: 9px 14px;
         min-width: 170px;
 
-        border-radius: 10px;
+        border-radius: 12px;
         cursor: pointer;
         user-select: none;
 
@@ -236,7 +265,7 @@
       .btn-dark {
         color: var(--text);
         background: linear-gradient(to bottom, rgba(0,0,0,0.46), rgba(0,0,0,0.26));
-        border: 1px solid var(--edge);
+        border: 1px solid rgba(255, 210, 110, 0.35);
         box-shadow:
           0 14px 20px rgba(0,0,0,0.22),
           inset 0 1px 0 rgba(255,255,255,0.08);
@@ -252,49 +281,31 @@
       .home-block {
         position: relative;
         overflow: hidden;
-        background: linear-gradient(to bottom, var(--panel), var(--panel2));
-        border: 1px solid var(--edge);
-        border-radius: 12px;
-        box-shadow: 0 0 42px rgba(0,0,0,0.55);
-        padding: 16px 14px 18px 14px;
+        background: linear-gradient(to bottom, var(--panelBg), var(--panelBg2));
+        border: 2px solid rgba(255, 210, 110, 0.18);
+        border-radius: 14px;
+        box-shadow: 0 0 44px rgba(0,0,0,0.55);
+        padding: 18px 14px 18px 14px;
         margin-top: 16px;
       }
 
+      /* efeito leve só pra dar vida */
       .home-block::before {
         content: "";
         position: absolute;
         inset: 0;
         pointer-events: none;
         background:
-          radial-gradient(circle at top, rgba(255,233,127,0.10), rgba(0,0,0,0) 55%),
-          radial-gradient(circle at bottom, rgba(0,0,0,0.44), rgba(0,0,0,0) 62%);
+          radial-gradient(circle at top, rgba(255, 210, 110, 0.10), rgba(0,0,0,0) 58%),
+          radial-gradient(circle at bottom, rgba(0,0,0,0.40), rgba(0,0,0,0) 60%);
       }
 
-      .block-title {
+      .block-head {
         position: relative;
         z-index: 2;
-        margin: 2px 0 10px 0;
-        text-align: center;
-
-        font-family: "Cinzel", serif;
-        font-size: 1.05rem; /* VOLTA pro discreto */
-        font-weight: 700;
-        letter-spacing: 0.5px;
-      }
-
-      .divider {
-        position: relative;
-        z-index: 2;
-        width: min(620px, 92%);
-        height: 2px;
-        margin: 0 auto 10px auto;
-        background: linear-gradient(
-          to right,
-          rgba(255,233,127,0),
-          rgba(255,233,127,0.85),
-          rgba(255,233,127,0)
-        );
-        box-shadow: 0 0 14px rgba(255,233,127,0.10);
+        display: flex;
+        justify-content: center;
+        margin: 2px 0 12px 0;
       }
 
       .block-sub {
@@ -305,10 +316,9 @@
         max-width: 920px;
         margin: 0 auto 14px auto;
         line-height: 1.45;
-        font-size: 1rem; /* sem exagero */
+        font-size: 1rem;
       }
 
-      /* GRID 3 simétrico */
       .tri-grid {
         position: relative;
         z-index: 2;
@@ -354,10 +364,10 @@
         overflow: hidden;
 
         background: rgba(0, 0, 0, 0.42);
-        border: 1px solid var(--edge);
+        border: 2px solid rgba(255, 210, 110, 0.18);
         box-shadow:
           0 18px 26px rgba(0,0,0,0.30),
-          inset 0 0 30px rgba(0,0,0,0.26);
+          inset 0 0 30px rgba(0,0,0,0.22);
       }
       .flip-back { transform: rotateY(180deg); }
 
@@ -365,8 +375,8 @@
         position: relative;
         height: 58%;
         background:
-          radial-gradient(circle at 30% 20%, rgba(255,233,127,0.12), rgba(0,0,0,0) 46%),
-          linear-gradient(to bottom, rgba(0,0,0,0.10), rgba(0,0,0,0.65));
+          radial-gradient(circle at 30% 20%, rgba(255,210,110,0.10), rgba(0,0,0,0) 48%),
+          linear-gradient(to bottom, rgba(0,0,0,0.10), rgba(0,0,0,0.62));
       }
       .photo-top img {
         width: 100%;
@@ -381,13 +391,6 @@
         position: absolute;
         left: 10px;
         bottom: 10px;
-        padding: 6px 10px;
-        border-radius: 999px;
-        background: rgba(0,0,0,0.45);
-        border: 1px solid var(--edge2);
-        font-family: "Cinzel", serif;
-        font-size: 0.9rem;
-        font-weight: 700;
       }
 
       .photo-plus {
@@ -396,12 +399,23 @@
         bottom: 10px;
         width: 40px;
         height: 40px;
-        border-radius: 10px;
-        background: rgba(0,0,0,0.45);
-        border: 1px solid var(--edge);
+        border-radius: 12px;
         display: grid;
         place-items: center;
-        font-size: 1.2rem;
+      }
+
+      /* aplica o pill do print dentro do card */
+      .photo-tag .pill,
+      .photo-plus .pill {
+        padding: 7px 10px;
+        border-radius: 12px;
+        font-size: 0.88rem;
+      }
+
+      .photo-plus .pill {
+        width: 40px;
+        height: 40px;
+        padding: 0;
       }
 
       .photo-body {
@@ -418,6 +432,7 @@
         font-weight: 700;
         font-size: 1rem;
         margin: 0;
+        color: var(--textGold2);
       }
       .card-desc {
         margin: 0;
@@ -433,7 +448,7 @@
         grid-template-rows: auto auto 1fr auto;
         gap: 10px;
         text-align: center;
-        background: linear-gradient(to bottom, rgba(0,0,0,0.56), rgba(0,0,0,0.34));
+        background: linear-gradient(to bottom, rgba(0,0,0,0.56), rgba(0,0,0,0.30));
       }
 
       .back-text {
@@ -444,9 +459,9 @@
       }
 
       .meta-row {
-        background: rgba(0,0,0,0.24);
-        border: 1px solid var(--edge2);
-        border-radius: 10px;
+        background: rgba(0,0,0,0.22);
+        border: 1px solid rgba(255, 210, 110, 0.20);
+        border-radius: 12px;
         padding: 8px 10px;
         text-align: left;
         font-size: 0.92rem;
@@ -469,11 +484,10 @@
         margin-top: 14px;
       }
 
-      /* Esconde ranking antigo sem apagar JS */
       .hidden-compat { display: none !important; }
     </style>
 
-    <!-- Base para GitHub Pages (seu repo) -->
+    <!-- Base para GitHub Pages -->
     <script>
       (function () {
         const isGithubPages = location.hostname.endsWith("github.io");
@@ -565,13 +579,28 @@
         </div>
       </div>
 
-      <!-- HOME NOVA -->
+      <!-- HOME -->
       <div class="home-area">
         <div class="home-top">
           <div class="home-badges">
-            <div class="home-badge"><span class="gold">🏆 Votação mensal</span></div>
-            <div class="home-badge"><span class="gold">⏳ 1 voto a cada 6 horas</span></div>
-            <div class="home-badge"><span class="gold">🔐 Logado vale 2 pontos</span></div>
+            <div class="badge-wrap">
+              <div class="pill">
+                <span class="pill-ico">🏆</span>
+                <span>Votação mensal</span>
+              </div>
+            </div>
+            <div class="badge-wrap">
+              <div class="pill">
+                <span class="pill-ico">⏳</span>
+                <span>1 voto a cada 6 horas</span>
+              </div>
+            </div>
+            <div class="badge-wrap">
+              <div class="pill">
+                <span class="pill-ico">🔐</span>
+                <span>Logado vale 2 pontos</span>
+              </div>
+            </div>
           </div>
 
           <div class="home-actions">
@@ -582,11 +611,18 @@
 
         <!-- BLOCO 1 -->
         <div class="home-block">
-          <h2 class="block-title gold-strong">👑 BLOCO 1 — PIOR JOGADA DO MÊS (3 JOGADAS)</h2>
-          <div class="divider"></div>
+          <div class="block-head">
+            <div class="pill pill-title">
+              <span class="pill-ico">👑</span>
+              <span>BLOCO 1 — PIOR JOGADA DO MÊS (3 JOGADAS)</span>
+            </div>
+          </div>
+
           <p class="block-sub">
-            Três jogadas concorrem. Vire o card pra ver <strong class="gold-strong">personagem</strong>,
-            <strong class="gold-strong">stream</strong> e <strong class="gold-strong">link do seu vídeo</strong>.
+            Três jogadas concorrem. Vire o card pra ver
+            <span class="gold-text"><strong>personagem</strong></span>,
+            <span class="gold-text"><strong>stream</strong></span> e
+            <span class="gold-text"><strong>link do seu vídeo</strong></span>.
           </p>
 
           <div class="tri-grid">
@@ -596,23 +632,27 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./jogada1.jpg" alt="Jogada 1" />
-                    <div class="photo-tag gold">Imagem do card</div>
-                    <div class="photo-plus"><span class="gold">＋</span></div>
+                    <div class="photo-tag">
+                      <div class="pill"><span>Imagem do card</span></div>
+                    </div>
+                    <div class="photo-plus">
+                      <div class="pill"><span>＋</span></div>
+                    </div>
                   </div>
                   <div class="photo-body">
-                    <p class="card-title gold-strong">Jogada 1</p>
+                    <p class="card-title">Jogada 1</p>
                     <p class="card-desc">Passe o mouse pra virar.</p>
                   </div>
                 </div>
 
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="card-title gold-strong">Jogada 1 — detalhes</p>
+                    <p class="card-title">Jogada 1 — detalhes</p>
                     <p class="back-text">Descrição curta do que aconteceu.</p>
 
-                    <div class="meta-row"><span class="gold-strong">Personagem:</span> Knight Zika</div>
-                    <div class="meta-row"><span class="gold-strong">Stream:</span> twitch.tv/...</div>
-                    <div class="meta-row"><span class="gold-strong">Seu vídeo:</span> youtube.com/...&t=123</div>
+                    <div class="meta-row"><span class="gold-text"><strong>Personagem:</strong></span> Knight Zika</div>
+                    <div class="meta-row"><span class="gold-text"><strong>Stream:</strong></span> twitch.tv/...</div>
+                    <div class="meta-row"><span class="gold-text"><strong>Seu vídeo:</strong></span> youtube.com/...&t=123</div>
 
                     <div class="flip-actions">
                       <a class="btn-dark" href="#" onclick="return false;">▶ Ver no YouTube</a>
@@ -629,23 +669,27 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./jogada2.jpg" alt="Jogada 2" />
-                    <div class="photo-tag gold">Imagem do card</div>
-                    <div class="photo-plus"><span class="gold">＋</span></div>
+                    <div class="photo-tag">
+                      <div class="pill"><span>Imagem do card</span></div>
+                    </div>
+                    <div class="photo-plus">
+                      <div class="pill"><span>＋</span></div>
+                    </div>
                   </div>
                   <div class="photo-body">
-                    <p class="card-title gold-strong">Jogada 2</p>
+                    <p class="card-title">Jogada 2</p>
                     <p class="card-desc">Passe o mouse pra virar.</p>
                   </div>
                 </div>
 
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="card-title gold-strong">Jogada 2 — detalhes</p>
+                    <p class="card-title">Jogada 2 — detalhes</p>
                     <p class="back-text">Descrição curta do que aconteceu.</p>
 
-                    <div class="meta-row"><span class="gold-strong">Personagem:</span> ...</div>
-                    <div class="meta-row"><span class="gold-strong">Stream:</span> twitch.tv/...</div>
-                    <div class="meta-row"><span class="gold-strong">Seu vídeo:</span> youtube.com/...&t=...</div>
+                    <div class="meta-row"><span class="gold-text"><strong>Personagem:</strong></span> ...</div>
+                    <div class="meta-row"><span class="gold-text"><strong>Stream:</strong></span> twitch.tv/...</div>
+                    <div class="meta-row"><span class="gold-text"><strong>Seu vídeo:</strong></span> youtube.com/...&t=...</div>
 
                     <div class="flip-actions">
                       <a class="btn-dark" href="#" onclick="return false;">▶ Ver no YouTube</a>
@@ -662,23 +706,27 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./jogada3.jpg" alt="Jogada 3" />
-                    <div class="photo-tag gold">Imagem do card</div>
-                    <div class="photo-plus"><span class="gold">＋</span></div>
+                    <div class="photo-tag">
+                      <div class="pill"><span>Imagem do card</span></div>
+                    </div>
+                    <div class="photo-plus">
+                      <div class="pill"><span>＋</span></div>
+                    </div>
                   </div>
                   <div class="photo-body">
-                    <p class="card-title gold-strong">Jogada 3</p>
+                    <p class="card-title">Jogada 3</p>
                     <p class="card-desc">Passe o mouse pra virar.</p>
                   </div>
                 </div>
 
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="card-title gold-strong">Jogada 3 — detalhes</p>
+                    <p class="card-title">Jogada 3 — detalhes</p>
                     <p class="back-text">Descrição curta do que aconteceu.</p>
 
-                    <div class="meta-row"><span class="gold-strong">Personagem:</span> ...</div>
-                    <div class="meta-row"><span class="gold-strong">Stream:</span> twitch.tv/...</div>
-                    <div class="meta-row"><span class="gold-strong">Seu vídeo:</span> youtube.com/...&t=...</div>
+                    <div class="meta-row"><span class="gold-text"><strong>Personagem:</strong></span> ...</div>
+                    <div class="meta-row"><span class="gold-text"><strong>Stream:</strong></span> twitch.tv/...</div>
+                    <div class="meta-row"><span class="gold-text"><strong>Seu vídeo:</strong></span> youtube.com/...&t=...</div>
 
                     <div class="flip-actions">
                       <a class="btn-dark" href="#" onclick="return false;">▶ Ver no YouTube</a>
@@ -698,8 +746,13 @@
 
         <!-- BLOCO 2 -->
         <div class="home-block">
-          <h2 class="block-title gold-strong">⚔️ BLOCO 2 — DUELO RÁPIDO (A vs B)</h2>
-          <div class="divider"></div>
+          <div class="block-head">
+            <div class="pill pill-title">
+              <span class="pill-ico">⚔️</span>
+              <span>BLOCO 2 — DUELO RÁPIDO (A vs B)</span>
+            </div>
+          </div>
+
           <p class="block-sub">Três duelos em destaque. Vire o card pra ver a descrição e votar.</p>
 
           <div class="tri-grid">
@@ -708,23 +761,26 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./duelo1.jpg" alt="Duelo 1" />
-                    <div class="photo-tag gold">Imagem do card</div>
-                    <div class="photo-plus"><span class="gold">⚔</span></div>
+                    <div class="photo-tag">
+                      <div class="pill"><span>Imagem do card</span></div>
+                    </div>
+                    <div class="photo-plus">
+                      <div class="pill"><span>⚔</span></div>
+                    </div>
                   </div>
                   <div class="photo-body">
-                    <p class="card-title gold-strong">Duelo 1</p>
+                    <p class="card-title">Duelo 1</p>
                     <p class="card-desc">A vs B — passe o mouse pra virar.</p>
                   </div>
                 </div>
 
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="card-title gold-strong">Duelo 1 — detalhes</p>
+                    <p class="card-title">Duelo 1 — detalhes</p>
                     <p class="back-text">Mini descrição do duelo.</p>
 
-                    <div class="meta-row"><span class="gold-strong">A:</span> Nome/Canal</div>
-                    <div class="meta-row"><span class="gold-strong">B:</span> Nome/Canal</div>
-                    <div class="meta-row"><span class="gold-strong">Regra:</span> Quem tiver mais votos vence.</div>
+                    <div class="meta-row"><span class="gold-text"><strong>A:</strong></span> Nome/Canal</div>
+                    <div class="meta-row"><span class="gold-text"><strong>B:</strong></span> Nome/Canal</div>
 
                     <div class="flip-actions">
                       <button class="btn-gold" type="button" data-vote data-type="duelo" data-id="1A">🗳 Votar A</button>
@@ -741,23 +797,26 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./duelo2.jpg" alt="Duelo 2" />
-                    <div class="photo-tag gold">Imagem do card</div>
-                    <div class="photo-plus"><span class="gold">⚔</span></div>
+                    <div class="photo-tag">
+                      <div class="pill"><span>Imagem do card</span></div>
+                    </div>
+                    <div class="photo-plus">
+                      <div class="pill"><span>⚔</span></div>
+                    </div>
                   </div>
                   <div class="photo-body">
-                    <p class="card-title gold-strong">Duelo 2</p>
+                    <p class="card-title">Duelo 2</p>
                     <p class="card-desc">A vs B — passe o mouse pra virar.</p>
                   </div>
                 </div>
 
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="card-title gold-strong">Duelo 2 — detalhes</p>
+                    <p class="card-title">Duelo 2 — detalhes</p>
                     <p class="back-text">Mini descrição do duelo.</p>
 
-                    <div class="meta-row"><span class="gold-strong">A:</span> Nome/Canal</div>
-                    <div class="meta-row"><span class="gold-strong">B:</span> Nome/Canal</div>
-                    <div class="meta-row"><span class="gold-strong">Regra:</span> Votação mensal.</div>
+                    <div class="meta-row"><span class="gold-text"><strong>A:</strong></span> Nome/Canal</div>
+                    <div class="meta-row"><span class="gold-text"><strong>B:</strong></span> Nome/Canal</div>
 
                     <div class="flip-actions">
                       <button class="btn-gold" type="button" data-vote data-type="duelo" data-id="2A">🗳 Votar A</button>
@@ -774,23 +833,26 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./duelo3.jpg" alt="Duelo 3" />
-                    <div class="photo-tag gold">Imagem do card</div>
-                    <div class="photo-plus"><span class="gold">⚔</span></div>
+                    <div class="photo-tag">
+                      <div class="pill"><span>Imagem do card</span></div>
+                    </div>
+                    <div class="photo-plus">
+                      <div class="pill"><span>⚔</span></div>
+                    </div>
                   </div>
                   <div class="photo-body">
-                    <p class="card-title gold-strong">Duelo 3</p>
+                    <p class="card-title">Duelo 3</p>
                     <p class="card-desc">A vs B — passe o mouse pra virar.</p>
                   </div>
                 </div>
 
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="card-title gold-strong">Duelo 3 — detalhes</p>
+                    <p class="card-title">Duelo 3 — detalhes</p>
                     <p class="back-text">Mini descrição do duelo.</p>
 
-                    <div class="meta-row"><span class="gold-strong">A:</span> Nome/Canal</div>
-                    <div class="meta-row"><span class="gold-strong">B:</span> Nome/Canal</div>
-                    <div class="meta-row"><span class="gold-strong">Regra:</span> Votação mensal.</div>
+                    <div class="meta-row"><span class="gold-text"><strong>A:</strong></span> Nome/Canal</div>
+                    <div class="meta-row"><span class="gold-text"><strong>B:</strong></span> Nome/Canal</div>
 
                     <div class="flip-actions">
                       <button class="btn-gold" type="button" data-vote data-type="duelo" data-id="3A">🗳 Votar A</button>
@@ -802,16 +864,17 @@
               </div>
             </article>
           </div>
-
-          <div class="home-controls">
-            <a class="btn-dark" href="#" onclick="return false;">📨 Indicar criador pro próximo duelo</a>
-          </div>
         </div>
 
         <!-- BLOCO 3 -->
         <div class="home-block">
-          <h2 class="block-title gold-strong">🏰 BLOCO 3 — MELHOR OTSERVER DA ATUALIDADE</h2>
-          <div class="divider"></div>
+          <div class="block-head">
+            <div class="pill pill-title">
+              <span class="pill-ico">🏰</span>
+              <span>BLOCO 3 — MELHOR OTSERVER DA ATUALIDADE</span>
+            </div>
+          </div>
+
           <p class="block-sub">Três servidores em destaque. Vire o card pra ver a info e votar.</p>
 
           <div class="tri-grid">
@@ -820,23 +883,27 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./ot1.jpg" alt="OT 1" />
-                    <div class="photo-tag gold">Imagem do card</div>
-                    <div class="photo-plus"><span class="gold">🏰</span></div>
+                    <div class="photo-tag">
+                      <div class="pill"><span>Imagem do card</span></div>
+                    </div>
+                    <div class="photo-plus">
+                      <div class="pill"><span>🏰</span></div>
+                    </div>
                   </div>
                   <div class="photo-body">
-                    <p class="card-title gold-strong">OT 1</p>
+                    <p class="card-title">OT 1</p>
                     <p class="card-desc">Passe o mouse pra virar.</p>
                   </div>
                 </div>
 
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="card-title gold-strong">OT 1 — detalhes</p>
+                    <p class="card-title">OT 1 — detalhes</p>
                     <p class="back-text">Descrição curta do servidor.</p>
 
-                    <div class="meta-row"><span class="gold-strong">Versão:</span> 8.6</div>
-                    <div class="meta-row"><span class="gold-strong">Site:</span> exemplo.com</div>
-                    <div class="meta-row"><span class="gold-strong">IP:</span> play.exemplo.com:7171</div>
+                    <div class="meta-row"><span class="gold-text"><strong>Versão:</strong></span> 8.6</div>
+                    <div class="meta-row"><span class="gold-text"><strong>Site:</strong></span> exemplo.com</div>
+                    <div class="meta-row"><span class="gold-text"><strong>IP:</strong></span> play.exemplo.com:7171</div>
 
                     <div class="flip-actions">
                       <a class="btn-dark" href="#" onclick="return false;">🌐 Abrir site</a>
@@ -852,23 +919,27 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./ot2.jpg" alt="OT 2" />
-                    <div class="photo-tag gold">Imagem do card</div>
-                    <div class="photo-plus"><span class="gold">🏰</span></div>
+                    <div class="photo-tag">
+                      <div class="pill"><span>Imagem do card</span></div>
+                    </div>
+                    <div class="photo-plus">
+                      <div class="pill"><span>🏰</span></div>
+                    </div>
                   </div>
                   <div class="photo-body">
-                    <p class="card-title gold-strong">OT 2</p>
+                    <p class="card-title">OT 2</p>
                     <p class="card-desc">Passe o mouse pra virar.</p>
                   </div>
                 </div>
 
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="card-title gold-strong">OT 2 — detalhes</p>
+                    <p class="card-title">OT 2 — detalhes</p>
                     <p class="back-text">Descrição curta do servidor.</p>
 
-                    <div class="meta-row"><span class="gold-strong">Versão:</span> 10.x</div>
-                    <div class="meta-row"><span class="gold-strong">Site:</span> exemplo.com</div>
-                    <div class="meta-row"><span class="gold-strong">IP:</span> play.exemplo.com:7171</div>
+                    <div class="meta-row"><span class="gold-text"><strong>Versão:</strong></span> 10.x</div>
+                    <div class="meta-row"><span class="gold-text"><strong>Site:</strong></span> exemplo.com</div>
+                    <div class="meta-row"><span class="gold-text"><strong>IP:</strong></span> play.exemplo.com:7171</div>
 
                     <div class="flip-actions">
                       <a class="btn-dark" href="#" onclick="return false;">🌐 Abrir site</a>
@@ -884,23 +955,27 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./ot3.jpg" alt="OT 3" />
-                    <div class="photo-tag gold">Imagem do card</div>
-                    <div class="photo-plus"><span class="gold">🏰</span></div>
+                    <div class="photo-tag">
+                      <div class="pill"><span>Imagem do card</span></div>
+                    </div>
+                    <div class="photo-plus">
+                      <div class="pill"><span>🏰</span></div>
+                    </div>
                   </div>
                   <div class="photo-body">
-                    <p class="card-title gold-strong">OT 3</p>
+                    <p class="card-title">OT 3</p>
                     <p class="card-desc">Passe o mouse pra virar.</p>
                   </div>
                 </div>
 
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="card-title gold-strong">OT 3 — detalhes</p>
+                    <p class="card-title">OT 3 — detalhes</p>
                     <p class="back-text">Descrição curta do servidor.</p>
 
-                    <div class="meta-row"><span class="gold-strong">Versão:</span> 7.4</div>
-                    <div class="meta-row"><span class="gold-strong">Site:</span> exemplo.com</div>
-                    <div class="meta-row"><span class="gold-strong">IP:</span> play.exemplo.com:7171</div>
+                    <div class="meta-row"><span class="gold-text"><strong>Versão:</strong></span> 7.4</div>
+                    <div class="meta-row"><span class="gold-text"><strong>Site:</strong></span> exemplo.com</div>
+                    <div class="meta-row"><span class="gold-text"><strong>IP:</strong></span> play.exemplo.com:7171</div>
 
                     <div class="flip-actions">
                       <a class="btn-dark" href="#" onclick="return false;">🌐 Abrir site</a>
