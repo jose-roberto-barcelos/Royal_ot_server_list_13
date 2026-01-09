@@ -99,7 +99,66 @@
         right: 0.5rem;
       }
 
-      /* ====== HOME ====== */
+      /* ====== Ouro brilhante (NOVO) ====== */
+      :root {
+        --gold-1: #fff6bf;  /* highlight */
+        --gold-2: #ffe77a;  /* main */
+        --gold-3: #ffcf3a;  /* edge */
+        --gold-4: #b26a00;  /* deep */
+      }
+
+      .gold-shine {
+        color: var(--gold-2);
+        text-shadow:
+          0 1px 0 rgba(0,0,0,0.85),
+          0 0 6px rgba(0,0,0,0.75),
+          0 0 10px rgba(255,231,122,0.35),
+          0 0 18px rgba(255,207,58,0.22);
+      }
+
+      .gold-gradient-text {
+        background: linear-gradient(to bottom, var(--gold-1), var(--gold-2) 45%, var(--gold-3));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow:
+          0 1px 0 rgba(0,0,0,0.85),
+          0 0 6px rgba(0,0,0,0.75),
+          0 0 10px rgba(255,231,122,0.35),
+          0 0 18px rgba(255,207,58,0.22);
+      }
+
+      /* aplicar brilho em pontos-chave */
+      .home-title,
+      .photo-title,
+      .back-title,
+      .pill,
+      .meta-row b {
+        background: linear-gradient(to bottom, var(--gold-1), var(--gold-2) 45%, var(--gold-3));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow:
+          0 1px 0 rgba(0,0,0,0.88),
+          0 0 6px rgba(0,0,0,0.75),
+          0 0 10px rgba(255,231,122,0.35),
+          0 0 18px rgba(255,207,58,0.22);
+      }
+
+      /* negritos nos parágrafos ficam mais “ouro” */
+      .home-subtitle b,
+      .back-text b {
+        background: linear-gradient(to bottom, var(--gold-1), var(--gold-2) 45%, var(--gold-3));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        text-shadow:
+          0 1px 0 rgba(0,0,0,0.88),
+          0 0 6px rgba(0,0,0,0.75),
+          0 0 10px rgba(255,231,122,0.35),
+          0 0 18px rgba(255,207,58,0.22);
+      }
+
       .hidden-compat {
         display: none !important;
       }
@@ -228,7 +287,7 @@
         inset: 0;
         pointer-events: none;
         background: radial-gradient(circle at top, rgba(255, 233, 127, 0.18), rgba(0, 0, 0, 0) 45%),
-          radial-gradient(circle at bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0) 60%);
+          radial-gradient(circle at bottom, rgba(0, 0, 0, 0.6), rgba(0,  0, 0, 0) 60%);
       }
 
       .home-title {
@@ -236,8 +295,6 @@
         padding-top: 10px;
         text-align: center;
         font-family: "Cinzel", serif;
-        color: #ffe97f;
-        text-shadow: 0 0 4px #000, 0 0 10px rgba(0, 0, 0, 0.6);
         letter-spacing: 0.8px;
         font-size: clamp(1.02rem, 1.15vw, 1.25rem);
         display: inline-flex;
@@ -248,6 +305,7 @@
         position: relative;
         z-index: 2;
       }
+
       .home-seal {
         display: inline-flex;
         align-items: center;
@@ -263,6 +321,7 @@
         font-size: 0.9rem;
         flex: 0 0 auto;
       }
+
       .home-headerline {
         width: min(640px, 92%);
         height: 2px;
@@ -277,6 +336,7 @@
         position: relative;
         z-index: 2;
       }
+
       .home-subtitle {
         margin: 10px auto 0 auto;
         max-width: 920px;
@@ -307,7 +367,7 @@
         }
       }
 
-      /* ====== FLIP CARD (com altura fixa -> não some) ====== */
+      /* ====== FLIP CARD ====== */
       .flip-card {
         perspective: 1000px;
         position: relative;
@@ -408,7 +468,6 @@
         border-radius: 999px;
         border: 1px solid rgba(255, 204, 102, 0.26);
         background: rgba(0, 0, 0, 0.45);
-        color: rgba(240, 237, 210, 0.95);
         font-family: "Cinzel", serif;
         font-size: 0.82rem;
         margin: 0 auto 2px auto;
@@ -417,8 +476,6 @@
       .photo-title {
         margin: 2px 0;
         font-family: "Cinzel", serif;
-        color: #ffe97f;
-        text-shadow: 0 0 4px #000;
         font-size: 1.03rem;
       }
       .photo-desc {
@@ -440,8 +497,6 @@
       }
       .back-title {
         font-family: "Cinzel", serif;
-        color: #ffe97f;
-        text-shadow: 0 0 4px #000;
         font-size: 1.02rem;
         margin: 0;
       }
@@ -465,10 +520,6 @@
         border-radius: 10px;
         padding: 8px 10px;
         text-align: left;
-      }
-      .meta-row b {
-        color: #ffe97f;
-        font-weight: 600;
       }
       .flip-actions {
         display: flex;
@@ -558,7 +609,6 @@
     </aside>
 
     <section class="ranking aba ativa espaco-pos-header" id="inicio">
-      <!-- compatibilidade antiga, escondida -->
       <div class="hidden-compat">
         <div class="table-container">
           <h2 class="titulo-dentro">Tibia OtServers Ranking</h2>
@@ -593,7 +643,6 @@
           </div>
         </div>
 
-        <!-- ===================== BLOCO 1 ===================== -->
         <div class="table-container home-block">
           <h2 class="home-title"><span class="home-seal">👑</span>Bloco 1 — Pior jogada do mês (3 jogadas)</h2>
           <div class="home-headerline"></div>
@@ -702,7 +751,6 @@
           </div>
         </div>
 
-        <!-- ===================== BLOCO 2 ===================== -->
         <div class="table-container home-block">
           <h2 class="home-title"><span class="home-seal">⚔️</span>Bloco 2 — Duelo rápido (A vs B)</h2>
           <div class="home-headerline"></div>
@@ -813,7 +861,6 @@
           </div>
         </div>
 
-        <!-- ===================== BLOCO 3 ===================== -->
         <div class="table-container home-block">
           <h2 class="home-title"><span class="home-seal">🏰</span>Bloco 3 — Melhor OTServer da atualidade</h2>
           <div class="home-headerline"></div>
@@ -927,7 +974,6 @@
     <script type="module" src="./script.js"></script>
 
     <script>
-      // Menu lateral
       const menuToggle = document.getElementById("menu-toggle");
       const menuClose = document.getElementById("menu-close");
       const sideMenu = document.getElementById("side-menu");
@@ -940,7 +986,6 @@
         sideMenu.setAttribute("aria-hidden", "true");
       });
 
-      // Flip no toque (mobile)
       const isTouch = matchMedia("(hover: none)").matches;
 
       if (isTouch) {
@@ -959,7 +1004,6 @@
         });
       }
 
-      // Voto (simulação)
       function votar(tipo, id) {
         alert(`Voto registrado (simulação)\nTipo: ${tipo}\nID: ${id}\n\nDepois a gente liga no Firestore/Functions.`);
       }
