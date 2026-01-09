@@ -5,7 +5,7 @@
     <title>Royal OtServlist</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Fonts (títulos mais épicos / corpo mantém estilo) -->
+    <!-- Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cinzel+Decorative:wght@700&display=swap"
       rel="stylesheet"
@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="styles.css" />
 
     <style>
-      /* ====== Mantido do seu index (compatibilidade) ====== */
+      /* ====== Mantido (compatibilidade) ====== */
       #servidores-wrapper.collapsed {
         max-height: 400px;
         overflow-y: auto;
@@ -100,60 +100,60 @@
         right: 0.5rem;
       }
 
-      /* ====== NOVO PADRÃO: metal + neon (controlado, sem amadorismo) ====== */
+      /* ====== NOVO: contraste e padronização ====== */
       :root {
         --font-title: "Cinzel Decorative", "Cinzel", serif;
         --font-ui: "Cinzel", serif;
 
-        --gold-ice: #fff9c9;
-        --gold-bright: #ffe97f;
-        --gold-mid: #f2c34a;
+        --gold: #ffe07a;
+        --gold-2: #f5c24a;
         --gold-deep: #9b6a18;
 
-        --neon-soft: rgba(255, 233, 127, 0.22);
-        --neon-mid: rgba(255, 210, 90, 0.18);
+        --text: rgba(240, 237, 210, 0.96);
+        --text-soft: rgba(240, 237, 210, 0.90);
 
-        --rim: rgba(255, 204, 102, 0.35);
-        --rim-strong: rgba(255, 204, 102, 0.48);
-        --panel-top: rgba(0, 0, 0, 0.62);
-        --panel-bot: rgba(0, 0, 0, 0.45);
+        --panel: rgba(0, 0, 0, 0.42);
+        --panel-2: rgba(0, 0, 0, 0.30);
+        --panel-edge: rgba(255, 204, 102, 0.42);
+        --panel-edge-2: rgba(255, 204, 102, 0.28);
+
+        --shadow: rgba(0, 0, 0, 0.65);
+        --glow: rgba(255, 224, 122, 0.18);
       }
 
-      /* Texto metálico com leve glow (fallback sempre claro) */
-      .gold-mn {
-        color: var(--gold-bright);
+      /* Texto dourado SÓLIDO (sempre legível) */
+      .gold-text {
+        color: var(--gold);
         text-shadow:
-          0 1px 0 rgba(0,0,0,0.88),
+          0 2px 0 rgba(0,0,0,0.80),
           0 0 10px rgba(0,0,0,0.55),
-          0 0 14px var(--neon-soft),
-          0 0 26px rgba(255, 233, 127, 0.10);
+          0 0 18px rgba(255, 224, 122, 0.22);
       }
 
-      /* usa gradient só onde suportado (não “apaga” o texto) */
+      /* Título com aspecto metálico (gradient), mas com fallback legível */
+      .gold-title {
+        color: var(--gold);
+        text-shadow:
+          0 2px 0 rgba(0,0,0,0.80),
+          0 0 14px rgba(0,0,0,0.55),
+          0 0 24px rgba(255, 224, 122, 0.18);
+      }
       @supports (-webkit-background-clip: text) or (background-clip: text) {
-        .gold-mn {
+        .gold-title {
           background: linear-gradient(
             to bottom,
-            var(--gold-ice) 0%,
-            var(--gold-bright) 34%,
-            var(--gold-mid) 62%,
+            #fff7cf 0%,
+            var(--gold) 34%,
+            var(--gold-2) 62%,
             var(--gold-deep) 100%
           );
           -webkit-background-clip: text;
           background-clip: text;
           color: transparent;
           -webkit-text-fill-color: transparent;
-
-          text-shadow:
-            0 1px 0 rgba(0,0,0,0.88),
-            0 0 10px rgba(0,0,0,0.55),
-            0 0 14px var(--neon-soft),
-            0 0 24px var(--neon-mid);
-          filter: drop-shadow(0 0 10px rgba(255, 233, 127, 0.10));
         }
       }
 
-      /* ====== layout base ====== */
       .hidden-compat {
         display: none !important;
       }
@@ -165,12 +165,11 @@
 
       .home-top {
         display: grid;
-        grid-template-columns: 1fr;
         gap: 10px;
         margin: 10px 0 18px 0;
       }
 
-      /* ====== badges do topo (padronizados) ====== */
+      /* Badges (mais claros, legíveis) */
       .home-badges {
         display: flex;
         gap: 10px;
@@ -180,18 +179,18 @@
       }
       .home-badge {
         font-family: var(--font-ui);
-        font-weight: 600;
+        font-weight: 700;
         letter-spacing: 0.2px;
 
-        background: linear-gradient(to bottom, rgba(0,0,0,0.62), rgba(0,0,0,0.42));
-        border: 1px solid var(--rim);
+        background: linear-gradient(to bottom, rgba(0,0,0,0.46), rgba(0,0,0,0.32));
+        border: 1px solid var(--panel-edge);
         border-radius: 12px;
         padding: 8px 12px;
 
         box-shadow:
-          0 10px 20px rgba(0,0,0,0.40),
+          0 10px 18px rgba(0,0,0,0.35),
           inset 0 1px 0 rgba(255,255,255,0.06),
-          0 0 22px rgba(255, 233, 127, 0.06);
+          0 0 18px var(--glow);
       }
       .home-badge .badge-text {
         font-size: 0.92rem;
@@ -204,7 +203,7 @@
         flex-wrap: wrap;
       }
 
-      /* ====== Botões (já estavam bons: só deixa “premium” sem ficar gigante) ====== */
+      /* Botões (menos “gigante”, porém vivos) */
       .btn-gold,
       .home-actions a,
       .home-controls a,
@@ -215,10 +214,10 @@
         -webkit-appearance: none !important;
 
         font-family: var(--font-ui) !important;
-        font-weight: 700 !important;
+        font-weight: 800 !important;
         letter-spacing: 0.15px !important;
 
-        min-width: 118px !important;
+        min-width: 120px !important;
         padding: 8px 12px !important;
         font-size: 0.92rem !important;
 
@@ -226,15 +225,15 @@
         border: 1px solid rgba(110, 70, 10, 0.78) !important;
 
         color: #2b1a00 !important;
-        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.30) !important;
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.28) !important;
 
-        background: linear-gradient(to bottom, #fff0b0, #e2b54a 55%, #8f6215) !important;
+        background: linear-gradient(to bottom, #fff2b8, #e2b54a 55%, #8f6215) !important;
 
         box-shadow:
-          0 10px 16px rgba(0, 0, 0, 0.30),
-          inset 0 1px 0 rgba(255, 255, 255, 0.30),
-          inset 0 -10px 16px rgba(0, 0, 0, 0.22),
-          0 0 16px rgba(255, 233, 127, 0.08) !important;
+          0 10px 16px rgba(0, 0, 0, 0.28),
+          inset 0 1px 0 rgba(255, 255, 255, 0.28),
+          inset 0 -10px 16px rgba(0, 0, 0, 0.18),
+          0 0 14px rgba(255, 224, 122, 0.10) !important;
 
         cursor: pointer !important;
         text-decoration: none !important;
@@ -254,22 +253,22 @@
         transform: translateY(-1px) !important;
         filter: brightness(1.06) !important;
         box-shadow:
-          0 14px 22px rgba(0, 0, 0, 0.40),
-          0 0 22px rgba(255, 233, 127, 0.14),
-          inset 0 1px 0 rgba(255, 255, 255, 0.34),
-          inset 0 -10px 16px rgba(0, 0, 0, 0.18) !important;
+          0 14px 22px rgba(0, 0, 0, 0.36),
+          0 0 18px rgba(255, 224, 122, 0.16),
+          inset 0 1px 0 rgba(255, 255, 255, 0.30),
+          inset 0 -10px 16px rgba(0, 0, 0, 0.16) !important;
       }
 
       .btn-secondary {
-        color: rgba(240, 237, 210, 0.95) !important;
-        text-shadow: 0 0 6px #000 !important;
-        border: 1px solid rgba(255, 204, 102, 0.38) !important;
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.34)) !important;
+        color: var(--text) !important;
+        text-shadow: 0 0 8px #000 !important;
+        border: 1px solid var(--panel-edge) !important;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.44), rgba(0, 0, 0, 0.28)) !important;
         box-shadow:
-          0 10px 16px rgba(0, 0, 0, 0.32),
-          inset 0 1px 0 rgba(255, 255, 255, 0.12),
-          inset 0 -10px 16px rgba(0, 0, 0, 0.38),
-          0 0 18px rgba(255, 233, 127, 0.06) !important;
+          0 10px 16px rgba(0, 0, 0, 0.28),
+          inset 0 1px 0 rgba(255, 255, 255, 0.10),
+          inset 0 -10px 16px rgba(0, 0, 0, 0.28),
+          0 0 14px var(--glow) !important;
       }
 
       .home-actions a {
@@ -278,15 +277,15 @@
         font-size: 0.98rem !important;
       }
 
-      /* ====== Blocos ====== */
+      /* Blocos (mais claros e com “borda viva”) */
       .home-block.table-container {
         position: relative;
         overflow: hidden;
-        background: linear-gradient(to bottom, var(--panel-top), var(--panel-bot)) !important;
-        border: 1px solid var(--rim-strong) !important;
+        background: linear-gradient(to bottom, var(--panel), var(--panel-2)) !important;
+        border: 1px solid var(--panel-edge) !important;
         box-shadow:
-          0 0 46px rgba(0, 0, 0, 0.78),
-          0 0 22px rgba(255, 233, 127, 0.06) !important;
+          0 0 42px rgba(0, 0, 0, 0.62),
+          0 0 18px rgba(255, 224, 122, 0.10) !important;
         backdrop-filter: blur(2px);
         margin-top: 16px;
         padding-bottom: 16px;
@@ -297,8 +296,8 @@
         inset: 0;
         pointer-events: none;
         background:
-          radial-gradient(circle at top, rgba(255, 233, 127, 0.14), rgba(0, 0, 0, 0) 45%),
-          radial-gradient(circle at bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) 60%);
+          radial-gradient(circle at top, rgba(255, 224, 122, 0.10), rgba(0, 0, 0, 0) 48%),
+          radial-gradient(circle at bottom, rgba(0, 0, 0, 0.48), rgba(0, 0, 0, 0) 62%);
       }
 
       .home-title {
@@ -307,7 +306,7 @@
         text-align: center;
         font-family: var(--font-title);
         letter-spacing: 0.6px;
-        font-size: clamp(1.02rem, 1.15vw, 1.22rem);
+        font-size: clamp(1.02rem, 1.15vw, 1.20rem);
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -324,13 +323,15 @@
         width: 28px;
         height: 28px;
         border-radius: 50%;
-        border: 1px solid var(--rim-strong);
-        background: rgba(0, 0, 0, 0.52);
-        box-shadow: 0 0 18px rgba(0, 0, 0, 0.55), 0 0 18px rgba(255, 233, 127, 0.06);
-        color: var(--gold-bright);
-        text-shadow: 0 0 8px rgba(255, 233, 127, 0.12);
-        font-size: 0.9rem;
+        border: 1px solid var(--panel-edge);
+        background: rgba(0, 0, 0, 0.36);
+        box-shadow: 0 0 18px rgba(0, 0, 0, 0.45), 0 0 14px rgba(255, 224, 122, 0.08);
+        color: var(--gold);
+        text-shadow: 0 0 10px rgba(255, 224, 122, 0.18);
+        font-size: 0.95rem;
         flex: 0 0 auto;
+        position: relative;
+        z-index: 2;
       }
 
       .home-headerline {
@@ -339,11 +340,11 @@
         margin: 10px auto 0 auto;
         background: linear-gradient(
           to right,
-          rgba(255, 233, 127, 0),
-          rgba(255, 233, 127, 0.85),
-          rgba(255, 233, 127, 0)
+          rgba(255, 224, 122, 0),
+          rgba(255, 224, 122, 0.95),
+          rgba(255, 224, 122, 0)
         );
-        box-shadow: 0 0 18px rgba(255, 233, 127, 0.10);
+        box-shadow: 0 0 16px rgba(255, 224, 122, 0.14);
         position: relative;
         z-index: 2;
       }
@@ -352,19 +353,19 @@
         margin: 10px auto 0 auto;
         max-width: 920px;
         text-align: center;
-        color: rgba(240, 237, 210, 0.94);
+        color: var(--text);
         line-height: 1.45;
-        font-size: clamp(0.93rem, 1.02vw, 1.02rem);
-        text-transform: none !important;
+        font-size: clamp(0.94rem, 1.02vw, 1.02rem);
         position: relative;
         z-index: 2;
         padding: 0 14px;
+        text-shadow: 0 2px 0 rgba(0,0,0,0.65);
       }
       .home-subtitle b {
-        font-weight: 700;
+        font-weight: 800;
       }
 
-      /* ====== GRID 3 SIMÉTRICOS ====== */
+      /* GRID 3 simétrico */
       .tri-grid {
         max-width: 1020px;
         margin: 14px auto 0 auto;
@@ -381,7 +382,7 @@
         }
       }
 
-      /* ====== FLIP CARD ====== */
+      /* FLIP CARD */
       .flip-card {
         perspective: 1000px;
         position: relative;
@@ -424,12 +425,12 @@
         -webkit-backface-visibility: hidden;
         border-radius: 14px;
         overflow: hidden;
-        background: rgba(0, 0, 0, 0.56);
-        border: 1px solid rgba(255, 204, 102, 0.28);
+        background: rgba(0, 0, 0, 0.42);
+        border: 1px solid var(--panel-edge);
         box-shadow:
-          0 18px 28px rgba(0, 0, 0, 0.42),
-          inset 0 0 30px rgba(0, 0, 0, 0.48),
-          0 0 22px rgba(255, 233, 127, 0.05);
+          0 18px 26px rgba(0, 0, 0, 0.38),
+          inset 0 0 30px rgba(0, 0, 0, 0.30),
+          0 0 18px rgba(255, 224, 122, 0.10);
       }
       .flip-front {
         transform: rotateY(0deg);
@@ -438,19 +439,38 @@
         transform: rotateY(180deg);
       }
 
+      /* área da foto com placeholder legível */
       .photo-top {
         position: relative;
-        height: 55%;
+        height: 56%;
         background:
-          radial-gradient(circle at 30% 20%, rgba(255, 233, 127, 0.10), rgba(0, 0, 0, 0) 42%),
-          linear-gradient(to bottom, rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0.75));
+          radial-gradient(circle at 30% 20%, rgba(255, 224, 122, 0.14), rgba(0, 0, 0, 0) 46%),
+          linear-gradient(to bottom, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.62));
+      }
+      .photo-top::after {
+        content: "Imagem do card";
+        position: absolute;
+        left: 12px;
+        bottom: 12px;
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: rgba(0,0,0,0.46);
+        border: 1px solid var(--panel-edge-2);
+        color: var(--text);
+        font-family: var(--font-ui);
+        font-weight: 700;
+        font-size: 0.85rem;
+        text-shadow: 0 2px 0 rgba(0,0,0,0.70);
       }
       .photo-top img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         display: block;
-        filter: saturate(1.06) contrast(1.05);
+        filter: saturate(1.05) contrast(1.06);
+      }
+      .photo-top img.is-hidden {
+        display: none;
       }
 
       .photo-action {
@@ -460,16 +480,16 @@
         width: 38px;
         height: 38px;
         border-radius: 10px;
-        background: rgba(0, 0, 0, 0.58);
-        border: 1px solid rgba(255, 204, 102, 0.32);
+        background: rgba(0, 0, 0, 0.45);
+        border: 1px solid var(--panel-edge);
         display: grid;
         place-items: center;
         font-size: 1.15rem;
-        box-shadow: 0 10px 16px rgba(0, 0, 0, 0.45);
+        box-shadow: 0 10px 16px rgba(0, 0, 0, 0.38), 0 0 14px rgba(255,224,122,0.10);
       }
 
       .photo-body {
-        height: 45%;
+        height: 44%;
         padding: 12px 12px 14px 12px;
         text-align: center;
         display: grid;
@@ -483,13 +503,15 @@
         gap: 8px;
         padding: 6px 10px;
         border-radius: 999px;
-        border: 1px solid rgba(255, 204, 102, 0.24);
-        background: rgba(0, 0, 0, 0.40);
+        border: 1px solid var(--panel-edge-2);
+        background: rgba(0, 0, 0, 0.34);
         font-family: var(--font-ui);
-        font-weight: 700;
+        font-weight: 800;
         font-size: 0.82rem;
         margin: 0 auto 2px auto;
-        box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.45);
+        box-shadow: inset 0 0 14px rgba(0, 0, 0, 0.30), 0 0 12px rgba(255,224,122,0.08);
+        color: var(--text);
+        text-shadow: 0 2px 0 rgba(0,0,0,0.65);
       }
 
       .photo-title {
@@ -501,10 +523,10 @@
 
       .photo-desc {
         margin: 0;
-        color: rgba(240, 237, 210, 0.92);
+        color: var(--text-soft);
         font-size: 0.96rem;
         line-height: 1.35;
-        text-transform: none !important;
+        text-shadow: 0 2px 0 rgba(0,0,0,0.62);
       }
 
       .back-wrap {
@@ -514,7 +536,7 @@
         grid-template-rows: auto auto 1fr auto;
         gap: 10px;
         text-align: center;
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.70), rgba(0, 0, 0, 0.52));
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.38));
       }
 
       .back-title {
@@ -526,10 +548,10 @@
 
       .back-text {
         margin: 0;
-        color: rgba(240, 237, 210, 0.95);
+        color: var(--text);
         line-height: 1.4;
         font-size: 0.95rem;
-        text-transform: none !important;
+        text-shadow: 0 2px 0 rgba(0,0,0,0.60);
       }
 
       .back-meta {
@@ -537,12 +559,13 @@
         gap: 8px;
         margin-top: 4px;
         font-size: 0.9rem;
-        color: rgba(240, 237, 210, 0.92);
+        color: var(--text);
+        text-shadow: 0 2px 0 rgba(0,0,0,0.60);
       }
 
       .meta-row {
-        background: rgba(0, 0, 0, 0.36);
-        border: 1px solid rgba(255, 204, 102, 0.20);
+        background: rgba(0, 0, 0, 0.28);
+        border: 1px solid var(--panel-edge-2);
         border-radius: 10px;
         padding: 8px 10px;
         text-align: left;
@@ -567,6 +590,7 @@
       }
     </style>
 
+    <!-- Base para GitHub Pages (seu repo) -->
     <script>
       (function () {
         const isGithubPages = location.hostname.endsWith("github.io");
@@ -636,6 +660,7 @@
     </aside>
 
     <section class="ranking aba ativa espaco-pos-header" id="inicio">
+      <!-- antigo ranking escondido -->
       <div class="hidden-compat">
         <div class="table-container">
           <h2 class="titulo-dentro">Tibia OtServers Ranking</h2>
@@ -660,13 +685,13 @@
         <div class="home-top">
           <div class="home-badges">
             <div class="home-badge">
-              <span class="badge-text gold-mn">🏆 Votação mensal</span>
+              <span class="badge-text gold-text">🏆 Votação mensal</span>
             </div>
             <div class="home-badge">
-              <span class="badge-text gold-mn">⏳ 1 voto a cada 6 horas</span>
+              <span class="badge-text gold-text">⏳ 1 voto a cada 6 horas</span>
             </div>
             <div class="home-badge">
-              <span class="badge-text gold-mn">🔐 Logado vale 2 pontos</span>
+              <span class="badge-text gold-text">🔐 Logado vale 2 pontos</span>
             </div>
           </div>
 
@@ -678,10 +703,12 @@
 
         <!-- BLOCO 1 -->
         <div class="table-container home-block">
-          <h2 class="home-title gold-mn"><span class="home-seal">👑</span>Bloco 1 — Pior jogada do mês (3 jogadas)</h2>
+          <h2 class="home-title gold-title">
+            <span class="home-seal">👑</span>Bloco 1 — Pior jogada do mês (3 jogadas)
+          </h2>
           <div class="home-headerline"></div>
           <p class="home-subtitle">
-            Três jogadas concorrem. Vire o card pra ver <b class="gold-mn">personagem</b>, <b class="gold-mn">stream</b> e o <b class="gold-mn">link do seu vídeo</b>.
+            Três jogadas concorrem. Vire o card pra ver <b class="gold-text">personagem</b>, <b class="gold-text">stream</b> e <b class="gold-text">link do seu vídeo</b>.
           </p>
 
           <div class="tri-grid">
@@ -689,23 +716,23 @@
               <div class="flip-inner">
                 <div class="flip-face flip-front">
                   <div class="photo-top">
-                    <img src="./jogada1.jpg" alt="Jogada 1" onerror="this.style.display='none';" />
-                    <div class="photo-action"><span class="gold-mn">＋</span></div>
+                    <img src="./jogada1.jpg" alt="Jogada 1" />
+                    <div class="photo-action"><span class="gold-text">＋</span></div>
                   </div>
                   <div class="photo-body">
-                    <div class="pill gold-mn">🎬 Jogada 1</div>
-                    <div class="photo-title gold-mn">Passe o mouse pra virar</div>
-                    <p class="photo-desc">A pior decisão do mês (candidata).</p>
+                    <div class="pill">🎬 Jogada 1</div>
+                    <div class="photo-title gold-title">Passe o mouse pra virar</div>
+                    <p class="photo-desc">Card com foto + detalhes atrás.</p>
                   </div>
                 </div>
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="back-title gold-mn">Jogada 1 — Detalhes</p>
+                    <p class="back-title gold-title">Jogada 1 — Detalhes</p>
                     <p class="back-text">Descrição curta do que aconteceu.</p>
                     <div class="back-meta">
-                      <div class="meta-row"><b class="gold-mn">Personagem:</b> Knight Zika</div>
-                      <div class="meta-row"><b class="gold-mn">Stream:</b> twitch.tv/...</div>
-                      <div class="meta-row"><b class="gold-mn">Seu vídeo:</b> youtube.com/...&t=123</div>
+                      <div class="meta-row"><b class="gold-text">Personagem:</b> Knight Zika</div>
+                      <div class="meta-row"><b class="gold-text">Stream:</b> twitch.tv/...</div>
+                      <div class="meta-row"><b class="gold-text">Seu vídeo:</b> youtube.com/...&t=123</div>
                     </div>
                     <div class="flip-actions">
                       <a class="btn-secondary" href="#" onclick="return false;">▶ Ver no YouTube</a>
@@ -720,23 +747,23 @@
               <div class="flip-inner">
                 <div class="flip-face flip-front">
                   <div class="photo-top">
-                    <img src="./jogada2.jpg" alt="Jogada 2" onerror="this.style.display='none';" />
-                    <div class="photo-action"><span class="gold-mn">＋</span></div>
+                    <img src="./jogada2.jpg" alt="Jogada 2" />
+                    <div class="photo-action"><span class="gold-text">＋</span></div>
                   </div>
                   <div class="photo-body">
-                    <div class="pill gold-mn">🎬 Jogada 2</div>
-                    <div class="photo-title gold-mn">Passe o mouse pra virar</div>
-                    <p class="photo-desc">Candidata do mês.</p>
+                    <div class="pill">🎬 Jogada 2</div>
+                    <div class="photo-title gold-title">Passe o mouse pra virar</div>
+                    <p class="photo-desc">Card com foto + detalhes atrás.</p>
                   </div>
                 </div>
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="back-title gold-mn">Jogada 2 — Detalhes</p>
+                    <p class="back-title gold-title">Jogada 2 — Detalhes</p>
                     <p class="back-text">Descrição curta do que aconteceu.</p>
                     <div class="back-meta">
-                      <div class="meta-row"><b class="gold-mn">Personagem:</b> ...</div>
-                      <div class="meta-row"><b class="gold-mn">Stream:</b> twitch.tv/...</div>
-                      <div class="meta-row"><b class="gold-mn">Seu vídeo:</b> youtube.com/...&t=...</div>
+                      <div class="meta-row"><b class="gold-text">Personagem:</b> ...</div>
+                      <div class="meta-row"><b class="gold-text">Stream:</b> twitch.tv/...</div>
+                      <div class="meta-row"><b class="gold-text">Seu vídeo:</b> youtube.com/...&t=...</div>
                     </div>
                     <div class="flip-actions">
                       <a class="btn-secondary" href="#" onclick="return false;">▶ Ver no YouTube</a>
@@ -751,23 +778,23 @@
               <div class="flip-inner">
                 <div class="flip-face flip-front">
                   <div class="photo-top">
-                    <img src="./jogada3.jpg" alt="Jogada 3" onerror="this.style.display='none';" />
-                    <div class="photo-action"><span class="gold-mn">＋</span></div>
+                    <img src="./jogada3.jpg" alt="Jogada 3" />
+                    <div class="photo-action"><span class="gold-text">＋</span></div>
                   </div>
                   <div class="photo-body">
-                    <div class="pill gold-mn">🎬 Jogada 3</div>
-                    <div class="photo-title gold-mn">Passe o mouse pra virar</div>
-                    <p class="photo-desc">Candidata do mês.</p>
+                    <div class="pill">🎬 Jogada 3</div>
+                    <div class="photo-title gold-title">Passe o mouse pra virar</div>
+                    <p class="photo-desc">Card com foto + detalhes atrás.</p>
                   </div>
                 </div>
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="back-title gold-mn">Jogada 3 — Detalhes</p>
+                    <p class="back-title gold-title">Jogada 3 — Detalhes</p>
                     <p class="back-text">Descrição curta do que aconteceu.</p>
                     <div class="back-meta">
-                      <div class="meta-row"><b class="gold-mn">Personagem:</b> ...</div>
-                      <div class="meta-row"><b class="gold-mn">Stream:</b> twitch.tv/...</div>
-                      <div class="meta-row"><b class="gold-mn">Seu vídeo:</b> youtube.com/...&t=...</div>
+                      <div class="meta-row"><b class="gold-text">Personagem:</b> ...</div>
+                      <div class="meta-row"><b class="gold-text">Stream:</b> twitch.tv/...</div>
+                      <div class="meta-row"><b class="gold-text">Seu vídeo:</b> youtube.com/...&t=...</div>
                     </div>
                     <div class="flip-actions">
                       <a class="btn-secondary" href="#" onclick="return false;">▶ Ver no YouTube</a>
@@ -787,7 +814,9 @@
 
         <!-- BLOCO 2 -->
         <div class="table-container home-block">
-          <h2 class="home-title gold-mn"><span class="home-seal">⚔️</span>Bloco 2 — Duelo rápido (A vs B)</h2>
+          <h2 class="home-title gold-title">
+            <span class="home-seal">⚔️</span>Bloco 2 — Duelo rápido (A vs B)
+          </h2>
           <div class="home-headerline"></div>
           <p class="home-subtitle">
             Três duelos em destaque. Vire pra ver descrição e votar.
@@ -798,23 +827,23 @@
               <div class="flip-inner">
                 <div class="flip-face flip-front">
                   <div class="photo-top">
-                    <img src="./duelo1.jpg" alt="Duelo 1" onerror="this.style.display='none';" />
-                    <div class="photo-action"><span class="gold-mn">⚔</span></div>
+                    <img src="./duelo1.jpg" alt="Duelo 1" />
+                    <div class="photo-action"><span class="gold-text">⚔</span></div>
                   </div>
                   <div class="photo-body">
-                    <div class="pill gold-mn">⚔ Duelo 1</div>
-                    <div class="photo-title gold-mn">Criador A vs Criador B</div>
+                    <div class="pill">⚔ Duelo 1</div>
+                    <div class="photo-title gold-title">A vs B</div>
                     <p class="photo-desc">Passe o mouse pra virar e votar.</p>
                   </div>
                 </div>
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="back-title gold-mn">Duelo 1 — Detalhes</p>
+                    <p class="back-title gold-title">Duelo 1 — Detalhes</p>
                     <p class="back-text">Mini descrição do duelo.</p>
                     <div class="back-meta">
-                      <div class="meta-row"><b class="gold-mn">A:</b> Nome/Canal</div>
-                      <div class="meta-row"><b class="gold-mn">B:</b> Nome/Canal</div>
-                      <div class="meta-row"><b class="gold-mn">Regra:</b> Quem tiver mais votos vence o mês.</div>
+                      <div class="meta-row"><b class="gold-text">A:</b> Nome/Canal</div>
+                      <div class="meta-row"><b class="gold-text">B:</b> Nome/Canal</div>
+                      <div class="meta-row"><b class="gold-text">Regra:</b> Quem tiver mais votos vence.</div>
                     </div>
                     <div class="flip-actions">
                       <button type="button" data-vote data-type="duelo" data-id="1A">🗳 Votar A</button>
@@ -830,23 +859,23 @@
               <div class="flip-inner">
                 <div class="flip-face flip-front">
                   <div class="photo-top">
-                    <img src="./duelo2.jpg" alt="Duelo 2" onerror="this.style.display='none';" />
-                    <div class="photo-action"><span class="gold-mn">⚔</span></div>
+                    <img src="./duelo2.jpg" alt="Duelo 2" />
+                    <div class="photo-action"><span class="gold-text">⚔</span></div>
                   </div>
                   <div class="photo-body">
-                    <div class="pill gold-mn">⚔ Duelo 2</div>
-                    <div class="photo-title gold-mn">Criador A vs Criador B</div>
+                    <div class="pill">⚔ Duelo 2</div>
+                    <div class="photo-title gold-title">A vs B</div>
                     <p class="photo-desc">Passe o mouse pra virar e votar.</p>
                   </div>
                 </div>
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="back-title gold-mn">Duelo 2 — Detalhes</p>
+                    <p class="back-title gold-title">Duelo 2 — Detalhes</p>
                     <p class="back-text">Mini descrição do duelo.</p>
                     <div class="back-meta">
-                      <div class="meta-row"><b class="gold-mn">A:</b> Nome/Canal</div>
-                      <div class="meta-row"><b class="gold-mn">B:</b> Nome/Canal</div>
-                      <div class="meta-row"><b class="gold-mn">Regra:</b> Votação mensal.</div>
+                      <div class="meta-row"><b class="gold-text">A:</b> Nome/Canal</div>
+                      <div class="meta-row"><b class="gold-text">B:</b> Nome/Canal</div>
+                      <div class="meta-row"><b class="gold-text">Regra:</b> Votação mensal.</div>
                     </div>
                     <div class="flip-actions">
                       <button type="button" data-vote data-type="duelo" data-id="2A">🗳 Votar A</button>
@@ -862,23 +891,23 @@
               <div class="flip-inner">
                 <div class="flip-face flip-front">
                   <div class="photo-top">
-                    <img src="./duelo3.jpg" alt="Duelo 3" onerror="this.style.display='none';" />
-                    <div class="photo-action"><span class="gold-mn">⚔</span></div>
+                    <img src="./duelo3.jpg" alt="Duelo 3" />
+                    <div class="photo-action"><span class="gold-text">⚔</span></div>
                   </div>
                   <div class="photo-body">
-                    <div class="pill gold-mn">⚔ Duelo 3</div>
-                    <div class="photo-title gold-mn">Criador A vs Criador B</div>
+                    <div class="pill">⚔ Duelo 3</div>
+                    <div class="photo-title gold-title">A vs B</div>
                     <p class="photo-desc">Passe o mouse pra virar e votar.</p>
                   </div>
                 </div>
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="back-title gold-mn">Duelo 3 — Detalhes</p>
+                    <p class="back-title gold-title">Duelo 3 — Detalhes</p>
                     <p class="back-text">Mini descrição do duelo.</p>
                     <div class="back-meta">
-                      <div class="meta-row"><b class="gold-mn">A:</b> Nome/Canal</div>
-                      <div class="meta-row"><b class="gold-mn">B:</b> Nome/Canal</div>
-                      <div class="meta-row"><b class="gold-mn">Regra:</b> Votação mensal.</div>
+                      <div class="meta-row"><b class="gold-text">A:</b> Nome/Canal</div>
+                      <div class="meta-row"><b class="gold-text">B:</b> Nome/Canal</div>
+                      <div class="meta-row"><b class="gold-text">Regra:</b> Votação mensal.</div>
                     </div>
                     <div class="flip-actions">
                       <button type="button" data-vote data-type="duelo" data-id="3A">🗳 Votar A</button>
@@ -898,10 +927,12 @@
 
         <!-- BLOCO 3 -->
         <div class="table-container home-block">
-          <h2 class="home-title gold-mn"><span class="home-seal">🏰</span>Bloco 3 — Melhor OTServer da atualidade</h2>
+          <h2 class="home-title gold-title">
+            <span class="home-seal">🏰</span>Bloco 3 — Melhor OTServer da atualidade
+          </h2>
           <div class="home-headerline"></div>
           <p class="home-subtitle">
-            Três servidores em destaque. Vire o card pra ver IP/site/versão e votar no melhor.
+            Três servidores em destaque. Vire o card pra ver info e votar.
           </p>
 
           <div class="tri-grid">
@@ -909,23 +940,23 @@
               <div class="flip-inner">
                 <div class="flip-face flip-front">
                   <div class="photo-top">
-                    <img src="./ot1.jpg" alt="OT 1" onerror="this.style.display='none';" />
-                    <div class="photo-action"><span class="gold-mn">🏰</span></div>
+                    <img src="./ot1.jpg" alt="OT 1" />
+                    <div class="photo-action"><span class="gold-text">🏰</span></div>
                   </div>
                   <div class="photo-body">
-                    <div class="pill gold-mn">🏰 OT 1</div>
-                    <div class="photo-title gold-mn">Nome do servidor</div>
+                    <div class="pill">🏰 OT 1</div>
+                    <div class="photo-title gold-title">Nome do servidor</div>
                     <p class="photo-desc">Passe o mouse pra virar e votar.</p>
                   </div>
                 </div>
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="back-title gold-mn">OT 1 — Detalhes</p>
+                    <p class="back-title gold-title">OT 1 — Detalhes</p>
                     <p class="back-text">Descrição curta do servidor.</p>
                     <div class="back-meta">
-                      <div class="meta-row"><b class="gold-mn">Versão:</b> 8.6</div>
-                      <div class="meta-row"><b class="gold-mn">Site:</b> exemplo.com</div>
-                      <div class="meta-row"><b class="gold-mn">IP:</b> play.exemplo.com:7171</div>
+                      <div class="meta-row"><b class="gold-text">Versão:</b> 8.6</div>
+                      <div class="meta-row"><b class="gold-text">Site:</b> exemplo.com</div>
+                      <div class="meta-row"><b class="gold-text">IP:</b> play.exemplo.com:7171</div>
                     </div>
                     <div class="flip-actions">
                       <a class="btn-secondary" href="#" onclick="return false;">🌐 Abrir site</a>
@@ -940,23 +971,23 @@
               <div class="flip-inner">
                 <div class="flip-face flip-front">
                   <div class="photo-top">
-                    <img src="./ot2.jpg" alt="OT 2" onerror="this.style.display='none';" />
-                    <div class="photo-action"><span class="gold-mn">🏰</span></div>
+                    <img src="./ot2.jpg" alt="OT 2" />
+                    <div class="photo-action"><span class="gold-text">🏰</span></div>
                   </div>
                   <div class="photo-body">
-                    <div class="pill gold-mn">🏰 OT 2</div>
-                    <div class="photo-title gold-mn">Nome do servidor</div>
+                    <div class="pill">🏰 OT 2</div>
+                    <div class="photo-title gold-title">Nome do servidor</div>
                     <p class="photo-desc">Passe o mouse pra virar e votar.</p>
                   </div>
                 </div>
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="back-title gold-mn">OT 2 — Detalhes</p>
+                    <p class="back-title gold-title">OT 2 — Detalhes</p>
                     <p class="back-text">Descrição curta do servidor.</p>
                     <div class="back-meta">
-                      <div class="meta-row"><b class="gold-mn">Versão:</b> 10.x</div>
-                      <div class="meta-row"><b class="gold-mn">Site:</b> exemplo.com</div>
-                      <div class="meta-row"><b class="gold-mn">IP:</b> play.exemplo.com:7171</div>
+                      <div class="meta-row"><b class="gold-text">Versão:</b> 10.x</div>
+                      <div class="meta-row"><b class="gold-text">Site:</b> exemplo.com</div>
+                      <div class="meta-row"><b class="gold-text">IP:</b> play.exemplo.com:7171</div>
                     </div>
                     <div class="flip-actions">
                       <a class="btn-secondary" href="#" onclick="return false;">🌐 Abrir site</a>
@@ -971,23 +1002,23 @@
               <div class="flip-inner">
                 <div class="flip-face flip-front">
                   <div class="photo-top">
-                    <img src="./ot3.jpg" alt="OT 3" onerror="this.style.display='none';" />
-                    <div class="photo-action"><span class="gold-mn">🏰</span></div>
+                    <img src="./ot3.jpg" alt="OT 3" />
+                    <div class="photo-action"><span class="gold-text">🏰</span></div>
                   </div>
                   <div class="photo-body">
-                    <div class="pill gold-mn">🏰 OT 3</div>
-                    <div class="photo-title gold-mn">Nome do servidor</div>
+                    <div class="pill">🏰 OT 3</div>
+                    <div class="photo-title gold-title">Nome do servidor</div>
                     <p class="photo-desc">Passe o mouse pra virar e votar.</p>
                   </div>
                 </div>
                 <div class="flip-face flip-back">
                   <div class="back-wrap">
-                    <p class="back-title gold-mn">OT 3 — Detalhes</p>
+                    <p class="back-title gold-title">OT 3 — Detalhes</p>
                     <p class="back-text">Descrição curta do servidor.</p>
                     <div class="back-meta">
-                      <div class="meta-row"><b class="gold-mn">Versão:</b> 7.4</div>
-                      <div class="meta-row"><b class="gold-mn">Site:</b> exemplo.com</div>
-                      <div class="meta-row"><b class="gold-mn">IP:</b> play.exemplo.com:7171</div>
+                      <div class="meta-row"><b class="gold-text">Versão:</b> 7.4</div>
+                      <div class="meta-row"><b class="gold-text">Site:</b> exemplo.com</div>
+                      <div class="meta-row"><b class="gold-text">IP:</b> play.exemplo.com:7171</div>
                     </div>
                     <div class="flip-actions">
                       <a class="btn-secondary" href="#" onclick="return false;">🌐 Abrir site</a>
@@ -1040,16 +1071,18 @@
         });
       }
 
+      // Esconde <img> se falhar, mas mantém placeholder do card legível
+      document.querySelectorAll(".photo-top img").forEach((img) => {
+        img.addEventListener("error", () => img.classList.add("is-hidden"));
+      });
+
       function votar(tipo, id) {
         alert(`Voto registrado (simulação)\nTipo: ${tipo}\nID: ${id}\n\nDepois a gente liga no Firestore/Functions.`);
       }
-
       document.querySelectorAll("[data-vote]").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           e.stopPropagation();
-          const tipo = btn.getAttribute("data-type");
-          const id = btn.getAttribute("data-id");
-          votar(tipo, id);
+          votar(btn.getAttribute("data-type"), btn.getAttribute("data-id"));
         });
       });
 
