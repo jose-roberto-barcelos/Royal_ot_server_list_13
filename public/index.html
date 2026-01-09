@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="styles.css" />
 
     <style>
-      /* ===== Mantido do seu index (menu + sticky, etc.) ===== */
+      /* ======= SEU CSS INLINE ORIGINAL (mantido) ======= */
       #servidores-wrapper.collapsed {
         max-height: 400px;
         overflow-y: auto;
@@ -119,340 +119,244 @@
         right: 0.5rem;
       }
 
-      /* ===== NOVO: Home (visuais “placa” + cards flip) ===== */
+      /* ======= NOVO: apenas o "miolo" do index, sem mexer no seu estilo base ======= */
       :root {
-        --gold: #ffd889;
-        --gold-2: #ffea9d;
-        --gold-dk: rgba(255, 216, 137, 0.28);
-        --panel-bg: rgba(18, 10, 6, 0.62); /* marrom escuro */
-        --panel-bg-2: rgba(28, 16, 10, 0.50);
+        --gold: #ffe97f;
+        --gold2: #ffd36a;
         --ink: rgba(240, 237, 210, 0.92);
-        --ink-2: rgba(240, 237, 210, 0.82);
-        --shadow: rgba(0, 0, 0, 0.55);
+        --muted: rgba(240, 237, 210, 0.78);
+        --panelA: rgba(0, 0, 0, 0.55);
+        --panelB: rgba(0, 0, 0, 0.35);
+        --line: rgba(255, 204, 102, 0.26);
+        --lineStrong: rgba(255, 204, 102, 0.38);
       }
 
-      /* container geral abaixo do header */
-      .home-area {
-        max-width: 1180px;
-        margin: 0 auto;
-        padding: 14px 16px 40px;
-        font-family: "Cinzel", serif;
-        color: var(--ink);
-      }
-
-      /* faixa superior (badges + botões) */
-      .home-topbar {
+      /* barra superior com infos (segue seu padrão, não inventa cores) */
+      .home-info {
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        flex-wrap: wrap;
         gap: 10px;
-        margin-top: 6px;
-      }
-
-      .home-pills {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 14px;
-        width: 100%;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto 14px auto;
         max-width: 980px;
       }
-
-      .pill {
-        display: flex;
+      .home-pill {
+        background: rgba(0, 0, 0, 0.55);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 10px 12px;
+        color: var(--gold);
+        text-shadow: 0 0 4px #000;
+        font-family: "Cinzel", serif;
+        font-size: 0.95rem;
+        letter-spacing: 0.3px;
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
+        display: inline-flex;
+        gap: 8px;
         align-items: center;
-        justify-content: center;
-        gap: 10px;
-        padding: 14px 16px;
-        border-radius: 12px;
-        background: linear-gradient(
-          to bottom,
-          rgba(40, 24, 14, 0.75),
-          rgba(12, 8, 6, 0.55)
-        );
-        border: 2px solid rgba(255, 216, 137, 0.25);
-        box-shadow: 0 18px 35px rgba(0, 0, 0, 0.45);
-        color: var(--gold-2);
-        text-shadow: 0 2px 0 rgba(0, 0, 0, 0.55);
-        letter-spacing: 0.4px;
-      }
-      .pill span {
-        color: var(--gold-2);
       }
 
-      .home-ctas {
+      .home-actions {
         display: flex;
-        gap: 14px;
+        gap: 10px;
         justify-content: center;
         flex-wrap: wrap;
+        margin: 8px 0 18px 0;
+      }
+      .home-actions a {
+        text-decoration: none;
       }
 
-      /* botão “placa dourada” (sem ficar gigante) */
-      .gold-btn {
+      /* reutiliza clima do seu "btn-contraste", mas sem depender dele */
+      .btn-royal {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
-        padding: 12px 18px;
-        border-radius: 12px;
-        text-decoration: none;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 1px solid var(--lineStrong);
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.38));
+        color: var(--gold);
         font-family: "Cinzel", serif;
-        font-size: 1.05rem;
-        letter-spacing: 0.5px;
-
-        background: linear-gradient(
-          to bottom,
-          rgba(255, 234, 157, 0.95),
-          rgba(214, 164, 64, 0.90)
-        );
-        border: 2px solid rgba(110, 70, 16, 0.65);
-        box-shadow:
-          0 16px 30px rgba(0, 0, 0, 0.45),
-          inset 0 1px 0 rgba(255, 255, 255, 0.35);
-        color: rgba(35, 22, 10, 0.92);
+        font-size: 0.95rem;
+        text-shadow: 0 0 4px #000;
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
+        cursor: pointer;
+        transition: transform 0.15s ease, filter 0.15s ease;
       }
-      .gold-btn:hover {
+      .btn-royal:hover {
         transform: translateY(-1px);
-        box-shadow:
-          0 18px 34px rgba(0, 0, 0, 0.50),
-          0 0 20px rgba(255, 210, 120, 0.18),
-          inset 0 1px 0 rgba(255, 255, 255, 0.40);
+        filter: brightness(1.06);
       }
 
-      /* Bloco grande “placa” */
+      /* BLOCO no estilo "placa" */
       .home-block {
-        margin-top: 18px;
-        padding: 22px 20px 18px;
-        border-radius: 16px;
-        background: linear-gradient(to bottom, var(--panel-bg), var(--panel-bg-2));
-        border: 2px solid rgba(255, 216, 137, 0.22);
-        box-shadow: 0 26px 60px rgba(0, 0, 0, 0.55);
-        position: relative;
-        overflow: hidden;
-      }
-      .home-block:before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-          circle at 20% 10%,
-          rgba(255, 220, 140, 0.10),
-          transparent 45%
-        );
-        pointer-events: none;
+        margin: 16px auto 0 auto;
+        max-width: 1100px;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: linear-gradient(to bottom, var(--panelA), var(--panelB));
+        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.45);
+        padding: 16px 14px 14px;
       }
 
       .block-head {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
         text-align: center;
-        margin-bottom: 16px;
-        position: relative;
-        z-index: 1;
+        margin-bottom: 12px;
       }
       .block-title {
         margin: 0;
-        font-size: 1.15rem; /* sem exagero */
-        color: var(--gold-2);
-        text-shadow: 0 2px 0 rgba(0, 0, 0, 0.55);
-        letter-spacing: 0.6px;
+        font-family: "Cinzel", serif;
+        font-size: 1.05rem; /* NÃO exagera */
+        color: var(--gold);
+        text-shadow: 0 0 4px #000, 0 0 6px rgba(255, 215, 0, 0.18);
+        letter-spacing: 0.4px;
       }
       .block-desc {
-        margin: 0;
-        font-size: 0.98rem;
-        color: var(--ink-2);
-        text-shadow: 0 2px 0 rgba(0, 0, 0, 0.55);
+        margin: 8px auto 0 auto;
+        max-width: 920px;
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.35;
+        text-shadow: 0 0 4px #000;
       }
 
-      /* grid 3 cards simétricos */
+      /* 3 cards simétricos */
       .cards-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 18px;
-        position: relative;
-        z-index: 1;
+        gap: 14px;
+      }
+      @media (max-width: 980px) {
+        .cards-grid {
+          grid-template-columns: 1fr;
+        }
       }
 
-      /* Card flip */
+      /* FLIP CARD */
       .flip-card {
-        perspective: 1200px;
-      }
-
-      .card-inner {
-        position: relative;
-        width: 100%;
+        perspective: 1100px;
         height: 360px;
+      }
+      @media (max-width: 980px) {
+        .flip-card {
+          height: 380px;
+        }
+      }
+
+      .flip-inner {
+        width: 100%;
+        height: 100%;
+        position: relative;
         transform-style: preserve-3d;
-        transition: transform 0.6s ease;
+        transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
       }
-
-      /* Hover desktop */
-      .flip-card:hover .card-inner {
+      /* hover no desktop */
+      .flip-card:hover .flip-inner {
+        transform: rotateY(180deg);
+      }
+      /* toque no mobile */
+      .flip-card.is-flipped .flip-inner {
         transform: rotateY(180deg);
       }
 
-      /* Mobile/touch: toggle por clique */
-      .flip-card.is-flipped .card-inner {
-        transform: rotateY(180deg);
-      }
-
-      .card-face {
+      .flip-face {
         position: absolute;
         inset: 0;
-        border-radius: 16px;
+        border-radius: 14px;
         overflow: hidden;
         backface-visibility: hidden;
-
-        background: linear-gradient(
-          to bottom,
-          rgba(12, 8, 6, 0.65),
-          rgba(12, 8, 6, 0.48)
-        );
-        border: 2px solid rgba(255, 216, 137, 0.20);
-        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+        border: 1px solid rgba(255, 204, 102, 0.20);
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35));
+        box-shadow: 0 14px 26px rgba(0, 0, 0, 0.45);
       }
 
-      .card-front {
+      .face-front {
         display: flex;
         flex-direction: column;
       }
 
       .thumb {
-        height: 64%;
-        background: rgba(0, 0, 0, 0.35);
+        height: 62%;
         position: relative;
+        background: rgba(0, 0, 0, 0.35);
       }
-      /* imagem do card (você troca o URL depois) */
-      .thumb::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background-size: cover;
-        background-position: center;
-        filter: saturate(1.02) contrast(1.02);
-        opacity: 0.95;
+      .thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        filter: saturate(1.03) contrast(1.04);
       }
-      /* cada card terá sua imagem via style="--img:url(...)" */
-      .thumb {
-        --img: none;
-      }
-      .thumb::before {
-        background-image: var(--img);
-      }
-
       .thumb::after {
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(
-          to bottom,
-          transparent 45%,
-          rgba(0, 0, 0, 0.65)
-        );
+        background: linear-gradient(to bottom, transparent 45%, rgba(0, 0, 0, 0.70));
+        pointer-events: none;
       }
 
       .front-bottom {
-        padding: 14px 14px 16px;
+        height: 38%;
+        padding: 12px 12px 14px;
         display: flex;
         flex-direction: column;
-        gap: 10px;
-      }
-
-      .card-kicker {
-        display: inline-flex;
-        align-items: center;
         justify-content: center;
-        gap: 8px;
-        width: fit-content;
-        padding: 10px 12px;
-        border-radius: 12px;
-        background: rgba(18, 10, 6, 0.55);
-        border: 2px solid rgba(255, 216, 137, 0.22);
-        color: var(--gold-2);
-        text-shadow: 0 2px 0 rgba(0, 0, 0, 0.55);
-        font-size: 0.95rem;
-      }
-
-      .front-actions {
-        display: flex;
         gap: 10px;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-
-      .btn-mini {
-        border: 2px solid rgba(110, 70, 16, 0.65);
-        border-radius: 12px;
-        padding: 10px 14px;
-        cursor: pointer;
-        font-family: "Cinzel", serif;
-        font-size: 0.95rem;
-        letter-spacing: 0.4px;
-        text-decoration: none;
-
-        background: linear-gradient(
-          to bottom,
-          rgba(255, 234, 157, 0.92),
-          rgba(214, 164, 64, 0.86)
-        );
-        color: rgba(35, 22, 10, 0.92);
-        box-shadow:
-          0 14px 26px rgba(0, 0, 0, 0.45),
-          inset 0 1px 0 rgba(255, 255, 255, 0.35);
-      }
-      .btn-mini:hover {
-        transform: translateY(-1px);
-        box-shadow:
-          0 16px 30px rgba(0, 0, 0, 0.50),
-          0 0 18px rgba(255, 210, 120, 0.16),
-          inset 0 1px 0 rgba(255, 255, 255, 0.40);
-      }
-
-      .btn-dark {
-        background: linear-gradient(
-          to bottom,
-          rgba(40, 24, 14, 0.75),
-          rgba(12, 8, 6, 0.55)
-        );
-        border: 2px solid rgba(255, 216, 137, 0.22);
-        color: var(--gold-2);
-      }
-
-      /* verso */
-      .card-back {
-        transform: rotateY(180deg);
-        padding: 16px 16px 18px;
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-      }
-
-      .back-title {
-        margin: 0;
         text-align: center;
-        font-size: 1.05rem;
-        color: var(--gold-2);
-        text-shadow: 0 2px 0 rgba(0, 0, 0, 0.55);
+      }
+      .card-title {
+        margin: 0;
+        color: var(--gold);
+        font-size: 0.98rem;
+        text-shadow: 0 0 4px #000;
+        letter-spacing: 0.3px;
+      }
+      .card-sub {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+        text-shadow: 0 0 4px #000;
+      }
+
+      .flip-back {
+        transform: rotateY(180deg);
+        padding: 12px 12px 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .back-desc {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.35;
+        text-shadow: 0 0 4px #000;
+        text-align: center;
       }
 
       .meta {
         display: grid;
-        gap: 10px;
-        font-size: 0.95rem;
-        color: var(--ink);
+        gap: 8px;
       }
-      .meta .row {
+      .meta-row {
         display: grid;
-        grid-template-columns: 120px 1fr;
-        gap: 10px;
+        grid-template-columns: 110px 1fr;
+        gap: 8px;
         align-items: center;
-        padding: 10px 12px;
-        border-radius: 12px;
-        background: rgba(0, 0, 0, 0.28);
-        border: 1px solid rgba(255, 216, 137, 0.18);
+        padding: 9px 10px;
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.35);
+        border: 1px solid rgba(255, 204, 102, 0.16);
+        color: var(--ink);
+        font-size: 0.9rem;
+        text-shadow: 0 0 4px #000;
       }
-      .meta .key {
-        color: var(--gold-2);
+      .meta-key {
+        color: var(--gold);
       }
       .meta a {
         color: var(--ink);
@@ -462,36 +366,36 @@
       .back-actions {
         margin-top: auto;
         display: flex;
-        gap: 10px;
+        gap: 8px;
         justify-content: center;
         flex-wrap: wrap;
       }
 
-      /* responsivo */
-      @media (max-width: 1020px) {
-        .home-pills {
-          grid-template-columns: 1fr;
-          max-width: 520px;
-        }
-        .cards-grid {
-          grid-template-columns: 1fr;
-        }
-        .card-inner {
-          height: 380px;
-        }
+      .btn-mini {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 9px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--lineStrong);
+        background: rgba(0, 0, 0, 0.45);
+        color: var(--gold);
+        font-family: "Cinzel", serif;
+        font-size: 0.9rem;
+        text-shadow: 0 0 4px #000;
+        cursor: pointer;
+        transition: transform 0.15s ease, filter 0.15s ease;
+        text-decoration: none;
+      }
+      .btn-mini:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.06);
       }
 
-      /* ===== Stubs escondidos para não quebrar seu script.js (se ele ainda tentar mexer no ranking) ===== */
-      .sr-only {
-        position: absolute !important;
-        width: 1px !important;
-        height: 1px !important;
-        padding: 0 !important;
-        margin: -1px !important;
-        overflow: hidden !important;
-        clip: rect(0, 0, 0, 0) !important;
-        white-space: nowrap !important;
-        border: 0 !important;
+      /* ===== manter ranking escondido (pra não quebrar script.js) ===== */
+      .legacy-ranking {
+        display: none;
       }
     </style>
   </head>
@@ -502,7 +406,7 @@
       <source src="./Neblina.webm" type="video/webm" />
     </video>
 
-    <!-- HEADER: mantido intacto -->
+    <!-- ===== SEU HEADER ORIGINAL (mantido 100%) ===== -->
     <header class="site-header">
       <button id="menu-toggle" aria-label="Abrir menu">MENU ☰</button>
 
@@ -562,6 +466,7 @@
       </div>
     </header>
 
+    <!-- ===== SEU MENU LATERAL ORIGINAL (mantido) ===== -->
     <aside id="side-menu" aria-hidden="true">
       <button id="menu-close" aria-label="Fechar menu">✕</button>
       <ul>
@@ -574,55 +479,95 @@
       </ul>
     </aside>
 
-    <!-- HOME -->
-    <main class="home-area espaco-pos-header">
-      <section class="home-topbar" aria-label="Ações e informações">
-        <div class="home-pills">
-          <div class="pill">🏆 <span>Votação mensal</span></div>
-          <div class="pill">⏳ <span>1 voto a cada 6 horas</span></div>
-          <div class="pill">🔒 <span>Logado vale 2 pontos</span></div>
+    <!-- ===== SUA SECTION ORIGINAL (mantida), só que com miolo novo ===== -->
+    <section class="ranking aba ativa espaco-pos-header" id="inicio">
+      <!-- ===== (LEGACY) ranking antigo escondido pra não quebrar seu script.js ===== -->
+      <div class="legacy-ranking">
+        <div class="filtros-ranking" style="margin-bottom: 20px">
+          <input type="text" id="filtro-nome" placeholder="🔍 Buscar servidor..." />
+          <select id="filtro-versao">
+            <option value="">Todas as versões</option>
+          </select>
+          <select id="filtro-origem">
+            <option value="">Todas as origens</option>
+            <option value="Socket">Socket</option>
+            <option value="HTML">HTML</option>
+            <option value="Erro">Erro</option>
+          </select>
         </div>
 
-        <div class="home-ctas">
-          <a class="gold-btn" href="/envie-clips.html">📩 Envie Clips</a>
-          <a class="gold-btn" href="top.html">📺 Top Live</a>
+        <div class="table-container">
+          <h2 class="titulo-dentro">Tibia OtServers Ranking</h2>
+          <div id="servidores-wrapper" class="collapsed">
+            <table>
+              <thead>
+                <tr>
+                  <th onclick="ordenarPor('Servidor')">Servidor ⬍</th>
+                  <th onclick="ordenarPor('Versão')">Versão ⬍</th>
+                  <th onclick="ordenarPor('Jogadores Online')">Jogadores Online ⬍</th>
+                  <th>Origem</th>
+                  <th>Observação</th>
+                </tr>
+              </thead>
+              <tbody id="tabela-servidores"></tbody>
+            </table>
+          </div>
         </div>
-      </section>
 
-      <!-- BLOCO 1 -->
-      <section class="home-block" aria-label="Bloco 1 - Pior jogada do mês">
+        <div class="table-controls outside">
+          <button id="toggle-table" type="button">Expandir</button>
+          <a class="btn-contraste" href="/envie-clips.html">Envie Clips</a>
+        </div>
+      </div>
+
+      <!-- ===== NOVO INDEX (os 3 blocos) ===== -->
+      <div class="home-info">
+        <div class="home-pill">🏆 <span>Votação mensal</span></div>
+        <div class="home-pill">⏳ <span>1 voto a cada 6 horas</span></div>
+        <div class="home-pill">🔒 <span>Logado vale 2 pontos</span></div>
+      </div>
+
+      <div class="home-actions">
+        <a class="btn-royal" href="/envie-clips.html">📩 Envie Clips</a>
+        <a class="btn-royal" href="top.html">📺 Top Live</a>
+      </div>
+
+      <!-- ===== BLOCO 1 ===== -->
+      <div class="home-block">
         <div class="block-head">
           <h2 class="block-title">👑 Bloco 1 — Pior jogada do mês (3 jogadas)</h2>
           <p class="block-desc">
-            Três jogadas concorrem. Passe o mouse para virar o card e ver os detalhes.
+            Passe o mouse para virar o card e ver descrição, personagem, link da stream e o link do seu vídeo na jogada.
           </p>
         </div>
 
         <div class="cards-grid">
           <!-- Card 1 -->
           <article class="flip-card" data-flip>
-            <div class="card-inner">
-              <div class="card-face card-front">
-                <div class="thumb" style="--img: url('./PLACEHOLDER_CARD_1.jpg');"></div>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb">
+                  <!-- Troque a imagem depois (placeholder seguro do seu próprio site) -->
+                  <img src="./brasao-novo.png" alt="Jogada 1" />
+                </div>
                 <div class="front-bottom">
-                  <div class="card-kicker">🎬 Jogada 1</div>
-                  <div class="front-actions">
-                    <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver</a>
-                    <button class="btn-mini btn-dark" type="button">Votar</button>
-                  </div>
+                  <p class="card-title">Jogada 1</p>
+                  <p class="card-sub">Passe o mouse para virar</p>
                 </div>
               </div>
 
-              <div class="card-face card-back">
-                <h3 class="back-title">Detalhes da jogada 1</h3>
+              <div class="flip-face flip-back">
+                <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
+
                 <div class="meta">
-                  <div class="row"><div class="key">Personagem</div><div>Ex: Knight Zika</div></div>
-                  <div class="row"><div class="key">Stream</div><div><a href="#" target="_blank" rel="noreferrer">https://twitch.tv/...</a></div></div>
-                  <div class="row"><div class="key">Seu vídeo</div><div><a href="#" target="_blank" rel="noreferrer">https://youtube.com/...&t=123</a></div></div>
+                  <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
+                  <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
+                  <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
                 </div>
+
                 <div class="back-actions">
                   <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
-                  <button class="btn-mini btn-dark" type="button">Votar</button>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
                 </div>
               </div>
             </div>
@@ -630,28 +575,29 @@
 
           <!-- Card 2 -->
           <article class="flip-card" data-flip>
-            <div class="card-inner">
-              <div class="card-face card-front">
-                <div class="thumb" style="--img: url('./PLACEHOLDER_CARD_2.jpg');"></div>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb">
+                  <img src="./brasao-novo.png" alt="Jogada 2" />
+                </div>
                 <div class="front-bottom">
-                  <div class="card-kicker">🎬 Jogada 2</div>
-                  <div class="front-actions">
-                    <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver</a>
-                    <button class="btn-mini btn-dark" type="button">Votar</button>
-                  </div>
+                  <p class="card-title">Jogada 2</p>
+                  <p class="card-sub">Passe o mouse para virar</p>
                 </div>
               </div>
 
-              <div class="card-face card-back">
-                <h3 class="back-title">Detalhes da jogada 2</h3>
+              <div class="flip-face flip-back">
+                <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
+
                 <div class="meta">
-                  <div class="row"><div class="key">Personagem</div><div>Ex: Druid X</div></div>
-                  <div class="row"><div class="key">Stream</div><div><a href="#" target="_blank" rel="noreferrer">https://twitch.tv/...</a></div></div>
-                  <div class="row"><div class="key">Seu vídeo</div><div><a href="#" target="_blank" rel="noreferrer">https://youtube.com/...&t=123</a></div></div>
+                  <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
+                  <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
+                  <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
                 </div>
+
                 <div class="back-actions">
                   <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
-                  <button class="btn-mini btn-dark" type="button">Votar</button>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
                 </div>
               </div>
             </div>
@@ -659,248 +605,206 @@
 
           <!-- Card 3 -->
           <article class="flip-card" data-flip>
-            <div class="card-inner">
-              <div class="card-face card-front">
-                <div class="thumb" style="--img: url('./PLACEHOLDER_CARD_3.jpg');"></div>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb">
+                  <img src="./brasao-novo.png" alt="Jogada 3" />
+                </div>
                 <div class="front-bottom">
-                  <div class="card-kicker">🎬 Jogada 3</div>
-                  <div class="front-actions">
-                    <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver</a>
-                    <button class="btn-mini btn-dark" type="button">Votar</button>
-                  </div>
+                  <p class="card-title">Jogada 3</p>
+                  <p class="card-sub">Passe o mouse para virar</p>
                 </div>
               </div>
 
-              <div class="card-face card-back">
-                <h3 class="back-title">Detalhes da jogada 3</h3>
+              <div class="flip-face flip-back">
+                <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
+
                 <div class="meta">
-                  <div class="row"><div class="key">Personagem</div><div>Ex: Sorcerer Y</div></div>
-                  <div class="row"><div class="key">Stream</div><div><a href="#" target="_blank" rel="noreferrer">https://twitch.tv/...</a></div></div>
-                  <div class="row"><div class="key">Seu vídeo</div><div><a href="#" target="_blank" rel="noreferrer">https://youtube.com/...&t=123</a></div></div>
+                  <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
+                  <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
+                  <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
                 </div>
+
                 <div class="back-actions">
                   <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
-                  <button class="btn-mini btn-dark" type="button">Votar</button>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
                 </div>
               </div>
             </div>
           </article>
         </div>
-      </section>
-
-      <!-- BLOCO 2 -->
-      <section class="home-block" aria-label="Bloco 2 - Duelo rápido">
-        <div class="block-head">
-          <h2 class="block-title">⚔️ Bloco 2 — Duelo rápido (3 duelos do mês)</h2>
-          <p class="block-desc">
-            Três duelos em paralelo para manter a galera voltando. Vire o card para votar.
-          </p>
-        </div>
-
-        <div class="cards-grid">
-          <!-- Duelo 1 -->
-          <article class="flip-card" data-flip>
-            <div class="card-inner">
-              <div class="card-face card-front">
-                <div class="thumb" style="--img: url('./PLACEHOLDER_DUELO_1.jpg');"></div>
-                <div class="front-bottom">
-                  <div class="card-kicker">🥊 Duelo 1</div>
-                  <div class="front-actions">
-                    <button class="btn-mini btn-dark" type="button">Virar & Votar</button>
-                    <a class="btn-mini" href="#" target="_blank" rel="noreferrer">Abrir</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card-face card-back">
-                <h3 class="back-title">Duelo 1 — A vs B</h3>
-                <div class="meta">
-                  <div class="row"><div class="key">Criador A</div><div>Nome/Canal A</div></div>
-                  <div class="row"><div class="key">Criador B</div><div>Nome/Canal B</div></div>
-                  <div class="row"><div class="key">Como entra</div><div>Indicação da comunidade (formulário).</div></div>
-                </div>
-                <div class="back-actions">
-                  <button class="btn-mini btn-dark" type="button">Votar A</button>
-                  <button class="btn-mini btn-dark" type="button">Votar B</button>
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">Abrir canais</a>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- Duelo 2 -->
-          <article class="flip-card" data-flip>
-            <div class="card-inner">
-              <div class="card-face card-front">
-                <div class="thumb" style="--img: url('./PLACEHOLDER_DUELO_2.jpg');"></div>
-                <div class="front-bottom">
-                  <div class="card-kicker">🥊 Duelo 2</div>
-                  <div class="front-actions">
-                    <button class="btn-mini btn-dark" type="button">Virar & Votar</button>
-                    <a class="btn-mini" href="#" target="_blank" rel="noreferrer">Abrir</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card-face card-back">
-                <h3 class="back-title">Duelo 2 — A vs B</h3>
-                <div class="meta">
-                  <div class="row"><div class="key">Criador A</div><div>Nome/Canal A</div></div>
-                  <div class="row"><div class="key">Criador B</div><div>Nome/Canal B</div></div>
-                  <div class="row"><div class="key">Como entra</div><div>Indicação da comunidade (formulário).</div></div>
-                </div>
-                <div class="back-actions">
-                  <button class="btn-mini btn-dark" type="button">Votar A</button>
-                  <button class="btn-mini btn-dark" type="button">Votar B</button>
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">Abrir canais</a>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- Duelo 3 -->
-          <article class="flip-card" data-flip>
-            <div class="card-inner">
-              <div class="card-face card-front">
-                <div class="thumb" style="--img: url('./PLACEHOLDER_DUELO_3.jpg');"></div>
-                <div class="front-bottom">
-                  <div class="card-kicker">🥊 Duelo 3</div>
-                  <div class="front-actions">
-                    <button class="btn-mini btn-dark" type="button">Virar & Votar</button>
-                    <a class="btn-mini" href="#" target="_blank" rel="noreferrer">Abrir</a>
-                  </div>
-                </div>
-              </div>
-
-              <div class="card-face card-back">
-                <h3 class="back-title">Duelo 3 — A vs B</h3>
-                <div class="meta">
-                  <div class="row"><div class="key">Criador A</div><div>Nome/Canal A</div></div>
-                  <div class="row"><div class="key">Criador B</div><div>Nome/Canal B</div></div>
-                  <div class="row"><div class="key">Como entra</div><div>Indicação da comunidade (formulário).</div></div>
-                </div>
-                <div class="back-actions">
-                  <button class="btn-mini btn-dark" type="button">Votar A</button>
-                  <button class="btn-mini btn-dark" type="button">Votar B</button>
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">Abrir canais</a>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- BLOCO 3 -->
-      <section class="home-block" aria-label="Bloco 3 - Melhor otserver da atualidade">
-        <div class="block-head">
-          <h2 class="block-title">🏰 Bloco 3 — Melhor OTServer da atualidade (3 opções)</h2>
-          <p class="block-desc">
-            Três candidatos. Vire o card para ver detalhes e votar.
-          </p>
-        </div>
-
-        <div class="cards-grid">
-          <!-- Server 1 -->
-          <article class="flip-card" data-flip>
-            <div class="card-inner">
-              <div class="card-face card-front">
-                <div class="thumb" style="--img: url('./PLACEHOLDER_SERVER_1.jpg');"></div>
-                <div class="front-bottom">
-                  <div class="card-kicker">🟩 Server 1</div>
-                  <div class="front-actions">
-                    <a class="btn-mini" href="#" target="_blank" rel="noreferrer">Abrir site</a>
-                    <button class="btn-mini btn-dark" type="button">Votar</button>
-                  </div>
-                </div>
-              </div>
-              <div class="card-face card-back">
-                <h3 class="back-title">Server 1 — detalhes</h3>
-                <div class="meta">
-                  <div class="row"><div class="key">Nome</div><div>Ex: GrimOT</div></div>
-                  <div class="row"><div class="key">Versão</div><div>Ex: 7.4</div></div>
-                  <div class="row"><div class="key">Destaque</div><div>Mini descrição do porquê está aqui.</div></div>
-                </div>
-                <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">Abrir</a>
-                  <button class="btn-mini btn-dark" type="button">Votar</button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- Server 2 -->
-          <article class="flip-card" data-flip>
-            <div class="card-inner">
-              <div class="card-face card-front">
-                <div class="thumb" style="--img: url('./PLACEHOLDER_SERVER_2.jpg');"></div>
-                <div class="front-bottom">
-                  <div class="card-kicker">🟨 Server 2</div>
-                  <div class="front-actions">
-                    <a class="btn-mini" href="#" target="_blank" rel="noreferrer">Abrir site</a>
-                    <button class="btn-mini btn-dark" type="button">Votar</button>
-                  </div>
-                </div>
-              </div>
-              <div class="card-face card-back">
-                <h3 class="back-title">Server 2 — detalhes</h3>
-                <div class="meta">
-                  <div class="row"><div class="key">Nome</div><div>Ex: DeusOT</div></div>
-                  <div class="row"><div class="key">Versão</div><div>Ex: 8.6</div></div>
-                  <div class="row"><div class="key">Destaque</div><div>Mini descrição do porquê está aqui.</div></div>
-                </div>
-                <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">Abrir</a>
-                  <button class="btn-mini btn-dark" type="button">Votar</button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- Server 3 -->
-          <article class="flip-card" data-flip>
-            <div class="card-inner">
-              <div class="card-face card-front">
-                <div class="thumb" style="--img: url('./PLACEHOLDER_SERVER_3.jpg');"></div>
-                <div class="front-bottom">
-                  <div class="card-kicker">🟥 Server 3</div>
-                  <div class="front-actions">
-                    <a class="btn-mini" href="#" target="_blank" rel="noreferrer">Abrir site</a>
-                    <button class="btn-mini btn-dark" type="button">Votar</button>
-                  </div>
-                </div>
-              </div>
-              <div class="card-face card-back">
-                <h3 class="back-title">Server 3 — detalhes</h3>
-                <div class="meta">
-                  <div class="row"><div class="key">Nome</div><div>Ex: MagicHeart</div></div>
-                  <div class="row"><div class="key">Versão</div><div>Ex: 7.6</div></div>
-                  <div class="row"><div class="key">Destaque</div><div>Mini descrição do porquê está aqui.</div></div>
-                </div>
-                <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">Abrir</a>
-                  <button class="btn-mini btn-dark" type="button">Votar</button>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- ===== STUBS ocultos (pra não quebrar script.js se ele ainda procurar ids do ranking) ===== -->
-      <div class="sr-only" aria-hidden="true">
-        <input id="filtro-nome" />
-        <select id="filtro-versao"></select>
-        <select id="filtro-origem"></select>
-        <div id="servidores-wrapper"><table><tbody id="tabela-servidores"></tbody></table></div>
-        <button id="toggle-table" type="button">Expandir</button>
       </div>
-    </main>
 
-    <!-- mantém seu script (pra login/rádio/idiomas/etc). Se ele for só ranking, esses stubs evitam erro -->
+      <!-- ===== BLOCO 2 ===== -->
+      <div class="home-block">
+        <div class="block-head">
+          <h2 class="block-title">⚔️ Bloco 2 — Duelo rápido (A vs B)</h2>
+          <p class="block-desc">
+            Passe o mouse para virar. No verso, aparece a descrição e os botões de voto.
+          </p>
+        </div>
+
+        <div class="cards-grid">
+          <article class="flip-card" data-flip>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb"><img src="./brasao-novo.png" alt="Duelo 1" /></div>
+                <div class="front-bottom">
+                  <p class="card-title">Duelo 1</p>
+                  <p class="card-sub">A vs B — vire para votar</p>
+                </div>
+              </div>
+              <div class="flip-face flip-back">
+                <p class="back-desc">Descrição do duelo (por que esses dois estão aqui).</p>
+                <div class="meta">
+                  <div class="meta-row"><span class="meta-key">A</span><span>Streamer A</span></div>
+                  <div class="meta-row"><span class="meta-key">B</span><span>Streamer B</span></div>
+                </div>
+                <div class="back-actions">
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar A</button>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar B</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="flip-card" data-flip>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb"><img src="./brasao-novo.png" alt="Duelo 2" /></div>
+                <div class="front-bottom">
+                  <p class="card-title">Duelo 2</p>
+                  <p class="card-sub">A vs B — vire para votar</p>
+                </div>
+              </div>
+              <div class="flip-face flip-back">
+                <p class="back-desc">Descrição do duelo (por que esses dois estão aqui).</p>
+                <div class="meta">
+                  <div class="meta-row"><span class="meta-key">A</span><span>Streamer A</span></div>
+                  <div class="meta-row"><span class="meta-key">B</span><span>Streamer B</span></div>
+                </div>
+                <div class="back-actions">
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar A</button>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar B</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="flip-card" data-flip>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb"><img src="./brasao-novo.png" alt="Duelo 3" /></div>
+                <div class="front-bottom">
+                  <p class="card-title">Duelo 3</p>
+                  <p class="card-sub">A vs B — vire para votar</p>
+                </div>
+              </div>
+              <div class="flip-face flip-back">
+                <p class="back-desc">Descrição do duelo (por que esses dois estão aqui).</p>
+                <div class="meta">
+                  <div class="meta-row"><span class="meta-key">A</span><span>Streamer A</span></div>
+                  <div class="meta-row"><span class="meta-key">B</span><span>Streamer B</span></div>
+                </div>
+                <div class="back-actions">
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar A</button>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar B</button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- ===== BLOCO 3 ===== -->
+      <div class="home-block">
+        <div class="block-head">
+          <h2 class="block-title">🏰 Bloco 3 — Melhor OTServer da atualidade</h2>
+          <p class="block-desc">
+            Vire o card para ver detalhes e votar. (Você pode trocar isso depois para os servidores reais.)
+          </p>
+        </div>
+
+        <div class="cards-grid">
+          <article class="flip-card" data-flip>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb"><img src="./brasao-novo.png" alt="OT 1" /></div>
+                <div class="front-bottom">
+                  <p class="card-title">OT 1</p>
+                  <p class="card-sub">Vire para ver detalhes</p>
+                </div>
+              </div>
+              <div class="flip-face flip-back">
+                <p class="back-desc">Mini descrição do servidor.</p>
+                <div class="meta">
+                  <div class="meta-row"><span class="meta-key">Nome</span><span>Nome do OT</span></div>
+                  <div class="meta-row"><span class="meta-key">Versão</span><span>Ex: 7.4</span></div>
+                  <div class="meta-row"><span class="meta-key">Site</span><span><a href="#" target="_blank" rel="noreferrer">link</a></span></div>
+                </div>
+                <div class="back-actions">
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">🌐 Abrir</a>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="flip-card" data-flip>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb"><img src="./brasao-novo.png" alt="OT 2" /></div>
+                <div class="front-bottom">
+                  <p class="card-title">OT 2</p>
+                  <p class="card-sub">Vire para ver detalhes</p>
+                </div>
+              </div>
+              <div class="flip-face flip-back">
+                <p class="back-desc">Mini descrição do servidor.</p>
+                <div class="meta">
+                  <div class="meta-row"><span class="meta-key">Nome</span><span>Nome do OT</span></div>
+                  <div class="meta-row"><span class="meta-key">Versão</span><span>Ex: 8.6</span></div>
+                  <div class="meta-row"><span class="meta-key">Site</span><span><a href="#" target="_blank" rel="noreferrer">link</a></span></div>
+                </div>
+                <div class="back-actions">
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">🌐 Abrir</a>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="flip-card" data-flip>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb"><img src="./brasao-novo.png" alt="OT 3" /></div>
+                <div class="front-bottom">
+                  <p class="card-title">OT 3</p>
+                  <p class="card-sub">Vire para ver detalhes</p>
+                </div>
+              </div>
+              <div class="flip-face flip-back">
+                <p class="back-desc">Mini descrição do servidor.</p>
+                <div class="meta">
+                  <div class="meta-row"><span class="meta-key">Nome</span><span>Nome do OT</span></div>
+                  <div class="meta-row"><span class="meta-key">Versão</span><span>Ex: 10.x</span></div>
+                  <div class="meta-row"><span class="meta-key">Site</span><span><a href="#" target="_blank" rel="noreferrer">link</a></span></div>
+                </div>
+                <div class="back-actions">
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">🌐 Abrir</a>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
     <script type="module" src="./script.js"></script>
 
     <script>
-      // menu
+      // ===== seu menu lateral (mantido) =====
       const menuToggle = document.getElementById("menu-toggle");
       const menuClose = document.getElementById("menu-close");
       const sideMenu = document.getElementById("side-menu");
@@ -913,22 +817,28 @@
         sideMenu.setAttribute("aria-hidden", "true");
       });
 
-      // flip no mobile (touch): toca no card pra virar, toca fora pra desvirar
-      const flipCards = document.querySelectorAll("[data-flip]");
-      flipCards.forEach((card) => {
+      // ===== flip no toque (mobile) =====
+      const cards = document.querySelectorAll("[data-flip]");
+      cards.forEach((card) => {
         card.addEventListener("click", (e) => {
-          // evita virar quando clicar em link/botão
-          const tag = e.target && e.target.tagName ? e.target.tagName.toLowerCase() : "";
-          if (tag === "a" || tag === "button") return;
+          const interactive = e.target.closest("a,button,input,select,textarea,label");
+          if (interactive) return;
           card.classList.toggle("is-flipped");
         });
       });
 
       document.addEventListener("click", (e) => {
-        const clickedInside = e.target.closest && e.target.closest("[data-flip]");
-        if (!clickedInside) {
-          flipCards.forEach((c) => c.classList.remove("is-flipped"));
-        }
+        const inside = e.target.closest("[data-flip]");
+        if (!inside) cards.forEach((c) => c.classList.remove("is-flipped"));
+      });
+
+      // ===== placeholder voto (sem backend ainda) =====
+      document.querySelectorAll("[data-vote]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          alert("Votação ainda não está ligada no banco. Aqui é só o layout + flip.");
+        });
       });
     </script>
   </body>
