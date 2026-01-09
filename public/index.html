@@ -122,7 +122,6 @@
       /* ======= NOVO: apenas o "miolo" do index, sem mexer no seu estilo base ======= */
       :root {
         --gold: #ffe97f;
-        --gold2: #ffd36a;
         --ink: rgba(240, 237, 210, 0.92);
         --muted: rgba(240, 237, 210, 0.78);
         --panelA: rgba(0, 0, 0, 0.55);
@@ -130,12 +129,12 @@
         --line: rgba(255, 204, 102, 0.26);
         --lineStrong: rgba(255, 204, 102, 0.38);
 
-        /* neon dourado */
-        --gold-neon-a: rgba(255, 233, 127, 0.65);
-        --gold-neon-b: rgba(255, 215, 0, 0.35);
+        /* >>> Neon dourado MAIS AMARELO e MAIS FORTE (igual topo) <<< */
+        --neonY1: rgba(255, 255, 120, 0.95); /* amarelo bem neon */
+        --neonY2: rgba(255, 215, 0, 0.65);   /* dourado quente */
+        --neonY3: rgba(255, 170, 0, 0.30);   /* âmbar pra “corpo” */
       }
 
-      /* barra superior com infos (segue seu padrão, não inventa cores) */
       .home-info {
         display: flex;
         flex-wrap: wrap;
@@ -194,7 +193,6 @@
         filter: brightness(1.06);
       }
 
-      /* BLOCO no estilo "placa" */
       .home-block {
         margin: 16px auto 0 auto;
         max-width: 1100px;
@@ -212,7 +210,7 @@
       .block-title {
         margin: 0;
         font-family: "Cinzel", serif;
-        font-size: 1.05rem; /* NÃO exagera */
+        font-size: 1.05rem;
         color: var(--gold);
         text-shadow: 0 0 4px #000, 0 0 6px rgba(255, 215, 0, 0.18);
         letter-spacing: 0.4px;
@@ -226,7 +224,6 @@
         text-shadow: 0 0 4px #000;
       }
 
-      /* 3 cards simétricos */
       .cards-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -238,7 +235,6 @@
         }
       }
 
-      /* FLIP CARD */
       .flip-card {
         perspective: 1100px;
         height: 360px;
@@ -255,19 +251,14 @@
         position: relative;
         transform-style: preserve-3d;
         transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
-        transition-delay: 0s; /* padrão */
-      }
-
-      /* >>> SEQUÊNCIA: brilha/gira rápido, DEPOIS o card vira */
-      .flip-card:hover .flip-inner {
-        transition-delay: 0.14s; /* dá tempo do brilho+giro da imagem acontecer primeiro */
-        transform: rotateY(180deg);
-      }
-      .flip-card:not(:hover) .flip-inner {
         transition-delay: 0s;
       }
 
-      /* toque no mobile */
+      /* brilha/gira primeiro, depois o flip */
+      .flip-card:hover .flip-inner {
+        transition-delay: 0.14s;
+        transform: rotateY(180deg);
+      }
       .flip-card.is-flipped .flip-inner {
         transition-delay: 0.14s;
         transform: rotateY(180deg);
@@ -283,13 +274,12 @@
         background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35));
         box-shadow: 0 14px 26px rgba(0, 0, 0, 0.45);
       }
-
       .face-front {
         display: flex;
         flex-direction: column;
       }
 
-      /* ====== THUMB: enquadrar melhor o brasão (sem cortar/esticar) ====== */
+      /* ===== THUMB ===== */
       .thumb {
         height: 62%;
         position: relative;
@@ -300,19 +290,35 @@
         padding: 18px 18px 22px;
       }
 
+      /* overlay que dá “corpo neon” por cima do brasão inteiro */
+      .thumb::before {
+        content: "";
+        position: absolute;
+        inset: 12px;
+        border-radius: 12px;
+        pointer-events: none;
+        opacity: 0; /* só aparece no hover */
+        background:
+          radial-gradient(circle at 50% 45%, rgba(255, 255, 160, 0.55), transparent 55%),
+          radial-gradient(circle at 45% 50%, rgba(255, 215, 0, 0.28), transparent 60%);
+        mix-blend-mode: screen; /* dá “neon” no corpo inteiro sem pintar o fundo */
+        transition: opacity 0.18s ease;
+      }
+
       .thumb img {
         width: 100%;
         height: 100%;
         max-width: 92%;
         max-height: 92%;
-        object-fit: contain;          /* <— enquadra (não corta) */
+        object-fit: contain;
         object-position: center;
         display: block;
         transform: translateY(2px) rotate(0deg);
-        filter:
-          drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
         transition: transform 0.18s ease, filter 0.18s ease;
         will-change: transform, filter;
+
+        /* base mais neutra */
+        filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
       }
 
       .thumb::after {
@@ -323,35 +329,46 @@
         pointer-events: none;
       }
 
-      /* ====== Hover: brilho dourado neon + giro rápido sutil ====== */
-      @keyframes crestNeonSpin {
+      /* animação do giro + “neon corpo inteiro” */
+      @keyframes crestNeonSpinStrong {
         0% {
           transform: translateY(2px) scale(1) rotate(0deg);
           filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
         }
         60% {
-          transform: translateY(0px) scale(1.03) rotate(6deg);
+          transform: translateY(0px) scale(1.035) rotate(7deg);
           filter:
+            brightness(1.18) saturate(1.25)
             drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55))
-            drop-shadow(0 0 10px var(--gold-neon-a))
-            drop-shadow(0 0 22px var(--gold-neon-b));
+            drop-shadow(0 0 8px var(--neonY1))
+            drop-shadow(0 0 16px var(--neonY2))
+            drop-shadow(0 0 30px var(--neonY3));
         }
         100% {
           transform: translateY(0px) scale(1.02) rotate(2deg);
           filter:
+            brightness(1.12) saturate(1.18)
             drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55))
-            drop-shadow(0 0 8px rgba(255, 233, 127, 0.45))
-            drop-shadow(0 0 18px rgba(255, 215, 0, 0.28));
+            drop-shadow(0 0 6px rgba(255, 255, 140, 0.70))
+            drop-shadow(0 0 14px rgba(255, 215, 0, 0.55))
+            drop-shadow(0 0 26px rgba(255, 170, 0, 0.28));
         }
       }
 
+      /* hover: ativa overlay + animação mais amarela */
+      .flip-card:hover .thumb::before {
+        opacity: 1;
+      }
       .flip-card:hover .thumb img {
-        animation: crestNeonSpin 0.22s ease-out both; /* rápido mas sutil */
+        animation: crestNeonSpinStrong 0.22s ease-out both;
       }
 
-      /* em touch/click, também aplica o efeito antes de virar */
+      /* touch: mesma coisa */
+      .flip-card.is-flipped .thumb::before {
+        opacity: 1;
+      }
       .flip-card.is-flipped .thumb img {
-        animation: crestNeonSpin 0.22s ease-out both;
+        animation: crestNeonSpinStrong 0.22s ease-out both;
       }
 
       .front-bottom {
@@ -449,7 +466,6 @@
         filter: brightness(1.06);
       }
 
-      /* ===== manter ranking escondido (pra não quebrar script.js) ===== */
       .legacy-ranking {
         display: none;
       }
@@ -462,7 +478,6 @@
       <source src="./Neblina.webm" type="video/webm" />
     </video>
 
-    <!-- ===== SEU HEADER ORIGINAL (mantido 100%) ===== -->
     <header class="site-header">
       <button id="menu-toggle" aria-label="Abrir menu">MENU ☰</button>
 
@@ -522,7 +537,6 @@
       </div>
     </header>
 
-    <!-- ===== SEU MENU LATERAL ORIGINAL (mantido) ===== -->
     <aside id="side-menu" aria-hidden="true">
       <button id="menu-close" aria-label="Fechar menu">✕</button>
       <ul>
@@ -535,9 +549,7 @@
       </ul>
     </aside>
 
-    <!-- ===== SUA SECTION ORIGINAL (mantida), só que com miolo novo ===== -->
     <section class="ranking aba ativa espaco-pos-header" id="inicio">
-      <!-- ===== (LEGACY) ranking antigo escondido pra não quebrar seu script.js ===== -->
       <div class="legacy-ranking">
         <div class="filtros-ranking" style="margin-bottom: 20px">
           <input type="text" id="filtro-nome" placeholder="🔍 Buscar servidor..." />
@@ -576,7 +588,6 @@
         </div>
       </div>
 
-      <!-- ===== NOVO INDEX (os 3 blocos) ===== -->
       <div class="home-info">
         <div class="home-pill">🏆 <span>Votação mensal</span></div>
         <div class="home-pill">⏳ <span>1 voto a cada 6 horas</span></div>
@@ -588,7 +599,7 @@
         <a class="btn-royal" href="top.html">📺 Top Live</a>
       </div>
 
-      <!-- ===== BLOCO 1 ===== -->
+      <!-- BLOCO 1 -->
       <div class="home-block">
         <div class="block-head">
           <h2 class="block-title">👑 Bloco 1 — Pior jogada do mês (3 jogadas)</h2>
@@ -598,28 +609,22 @@
         </div>
 
         <div class="cards-grid">
-          <!-- Card 1 -->
           <article class="flip-card" data-flip>
             <div class="flip-inner">
               <div class="flip-face face-front">
-                <div class="thumb">
-                  <img src="./brasao-novo.png" alt="Jogada 1" />
-                </div>
+                <div class="thumb"><img src="./brasao-novo.png" alt="Jogada 1" /></div>
                 <div class="front-bottom">
                   <p class="card-title">Jogada 1</p>
                   <p class="card-sub">Passe o mouse para virar</p>
                 </div>
               </div>
-
               <div class="flip-face flip-back">
                 <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
-
                 <div class="meta">
                   <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
                   <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
                   <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
                 </div>
-
                 <div class="back-actions">
                   <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
                   <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
@@ -628,28 +633,22 @@
             </div>
           </article>
 
-          <!-- Card 2 -->
           <article class="flip-card" data-flip>
             <div class="flip-inner">
               <div class="flip-face face-front">
-                <div class="thumb">
-                  <img src="./brasao-novo.png" alt="Jogada 2" />
-                </div>
+                <div class="thumb"><img src="./brasao-novo.png" alt="Jogada 2" /></div>
                 <div class="front-bottom">
                   <p class="card-title">Jogada 2</p>
                   <p class="card-sub">Passe o mouse para virar</p>
                 </div>
               </div>
-
               <div class="flip-face flip-back">
                 <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
-
                 <div class="meta">
                   <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
                   <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
                   <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
                 </div>
-
                 <div class="back-actions">
                   <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
                   <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
@@ -658,28 +657,22 @@
             </div>
           </article>
 
-          <!-- Card 3 -->
           <article class="flip-card" data-flip>
             <div class="flip-inner">
               <div class="flip-face face-front">
-                <div class="thumb">
-                  <img src="./brasao-novo.png" alt="Jogada 3" />
-                </div>
+                <div class="thumb"><img src="./brasao-novo.png" alt="Jogada 3" /></div>
                 <div class="front-bottom">
                   <p class="card-title">Jogada 3</p>
                   <p class="card-sub">Passe o mouse para virar</p>
                 </div>
               </div>
-
               <div class="flip-face flip-back">
                 <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
-
                 <div class="meta">
                   <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
                   <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
                   <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
                 </div>
-
                 <div class="back-actions">
                   <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
                   <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
@@ -690,7 +683,7 @@
         </div>
       </div>
 
-      <!-- ===== BLOCO 2 ===== -->
+      <!-- BLOCO 2 -->
       <div class="home-block">
         <div class="block-head">
           <h2 class="block-title">⚔️ Bloco 2 — Duelo rápido (A vs B)</h2>
@@ -771,7 +764,7 @@
         </div>
       </div>
 
-      <!-- ===== BLOCO 3 ===== -->
+      <!-- BLOCO 3 -->
       <div class="home-block">
         <div class="block-head">
           <h2 class="block-title">🏰 Bloco 3 — Melhor OTServer da atualidade</h2>
@@ -859,7 +852,6 @@
     <script type="module" src="./script.js"></script>
 
     <script>
-      // ===== seu menu lateral (mantido) =====
       const menuToggle = document.getElementById("menu-toggle");
       const menuClose = document.getElementById("menu-close");
       const sideMenu = document.getElementById("side-menu");
@@ -872,7 +864,6 @@
         sideMenu.setAttribute("aria-hidden", "true");
       });
 
-      // ===== flip no toque (mobile) =====
       const cards = document.querySelectorAll("[data-flip]");
       cards.forEach((card) => {
         card.addEventListener("click", (e) => {
@@ -887,7 +878,6 @@
         if (!inside) cards.forEach((c) => c.classList.remove("is-flipped"));
       });
 
-      // ===== placeholder voto (sem backend ainda) =====
       document.querySelectorAll("[data-vote]").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           e.preventDefault();
