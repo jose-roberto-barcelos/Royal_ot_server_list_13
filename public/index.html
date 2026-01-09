@@ -129,6 +129,10 @@
         --panelB: rgba(0, 0, 0, 0.35);
         --line: rgba(255, 204, 102, 0.26);
         --lineStrong: rgba(255, 204, 102, 0.38);
+
+        /* neon dourado */
+        --gold-neon-a: rgba(255, 233, 127, 0.65);
+        --gold-neon-b: rgba(255, 215, 0, 0.35);
       }
 
       /* barra superior com infos (segue seu padrão, não inventa cores) */
@@ -168,7 +172,6 @@
         text-decoration: none;
       }
 
-      /* reutiliza clima do seu "btn-contraste", mas sem depender dele */
       .btn-royal {
         display: inline-flex;
         align-items: center;
@@ -252,13 +255,21 @@
         position: relative;
         transform-style: preserve-3d;
         transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+        transition-delay: 0s; /* padrão */
       }
-      /* hover no desktop */
+
+      /* >>> SEQUÊNCIA: brilha/gira rápido, DEPOIS o card vira */
       .flip-card:hover .flip-inner {
+        transition-delay: 0.14s; /* dá tempo do brilho+giro da imagem acontecer primeiro */
         transform: rotateY(180deg);
       }
+      .flip-card:not(:hover) .flip-inner {
+        transition-delay: 0s;
+      }
+
       /* toque no mobile */
       .flip-card.is-flipped .flip-inner {
+        transition-delay: 0.14s;
         transform: rotateY(180deg);
       }
 
@@ -278,24 +289,69 @@
         flex-direction: column;
       }
 
+      /* ====== THUMB: enquadrar melhor o brasão (sem cortar/esticar) ====== */
       .thumb {
         height: 62%;
         position: relative;
         background: rgba(0, 0, 0, 0.35);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px 18px 22px;
       }
+
       .thumb img {
         width: 100%;
         height: 100%;
-        object-fit: cover;
+        max-width: 92%;
+        max-height: 92%;
+        object-fit: contain;          /* <— enquadra (não corta) */
+        object-position: center;
         display: block;
-        filter: saturate(1.03) contrast(1.04);
+        transform: translateY(2px) rotate(0deg);
+        filter:
+          drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
+        transition: transform 0.18s ease, filter 0.18s ease;
+        will-change: transform, filter;
       }
+
       .thumb::after {
         content: "";
         position: absolute;
         inset: 0;
         background: linear-gradient(to bottom, transparent 45%, rgba(0, 0, 0, 0.70));
         pointer-events: none;
+      }
+
+      /* ====== Hover: brilho dourado neon + giro rápido sutil ====== */
+      @keyframes crestNeonSpin {
+        0% {
+          transform: translateY(2px) scale(1) rotate(0deg);
+          filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
+        }
+        60% {
+          transform: translateY(0px) scale(1.03) rotate(6deg);
+          filter:
+            drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 0 10px var(--gold-neon-a))
+            drop-shadow(0 0 22px var(--gold-neon-b));
+        }
+        100% {
+          transform: translateY(0px) scale(1.02) rotate(2deg);
+          filter:
+            drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 0 8px rgba(255, 233, 127, 0.45))
+            drop-shadow(0 0 18px rgba(255, 215, 0, 0.28));
+        }
+      }
+
+      .flip-card:hover .thumb img {
+        animation: crestNeonSpin 0.22s ease-out both; /* rápido mas sutil */
+      }
+
+      /* em touch/click, também aplica o efeito antes de virar */
+      .flip-card.is-flipped .thumb img {
+        animation: crestNeonSpin 0.22s ease-out both;
       }
 
       .front-bottom {
@@ -547,7 +603,6 @@
             <div class="flip-inner">
               <div class="flip-face face-front">
                 <div class="thumb">
-                  <!-- Troque a imagem depois (placeholder seguro do seu próprio site) -->
                   <img src="./brasao-novo.png" alt="Jogada 1" />
                 </div>
                 <div class="front-bottom">
