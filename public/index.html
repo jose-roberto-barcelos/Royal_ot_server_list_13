@@ -101,26 +101,29 @@
         right: 0.5rem;
       }
 
-      /* ===== NOVO ESTILO “PILL” (igual seu print) ===== */
+      /* =========
+         VISUAL “PACOTES E PREÇOS” (placa escura + dourado)
+         ========= */
       :root {
-        --goldA: #ffe7a6;
-        --goldB: #f1c45c;
-        --goldC: #b57a1f;
+        /* dourado “metal” */
+        --gold-1: #ffe8a6;
+        --gold-2: #f1c45c;
+        --gold-3: #b57a1f;
 
-        --lineGold: rgba(255, 210, 110, 0.85);
-        --lineGoldSoft: rgba(255, 210, 110, 0.42);
+        /* linhas e brilho */
+        --gold-line-strong: rgba(255, 210, 110, 0.90);
+        --gold-line-soft: rgba(255, 210, 110, 0.35);
+        --gold-glow: rgba(255, 210, 110, 0.10);
 
-        --pillBgTop: rgba(0, 0, 0, 0.52);
-        --pillBgMid: rgba(0, 0, 0, 0.38);
-        --pillBgBot: rgba(0, 0, 0, 0.30);
+        /* placa (fundo do bloco) — estilo do print */
+        --plate-top: rgba(24, 16, 7, 0.78);
+        --plate-mid: rgba(15, 10, 5, 0.64);
+        --plate-bot: rgba(0, 0, 0, 0.46);
 
-        --textGold: #f7d98a;
-        --textGold2: #ffd27a;
+        /* texto */
         --text: rgba(240, 237, 210, 0.92);
-        --muted: rgba(240, 237, 210, 0.78);
-
-        --panelBg: rgba(0, 0, 0, 0.28);
-        --panelBg2: rgba(0, 0, 0, 0.18);
+        --muted: rgba(240, 237, 210, 0.76);
+        --gold-text: #ffd889;
       }
 
       .home-area {
@@ -128,77 +131,10 @@
         margin: 0 auto;
         padding: 0 12px 28px 12px;
         color: var(--text);
-        text-shadow: 0 2px 0 rgba(0, 0, 0, 0.55);
+        text-shadow: 0 2px 0 rgba(0, 0, 0, 0.58);
       }
 
-      .home-area a,
-      .home-area a:visited,
-      .home-area a:hover,
-      .home-area a:active {
-        color: inherit;
-        text-decoration: none;
-      }
-
-      .gold-text {
-        color: var(--textGold2);
-        text-shadow:
-          0 2px 0 rgba(0,0,0,0.78),
-          0 0 10px rgba(255, 210, 110, 0.12);
-      }
-
-      /* O “pill” igual ao print */
-      .pill {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-
-        padding: 10px 18px;
-        border-radius: 14px;
-
-        font-family: "Cinzel", serif;
-        font-size: 1rem;
-        letter-spacing: 0.6px;
-
-        color: var(--textGold);
-
-        background: linear-gradient(
-          to bottom,
-          var(--pillBgTop),
-          var(--pillBgMid),
-          var(--pillBgBot)
-        );
-
-        border: 2px solid var(--lineGoldSoft);
-
-        box-shadow:
-          0 14px 22px rgba(0, 0, 0, 0.26),
-          inset 0 1px 0 rgba(255, 255, 255, 0.08),
-          inset 0 -10px 18px rgba(0, 0, 0, 0.22),
-          0 0 18px rgba(255, 210, 110, 0.08);
-      }
-
-      .pill strong {
-        color: var(--textGold2);
-        font-weight: 700;
-      }
-
-      .pill .pill-ico {
-        display: inline-flex;
-        width: 20px;
-        align-items: center;
-        justify-content: center;
-        filter: drop-shadow(0 2px 0 rgba(0,0,0,0.7));
-      }
-
-      /* versão “pill grande” pros títulos */
-      .pill-title {
-        padding: 12px 22px;
-        font-size: 1.02rem; /* NÃO aumenta exagerado */
-        border-color: rgba(255, 210, 110, 0.55);
-      }
-
-      /* ===== Topo ===== */
+      /* ===== Topo (badges estilo placa) ===== */
       .home-top {
         display: grid;
         gap: 12px;
@@ -211,18 +147,50 @@
         gap: 12px;
         align-items: stretch;
       }
-
-      .badge-wrap {
-        display: flex;
-        justify-content: center;
-      }
-
       @media (max-width: 980px) {
         .home-badges {
           grid-template-columns: 1fr;
         }
       }
+      .badge-wrap {
+        display: flex;
+        justify-content: center;
+      }
 
+      /* “tarja” igual o print */
+      .badge-plate {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+
+        padding: 12px 18px;
+        border-radius: 12px;
+
+        font-family: "Cinzel", serif;
+        font-size: 1rem;
+        letter-spacing: 0.6px;
+
+        color: var(--gold-text);
+
+        background: linear-gradient(to bottom, var(--plate-top), var(--plate-mid), var(--plate-bot));
+        border: 2px solid var(--gold-line-soft);
+
+        box-shadow:
+          0 14px 24px rgba(0,0,0,0.28),
+          inset 0 1px 0 rgba(255,255,255,0.08),
+          inset 0 -16px 26px rgba(0,0,0,0.22),
+          0 0 20px var(--gold-glow);
+      }
+
+      .badge-plate .ico {
+        width: 22px;
+        display: inline-flex;
+        justify-content: center;
+        filter: drop-shadow(0 2px 0 rgba(0,0,0,0.75));
+      }
+
+      /* botões do topo — sem exagero */
       .home-actions {
         display: flex;
         gap: 12px;
@@ -230,16 +198,14 @@
         flex-wrap: wrap;
       }
 
-      /* Botões de ação (não gigantes) */
-      .btn-gold,
-      .btn-dark {
+      .btn-metal {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 8px;
+        gap: 10px;
 
-        padding: 9px 14px;
-        min-width: 170px;
+        padding: 10px 16px;
+        min-width: 180px;
 
         border-radius: 12px;
         cursor: pointer;
@@ -247,57 +213,97 @@
 
         font-family: "Cinzel", serif;
         font-size: 0.95rem;
-        letter-spacing: 0.4px;
+        letter-spacing: 0.5px;
 
-        transition: transform 0.15s ease, filter 0.15s ease;
-      }
-
-      .btn-gold {
         color: #2b1a00;
         background: linear-gradient(to bottom, #fff2b8, #e2b54a 55%, #8f6215);
         border: 1px solid rgba(110, 70, 10, 0.85);
-        box-shadow:
-          0 14px 20px rgba(0,0,0,0.26),
-          inset 0 1px 0 rgba(255,255,255,0.22),
-          inset 0 -10px 16px rgba(0,0,0,0.16);
-      }
 
-      .btn-dark {
-        color: var(--text);
-        background: linear-gradient(to bottom, rgba(0,0,0,0.46), rgba(0,0,0,0.26));
-        border: 1px solid rgba(255, 210, 110, 0.35);
         box-shadow:
-          0 14px 20px rgba(0,0,0,0.22),
-          inset 0 1px 0 rgba(255,255,255,0.08);
+          0 14px 22px rgba(0,0,0,0.25),
+          inset 0 1px 0 rgba(255,255,255,0.24),
+          inset 0 -14px 20px rgba(0,0,0,0.16);
+        transition: transform 0.15s ease, filter 0.15s ease;
       }
-
-      .btn-gold:hover,
-      .btn-dark:hover {
+      .btn-metal:hover {
         transform: translateY(-1px);
         filter: brightness(1.05);
       }
 
-      /* ===== Blocos ===== */
+      .btn-plate {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+
+        padding: 10px 16px;
+        min-width: 180px;
+
+        border-radius: 12px;
+        cursor: pointer;
+        user-select: none;
+
+        font-family: "Cinzel", serif;
+        font-size: 0.95rem;
+        letter-spacing: 0.5px;
+
+        color: var(--gold-text);
+        background: linear-gradient(to bottom, var(--plate-top), var(--plate-mid), var(--plate-bot));
+        border: 2px solid var(--gold-line-soft);
+
+        box-shadow:
+          0 14px 22px rgba(0,0,0,0.22),
+          inset 0 1px 0 rgba(255,255,255,0.08),
+          0 0 18px rgba(255, 210, 110, 0.06);
+        transition: transform 0.15s ease, filter 0.15s ease;
+      }
+      .btn-plate:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.06);
+      }
+
+      /* ===== BLOCO: AQUI é o que você reclamou (FUNDO DO BLOCO) ===== */
       .home-block {
         position: relative;
         overflow: hidden;
-        background: linear-gradient(to bottom, var(--panelBg), var(--panelBg2));
-        border: 2px solid rgba(255, 210, 110, 0.18);
+
+        /* >>> FUNDO estilo “PACOTES E PREÇOS” <<< */
+        background: linear-gradient(to bottom, var(--plate-top), var(--plate-mid) 55%, var(--plate-bot));
+
         border-radius: 14px;
-        box-shadow: 0 0 44px rgba(0,0,0,0.55);
-        padding: 18px 14px 18px 14px;
+        border: 2px solid rgba(255, 210, 110, 0.22);
+
+        box-shadow:
+          0 28px 55px rgba(0,0,0,0.55),
+          0 0 30px rgba(255, 210, 110, 0.05);
+
+        padding: 18px 16px 18px 16px;
         margin-top: 16px;
       }
 
-      /* efeito leve só pra dar vida */
+      /* brilho interno (bem sutil, “premium”, não neon) */
       .home-block::before {
         content: "";
         position: absolute;
         inset: 0;
         pointer-events: none;
+
         background:
-          radial-gradient(circle at top, rgba(255, 210, 110, 0.10), rgba(0,0,0,0) 58%),
-          radial-gradient(circle at bottom, rgba(0,0,0,0.40), rgba(0,0,0,0) 60%);
+          radial-gradient(circle at top, rgba(255,210,110,0.14), rgba(0,0,0,0) 52%),
+          radial-gradient(circle at bottom, rgba(0,0,0,0.55), rgba(0,0,0,0) 60%);
+        opacity: 0.9;
+      }
+
+      /* linha “dourada” no topo do bloco (só pra dar acabamento) */
+      .home-block::after {
+        content: "";
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        top: 14px;
+        height: 1px;
+        background: linear-gradient(to right, rgba(0,0,0,0), rgba(255,210,110,0.55), rgba(0,0,0,0));
+        pointer-events: none;
       }
 
       .block-head {
@@ -306,6 +312,38 @@
         display: flex;
         justify-content: center;
         margin: 2px 0 12px 0;
+      }
+
+      /* Título do bloco no MESMO aspecto do print */
+      .block-title {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+
+        padding: 10px 18px;
+        border-radius: 12px;
+
+        font-family: "Cinzel", serif;
+        font-size: 1rem; /* não mexe exagerado */
+        letter-spacing: 0.6px;
+
+        color: var(--gold-text);
+
+        background: linear-gradient(to bottom, rgba(0,0,0,0.40), rgba(0,0,0,0.22));
+        border: 2px solid var(--gold-line-soft);
+
+        box-shadow:
+          0 12px 18px rgba(0,0,0,0.22),
+          inset 0 1px 0 rgba(255,255,255,0.06),
+          0 0 16px rgba(255,210,110,0.06);
+      }
+
+      .block-title .ico {
+        width: 22px;
+        display: inline-flex;
+        justify-content: center;
+        filter: drop-shadow(0 2px 0 rgba(0,0,0,0.75));
       }
 
       .block-sub {
@@ -318,7 +356,11 @@
         line-height: 1.45;
         font-size: 1rem;
       }
+      .block-sub strong {
+        color: var(--gold-text);
+      }
 
+      /* grid 3 cards simétricos */
       .tri-grid {
         position: relative;
         z-index: 2;
@@ -329,16 +371,14 @@
         gap: 16px;
       }
       @media (max-width: 980px) {
-        .tri-grid {
-          grid-template-columns: 1fr;
-        }
+        .tri-grid { grid-template-columns: 1fr; }
       }
 
-      /* ===== Flip cards ===== */
+      /* ===== Flip Cards (hover gira / “desgira”) ===== */
       .flip-card {
-        perspective: 1000px;
+        perspective: 1100px;
         width: 100%;
-        height: 420px;
+        height: 410px;
       }
       @media (max-width: 980px) {
         .flip-card { height: 380px; }
@@ -363,11 +403,14 @@
         border-radius: 14px;
         overflow: hidden;
 
-        background: rgba(0, 0, 0, 0.42);
+        /* card no mesmo clima do bloco */
+        background: linear-gradient(to bottom, rgba(0,0,0,0.40), rgba(0,0,0,0.22));
         border: 2px solid rgba(255, 210, 110, 0.18);
+
         box-shadow:
-          0 18px 26px rgba(0,0,0,0.30),
-          inset 0 0 30px rgba(0,0,0,0.22);
+          0 16px 26px rgba(0,0,0,0.30),
+          inset 0 1px 0 rgba(255,255,255,0.06),
+          0 0 18px rgba(255,210,110,0.05);
       }
       .flip-back { transform: rotateY(180deg); }
 
@@ -387,6 +430,30 @@
       }
       .photo-top img.is-hidden { display: none; }
 
+      /* plaquinhas em cima da foto (mesmo estilo do print) */
+      .tag-plate {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+
+        padding: 8px 12px;
+        border-radius: 12px;
+
+        font-family: "Cinzel", serif;
+        font-size: 0.88rem;
+        letter-spacing: 0.5px;
+
+        color: var(--gold-text);
+        background: linear-gradient(to bottom, rgba(0,0,0,0.46), rgba(0,0,0,0.26));
+        border: 2px solid rgba(255, 210, 110, 0.25);
+
+        box-shadow:
+          0 10px 16px rgba(0,0,0,0.25),
+          inset 0 1px 0 rgba(255,255,255,0.06),
+          0 0 14px rgba(255,210,110,0.05);
+      }
+
       .photo-tag {
         position: absolute;
         left: 10px;
@@ -397,25 +464,12 @@
         position: absolute;
         right: 10px;
         bottom: 10px;
-        width: 40px;
-        height: 40px;
-        border-radius: 12px;
-        display: grid;
-        place-items: center;
       }
-
-      /* aplica o pill do print dentro do card */
-      .photo-tag .pill,
-      .photo-plus .pill {
-        padding: 7px 10px;
-        border-radius: 12px;
-        font-size: 0.88rem;
-      }
-
-      .photo-plus .pill {
-        width: 40px;
-        height: 40px;
+      .photo-plus .tag-plate {
+        width: 44px;
+        height: 44px;
         padding: 0;
+        font-size: 1.05rem;
       }
 
       .photo-body {
@@ -432,7 +486,7 @@
         font-weight: 700;
         font-size: 1rem;
         margin: 0;
-        color: var(--textGold2);
+        color: var(--gold-text);
       }
       .card-desc {
         margin: 0;
@@ -460,12 +514,13 @@
 
       .meta-row {
         background: rgba(0,0,0,0.22);
-        border: 1px solid rgba(255, 210, 110, 0.20);
+        border: 2px solid rgba(255, 210, 110, 0.16);
         border-radius: 12px;
-        padding: 8px 10px;
+        padding: 9px 10px;
         text-align: left;
         font-size: 0.92rem;
       }
+      .meta-row strong { color: var(--gold-text); }
 
       .flip-actions {
         display: flex;
@@ -473,6 +528,42 @@
         justify-content: center;
         flex-wrap: wrap;
       }
+
+      .btn-mini {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 9px 14px;
+        min-width: 150px;
+        border-radius: 12px;
+        cursor: pointer;
+        user-select: none;
+
+        font-family: "Cinzel", serif;
+        font-size: 0.92rem;
+        letter-spacing: 0.4px;
+        border: none;
+      }
+      .btn-mini.gold {
+        color: #2b1a00;
+        background: linear-gradient(to bottom, #fff2b8, #e2b54a 55%, #8f6215);
+        border: 1px solid rgba(110, 70, 10, 0.85);
+        box-shadow:
+          0 12px 18px rgba(0,0,0,0.22),
+          inset 0 1px 0 rgba(255,255,255,0.22),
+          inset 0 -12px 18px rgba(0,0,0,0.14);
+      }
+      .btn-mini.plate {
+        color: var(--gold-text);
+        background: linear-gradient(to bottom, rgba(0,0,0,0.46), rgba(0,0,0,0.26));
+        border: 2px solid rgba(255, 210, 110, 0.22);
+        box-shadow:
+          0 12px 18px rgba(0,0,0,0.20),
+          inset 0 1px 0 rgba(255,255,255,0.06);
+      }
+
+      .btn-mini:hover { filter: brightness(1.05); transform: translateY(-1px); transition: 0.15s; }
 
       .home-controls {
         position: relative;
@@ -558,7 +649,7 @@
     </aside>
 
     <section class="ranking aba ativa espaco-pos-header" id="inicio">
-      <!-- ranking antigo escondido -->
+      <!-- compat escondido -->
       <div class="hidden-compat">
         <div class="table-container">
           <h2 class="titulo-dentro">Tibia OtServers Ranking</h2>
@@ -579,50 +670,39 @@
         </div>
       </div>
 
-      <!-- HOME -->
       <div class="home-area">
+        <!-- topo -->
         <div class="home-top">
           <div class="home-badges">
             <div class="badge-wrap">
-              <div class="pill">
-                <span class="pill-ico">🏆</span>
-                <span>Votação mensal</span>
-              </div>
+              <div class="badge-plate"><span class="ico">🏆</span><span>Votação mensal</span></div>
             </div>
             <div class="badge-wrap">
-              <div class="pill">
-                <span class="pill-ico">⏳</span>
-                <span>1 voto a cada 6 horas</span>
-              </div>
+              <div class="badge-plate"><span class="ico">⏳</span><span>1 voto a cada 6 horas</span></div>
             </div>
             <div class="badge-wrap">
-              <div class="pill">
-                <span class="pill-ico">🔐</span>
-                <span>Logado vale 2 pontos</span>
-              </div>
+              <div class="badge-plate"><span class="ico">🔐</span><span>Logado vale 2 pontos</span></div>
             </div>
           </div>
 
           <div class="home-actions">
-            <a class="btn-gold" href="./envie-clips.html">📩 Envie Clips</a>
-            <a class="btn-dark" href="top.html">📺 Top Live</a>
+            <a class="btn-metal" href="./envie-clips.html">📩 Envie Clips</a>
+            <a class="btn-plate" href="top.html">📺 Top Live</a>
           </div>
         </div>
 
-        <!-- BLOCO 1 -->
+        <!-- ===== BLOCO 1 ===== -->
         <div class="home-block">
           <div class="block-head">
-            <div class="pill pill-title">
-              <span class="pill-ico">👑</span>
+            <div class="block-title">
+              <span class="ico">👑</span>
               <span>BLOCO 1 — PIOR JOGADA DO MÊS (3 JOGADAS)</span>
             </div>
           </div>
 
           <p class="block-sub">
-            Três jogadas concorrem. Vire o card pra ver
-            <span class="gold-text"><strong>personagem</strong></span>,
-            <span class="gold-text"><strong>stream</strong></span> e
-            <span class="gold-text"><strong>link do seu vídeo</strong></span>.
+            Três jogadas concorrem. Vire o card pra ver <strong>personagem</strong>, <strong>stream</strong> e
+            <strong>link do seu vídeo</strong>.
           </p>
 
           <div class="tri-grid">
@@ -632,12 +712,8 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./jogada1.jpg" alt="Jogada 1" />
-                    <div class="photo-tag">
-                      <div class="pill"><span>Imagem do card</span></div>
-                    </div>
-                    <div class="photo-plus">
-                      <div class="pill"><span>＋</span></div>
-                    </div>
+                    <div class="photo-tag"><div class="tag-plate">Imagem do card</div></div>
+                    <div class="photo-plus"><div class="tag-plate">＋</div></div>
                   </div>
                   <div class="photo-body">
                     <p class="card-title">Jogada 1</p>
@@ -650,13 +726,13 @@
                     <p class="card-title">Jogada 1 — detalhes</p>
                     <p class="back-text">Descrição curta do que aconteceu.</p>
 
-                    <div class="meta-row"><span class="gold-text"><strong>Personagem:</strong></span> Knight Zika</div>
-                    <div class="meta-row"><span class="gold-text"><strong>Stream:</strong></span> twitch.tv/...</div>
-                    <div class="meta-row"><span class="gold-text"><strong>Seu vídeo:</strong></span> youtube.com/...&t=123</div>
+                    <div class="meta-row"><strong>Personagem:</strong> Knight Zika</div>
+                    <div class="meta-row"><strong>Stream:</strong> twitch.tv/...</div>
+                    <div class="meta-row"><strong>Seu vídeo:</strong> youtube.com/...&t=123</div>
 
                     <div class="flip-actions">
-                      <a class="btn-dark" href="#" onclick="return false;">▶ Ver no YouTube</a>
-                      <button class="btn-gold" type="button" data-vote data-type="jogadaMes" data-id="1">🗳 Votar</button>
+                      <a class="btn-mini plate" href="#" onclick="return false;">▶ Ver no YouTube</a>
+                      <button class="btn-mini gold" type="button" data-vote data-type="jogadaMes" data-id="1">🗳 Votar</button>
                     </div>
                   </div>
                 </div>
@@ -669,12 +745,8 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./jogada2.jpg" alt="Jogada 2" />
-                    <div class="photo-tag">
-                      <div class="pill"><span>Imagem do card</span></div>
-                    </div>
-                    <div class="photo-plus">
-                      <div class="pill"><span>＋</span></div>
-                    </div>
+                    <div class="photo-tag"><div class="tag-plate">Imagem do card</div></div>
+                    <div class="photo-plus"><div class="tag-plate">＋</div></div>
                   </div>
                   <div class="photo-body">
                     <p class="card-title">Jogada 2</p>
@@ -687,13 +759,13 @@
                     <p class="card-title">Jogada 2 — detalhes</p>
                     <p class="back-text">Descrição curta do que aconteceu.</p>
 
-                    <div class="meta-row"><span class="gold-text"><strong>Personagem:</strong></span> ...</div>
-                    <div class="meta-row"><span class="gold-text"><strong>Stream:</strong></span> twitch.tv/...</div>
-                    <div class="meta-row"><span class="gold-text"><strong>Seu vídeo:</strong></span> youtube.com/...&t=...</div>
+                    <div class="meta-row"><strong>Personagem:</strong> ...</div>
+                    <div class="meta-row"><strong>Stream:</strong> twitch.tv/...</div>
+                    <div class="meta-row"><strong>Seu vídeo:</strong> youtube.com/...&t=...</div>
 
                     <div class="flip-actions">
-                      <a class="btn-dark" href="#" onclick="return false;">▶ Ver no YouTube</a>
-                      <button class="btn-gold" type="button" data-vote data-type="jogadaMes" data-id="2">🗳 Votar</button>
+                      <a class="btn-mini plate" href="#" onclick="return false;">▶ Ver no YouTube</a>
+                      <button class="btn-mini gold" type="button" data-vote data-type="jogadaMes" data-id="2">🗳 Votar</button>
                     </div>
                   </div>
                 </div>
@@ -706,12 +778,8 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./jogada3.jpg" alt="Jogada 3" />
-                    <div class="photo-tag">
-                      <div class="pill"><span>Imagem do card</span></div>
-                    </div>
-                    <div class="photo-plus">
-                      <div class="pill"><span>＋</span></div>
-                    </div>
+                    <div class="photo-tag"><div class="tag-plate">Imagem do card</div></div>
+                    <div class="photo-plus"><div class="tag-plate">＋</div></div>
                   </div>
                   <div class="photo-body">
                     <p class="card-title">Jogada 3</p>
@@ -724,13 +792,13 @@
                     <p class="card-title">Jogada 3 — detalhes</p>
                     <p class="back-text">Descrição curta do que aconteceu.</p>
 
-                    <div class="meta-row"><span class="gold-text"><strong>Personagem:</strong></span> ...</div>
-                    <div class="meta-row"><span class="gold-text"><strong>Stream:</strong></span> twitch.tv/...</div>
-                    <div class="meta-row"><span class="gold-text"><strong>Seu vídeo:</strong></span> youtube.com/...&t=...</div>
+                    <div class="meta-row"><strong>Personagem:</strong> ...</div>
+                    <div class="meta-row"><strong>Stream:</strong> twitch.tv/...</div>
+                    <div class="meta-row"><strong>Seu vídeo:</strong> youtube.com/...&t=...</div>
 
                     <div class="flip-actions">
-                      <a class="btn-dark" href="#" onclick="return false;">▶ Ver no YouTube</a>
-                      <button class="btn-gold" type="button" data-vote data-type="jogadaMes" data-id="3">🗳 Votar</button>
+                      <a class="btn-mini plate" href="#" onclick="return false;">▶ Ver no YouTube</a>
+                      <button class="btn-mini gold" type="button" data-vote data-type="jogadaMes" data-id="3">🗳 Votar</button>
                     </div>
                   </div>
                 </div>
@@ -739,16 +807,16 @@
           </div>
 
           <div class="home-controls">
-            <a class="btn-dark" href="#" onclick="return false;">📜 Ver ranking do mês</a>
-            <a class="btn-gold" href="./envie-clips.html">📩 Enviar clip</a>
+            <a class="btn-plate" href="#" onclick="return false;">📜 Ver ranking do mês</a>
+            <a class="btn-metal" href="./envie-clips.html">📩 Enviar clip</a>
           </div>
         </div>
 
-        <!-- BLOCO 2 -->
+        <!-- ===== BLOCO 2 ===== -->
         <div class="home-block">
           <div class="block-head">
-            <div class="pill pill-title">
-              <span class="pill-ico">⚔️</span>
+            <div class="block-title">
+              <span class="ico">⚔️</span>
               <span>BLOCO 2 — DUELO RÁPIDO (A vs B)</span>
             </div>
           </div>
@@ -761,12 +829,8 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./duelo1.jpg" alt="Duelo 1" />
-                    <div class="photo-tag">
-                      <div class="pill"><span>Imagem do card</span></div>
-                    </div>
-                    <div class="photo-plus">
-                      <div class="pill"><span>⚔</span></div>
-                    </div>
+                    <div class="photo-tag"><div class="tag-plate">Imagem do card</div></div>
+                    <div class="photo-plus"><div class="tag-plate">⚔</div></div>
                   </div>
                   <div class="photo-body">
                     <p class="card-title">Duelo 1</p>
@@ -779,13 +843,13 @@
                     <p class="card-title">Duelo 1 — detalhes</p>
                     <p class="back-text">Mini descrição do duelo.</p>
 
-                    <div class="meta-row"><span class="gold-text"><strong>A:</strong></span> Nome/Canal</div>
-                    <div class="meta-row"><span class="gold-text"><strong>B:</strong></span> Nome/Canal</div>
+                    <div class="meta-row"><strong>A:</strong> Nome/Canal</div>
+                    <div class="meta-row"><strong>B:</strong> Nome/Canal</div>
 
                     <div class="flip-actions">
-                      <button class="btn-gold" type="button" data-vote data-type="duelo" data-id="1A">🗳 Votar A</button>
-                      <button class="btn-gold" type="button" data-vote data-type="duelo" data-id="1B">🗳 Votar B</button>
-                      <a class="btn-dark" href="#" onclick="return false;">🔗 Abrir canais</a>
+                      <button class="btn-mini gold" type="button" data-vote data-type="duelo" data-id="1A">🗳 Votar A</button>
+                      <button class="btn-mini gold" type="button" data-vote data-type="duelo" data-id="1B">🗳 Votar B</button>
+                      <a class="btn-mini plate" href="#" onclick="return false;">🔗 Abrir canais</a>
                     </div>
                   </div>
                 </div>
@@ -797,12 +861,8 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./duelo2.jpg" alt="Duelo 2" />
-                    <div class="photo-tag">
-                      <div class="pill"><span>Imagem do card</span></div>
-                    </div>
-                    <div class="photo-plus">
-                      <div class="pill"><span>⚔</span></div>
-                    </div>
+                    <div class="photo-tag"><div class="tag-plate">Imagem do card</div></div>
+                    <div class="photo-plus"><div class="tag-plate">⚔</div></div>
                   </div>
                   <div class="photo-body">
                     <p class="card-title">Duelo 2</p>
@@ -815,13 +875,13 @@
                     <p class="card-title">Duelo 2 — detalhes</p>
                     <p class="back-text">Mini descrição do duelo.</p>
 
-                    <div class="meta-row"><span class="gold-text"><strong>A:</strong></span> Nome/Canal</div>
-                    <div class="meta-row"><span class="gold-text"><strong>B:</strong></span> Nome/Canal</div>
+                    <div class="meta-row"><strong>A:</strong> Nome/Canal</div>
+                    <div class="meta-row"><strong>B:</strong> Nome/Canal</div>
 
                     <div class="flip-actions">
-                      <button class="btn-gold" type="button" data-vote data-type="duelo" data-id="2A">🗳 Votar A</button>
-                      <button class="btn-gold" type="button" data-vote data-type="duelo" data-id="2B">🗳 Votar B</button>
-                      <a class="btn-dark" href="#" onclick="return false;">🔗 Abrir canais</a>
+                      <button class="btn-mini gold" type="button" data-vote data-type="duelo" data-id="2A">🗳 Votar A</button>
+                      <button class="btn-mini gold" type="button" data-vote data-type="duelo" data-id="2B">🗳 Votar B</button>
+                      <a class="btn-mini plate" href="#" onclick="return false;">🔗 Abrir canais</a>
                     </div>
                   </div>
                 </div>
@@ -833,12 +893,8 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./duelo3.jpg" alt="Duelo 3" />
-                    <div class="photo-tag">
-                      <div class="pill"><span>Imagem do card</span></div>
-                    </div>
-                    <div class="photo-plus">
-                      <div class="pill"><span>⚔</span></div>
-                    </div>
+                    <div class="photo-tag"><div class="tag-plate">Imagem do card</div></div>
+                    <div class="photo-plus"><div class="tag-plate">⚔</div></div>
                   </div>
                   <div class="photo-body">
                     <p class="card-title">Duelo 3</p>
@@ -851,13 +907,13 @@
                     <p class="card-title">Duelo 3 — detalhes</p>
                     <p class="back-text">Mini descrição do duelo.</p>
 
-                    <div class="meta-row"><span class="gold-text"><strong>A:</strong></span> Nome/Canal</div>
-                    <div class="meta-row"><span class="gold-text"><strong>B:</strong></span> Nome/Canal</div>
+                    <div class="meta-row"><strong>A:</strong> Nome/Canal</div>
+                    <div class="meta-row"><strong>B:</strong> Nome/Canal</div>
 
                     <div class="flip-actions">
-                      <button class="btn-gold" type="button" data-vote data-type="duelo" data-id="3A">🗳 Votar A</button>
-                      <button class="btn-gold" type="button" data-vote data-type="duelo" data-id="3B">🗳 Votar B</button>
-                      <a class="btn-dark" href="#" onclick="return false;">🔗 Abrir canais</a>
+                      <button class="btn-mini gold" type="button" data-vote data-type="duelo" data-id="3A">🗳 Votar A</button>
+                      <button class="btn-mini gold" type="button" data-vote data-type="duelo" data-id="3B">🗳 Votar B</button>
+                      <a class="btn-mini plate" href="#" onclick="return false;">🔗 Abrir canais</a>
                     </div>
                   </div>
                 </div>
@@ -866,11 +922,11 @@
           </div>
         </div>
 
-        <!-- BLOCO 3 -->
+        <!-- ===== BLOCO 3 ===== -->
         <div class="home-block">
           <div class="block-head">
-            <div class="pill pill-title">
-              <span class="pill-ico">🏰</span>
+            <div class="block-title">
+              <span class="ico">🏰</span>
               <span>BLOCO 3 — MELHOR OTSERVER DA ATUALIDADE</span>
             </div>
           </div>
@@ -883,12 +939,8 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./ot1.jpg" alt="OT 1" />
-                    <div class="photo-tag">
-                      <div class="pill"><span>Imagem do card</span></div>
-                    </div>
-                    <div class="photo-plus">
-                      <div class="pill"><span>🏰</span></div>
-                    </div>
+                    <div class="photo-tag"><div class="tag-plate">Imagem do card</div></div>
+                    <div class="photo-plus"><div class="tag-plate">🏰</div></div>
                   </div>
                   <div class="photo-body">
                     <p class="card-title">OT 1</p>
@@ -901,13 +953,13 @@
                     <p class="card-title">OT 1 — detalhes</p>
                     <p class="back-text">Descrição curta do servidor.</p>
 
-                    <div class="meta-row"><span class="gold-text"><strong>Versão:</strong></span> 8.6</div>
-                    <div class="meta-row"><span class="gold-text"><strong>Site:</strong></span> exemplo.com</div>
-                    <div class="meta-row"><span class="gold-text"><strong>IP:</strong></span> play.exemplo.com:7171</div>
+                    <div class="meta-row"><strong>Versão:</strong> 8.6</div>
+                    <div class="meta-row"><strong>Site:</strong> exemplo.com</div>
+                    <div class="meta-row"><strong>IP:</strong> play.exemplo.com:7171</div>
 
                     <div class="flip-actions">
-                      <a class="btn-dark" href="#" onclick="return false;">🌐 Abrir site</a>
-                      <button class="btn-gold" type="button" data-vote data-type="ot" data-id="1">🗳 Votar</button>
+                      <a class="btn-mini plate" href="#" onclick="return false;">🌐 Abrir site</a>
+                      <button class="btn-mini gold" type="button" data-vote data-type="ot" data-id="1">🗳 Votar</button>
                     </div>
                   </div>
                 </div>
@@ -919,12 +971,8 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./ot2.jpg" alt="OT 2" />
-                    <div class="photo-tag">
-                      <div class="pill"><span>Imagem do card</span></div>
-                    </div>
-                    <div class="photo-plus">
-                      <div class="pill"><span>🏰</span></div>
-                    </div>
+                    <div class="photo-tag"><div class="tag-plate">Imagem do card</div></div>
+                    <div class="photo-plus"><div class="tag-plate">🏰</div></div>
                   </div>
                   <div class="photo-body">
                     <p class="card-title">OT 2</p>
@@ -937,13 +985,13 @@
                     <p class="card-title">OT 2 — detalhes</p>
                     <p class="back-text">Descrição curta do servidor.</p>
 
-                    <div class="meta-row"><span class="gold-text"><strong>Versão:</strong></span> 10.x</div>
-                    <div class="meta-row"><span class="gold-text"><strong>Site:</strong></span> exemplo.com</div>
-                    <div class="meta-row"><span class="gold-text"><strong>IP:</strong></span> play.exemplo.com:7171</div>
+                    <div class="meta-row"><strong>Versão:</strong> 10.x</div>
+                    <div class="meta-row"><strong>Site:</strong> exemplo.com</div>
+                    <div class="meta-row"><strong>IP:</strong> play.exemplo.com:7171</div>
 
                     <div class="flip-actions">
-                      <a class="btn-dark" href="#" onclick="return false;">🌐 Abrir site</a>
-                      <button class="btn-gold" type="button" data-vote data-type="ot" data-id="2">🗳 Votar</button>
+                      <a class="btn-mini plate" href="#" onclick="return false;">🌐 Abrir site</a>
+                      <button class="btn-mini gold" type="button" data-vote data-type="ot" data-id="2">🗳 Votar</button>
                     </div>
                   </div>
                 </div>
@@ -955,12 +1003,8 @@
                 <div class="flip-face flip-front">
                   <div class="photo-top">
                     <img src="./ot3.jpg" alt="OT 3" />
-                    <div class="photo-tag">
-                      <div class="pill"><span>Imagem do card</span></div>
-                    </div>
-                    <div class="photo-plus">
-                      <div class="pill"><span>🏰</span></div>
-                    </div>
+                    <div class="photo-tag"><div class="tag-plate">Imagem do card</div></div>
+                    <div class="photo-plus"><div class="tag-plate">🏰</div></div>
                   </div>
                   <div class="photo-body">
                     <p class="card-title">OT 3</p>
@@ -973,13 +1017,13 @@
                     <p class="card-title">OT 3 — detalhes</p>
                     <p class="back-text">Descrição curta do servidor.</p>
 
-                    <div class="meta-row"><span class="gold-text"><strong>Versão:</strong></span> 7.4</div>
-                    <div class="meta-row"><span class="gold-text"><strong>Site:</strong></span> exemplo.com</div>
-                    <div class="meta-row"><span class="gold-text"><strong>IP:</strong></span> play.exemplo.com:7171</div>
+                    <div class="meta-row"><strong>Versão:</strong> 7.4</div>
+                    <div class="meta-row"><strong>Site:</strong> exemplo.com</div>
+                    <div class="meta-row"><strong>IP:</strong> play.exemplo.com:7171</div>
 
                     <div class="flip-actions">
-                      <a class="btn-dark" href="#" onclick="return false;">🌐 Abrir site</a>
-                      <button class="btn-gold" type="button" data-vote data-type="ot" data-id="3">🗳 Votar</button>
+                      <a class="btn-mini plate" href="#" onclick="return false;">🌐 Abrir site</a>
+                      <button class="btn-mini gold" type="button" data-vote data-type="ot" data-id="3">🗳 Votar</button>
                     </div>
                   </div>
                 </div>
@@ -988,8 +1032,8 @@
           </div>
 
           <div class="home-controls">
-            <a class="btn-gold" href="servicos.html">📢 Divulgar meu servidor</a>
-            <a class="btn-dark" href="#" onclick="return false;">🏆 Ver vencedores anteriores</a>
+            <a class="btn-metal" href="servicos.html">📢 Divulgar meu servidor</a>
+            <a class="btn-plate" href="#" onclick="return false;">🏆 Ver vencedores</a>
           </div>
         </div>
       </div>
