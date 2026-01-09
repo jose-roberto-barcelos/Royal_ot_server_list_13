@@ -13,9 +13,7 @@
     <link rel="stylesheet" href="styles.css" />
 
     <style>
-      /* ==============================
-         MANTÉM REGRAS QUE JÁ EXISTIAM
-      ============================== */
+      /* ====== SEU CSS ORIGINAL (mantido) ====== */
       #servidores-wrapper.collapsed {
         max-height: 400px;
         overflow-y: auto;
@@ -121,308 +119,196 @@
         right: 0.5rem;
       }
 
-      /* ==============================
-         NOVO INDEX (BLOCOS + CARDS)
-         (não mexe no header)
-      ============================== */
-      :root {
-        /* Dourado “metal” */
-        --gold-1: #fff0a6;
-        --gold-2: #ffd36b;
-        --gold-3: #b67a12;
-
-        /* Neon dourado (bem amarelo) */
-        --neon-gold-a: rgba(255, 230, 90, 0.95);
-        --neon-gold-b: rgba(255, 210, 0, 0.85);
-        --neon-gold-c: rgba(255, 248, 160, 0.70);
-
-        /* Painéis */
-        --panel-bg: rgba(0, 0, 0, 0.42);
-        --panel-bg-2: rgba(0, 0, 0, 0.32);
-        --panel-border: rgba(255, 200, 90, 0.28);
-        --panel-border-strong: rgba(255, 205, 100, 0.40);
-
-        /* Texto */
-        --text-soft: rgba(240, 232, 210, 0.92);
-        --text-strong: rgba(255, 233, 140, 0.95);
-      }
-
-      .index-wrap {
+      /* ====== HOME NOVA (só adiciona, não quebra nada) ====== */
+      .home-hub {
         width: min(1200px, calc(100% - 36px));
-        margin: 0 auto;
-        padding: 22px 0 46px 0;
+        margin: 0 auto 26px auto;
       }
 
-      /* Top badges + CTA (segue padrão do site) */
-      .top-row {
+      .home-top {
         display: flex;
-        flex-wrap: wrap;
         gap: 12px;
+        flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        margin: 10px auto 18px auto;
+        margin: 6px auto 12px auto;
       }
 
-      .chip {
+      .home-chip {
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        padding: 12px 18px;
-        border-radius: 14px;
-        border: 1px solid var(--panel-border);
-        background: linear-gradient(
-          to bottom,
-          rgba(0, 0, 0, 0.38),
-          rgba(0, 0, 0, 0.22)
-        );
-        color: var(--text-strong);
-        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.55);
+        padding: 12px 16px;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.35);
+        border: 1px solid rgba(255, 204, 102, 0.35);
+        color: #ffe97f;
+        text-shadow: 0 0 4px #000, 0 0 6px #ffd700;
         font-family: "Cinzel", serif;
-        letter-spacing: 0.02em;
+        font-size: 0.98rem;
         backdrop-filter: blur(2px);
       }
 
-      .cta-row {
+      .home-cta {
         display: flex;
         gap: 14px;
-        align-items: center;
-        justify-content: center;
-        margin: 6px auto 18px auto;
         flex-wrap: wrap;
+        justify-content: center;
+        margin: 10px auto 20px auto;
       }
 
-      /* Botão “metal” mais profissional (não gigante) */
-      .btn-metal {
+      /* botões mais vivos, mas sem exagerar tamanho */
+      .home-btn {
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 10px;
-        padding: 12px 18px;
-        border-radius: 14px;
-        font-family: "Cinzel", serif;
-        font-size: 1.05rem;
+        padding: 12px 16px;
+        border-radius: 12px;
+        border: 1px solid rgba(255, 204, 102, 0.55);
+        background: linear-gradient(180deg, #fff1b3, #ffcf63);
         color: #2b1a04;
+        font-family: "Cinzel", serif;
+        font-size: 1.02rem;
         text-decoration: none;
-        border: 1px solid rgba(255, 210, 90, 0.55);
-        background: linear-gradient(180deg, var(--gold-1), var(--gold-2));
-        box-shadow:
-          0 10px 18px rgba(0, 0, 0, 0.35),
-          0 0 0 1px rgba(0, 0, 0, 0.35) inset;
-        cursor: pointer;
-        transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+        box-shadow: 0 12px 22px rgba(0,0,0,0.35);
+        transition: transform 0.16s ease, filter 0.16s ease, box-shadow 0.16s ease;
       }
-
-      .btn-metal:hover {
+      .home-btn:hover {
         transform: translateY(-1px);
-        filter: brightness(1.03);
-        box-shadow:
-          0 14px 26px rgba(0, 0, 0, 0.45),
-          0 0 18px rgba(255, 210, 0, 0.22),
-          0 0 0 1px rgba(0, 0, 0, 0.35) inset;
+        filter: brightness(1.04);
+        box-shadow: 0 14px 28px rgba(0,0,0,0.45), 0 0 18px rgba(255, 210, 0, 0.20);
       }
 
-      /* Painéis */
-      .block {
-        border-radius: 22px;
-        border: 1px solid var(--panel-border-strong);
-        background: linear-gradient(
-          180deg,
-          rgba(0, 0, 0, 0.42),
-          rgba(0, 0, 0, 0.28)
-        );
-        box-shadow: 0 22px 50px rgba(0, 0, 0, 0.38);
-        padding: 22px 22px 26px 22px;
+      .home-block {
         margin: 18px auto;
-        position: relative;
-        overflow: hidden;
+        padding: 20px;
+        border-radius: 18px;
+        background: rgba(0,0,0,0.40);
+        border: 1px solid rgba(255, 204, 102, 0.30);
+        box-shadow: 0 22px 46px rgba(0,0,0,0.35);
       }
 
-      .block::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(
-          circle at 50% 0%,
-          rgba(255, 220, 100, 0.10),
-          transparent 60%
-        );
-        pointer-events: none;
-      }
-
-      .block-title {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        margin: 2px 0 10px 0;
-        color: var(--text-strong);
+      .home-block h2 {
+        margin: 0 0 8px 0;
         font-family: "Cinzel", serif;
-        text-shadow: 0 0 14px rgba(255, 210, 0, 0.18), 0 2px 0 rgba(0,0,0,0.65);
-        letter-spacing: 0.02em;
-        font-size: 1.15rem; /* mantém elegante, sem exagero */
-      }
-
-      .block-subtitle {
+        color: #ffe97f;
+        text-shadow: 0 0 4px #000, 0 0 6px #ffd700;
+        font-size: 1.15rem;
         text-align: center;
-        color: var(--text-soft);
-        font-family: "Cinzel", serif;
-        font-size: 0.98rem;
-        line-height: 1.35;
-        margin: 0 0 18px 0;
-        text-shadow: 0 2px 0 rgba(0,0,0,0.55);
+        letter-spacing: 0.02em;
       }
 
-      /* Grid dos 3 cards simétricos */
-      .cards-3 {
+      .home-block p {
+        margin: 0 0 16px 0;
+        font-family: "Cinzel", serif;
+        color: rgba(240, 232, 210, 0.95);
+        text-shadow: 0 2px 0 rgba(0,0,0,0.55);
+        font-size: 0.95rem;
+        text-align: center;
+      }
+
+      .cards3 {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 18px;
-        align-items: stretch;
+        gap: 16px;
       }
-
       @media (max-width: 980px) {
-        .cards-3 { grid-template-columns: 1fr; }
+        .cards3 { grid-template-columns: 1fr; }
       }
 
-      /* Flip card */
-      .flip-card {
-        height: 360px;
+      /* Flip */
+      .flip {
+        height: 340px;
         perspective: 1200px;
       }
-
       .flip-inner {
-        height: 100%;
         width: 100%;
+        height: 100%;
         position: relative;
         transform-style: preserve-3d;
         transition: transform 520ms cubic-bezier(0.2, 0.7, 0.2, 1);
       }
-
-      .flip-card:hover .flip-inner {
+      .flip:hover .flip-inner {
         transform: rotateY(180deg);
       }
 
-      .flip-face {
+      .face {
         position: absolute;
         inset: 0;
-        border-radius: 18px;
-        border: 1px solid var(--panel-border);
-        background: linear-gradient(
-          180deg,
-          rgba(0, 0, 0, 0.42),
-          rgba(0, 0, 0, 0.22)
-        );
-        box-shadow:
-          0 16px 26px rgba(0, 0, 0, 0.38),
-          0 0 0 1px rgba(0,0,0,0.35) inset;
+        border-radius: 16px;
+        background: rgba(0,0,0,0.35);
+        border: 1px solid rgba(255, 204, 102, 0.22);
+        box-shadow: 0 16px 26px rgba(0,0,0,0.32);
         backface-visibility: hidden;
         overflow: hidden;
       }
-
-      .flip-front {
+      .front {
+        padding: 14px;
         display: grid;
         grid-template-rows: 1fr auto;
-        padding: 16px;
+        gap: 12px;
+      }
+      .back {
+        transform: rotateY(180deg);
+        padding: 14px;
+        display: grid;
+        grid-template-rows: auto 1fr auto;
         gap: 12px;
       }
 
-      /* Área da imagem do card (enquadra melhor) */
-      .card-media {
+      .media {
         position: relative;
         border-radius: 14px;
-        border: 1px solid rgba(255, 200, 90, 0.25);
-        background: linear-gradient(180deg, rgba(0,0,0,0.22), rgba(0,0,0,0.10));
+        border: 1px solid rgba(255, 204, 102, 0.22);
+        background: rgba(0,0,0,0.22);
         overflow: hidden;
         display: grid;
         place-items: center;
       }
-
-      .card-media img {
+      .media img {
         width: 78%;
         height: 78%;
         object-fit: contain;
-        transform: translateY(2px);
-        transition:
-          transform 220ms ease,
-          filter 220ms ease;
+        transition: transform 220ms ease, filter 220ms ease;
         filter: contrast(1.05) saturate(1.05);
       }
 
-      /* ===========
-         BRILHO NEON DOURADO (FORTE)
-         - pega o corpo inteiro
-         - mais amarelo
-         - shine passando
-         - giro sutil depois
-      =========== */
-
-      /* camada glow (por cima do brasão) */
-      .card-media::before {
-        content: "";
-        position: absolute;
-        inset: -8%;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: contain;
-        opacity: 0;
-        transform: scale(1);
-        filter:
-          sepia(1)
-          saturate(8)
-          hue-rotate(8deg)
-          brightness(1.35)
-          contrast(1.05)
-          blur(0.6px);
-        mix-blend-mode: screen;
-        transition: opacity 160ms ease;
-        pointer-events: none;
-      }
-
-      /* brilho “aura” com sombras */
-      .card-media::after {
+      /* Brilho neon dourado + shine + giro sutil */
+      .media::after {
         content: "";
         position: absolute;
         inset: 0;
-        background:
-          linear-gradient(
-            120deg,
-            transparent 0%,
-            rgba(255, 240, 170, 0.0) 25%,
-            rgba(255, 235, 120, 0.55) 40%,
-            rgba(255, 220, 0, 0.35) 50%,
-            rgba(255, 240, 160, 0.55) 60%,
-            rgba(255, 240, 170, 0.0) 75%,
-            transparent 100%
-          );
         opacity: 0;
-        transform: translateX(-120%) skewX(-12deg);
-        transition: opacity 160ms ease;
         pointer-events: none;
         mix-blend-mode: screen;
+        background: linear-gradient(
+          120deg,
+          transparent 0%,
+          rgba(255, 240, 170, 0.0) 25%,
+          rgba(255, 235, 120, 0.55) 40%,
+          rgba(255, 220, 0, 0.40) 50%,
+          rgba(255, 240, 160, 0.55) 60%,
+          rgba(255, 240, 170, 0.0) 75%,
+          transparent 100%
+        );
+        transform: translateX(-120%) skewX(-12deg);
       }
 
-      /* quando passar o mouse no card (ou no flip-card), brilha e DEPOIS gira levemente */
-      .flip-card:hover .card-media::before {
-        opacity: 1;
-      }
-
-      .flip-card:hover .card-media::after {
+      .flip:hover .media::after {
         opacity: 0.95;
         animation: shineSweep 900ms ease forwards;
       }
 
-      .flip-card:hover .card-media img {
-        /* brilho e neon no corpo todo (bem amarelo) */
+      .flip:hover .media img {
         filter:
           contrast(1.10)
           saturate(1.35)
-          brightness(1.08)
-          drop-shadow(0 0 6px var(--neon-gold-a))
-          drop-shadow(0 0 14px var(--neon-gold-b))
-          drop-shadow(0 0 26px var(--neon-gold-c));
-        /* enquadramento + “giro” sutil com delay curtinho */
-        transition-delay: 70ms;
-        transform: translateY(1px) scale(1.02) rotateZ(-1.2deg);
+          brightness(1.10)
+          drop-shadow(0 0 6px rgba(255, 235, 110, 0.95))
+          drop-shadow(0 0 14px rgba(255, 210, 0, 0.85))
+          drop-shadow(0 0 26px rgba(255, 248, 160, 0.65));
+        transform: scale(1.02) rotateZ(-1.2deg);
       }
 
       @keyframes shineSweep {
@@ -430,7 +316,6 @@
         100% { transform: translateX(130%) skewX(-12deg); }
       }
 
-      /* Rótulo inferior (estilo “placa”) */
       .card-footer {
         display: flex;
         align-items: center;
@@ -443,105 +328,87 @@
         align-items: center;
         gap: 8px;
         padding: 10px 12px;
-        border-radius: 14px;
-        border: 1px solid rgba(255, 200, 90, 0.28);
+        border-radius: 12px;
+        border: 1px solid rgba(255, 204, 102, 0.22);
         background: rgba(0,0,0,0.22);
-        color: var(--text-strong);
+        color: #ffe97f;
         font-family: "Cinzel", serif;
         font-size: 0.95rem;
         text-shadow: 0 2px 0 rgba(0,0,0,0.55);
       }
 
-      .mini-btn {
-        width: 42px;
-        height: 42px;
+      .mini {
+        width: 40px;
+        height: 40px;
         border-radius: 12px;
-        border: 1px solid rgba(255, 210, 90, 0.35);
+        border: 1px solid rgba(255, 204, 102, 0.25);
         background: rgba(0,0,0,0.18);
-        color: var(--text-strong);
+        color: #ffe97f;
         font-family: "Cinzel", serif;
         cursor: pointer;
         transition: transform 0.16s ease, box-shadow 0.16s ease;
       }
-      .mini-btn:hover {
+      .mini:hover {
         transform: translateY(-1px);
-        box-shadow: 0 0 18px rgba(255, 210, 0, 0.22);
-      }
-
-      /* Back */
-      .flip-back {
-        transform: rotateY(180deg);
-        padding: 16px;
-        display: grid;
-        grid-template-rows: auto 1fr auto;
-        gap: 12px;
+        box-shadow: 0 0 18px rgba(255, 210, 0, 0.18);
       }
 
       .back-title {
-        color: var(--text-strong);
-        font-family: "Cinzel", serif;
-        font-size: 1.02rem;
         text-align: center;
-        text-shadow: 0 0 14px rgba(255, 210, 0, 0.18), 0 2px 0 rgba(0,0,0,0.65);
-      }
-
-      .back-text {
-        color: var(--text-soft);
         font-family: "Cinzel", serif;
+        color: #ffe97f;
+        text-shadow: 0 0 4px #000, 0 0 6px #ffd700;
+        font-size: 1.02rem;
+      }
+      .back-box {
+        font-family: "Cinzel", serif;
+        color: rgba(240, 232, 210, 0.95);
+        text-shadow: 0 2px 0 rgba(0,0,0,0.55);
         font-size: 0.95rem;
         line-height: 1.35;
-        background: rgba(0,0,0,0.18);
-        border: 1px solid rgba(255, 200, 90, 0.20);
         border-radius: 14px;
+        border: 1px solid rgba(255, 204, 102, 0.18);
+        background: rgba(0,0,0,0.18);
         padding: 12px;
       }
-
       .back-actions {
         display: flex;
         gap: 10px;
         justify-content: center;
         flex-wrap: wrap;
       }
-
-      .btn-small {
+      .act {
         padding: 10px 14px;
-        border-radius: 14px;
+        border-radius: 12px;
         font-family: "Cinzel", serif;
         font-size: 0.98rem;
-        border: 1px solid rgba(255, 210, 90, 0.50);
-        background: linear-gradient(180deg, var(--gold-1), var(--gold-2));
+        border: 1px solid rgba(255, 204, 102, 0.55);
+        background: linear-gradient(180deg, #fff1b3, #ffcf63);
         color: #2b1a04;
-        cursor: pointer;
         text-decoration: none;
-        transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease;
+        cursor: pointer;
+        transition: transform 0.16s ease, filter 0.16s ease, box-shadow 0.16s ease;
       }
-
-      .btn-small:hover {
+      .act:hover {
         transform: translateY(-1px);
         filter: brightness(1.03);
-        box-shadow: 0 0 18px rgba(255, 210, 0, 0.22);
-      }
-
-      .btn-ghost {
-        padding: 10px 14px;
-        border-radius: 14px;
-        font-family: "Cinzel", serif;
-        font-size: 0.98rem;
-        border: 1px solid rgba(255, 210, 90, 0.30);
-        background: rgba(0,0,0,0.18);
-        color: var(--text-strong);
-        cursor: pointer;
-        text-decoration: none;
-        transition: transform 0.18s ease, box-shadow 0.18s ease;
-      }
-      .btn-ghost:hover {
-        transform: translateY(-1px);
         box-shadow: 0 0 18px rgba(255, 210, 0, 0.18);
       }
-
-      /* seção escondida pra não quebrar script antigo */
-      .legacy-hidden {
-        display: none !important;
+      .act-ghost {
+        padding: 10px 14px;
+        border-radius: 12px;
+        font-family: "Cinzel", serif;
+        font-size: 0.98rem;
+        border: 1px solid rgba(255, 204, 102, 0.22);
+        background: rgba(0,0,0,0.18);
+        color: #ffe97f;
+        text-decoration: none;
+        cursor: pointer;
+        transition: transform 0.16s ease, box-shadow 0.16s ease;
+      }
+      .act-ghost:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 0 18px rgba(255, 210, 0, 0.14);
       }
     </style>
   </head>
@@ -552,6 +419,7 @@
       <source src="./Neblina.webm" type="video/webm" />
     </video>
 
+    <!-- ====== SEU HEADER ORIGINAL (mantido) ====== -->
     <header class="site-header">
       <button id="menu-toggle" aria-label="Abrir menu">MENU ☰</button>
 
@@ -623,305 +491,297 @@
       </ul>
     </aside>
 
-    <main class="index-wrap espaco-pos-header">
-      <div class="top-row">
-        <div class="chip">🏆 <span>Votação mensal</span></div>
-        <div class="chip">⏳ <span>1 voto a cada 6 horas</span></div>
-        <div class="chip">🔒 <span>Logado vale 2 pontos</span></div>
+    <!-- ====== SUA SECTION ORIGINAL (mantida) ====== -->
+    <section class="ranking aba ativa espaco-pos-header" id="inicio">
+      <div class="titulo-epico"></div>
+
+      <!-- ====== HOME NOVA INSERIDA AQUI (sem apagar nada) ====== -->
+      <div class="home-hub">
+        <div class="home-top">
+          <div class="home-chip">🏆 Votação mensal</div>
+          <div class="home-chip">⏳ 1 voto a cada 6 horas</div>
+          <div class="home-chip">🔒 Logado vale 2 pontos</div>
+        </div>
+
+        <div class="home-cta">
+          <a class="home-btn" href="/envie-clips.html">📩 Envie Clips</a>
+          <a class="home-btn" href="top.html">🖥️ Top Live</a>
+        </div>
+
+        <!-- BLOCO 1 -->
+        <div class="home-block" id="home-bloco-1">
+          <h2>👑 BLOCO 1 — PIOR JOGADA DO MÊS (3 jogadas)</h2>
+          <p>Passe o mouse: o card vira e mostra a descrição atrás. Tirou o mouse: volta.</p>
+
+          <div class="cards3">
+            <!-- Card 1 -->
+            <div class="flip">
+              <div class="flip-inner">
+                <div class="face front">
+                  <div class="media">
+                    <img src="./brasao-novo.png" alt="Card 1" />
+                  </div>
+                  <div class="card-footer">
+                    <div class="tag">Jogada 1</div>
+                    <button class="mini" type="button" title="Editar depois">+</button>
+                  </div>
+                </div>
+                <div class="face back">
+                  <div class="back-title">Jogada 1 — Detalhes</div>
+                  <div class="back-box">
+                    <b>Personagem:</b> (ex: Knight Zika)<br/>
+                    <b>Stream:</b> (link)<br/>
+                    <b>Seu vídeo:</b> (link + tempo exato)<br/><br/>
+                    <i>Placeholder (depois liga no Firestore/Functions).</i>
+                  </div>
+                  <div class="back-actions">
+                    <a class="act" href="#" onclick="return false;">▶ Ver no YouTube</a>
+                    <button class="act-ghost" type="button" onclick="return false;">🗳️ Votar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="flip">
+              <div class="flip-inner">
+                <div class="face front">
+                  <div class="media">
+                    <img src="./brasao-novo.png" alt="Card 2" />
+                  </div>
+                  <div class="card-footer">
+                    <div class="tag">Jogada 2</div>
+                    <button class="mini" type="button" title="Editar depois">+</button>
+                  </div>
+                </div>
+                <div class="face back">
+                  <div class="back-title">Jogada 2 — Detalhes</div>
+                  <div class="back-box">
+                    <b>Personagem:</b><br/>
+                    <b>Stream:</b><br/>
+                    <b>Seu vídeo:</b>
+                  </div>
+                  <div class="back-actions">
+                    <a class="act" href="#" onclick="return false;">▶ Ver no YouTube</a>
+                    <button class="act-ghost" type="button" onclick="return false;">🗳️ Votar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="flip">
+              <div class="flip-inner">
+                <div class="face front">
+                  <div class="media">
+                    <img src="./brasao-novo.png" alt="Card 3" />
+                  </div>
+                  <div class="card-footer">
+                    <div class="tag">Jogada 3</div>
+                    <button class="mini" type="button" title="Editar depois">+</button>
+                  </div>
+                </div>
+                <div class="face back">
+                  <div class="back-title">Jogada 3 — Detalhes</div>
+                  <div class="back-box">
+                    <b>Personagem:</b><br/>
+                    <b>Stream:</b><br/>
+                    <b>Seu vídeo:</b>
+                  </div>
+                  <div class="back-actions">
+                    <a class="act" href="#" onclick="return false;">▶ Ver no YouTube</a>
+                    <button class="act-ghost" type="button" onclick="return false;">🗳️ Votar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOCO 2 -->
+        <div class="home-block" id="home-bloco-2">
+          <h2>⚔️ BLOCO 2 — DUELO RÁPIDO (A vs B)</h2>
+          <p>Dois criadores entram. A votação decide o vencedor do mês.</p>
+
+          <div class="cards3">
+            <div class="flip">
+              <div class="flip-inner">
+                <div class="face front">
+                  <div class="media">
+                    <img src="./brasao-novo.png" alt="Criador A" />
+                  </div>
+                  <div class="card-footer">
+                    <div class="tag">Criador A</div>
+                    <button class="mini" type="button">+</button>
+                  </div>
+                </div>
+                <div class="face back">
+                  <div class="back-title">Criador A</div>
+                  <div class="back-box">
+                    Nome/canal + mini descrição.<br/>
+                    <i>Depois: botão votar + abrir canal.</i>
+                  </div>
+                  <div class="back-actions">
+                    <a class="act" href="#" onclick="return false;">Abrir canal</a>
+                    <button class="act-ghost" type="button" onclick="return false;">Votar A</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flip">
+              <div class="flip-inner">
+                <div class="face front">
+                  <div class="media">
+                    <img src="./brasao-novo.png" alt="VS" />
+                  </div>
+                  <div class="card-footer">
+                    <div class="tag">VS</div>
+                    <button class="mini" type="button">+</button>
+                  </div>
+                </div>
+                <div class="face back">
+                  <div class="back-title">Como escolher?</div>
+                  <div class="back-box">
+                    <b>Desafio da comunidade:</b> entra quem tiver mais indicações via formulário (ou top citados do mês).
+                  </div>
+                  <div class="back-actions">
+                    <a class="act" href="#" onclick="return false;">Indicar</a>
+                    <a class="act-ghost" href="#" onclick="return false;">Ver regras</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flip">
+              <div class="flip-inner">
+                <div class="face front">
+                  <div class="media">
+                    <img src="./brasao-novo.png" alt="Criador B" />
+                  </div>
+                  <div class="card-footer">
+                    <div class="tag">Criador B</div>
+                    <button class="mini" type="button">+</button>
+                  </div>
+                </div>
+                <div class="face back">
+                  <div class="back-title">Criador B</div>
+                  <div class="back-box">
+                    Nome/canal + mini descrição.
+                  </div>
+                  <div class="back-actions">
+                    <a class="act" href="#" onclick="return false;">Abrir canal</a>
+                    <button class="act-ghost" type="button" onclick="return false;">Votar B</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOCO 3 -->
+        <div class="home-block" id="home-bloco-3">
+          <h2>🏰 BLOCO 3 — MELHOR OTSERVER DA ATUALIDADE</h2>
+          <p>3 opções simétricas (depois você liga com votação/cadastro).</p>
+
+          <div class="cards3">
+            <div class="flip">
+              <div class="flip-inner">
+                <div class="face front">
+                  <div class="media">
+                    <img src="./brasao-novo.png" alt="OT 1" />
+                  </div>
+                  <div class="card-footer">
+                    <div class="tag">OT 1</div>
+                    <button class="mini" type="button">+</button>
+                  </div>
+                </div>
+                <div class="face back">
+                  <div class="back-title">OT 1</div>
+                  <div class="back-box">Nome, versão, diferencial, discord/site.</div>
+                  <div class="back-actions">
+                    <a class="act" href="#" onclick="return false;">Abrir</a>
+                    <button class="act-ghost" type="button" onclick="return false;">Votar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flip">
+              <div class="flip-inner">
+                <div class="face front">
+                  <div class="media">
+                    <img src="./brasao-novo.png" alt="OT 2" />
+                  </div>
+                  <div class="card-footer">
+                    <div class="tag">OT 2</div>
+                    <button class="mini" type="button">+</button>
+                  </div>
+                </div>
+                <div class="face back">
+                  <div class="back-title">OT 2</div>
+                  <div class="back-box">Nome, versão, diferencial, discord/site.</div>
+                  <div class="back-actions">
+                    <a class="act" href="#" onclick="return false;">Abrir</a>
+                    <button class="act-ghost" type="button" onclick="return false;">Votar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flip">
+              <div class="flip-inner">
+                <div class="face front">
+                  <div class="media">
+                    <img src="./brasao-novo.png" alt="OT 3" />
+                  </div>
+                  <div class="card-footer">
+                    <div class="tag">OT 3</div>
+                    <button class="mini" type="button">+</button>
+                  </div>
+                </div>
+                <div class="face back">
+                  <div class="back-title">OT 3</div>
+                  <div class="back-box">Nome, versão, diferencial, discord/site.</div>
+                  <div class="back-actions">
+                    <a class="act" href="#" onclick="return false;">Abrir</a>
+                    <button class="act-ghost" type="button" onclick="return false;">Votar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ====== FIM HOME NOVA ====== -->
+
+      <!-- ====== SEU RANKING ORIGINAL (mantido) ====== -->
+      <div class="filtros-ranking" style="margin-bottom: 20px">
+        <input
+          type="text"
+          id="filtro-nome"
+          placeholder="🔍 Buscar servidor..."
+        />
+        <select id="filtro-versao">
+          <option value="">Todas as versões</option>
+        </select>
+        <select id="filtro-origem">
+          <option value="">Todas as origens</option>
+          <option value="Socket">Socket</option>
+          <option value="HTML">HTML</option>
+          <option value="Erro">Erro</option>
+        </select>
       </div>
 
-      <div class="cta-row">
-        <a class="btn-metal" href="/envie-clips.html">📩 <span>Envie Clips</span></a>
-        <a class="btn-metal" href="top.html">🖥️ <span>Top Live</span></a>
-      </div>
-
-      <!-- BLOCO 1 -->
-      <section class="block" id="bloco1">
-        <div class="block-title">👑 BLOCO 1 — PIOR JOGADA DO MÊS (3 jogadas)</div>
-        <p class="block-subtitle">
-          Passe o mouse para virar o card e ver descrição, personagem, link da stream e o link do seu vídeo na jogada.
-        </p>
-
-        <div class="cards-3">
-          <!-- Card 1 -->
-          <div class="flip-card">
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div
-                  class="card-media"
-                  style="--img:url('./brasao-novo.png');"
-                  data-img="./brasao-novo.png"
-                >
-                  <img src="./brasao-novo.png" alt="Imagem do card" />
-                </div>
-                <div class="card-footer">
-                  <div class="tag">Jogada 1</div>
-                  <button class="mini-btn" type="button" title="Editar depois">+</button>
-                </div>
-              </div>
-
-              <div class="flip-face flip-back">
-                <div class="back-title">Jogada 1 — Detalhes</div>
-                <div class="back-text">
-                  <b>Personagem:</b> (ex: Knight Zika)<br/>
-                  <b>Stream:</b> link da Twitch/YouTube Live<br/>
-                  <b>Seu vídeo:</b> link com timestamp da jogada<br/><br/>
-                  <i>Você vai cadastrar isso no painel depois (Firestore/Functions).</i>
-                </div>
-                <div class="back-actions">
-                  <a class="btn-small" href="#" onclick="return false;">▶ Ver no YouTube</a>
-                  <button class="btn-ghost" type="button" onclick="return false;">🗳️ Votar</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 2 -->
-          <div class="flip-card">
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="card-media">
-                  <img src="./brasao-novo.png" alt="Imagem do card" />
-                </div>
-                <div class="card-footer">
-                  <div class="tag">Jogada 2</div>
-                  <button class="mini-btn" type="button" title="Editar depois">+</button>
-                </div>
-              </div>
-
-              <div class="flip-face flip-back">
-                <div class="back-title">Jogada 2 — Detalhes</div>
-                <div class="back-text">
-                  <b>Personagem:</b><br/>
-                  <b>Stream:</b><br/>
-                  <b>Seu vídeo:</b><br/><br/>
-                  <i>Placeholder (vai vir do banco depois).</i>
-                </div>
-                <div class="back-actions">
-                  <a class="btn-small" href="#" onclick="return false;">▶ Ver no YouTube</a>
-                  <button class="btn-ghost" type="button" onclick="return false;">🗳️ Votar</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="flip-card">
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="card-media">
-                  <img src="./brasao-novo.png" alt="Imagem do card" />
-                </div>
-                <div class="card-footer">
-                  <div class="tag">Jogada 3</div>
-                  <button class="mini-btn" type="button" title="Editar depois">+</button>
-                </div>
-              </div>
-
-              <div class="flip-face flip-back">
-                <div class="back-title">Jogada 3 — Detalhes</div>
-                <div class="back-text">
-                  <b>Personagem:</b><br/>
-                  <b>Stream:</b><br/>
-                  <b>Seu vídeo:</b><br/><br/>
-                  <i>Placeholder (vai vir do banco depois).</i>
-                </div>
-                <div class="back-actions">
-                  <a class="btn-small" href="#" onclick="return false;">▶ Ver no YouTube</a>
-                  <button class="btn-ghost" type="button" onclick="return false;">🗳️ Votar</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- BLOCO 2 -->
-      <section class="block" id="bloco2">
-        <div class="block-title">⚔️ BLOCO 2 — DUELO RÁPIDO (A vs B)</div>
-        <p class="block-subtitle">
-          Dois criadores se enfrentam. A votação decide o vencedor do mês.
-        </p>
-
-        <div class="cards-3">
-          <div class="flip-card">
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="card-media">
-                  <img src="./brasao-novo.png" alt="Criador A" />
-                </div>
-                <div class="card-footer">
-                  <div class="tag">Criador A</div>
-                  <button class="mini-btn" type="button" title="Editar depois">+</button>
-                </div>
-              </div>
-              <div class="flip-face flip-back">
-                <div class="back-title">Criador A</div>
-                <div class="back-text">
-                  Nome/canal + mini descrição.<br/>
-                  <i>Ideia: entra quem tiver mais indicações via formulário (ou top citados nos clips do mês).</i>
-                </div>
-                <div class="back-actions">
-                  <a class="btn-small" href="#" onclick="return false;">Abrir canal</a>
-                  <button class="btn-ghost" type="button" onclick="return false;">Votar A</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="flip-card">
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="card-media">
-                  <img src="./brasao-novo.png" alt="VS" />
-                </div>
-                <div class="card-footer">
-                  <div class="tag">VS</div>
-                  <button class="mini-btn" type="button" title="Editar depois">+</button>
-                </div>
-              </div>
-              <div class="flip-face flip-back">
-                <div class="back-title">Como escolher?</div>
-                <div class="back-text">
-                  <b>Desafio da comunidade:</b> abre indicações e pega os 2 mais votados/indicados do mês.
-                </div>
-                <div class="back-actions">
-                  <a class="btn-small" href="#" onclick="return false;">Indicar</a>
-                  <a class="btn-ghost" href="#" onclick="return false;">Ver regras</a>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="flip-card">
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="card-media">
-                  <img src="./brasao-novo.png" alt="Criador B" />
-                </div>
-                <div class="card-footer">
-                  <div class="tag">Criador B</div>
-                  <button class="mini-btn" type="button" title="Editar depois">+</button>
-                </div>
-              </div>
-              <div class="flip-face flip-back">
-                <div class="back-title">Criador B</div>
-                <div class="back-text">
-                  Nome/canal + mini descrição.<br/>
-                  <i>Placeholder (vai vir do banco depois).</i>
-                </div>
-                <div class="back-actions">
-                  <a class="btn-small" href="#" onclick="return false;">Abrir canal</a>
-                  <button class="btn-ghost" type="button" onclick="return false;">Votar B</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- BLOCO 3 -->
-      <section class="block" id="bloco3">
-        <div class="block-title">🏰 BLOCO 3 — MELHOR OTSERVER DA ATUALIDADE</div>
-        <p class="block-subtitle">
-          Vitrine mensal: 3 candidatos. (Depois você liga isso com cadastro/patrocínio ou votação pública.)
-        </p>
-
-        <div class="cards-3">
-          <div class="flip-card">
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="card-media">
-                  <img src="./brasao-novo.png" alt="OT 1" />
-                </div>
-                <div class="card-footer">
-                  <div class="tag">OT 1</div>
-                  <button class="mini-btn" type="button" title="Editar depois">+</button>
-                </div>
-              </div>
-              <div class="flip-face flip-back">
-                <div class="back-title">OT 1 — Detalhes</div>
-                <div class="back-text">
-                  Nome, versão, diferencial, site/discord.<br/>
-                  <i>Placeholder (vai vir do banco depois).</i>
-                </div>
-                <div class="back-actions">
-                  <a class="btn-small" href="#" onclick="return false;">Abrir site</a>
-                  <button class="btn-ghost" type="button" onclick="return false;">Votar</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="flip-card">
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="card-media">
-                  <img src="./brasao-novo.png" alt="OT 2" />
-                </div>
-                <div class="card-footer">
-                  <div class="tag">OT 2</div>
-                  <button class="mini-btn" type="button" title="Editar depois">+</button>
-                </div>
-              </div>
-              <div class="flip-face flip-back">
-                <div class="back-title">OT 2 — Detalhes</div>
-                <div class="back-text">
-                  Nome, versão, diferencial, site/discord.
-                </div>
-                <div class="back-actions">
-                  <a class="btn-small" href="#" onclick="return false;">Abrir site</a>
-                  <button class="btn-ghost" type="button" onclick="return false;">Votar</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="flip-card">
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="card-media">
-                  <img src="./brasao-novo.png" alt="OT 3" />
-                </div>
-                <div class="card-footer">
-                  <div class="tag">OT 3</div>
-                  <button class="mini-btn" type="button" title="Editar depois">+</button>
-                </div>
-              </div>
-              <div class="flip-face flip-back">
-                <div class="back-title">OT 3 — Detalhes</div>
-                <div class="back-text">
-                  Nome, versão, diferencial, site/discord.
-                </div>
-                <div class="back-actions">
-                  <a class="btn-small" href="#" onclick="return false;">Abrir site</a>
-                  <button class="btn-ghost" type="button" onclick="return false;">Votar</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ====== LEGACY (pra não quebrar script.js antigo) ====== -->
-      <section class="legacy-hidden" aria-hidden="true">
-        <div class="filtros-ranking" style="margin-bottom: 20px">
-          <input type="text" id="filtro-nome" placeholder="🔍 Buscar servidor..." />
-          <select id="filtro-versao"><option value="">Todas as versões</option></select>
-          <select id="filtro-origem">
-            <option value="">Todas as origens</option>
-            <option value="Socket">Socket</option>
-            <option value="HTML">HTML</option>
-            <option value="Erro">Erro</option>
-          </select>
-        </div>
+      <div class="table-container">
+        <h2 class="titulo-dentro">Tibia OtServers Ranking</h2>
         <div id="servidores-wrapper" class="collapsed">
           <table>
             <thead>
               <tr>
-                <th>Servidor</th>
-                <th>Versão</th>
-                <th>Jogadores Online</th>
+                <th onclick="ordenarPor('Servidor')">Servidor ⬍</th>
+                <th onclick="ordenarPor('Versão')">Versão ⬍</th>
+                <th onclick="ordenarPor('Jogadores Online')">Jogadores Online ⬍</th>
                 <th>Origem</th>
                 <th>Observação</th>
               </tr>
@@ -929,9 +789,14 @@
             <tbody id="tabela-servidores"></tbody>
           </table>
         </div>
+      </div>
+
+      <div class="table-controls outside">
         <button id="toggle-table" type="button">Expandir</button>
-      </section>
-    </main>
+        <!-- botão substituído por link direto -->
+        <a class="btn-contraste" href="/envie-clips.html">Envie Clips</a>
+      </div>
+    </section>
 
     <script type="module" src="./script.js"></script>
     <script>
@@ -947,8 +812,5 @@
         sideMenu.setAttribute("aria-hidden", "true");
       });
     </script>
-
-    <!-- Pequeno detalhe: se você quiser usar imagens diferentes em cada card depois,
-         é só trocar o src do <img> dentro de cada .card-media -->
   </body>
 </html>
