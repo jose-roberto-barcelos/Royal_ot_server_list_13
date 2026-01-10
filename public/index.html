@@ -13,7 +13,22 @@
     <link rel="stylesheet" href="styles.css" />
 
     <style>
-      /* ====== MANTIDOS DO SEU INDEX (menu + header) ====== */
+      /* =========================
+         FIX DO “APARECE E SOME”
+         =========================
+         O script antigo do site (ranking) mexe em .aba e pode esconder a página.
+         Aqui a gente força o conteúdo do index a ficar sempre visível.
+      */
+      body .aba {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        pointer-events: auto !important;
+      }
+
+      /* =========================
+         MENU LATERAL (igual ao seu)
+         ========================= */
       #menu-toggle {
         background: none;
         border: none;
@@ -90,397 +105,318 @@
         right: 0.5rem;
       }
 
-      /* ====== NOVO INDEX (HUB) – sem quebrar seu estilo ====== */
-      :root {
-        --gold-1: #ffeaa3;
-        --gold-2: #ffd46b;
-        --gold-3: #ffb92e;
-        --gold-line: rgba(255, 212, 107, 0.35);
-        --panel-bg: rgba(0, 0, 0, 0.45);
-        --panel-bg-strong: rgba(0, 0, 0, 0.58);
-        --text: #f3eed6;
-        --muted: rgba(243, 238, 214, 0.78);
+      /* =========================
+         TOPO (pílulas + botões)
+         ========================= */
+      .home-wrap {
+        width: min(1220px, calc(100% - 28px));
+        margin: 0 auto;
       }
 
-      .hub-wrap {
-        width: min(1200px, calc(100% - 40px));
-        margin: 18px auto 60px auto;
-      }
-
-      /* Faixa superior: “Votação mensal / 6 horas / 2 pontos” */
-      .hub-badges {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+      .top-pills {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         gap: 14px;
-        align-items: center;
-        justify-items: center;
-        margin: 10px 0 12px 0;
-      }
-      .hub-badge {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        padding: 14px 16px;
-        border-radius: 10px;
-        background: rgba(0, 0, 0, 0.35);
-        border: 1px solid var(--gold-line);
-        color: var(--text);
-        font-family: "Cinzel", serif;
-        letter-spacing: 0.4px;
-        text-shadow: 0 0 8px rgba(255, 214, 107, 0.16), 0 0 2px rgba(0, 0, 0, 0.9);
-        backdrop-filter: blur(4px);
-      }
-      .hub-badge b {
-        color: var(--gold-2);
-        text-shadow: 0 0 10px rgba(255, 191, 38, 0.22);
-        font-weight: 600;
+        flex-wrap: wrap;
+        margin-top: 18px;
       }
 
-      /* Botões grandes (mas sem exagero) */
-      .hub-actions {
-        display: flex;
-        gap: 16px;
-        justify-content: center;
-        align-items: center;
-        margin: 8px 0 18px 0;
-        flex-wrap: wrap;
-      }
-      .hub-btn {
+      /* estilo “pacotes e preços” (metal/dourado) */
+      .pill-gold {
         display: inline-flex;
         align-items: center;
-        gap: 12px;
-        padding: 14px 18px;
-        border-radius: 14px;
-        text-decoration: none;
+        gap: 10px;
+        padding: 12px 18px;
+        border-radius: 12px;
+        border: 2px solid rgba(255, 204, 102, 0.55);
+        background: rgba(0, 0, 0, 0.35);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35),
+          inset 0 0 0 1px rgba(255, 226, 151, 0.12);
+        color: #ffe6a6;
         font-family: "Cinzel", serif;
+        letter-spacing: 0.3px;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.25),
+          0 0 18px rgba(255, 200, 60, 0.18);
+        user-select: none;
+        line-height: 1;
+      }
+      .pill-gold .ico {
+        filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.25));
+      }
+
+      .top-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-top: 14px;
+      }
+
+      .btn-gold {
+        appearance: none;
+        border: 2px solid rgba(255, 225, 160, 0.75);
+        background: linear-gradient(
+          180deg,
+          #ffefb8 0%,
+          #e7be58 35%,
+          #c28a1e 100%
+        );
+        color: #2a1c00;
+        font-family: "Cinzel", serif;
+        letter-spacing: 0.6px;
+        padding: 12px 18px;
+        border-radius: 14px;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.38),
+          inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        transition: transform 0.14s ease, filter 0.14s ease,
+          box-shadow 0.14s ease;
         font-size: 1.05rem;
-        letter-spacing: 0.5px;
-        color: #2b200c;
-        background: linear-gradient(180deg, #fff0b6 0%, #ffd977 45%, #c8921d 100%);
-        border: 1px solid rgba(80, 50, 10, 0.55);
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-        transition: transform 0.15s ease, filter 0.15s ease;
       }
-      .hub-btn:hover {
+      .btn-gold:hover {
         transform: translateY(-1px);
-        filter: brightness(1.04);
+        filter: brightness(1.08) saturate(1.06);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45),
+          0 0 26px rgba(255, 214, 80, 0.18),
+          inset 0 1px 0 rgba(255, 255, 255, 0.65);
       }
-      .hub-btn:active {
+      .btn-gold:active {
         transform: translateY(0px);
-      }
-      .hub-btn .emoji {
-        font-size: 1.15rem;
+        filter: brightness(0.98);
       }
 
-      /* Painéis / blocos */
-      .hub-block {
-        margin-top: 18px;
-        padding: 18px 18px 22px 18px;
-        border-radius: 16px;
-        background: radial-gradient(
-            1200px 400px at 50% 0%,
-            rgba(255, 204, 102, 0.14),
-            transparent 60%
-          ),
-          var(--panel-bg-strong);
-        border: 1px solid rgba(255, 212, 107, 0.3);
-        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
-        backdrop-filter: blur(5px);
+      /* =========================
+         BLOCOS
+         ========================= */
+      .block-panel {
+        margin: 22px auto 26px auto;
+        border-radius: 18px;
+        border: 2px solid rgba(255, 204, 102, 0.35);
+        background: rgba(0, 0, 0, 0.34);
+        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45),
+          inset 0 0 0 1px rgba(255, 226, 151, 0.1);
+        padding: 18px 16px 18px 16px;
+        backdrop-filter: blur(2px);
       }
 
-      .hub-block-head {
+      .block-head {
         display: flex;
         align-items: center;
         justify-content: center;
         gap: 10px;
         margin-bottom: 10px;
-        text-align: center;
       }
-      .hub-block-title {
+
+      .block-title {
         font-family: "Cinzel", serif;
-        font-size: 1.05rem;
-        letter-spacing: 0.8px;
-        color: var(--gold-2);
-        text-shadow: 0 0 10px rgba(255, 191, 38, 0.18), 0 0 2px rgba(0, 0, 0, 0.9);
+        font-size: 1.22rem; /* não exagerado */
+        color: #ffe6a6;
+        letter-spacing: 0.6px;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.22),
+          0 0 16px rgba(255, 200, 60, 0.18);
+        text-align: center;
         margin: 0;
       }
-      .hub-block-desc {
+
+      .block-sub {
         text-align: center;
-        color: var(--muted);
-        margin: 0 0 14px 0;
+        margin: 0 auto 14px auto;
+        width: min(900px, 100%);
+        color: rgba(245, 238, 210, 0.92);
         font-family: "Cinzel", serif;
-        font-size: 0.95rem;
-        line-height: 1.4;
-        text-shadow: 0 0 2px rgba(0, 0, 0, 0.9);
+        font-size: 0.98rem;
+        text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
       }
 
-      /* Grid 3 cards */
-      .hub-grid-3 {
+      .cards-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
       }
 
-      /* Flip cards */
-      .flip {
+      @media (max-width: 980px) {
+        .cards-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 640px) {
+        .cards-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* =========================
+         CARD FLIP (hover gira / sai desgira)
+         ========================= */
+      .flip-card {
+        height: 360px;
         perspective: 1200px;
       }
+
       .flip-inner {
-        position: relative;
         width: 100%;
-        min-height: 360px;
+        height: 100%;
+        position: relative;
         transform-style: preserve-3d;
-        transition: transform 240ms ease;
+        transition: transform 0.55s ease;
       }
-      .flip:hover .flip-inner {
-        transform: rotateY(180deg);
-      }
-      .flip.is-flipped .flip-inner {
+
+      .flip-card:hover .flip-inner,
+      .flip-card:focus-within .flip-inner {
         transform: rotateY(180deg);
       }
 
       .flip-face {
         position: absolute;
         inset: 0;
-        border-radius: 16px;
+        border-radius: 18px;
+        border: 2px solid rgba(255, 204, 102, 0.32);
+        background: rgba(0, 0, 0, 0.42);
+        box-shadow: 0 16px 35px rgba(0, 0, 0, 0.45),
+          inset 0 0 0 1px rgba(255, 226, 151, 0.08);
         overflow: hidden;
         backface-visibility: hidden;
-        border: 1px solid rgba(255, 212, 107, 0.32);
-        background: var(--panel-bg);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
       }
 
       .flip-front {
-        display: grid;
-        grid-template-rows: 1fr auto;
+        display: flex;
+        flex-direction: column;
       }
 
-      .card-img {
+      .card-image {
+        flex: 1;
+        background: radial-gradient(
+            circle at 30% 20%,
+            rgba(255, 215, 0, 0.12),
+            transparent 55%
+          ),
+          linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.65));
         position: relative;
-        background:
-          linear-gradient(180deg, rgba(255, 204, 102, 0.08), rgba(0, 0, 0, 0.18)),
-          rgba(0, 0, 0, 0.25);
       }
-      .card-img .img-label {
+
+      /* Placeholder visual (troque depois por imagem via background-image) */
+      .card-image::after {
+        content: "IMAGEM DO CARD";
         position: absolute;
-        left: 12px;
+        left: 14px;
         bottom: 12px;
-        padding: 10px 12px;
-        border-radius: 12px;
-        background: rgba(0, 0, 0, 0.55);
-        border: 1px solid rgba(255, 212, 107, 0.28);
-        color: var(--text);
         font-family: "Cinzel", serif;
-        font-size: 0.95rem;
-        letter-spacing: 0.4px;
-        text-shadow: 0 0 2px rgba(0, 0, 0, 0.9);
-      }
-
-      /* “+” no canto (só visual) */
-      .corner-plus {
-        position: absolute;
-        right: 12px;
-        bottom: 12px;
-        width: 44px;
-        height: 44px;
+        color: rgba(255, 235, 180, 0.85);
+        letter-spacing: 0.6px;
+        padding: 8px 12px;
         border-radius: 12px;
-        display: grid;
-        place-items: center;
-        background: rgba(0, 0, 0, 0.55);
-        border: 1px solid rgba(255, 212, 107, 0.28);
-        color: var(--gold-2);
-        font-size: 22px;
-        text-shadow: 0 0 10px rgba(255, 191, 38, 0.18);
+        border: 2px solid rgba(255, 204, 102, 0.25);
+        background: rgba(0, 0, 0, 0.35);
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
       }
 
-      .card-footer {
+      .card-front-bottom {
+        padding: 12px 14px 14px 14px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 10px;
-        padding: 12px;
-        background: rgba(0, 0, 0, 0.35);
       }
-      .pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        padding: 10px 12px;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 212, 107, 0.28);
-        background: rgba(0, 0, 0, 0.4);
-        color: var(--text);
+
+      .card-tag {
         font-family: "Cinzel", serif;
-        font-size: 0.9rem;
-        letter-spacing: 0.35px;
-        text-decoration: none;
+        color: rgba(245, 238, 210, 0.92);
+        font-size: 0.95rem;
+        text-shadow: 0 0 10px rgba(0, 0, 0, 0.55);
       }
-      .pill:hover {
-        border-color: rgba(255, 212, 107, 0.45);
+
+      .badge-plus {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        border: 2px solid rgba(255, 204, 102, 0.45);
+        background: rgba(0, 0, 0, 0.35);
+        color: #ffe6a6;
+        display: grid;
+        place-items: center;
+        font-size: 20px;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        box-shadow: inset 0 0 0 1px rgba(255, 226, 151, 0.1);
       }
 
       .flip-back {
         transform: rotateY(180deg);
-        padding: 14px;
-        display: grid;
-        grid-template-rows: auto 1fr auto;
-        gap: 12px;
+        padding: 16px 16px 16px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
       }
 
       .back-title {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
-      }
-      .back-title h3 {
-        margin: 0;
         font-family: "Cinzel", serif;
-        font-size: 0.98rem;
-        color: var(--gold-2);
+        color: #ffe6a6;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.25);
+        font-size: 1.05rem;
+        margin: 0 0 4px 0;
         letter-spacing: 0.6px;
-        text-shadow: 0 0 10px rgba(255, 191, 38, 0.18), 0 0 2px rgba(0, 0, 0, 0.9);
-      }
-      .hint {
-        color: rgba(243, 238, 214, 0.65);
-        font-family: "Cinzel", serif;
-        font-size: 0.85rem;
       }
 
-      .back-body {
-        display: grid;
-        gap: 10px;
-      }
-      .field {
-        display: grid;
-        gap: 6px;
-      }
-      .field label {
+      .back-line {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
         font-family: "Cinzel", serif;
-        color: rgba(255, 212, 107, 0.9);
-        font-size: 0.85rem;
-        letter-spacing: 0.4px;
-        text-shadow: 0 0 2px rgba(0, 0, 0, 0.9);
-      }
-      .field .value {
-        border-radius: 12px;
-        padding: 10px 12px;
-        background: rgba(0, 0, 0, 0.45);
-        border: 1px solid rgba(255, 212, 107, 0.22);
-        color: var(--text);
-        font-family: "Cinzel", serif;
+        color: rgba(245, 238, 210, 0.92);
         font-size: 0.92rem;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
       }
-      .field .value a {
-        color: var(--text);
-        text-decoration: none;
-      }
-      .field .value a:hover {
-        text-decoration: underline;
+
+      .back-line span {
+        color: rgba(255, 230, 166, 0.95);
       }
 
       .back-actions {
+        margin-top: auto;
         display: flex;
         gap: 10px;
-        justify-content: space-between;
-        align-items: center;
         flex-wrap: wrap;
       }
 
-      .btn-gold {
+      .btn-mini {
+        font-family: "Cinzel", serif;
+        border-radius: 12px;
+        border: 2px solid rgba(255, 225, 160, 0.7);
+        background: linear-gradient(
+          180deg,
+          #ffefb8 0%,
+          #e7be58 35%,
+          #c28a1e 100%
+        );
+        color: #2a1c00;
+        padding: 10px 12px;
+        cursor: pointer;
+        text-decoration: none;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
-        padding: 12px 14px;
-        border-radius: 14px;
-        border: 1px solid rgba(80, 50, 10, 0.55);
-        font-family: "Cinzel", serif;
-        letter-spacing: 0.5px;
-        font-size: 0.95rem;
-        color: #2b200c;
-        background: linear-gradient(180deg, #fff0b6 0%, #ffd977 45%, #c8921d 100%);
-        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.5);
-        cursor: pointer;
-        text-decoration: none;
-        min-width: 160px;
+        gap: 8px;
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35),
+          inset 0 1px 0 rgba(255, 255, 255, 0.55);
+        transition: transform 0.14s ease, filter 0.14s ease;
+        font-size: 0.98rem;
+        min-width: 150px;
       }
-      .btn-gold:hover {
-        filter: brightness(1.04);
+      .btn-mini:hover {
         transform: translateY(-1px);
-      }
-      .btn-gold:active {
-        transform: translateY(0px);
+        filter: brightness(1.06) saturate(1.06);
       }
 
-      .btn-dark {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        padding: 12px 14px;
-        border-radius: 14px;
-        border: 1px solid rgba(255, 212, 107, 0.25);
-        font-family: "Cinzel", serif;
-        letter-spacing: 0.5px;
-        font-size: 0.95rem;
-        color: var(--text);
-        background: rgba(0, 0, 0, 0.45);
-        cursor: pointer;
-        text-decoration: none;
-        min-width: 160px;
-      }
-      .btn-dark:hover {
-        border-color: rgba(255, 212, 107, 0.45);
-        transform: translateY(-1px);
-      }
-      .btn-dark:active {
-        transform: translateY(0px);
-      }
-
-      /* Card central (brasão) – brilho neon dourado + giro sutil no hover */
-      .crest-card .card-img {
-        position: relative;
-        display: grid;
-        place-items: center;
-      }
-      .crest-card img {
-        width: 160px;
-        height: auto;
-        transform: translateZ(1px);
-        transition: filter 220ms ease, transform 220ms ease;
-        filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.55));
-      }
-      .crest-card:hover img {
-        transform: scale(1.02) rotate(-1deg);
-        filter:
-          drop-shadow(0 0 10px rgba(255, 225, 120, 0.70))
-          drop-shadow(0 0 22px rgba(255, 190, 45, 0.55))
-          drop-shadow(0 0 38px rgba(255, 210, 70, 0.32))
-          drop-shadow(0 10px 18px rgba(0, 0, 0, 0.55));
-      }
-
-      /* Responsivo */
-      @media (max-width: 1050px) {
-        .hub-grid-3 {
-          grid-template-columns: 1fr;
-        }
-        .flip-inner {
-          min-height: 340px;
-        }
-        .hub-badges {
-          grid-template-columns: 1fr;
-        }
-      }
-
-      /* ====== Área escondida: IDs que seu script.js pode esperar ====== */
-      .hidden-compat {
-        display: none !important;
+      .btn-mini.secondary {
+        background: rgba(0, 0, 0, 0.35);
+        color: #ffe6a6;
+        border-color: rgba(255, 204, 102, 0.5);
+        box-shadow: inset 0 0 0 1px rgba(255, 226, 151, 0.1),
+          0 10px 22px rgba(0, 0, 0, 0.35);
       }
     </style>
   </head>
@@ -491,7 +427,7 @@
       <source src="./Neblina.webm" type="video/webm" />
     </video>
 
-    <!-- ====== SEU HEADER (mantido) ====== -->
+    <!-- HEADER ORIGINAL (mantido) -->
     <header class="site-header">
       <button id="menu-toggle" aria-label="Abrir menu">MENU ☰</button>
 
@@ -563,469 +499,268 @@
       </ul>
     </aside>
 
-    <!-- ====== NOVO CONTEÚDO DO INDEX ====== -->
-    <main class="hub-wrap espaco-pos-header">
-      <div class="hub-badges">
-        <div class="hub-badge"><span>🏆</span><b>VOTAÇÃO MENSAL</b></div>
-        <div class="hub-badge"><span>⏳</span><b>1 VOTO A CADA 6 HORAS</b></div>
-        <div class="hub-badge"><span>🔒</span><b>LOGADO VALE 2 PONTOS</b></div>
-      </div>
-
-      <div class="hub-actions">
-        <a class="hub-btn" href="./envie-clips.html"><span class="emoji">📩</span>Envie Clips</a>
-        <a class="hub-btn" href="./top.html"><span class="emoji">🖥️</span>Top Live</a>
-      </div>
-
-      <!-- BLOCO 1 -->
-      <section class="hub-block" id="bloco-1">
-        <div class="hub-block-head">
-          <h2 class="hub-block-title">👑 BLOCO 1 — PIOR JOGADA DO MÊS (3 JOGADAS)</h2>
-        </div>
-        <p class="hub-block-desc">
-          Três jogadas concorrem. Passe o mouse para <b>virar</b> o card e ver personagem, stream e o link do seu vídeo.
-        </p>
-
-        <div class="hub-grid-3">
-          <!-- Card 1 -->
-          <article class="flip" data-flip>
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="card-img">
-                  <div class="img-label">Imagem do card</div>
-                  <div class="corner-plus">+</div>
-                </div>
-                <div class="card-footer">
-                  <span class="pill">🎬 Jogada 1</span>
-                  <span class="pill">↩ vire</span>
-                </div>
-              </div>
-
-              <div class="flip-face flip-back">
-                <div class="back-title">
-                  <h3>Jogada 1 — detalhes</h3>
-                  <span class="hint">tire o mouse pra voltar</span>
-                </div>
-
-                <div class="back-body">
-                  <div class="field">
-                    <label>Personagem</label>
-                    <div class="value">Ex: Knight Zika</div>
-                  </div>
-                  <div class="field">
-                    <label>Link da stream</label>
-                    <div class="value"><a href="#" onclick="event.preventDefault()">https://twitch.tv/...</a></div>
-                  </div>
-                  <div class="field">
-                    <label>Link do seu vídeo (ponto exato)</label>
-                    <div class="value"><a href="#" onclick="event.preventDefault()">https://youtube.com/...&t=123</a></div>
-                  </div>
-                </div>
-
-                <div class="back-actions">
-                  <a class="btn-gold" href="#" onclick="event.preventDefault()">▶ Ver jogada</a>
-                  <button class="btn-dark" type="button">🗳️ Votar</button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- Card 2 -->
-          <article class="flip" data-flip>
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="card-img">
-                  <div class="img-label">Imagem do card</div>
-                  <div class="corner-plus">+</div>
-                </div>
-                <div class="card-footer">
-                  <span class="pill">🎬 Jogada 2</span>
-                  <span class="pill">↩ vire</span>
-                </div>
-              </div>
-
-              <div class="flip-face flip-back">
-                <div class="back-title">
-                  <h3>Jogada 2 — detalhes</h3>
-                  <span class="hint">tire o mouse pra voltar</span>
-                </div>
-
-                <div class="back-body">
-                  <div class="field">
-                    <label>Personagem</label>
-                    <div class="value">Ex: Sorc Vacilão</div>
-                  </div>
-                  <div class="field">
-                    <label>Link da stream</label>
-                    <div class="value"><a href="#" onclick="event.preventDefault()">https://twitch.tv/...</a></div>
-                  </div>
-                  <div class="field">
-                    <label>Link do seu vídeo (ponto exato)</label>
-                    <div class="value"><a href="#" onclick="event.preventDefault()">https://youtube.com/...&t=456</a></div>
-                  </div>
-                </div>
-
-                <div class="back-actions">
-                  <a class="btn-gold" href="#" onclick="event.preventDefault()">▶ Ver jogada</a>
-                  <button class="btn-dark" type="button">🗳️ Votar</button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- Card 3 -->
-          <article class="flip" data-flip>
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="card-img">
-                  <div class="img-label">Imagem do card</div>
-                  <div class="corner-plus">+</div>
-                </div>
-                <div class="card-footer">
-                  <span class="pill">🎬 Jogada 3</span>
-                  <span class="pill">↩ vire</span>
-                </div>
-              </div>
-
-              <div class="flip-face flip-back">
-                <div class="back-title">
-                  <h3>Jogada 3 — detalhes</h3>
-                  <span class="hint">tire o mouse pra voltar</span>
-                </div>
-
-                <div class="back-body">
-                  <div class="field">
-                    <label>Personagem</label>
-                    <div class="value">Ex: Pally Dormindo</div>
-                  </div>
-                  <div class="field">
-                    <label>Link da stream</label>
-                    <div class="value"><a href="#" onclick="event.preventDefault()">https://twitch.tv/...</a></div>
-                  </div>
-                  <div class="field">
-                    <label>Link do seu vídeo (ponto exato)</label>
-                    <div class="value"><a href="#" onclick="event.preventDefault()">https://youtube.com/...&t=789</a></div>
-                  </div>
-                </div>
-
-                <div class="back-actions">
-                  <a class="btn-gold" href="#" onclick="event.preventDefault()">▶ Ver jogada</a>
-                  <button class="btn-dark" type="button">🗳️ Votar</button>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- BLOCO 2 -->
-      <section class="hub-block" id="bloco-2">
-        <div class="hub-block-head">
-          <h2 class="hub-block-title">⚔️ BLOCO 2 — DUELO RÁPIDO (A vs B)</h2>
-        </div>
-        <p class="hub-block-desc">
-          Dois criadores se enfrentam por popularidade do mês. O card do meio é o “VS” (brasão).
-        </p>
-
-        <div class="hub-grid-3">
-          <!-- Criador A -->
-          <article class="flip" data-flip>
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="card-img">
-                  <div class="img-label">Foto do criador A</div>
-                  <div class="corner-plus">+</div>
-                </div>
-                <div class="card-footer">
-                  <span class="pill">👤 Criador A</span>
-                  <span class="pill">↩ vire</span>
-                </div>
-              </div>
-
-              <div class="flip-face flip-back">
-                <div class="back-title">
-                  <h3>Criador A</h3>
-                  <span class="hint">tire o mouse pra voltar</span>
-                </div>
-
-                <div class="back-body">
-                  <div class="field">
-                    <label>Nome / Canal</label>
-                    <div class="value">Nome do criador A</div>
-                  </div>
-                  <div class="field">
-                    <label>Link</label>
-                    <div class="value"><a href="#" onclick="event.preventDefault()">https://twitch.tv/...</a></div>
-                  </div>
-                  <div class="field">
-                    <label>Mini descrição</label>
-                    <div class="value">Ex: “PvP / War / Clips”</div>
-                  </div>
-                </div>
-
-                <div class="back-actions">
-                  <a class="btn-gold" href="#" onclick="event.preventDefault()">🔗 Abrir canal</a>
-                  <button class="btn-dark" type="button">🗳️ Votar A</button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- VS / Brasão -->
-          <article class="flip crest-card" data-flip>
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="card-img">
-                  <img src="./brasao-novo.png" alt="VS" />
-                  <div class="img-label">Passe o mouse (brilho + flip)</div>
-                </div>
-                <div class="card-footer">
-                  <span class="pill">VS</span>
-                  <span class="pill">↩ vire</span>
-                </div>
-              </div>
-
-              <div class="flip-face flip-back">
-                <div class="back-title">
-                  <h3>Como escolher o duelo</h3>
-                  <span class="hint">tire o mouse pra voltar</span>
-                </div>
-
-                <div class="back-body">
-                  <div class="field">
-                    <label>“Desafio da comunidade”</label>
-                    <div class="value">
-                      Entra quem tiver mais indicações (formulário) ou os 2 mais citados nos clips do mês.
-                    </div>
-                  </div>
-                  <div class="field">
-                    <label>Sugestão</label>
-                    <div class="value">Você abre uma votação rápida “quem entra no próximo duelo?”</div>
-                  </div>
-                </div>
-
-                <div class="back-actions">
-                  <a class="btn-gold" href="#" onclick="event.preventDefault()">📌 Indicar criador</a>
-                  <a class="btn-dark" href="#" onclick="event.preventDefault()">📊 Ver duelos</a>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <!-- Criador B -->
-          <article class="flip" data-flip>
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="card-img">
-                  <div class="img-label">Foto do criador B</div>
-                  <div class="corner-plus">+</div>
-                </div>
-                <div class="card-footer">
-                  <span class="pill">👤 Criador B</span>
-                  <span class="pill">↩ vire</span>
-                </div>
-              </div>
-
-              <div class="flip-face flip-back">
-                <div class="back-title">
-                  <h3>Criador B</h3>
-                  <span class="hint">tire o mouse pra voltar</span>
-                </div>
-
-                <div class="back-body">
-                  <div class="field">
-                    <label>Nome / Canal</label>
-                    <div class="value">Nome do criador B</div>
-                  </div>
-                  <div class="field">
-                    <label>Link</label>
-                    <div class="value"><a href="#" onclick="event.preventDefault()">https://youtube.com/@...</a></div>
-                  </div>
-                  <div class="field">
-                    <label>Mini descrição</label>
-                    <div class="value">Ex: “Conteúdo Oldschool / OT / Lore”</div>
-                  </div>
-                </div>
-
-                <div class="back-actions">
-                  <a class="btn-gold" href="#" onclick="event.preventDefault()">🔗 Abrir canal</a>
-                  <button class="btn-dark" type="button">🗳️ Votar B</button>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- BLOCO 3 -->
-      <section class="hub-block" id="bloco-3">
-        <div class="hub-block-head">
-          <h2 class="hub-block-title">🏰 BLOCO 3 — MELHOR OTSERVER DA ATUALIDADE (TOP 3)</h2>
-        </div>
-        <p class="hub-block-desc">
-          Três opções simétricas. Cada card vira e mostra link, versão e chamada pra votar.
-        </p>
-
-        <div class="hub-grid-3">
-          <article class="flip" data-flip>
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="card-img">
-                  <div class="img-label">Banner / imagem do OT</div>
-                  <div class="corner-plus">+</div>
-                </div>
-                <div class="card-footer">
-                  <span class="pill">🥇 OT #1</span>
-                  <span class="pill">↩ vire</span>
-                </div>
-              </div>
-              <div class="flip-face flip-back">
-                <div class="back-title">
-                  <h3>OT #1</h3>
-                  <span class="hint">tire o mouse pra voltar</span>
-                </div>
-                <div class="back-body">
-                  <div class="field">
-                    <label>Nome</label>
-                    <div class="value">Nome do servidor</div>
-                  </div>
-                  <div class="field">
-                    <label>Versão</label>
-                    <div class="value">7.6 / 8.0 / etc</div>
-                  </div>
-                  <div class="field">
-                    <label>Link</label>
-                    <div class="value"><a href="#" onclick="event.preventDefault()">https://site-do-ot.com</a></div>
-                  </div>
-                </div>
-                <div class="back-actions">
-                  <a class="btn-gold" href="#" onclick="event.preventDefault()">🔗 Abrir site</a>
-                  <button class="btn-dark" type="button">🗳️ Votar</button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="flip" data-flip>
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="card-img">
-                  <div class="img-label">Banner / imagem do OT</div>
-                  <div class="corner-plus">+</div>
-                </div>
-                <div class="card-footer">
-                  <span class="pill">🥈 OT #2</span>
-                  <span class="pill">↩ vire</span>
-                </div>
-              </div>
-              <div class="flip-face flip-back">
-                <div class="back-title">
-                  <h3>OT #2</h3>
-                  <span class="hint">tire o mouse pra voltar</span>
-                </div>
-                <div class="back-body">
-                  <div class="field">
-                    <label>Nome</label>
-                    <div class="value">Nome do servidor</div>
-                  </div>
-                  <div class="field">
-                    <label>Versão</label>
-                    <div class="value">7.6 / 8.0 / etc</div>
-                  </div>
-                  <div class="field">
-                    <label>Link</label>
-                    <div class="value"><a href="#" onclick="event.preventDefault()">https://site-do-ot.com</a></div>
-                  </div>
-                </div>
-                <div class="back-actions">
-                  <a class="btn-gold" href="#" onclick="event.preventDefault()">🔗 Abrir site</a>
-                  <button class="btn-dark" type="button">🗳️ Votar</button>
-                </div>
-              </div>
-            </div>
-          </article>
-
-          <article class="flip" data-flip>
-            <div class="flip-inner">
-              <div class="flip-face flip-front">
-                <div class="card-img">
-                  <div class="img-label">Banner / imagem do OT</div>
-                  <div class="corner-plus">+</div>
-                </div>
-                <div class="card-footer">
-                  <span class="pill">🥉 OT #3</span>
-                  <span class="pill">↩ vire</span>
-                </div>
-              </div>
-              <div class="flip-face flip-back">
-                <div class="back-title">
-                  <h3>OT #3</h3>
-                  <span class="hint">tire o mouse pra voltar</span>
-                </div>
-                <div class="back-body">
-                  <div class="field">
-                    <label>Nome</label>
-                    <div class="value">Nome do servidor</div>
-                  </div>
-                  <div class="field">
-                    <label>Versão</label>
-                    <div class="value">7.6 / 8.0 / etc</div>
-                  </div>
-                  <div class="field">
-                    <label>Link</label>
-                    <div class="value"><a href="#" onclick="event.preventDefault()">https://site-do-ot.com</a></div>
-                  </div>
-                </div>
-                <div class="back-actions">
-                  <a class="btn-gold" href="#" onclick="event.preventDefault()">🔗 Abrir site</a>
-                  <button class="btn-dark" type="button">🗳️ Votar</button>
-                </div>
-              </div>
-            </div>
-          </article>
-        </div>
-      </section>
-
-      <!-- Compatibilidade escondida (pra não quebrar seu script.js atual) -->
-      <section class="hidden-compat">
-        <div class="filtros-ranking">
-          <input type="text" id="filtro-nome" placeholder="🔍 Buscar servidor..." />
-          <select id="filtro-versao"><option value="">Todas as versões</option></select>
-          <select id="filtro-origem">
-            <option value="">Todas as origens</option>
-            <option value="Socket">Socket</option>
-            <option value="HTML">HTML</option>
-            <option value="Erro">Erro</option>
-          </select>
+    <!-- CONTEÚDO -->
+    <section class="ranking aba ativa espaco-pos-header" id="inicio">
+      <div class="home-wrap">
+        <div class="top-pills">
+          <div class="pill-gold"><span class="ico">🏆</span> VOTAÇÃO MENSAL</div>
+          <div class="pill-gold"><span class="ico">⏳</span> 1 VOTO A CADA 6 HORAS</div>
+          <div class="pill-gold"><span class="ico">🔒</span> LOGADO VALE 2 PONTOS</div>
         </div>
 
-        <div class="table-container">
-          <div id="servidores-wrapper" class="collapsed">
-            <table>
-              <thead>
-                <tr>
-                  <th>Servidor</th>
-                  <th>Versão</th>
-                  <th>Jogadores Online</th>
-                  <th>Origem</th>
-                  <th>Observação</th>
-                </tr>
-              </thead>
-              <tbody id="tabela-servidores"></tbody>
-            </table>
+        <div class="top-actions">
+          <a class="btn-gold" href="/envie-clips.html">📩 Envie Clips</a>
+          <a class="btn-gold" href="top.html">📺 Top Live</a>
+        </div>
+
+        <!-- BLOCO 1 -->
+        <div class="block-panel" style="margin-top: 18px">
+          <div class="block-head">
+            <h2 class="block-title">👑 BLOCO 1 — PIOR JOGADA DO MÊS (3 JOGADAS)</h2>
+          </div>
+          <p class="block-sub">
+            Passe o mouse para virar o card e ver <b>personagem</b>, <b>stream</b> e o
+            <b>link do seu vídeo</b>. Ao tirar o mouse, ele volta.
+          </p>
+
+          <div class="cards-grid">
+            <!-- Card 1 -->
+            <div class="flip-card" tabindex="0">
+              <div class="flip-inner">
+                <div class="flip-face flip-front">
+                  <div class="card-image"></div>
+                  <div class="card-front-bottom">
+                    <div class="card-tag">Jogada 1</div>
+                    <div class="badge-plus">＋</div>
+                  </div>
+                </div>
+                <div class="flip-face flip-back">
+                  <h3 class="back-title">Jogada 1</h3>
+                  <div class="back-line"><span>Personagem:</span> Ex: Knight Zika</div>
+                  <div class="back-line"><span>Stream:</span> https://twitch.tv/...</div>
+                  <div class="back-line"><span>Vídeo (ponto exato):</span> https://youtube.com/...&t=123</div>
+                  <div class="back-actions">
+                    <a class="btn-mini" href="#" onclick="return false;">▶ Ver jogada</a>
+                    <button class="btn-mini secondary" type="button">🗳️ Votar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="flip-card" tabindex="0">
+              <div class="flip-inner">
+                <div class="flip-face flip-front">
+                  <div class="card-image"></div>
+                  <div class="card-front-bottom">
+                    <div class="card-tag">Jogada 2</div>
+                    <div class="badge-plus">＋</div>
+                  </div>
+                </div>
+                <div class="flip-face flip-back">
+                  <h3 class="back-title">Jogada 2</h3>
+                  <div class="back-line"><span>Personagem:</span> Ex: Sorcerer X</div>
+                  <div class="back-line"><span>Stream:</span> https://twitch.tv/...</div>
+                  <div class="back-line"><span>Vídeo (ponto exato):</span> https://youtube.com/...&t=123</div>
+                  <div class="back-actions">
+                    <a class="btn-mini" href="#" onclick="return false;">▶ Ver jogada</a>
+                    <button class="btn-mini secondary" type="button">🗳️ Votar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="flip-card" tabindex="0">
+              <div class="flip-inner">
+                <div class="flip-face flip-front">
+                  <div class="card-image"></div>
+                  <div class="card-front-bottom">
+                    <div class="card-tag">Jogada 3</div>
+                    <div class="badge-plus">＋</div>
+                  </div>
+                </div>
+                <div class="flip-face flip-back">
+                  <h3 class="back-title">Jogada 3</h3>
+                  <div class="back-line"><span>Personagem:</span> Ex: Paladin Y</div>
+                  <div class="back-line"><span>Stream:</span> https://twitch.tv/...</div>
+                  <div class="back-line"><span>Vídeo (ponto exato):</span> https://youtube.com/...&t=123</div>
+                  <div class="back-actions">
+                    <a class="btn-mini" href="#" onclick="return false;">▶ Ver jogada</a>
+                    <button class="btn-mini secondary" type="button">🗳️ Votar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="table-controls outside">
-          <button id="toggle-table" type="button">Expandir</button>
-        </div>
-      </section>
-    </main>
+        <!-- BLOCO 2 -->
+        <div class="block-panel">
+          <div class="block-head">
+            <h2 class="block-title">⚔️ BLOCO 2 — DUELO RÁPIDO (3 OPÇÕES)</h2>
+          </div>
+          <p class="block-sub">
+            Aqui você coloca <b>3 duelos</b> do mês (ex.: A vs B / C vs D / E vs F). Cada card vira e mostra a descrição.
+          </p>
 
-    <!-- mantém seu script principal (se ele controla login/radio/etc) -->
+          <div class="cards-grid">
+            <div class="flip-card" tabindex="0">
+              <div class="flip-inner">
+                <div class="flip-face flip-front">
+                  <div class="card-image"></div>
+                  <div class="card-front-bottom">
+                    <div class="card-tag">Duelo 1</div>
+                    <div class="badge-plus">＋</div>
+                  </div>
+                </div>
+                <div class="flip-face flip-back">
+                  <h3 class="back-title">Duelo 1</h3>
+                  <div class="back-line"><span>Criador A:</span> Nome + link</div>
+                  <div class="back-line"><span>Criador B:</span> Nome + link</div>
+                  <div class="back-line"><span>Descrição:</span> Mini descrição do duelo.</div>
+                  <div class="back-actions">
+                    <button class="btn-mini secondary" type="button">🗳️ Votar A</button>
+                    <button class="btn-mini secondary" type="button">🗳️ Votar B</button>
+                    <a class="btn-mini" href="#" onclick="return false;">🔗 Abrir canal</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flip-card" tabindex="0">
+              <div class="flip-inner">
+                <div class="flip-face flip-front">
+                  <div class="card-image"></div>
+                  <div class="card-front-bottom">
+                    <div class="card-tag">Duelo 2</div>
+                    <div class="badge-plus">＋</div>
+                  </div>
+                </div>
+                <div class="flip-face flip-back">
+                  <h3 class="back-title">Duelo 2</h3>
+                  <div class="back-line"><span>Criador A:</span> Nome + link</div>
+                  <div class="back-line"><span>Criador B:</span> Nome + link</div>
+                  <div class="back-line"><span>Descrição:</span> Mini descrição do duelo.</div>
+                  <div class="back-actions">
+                    <button class="btn-mini secondary" type="button">🗳️ Votar A</button>
+                    <button class="btn-mini secondary" type="button">🗳️ Votar B</button>
+                    <a class="btn-mini" href="#" onclick="return false;">🔗 Abrir canal</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flip-card" tabindex="0">
+              <div class="flip-inner">
+                <div class="flip-face flip-front">
+                  <div class="card-image"></div>
+                  <div class="card-front-bottom">
+                    <div class="card-tag">Duelo 3</div>
+                    <div class="badge-plus">＋</div>
+                  </div>
+                </div>
+                <div class="flip-face flip-back">
+                  <h3 class="back-title">Duelo 3</h3>
+                  <div class="back-line"><span>Criador A:</span> Nome + link</div>
+                  <div class="back-line"><span>Criador B:</span> Nome + link</div>
+                  <div class="back-line"><span>Descrição:</span> Mini descrição do duelo.</div>
+                  <div class="back-actions">
+                    <button class="btn-mini secondary" type="button">🗳️ Votar A</button>
+                    <button class="btn-mini secondary" type="button">🗳️ Votar B</button>
+                    <a class="btn-mini" href="#" onclick="return false;">🔗 Abrir canal</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- BLOCO 3 -->
+        <div class="block-panel" style="margin-bottom: 30px">
+          <div class="block-head">
+            <h2 class="block-title">🏰 BLOCO 3 — MELHOR OTSERVER DA ATUALIDADE (3 OPÇÕES)</h2>
+          </div>
+          <p class="block-sub">
+            3 candidatos do mês. Cada card vira e mostra descrição e botões.
+          </p>
+
+          <div class="cards-grid">
+            <div class="flip-card" tabindex="0">
+              <div class="flip-inner">
+                <div class="flip-face flip-front">
+                  <div class="card-image"></div>
+                  <div class="card-front-bottom">
+                    <div class="card-tag">OTServer 1</div>
+                    <div class="badge-plus">＋</div>
+                  </div>
+                </div>
+                <div class="flip-face flip-back">
+                  <h3 class="back-title">OTServer 1</h3>
+                  <div class="back-line"><span>Site:</span> https://...</div>
+                  <div class="back-line"><span>Versão:</span> 7.4 / 8.0 / etc</div>
+                  <div class="back-line"><span>Descrição:</span> Mini texto do servidor.</div>
+                  <div class="back-actions">
+                    <button class="btn-mini secondary" type="button">🗳️ Votar</button>
+                    <a class="btn-mini" href="#" onclick="return false;">📣 Divulgar</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flip-card" tabindex="0">
+              <div class="flip-inner">
+                <div class="flip-face flip-front">
+                  <div class="card-image"></div>
+                  <div class="card-front-bottom">
+                    <div class="card-tag">OTServer 2</div>
+                    <div class="badge-plus">＋</div>
+                  </div>
+                </div>
+                <div class="flip-face flip-back">
+                  <h3 class="back-title">OTServer 2</h3>
+                  <div class="back-line"><span>Site:</span> https://...</div>
+                  <div class="back-line"><span>Versão:</span> 7.4 / 8.0 / etc</div>
+                  <div class="back-line"><span>Descrição:</span> Mini texto do servidor.</div>
+                  <div class="back-actions">
+                    <button class="btn-mini secondary" type="button">🗳️ Votar</button>
+                    <a class="btn-mini" href="#" onclick="return false;">📣 Divulgar</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="flip-card" tabindex="0">
+              <div class="flip-inner">
+                <div class="flip-face flip-front">
+                  <div class="card-image"></div>
+                  <div class="card-front-bottom">
+                    <div class="card-tag">OTServer 3</div>
+                    <div class="badge-plus">＋</div>
+                  </div>
+                </div>
+                <div class="flip-face flip-back">
+                  <h3 class="back-title">OTServer 3</h3>
+                  <div class="back-line"><span>Site:</span> https://...</div>
+                  <div class="back-line"><span>Versão:</span> 7.4 / 8.0 / etc</div>
+                  <div class="back-line"><span>Descrição:</span> Mini texto do servidor.</div>
+                  <div class="back-actions">
+                    <button class="btn-mini secondary" type="button">🗳️ Votar</button>
+                    <a class="btn-mini" href="#" onclick="return false;">📣 Divulgar</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- mantém seu script principal -->
     <script type="module" src="./script.js"></script>
 
     <script>
-      // Menu lateral (seu)
+      // menu lateral (igual ao seu)
       const menuToggle = document.getElementById("menu-toggle");
       const menuClose = document.getElementById("menu-close");
       const sideMenu = document.getElementById("side-menu");
@@ -1038,20 +773,10 @@
         sideMenu.setAttribute("aria-hidden", "true");
       });
 
-      // Flip em MOBILE (toque para virar / toque fora para desvirar)
-      const flips = Array.from(document.querySelectorAll("[data-flip]"));
-      flips.forEach((card) => {
-        card.addEventListener("click", (e) => {
-          // não virar ao clicar em links/botões
-          const tag = e.target && e.target.tagName ? e.target.tagName.toLowerCase() : "";
-          if (tag === "a" || tag === "button") return;
-          card.classList.toggle("is-flipped");
-        });
-      });
-
-      document.addEventListener("click", (e) => {
-        const clickedInside = e.target.closest && e.target.closest("[data-flip]");
-        if (!clickedInside) flips.forEach((c) => c.classList.remove("is-flipped"));
+      // reforço extra: se algum JS antigo tentar esconder a aba, traz de volta
+      window.addEventListener("load", () => {
+        const s = document.getElementById("inicio");
+        if (s) s.classList.add("ativa");
       });
     </script>
   </body>
