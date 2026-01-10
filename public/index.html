@@ -132,20 +132,7 @@
         --backText: rgba(18, 10, 2, 0.92);
         --backMuted: rgba(18, 10, 2, 0.78);
 
-        /* defaults (sobrescrito pelos presets do body) */
-        --gTop:  #fff3c4;
-        --gHi:   #ffd974;
-        --gMid:  #f3b12a;
-        --gLow:  #bf6b0c;
-        --gDeep: #5d2b06;
-        --gEdge: rgba(55, 24, 2, 0.55);
-        --gLine: rgba(55, 24, 2, 0.32);
-      }
-
-      /* ======= PRESETS DO OURO (troca só a classe do body) ======= */
-
-      /* 1) Royal Gold (ouro brasão, profundo) */
-      body.gold-royal {
+        /* defaults */
         --gTop:  #fff5cf;
         --gHi:   #ffd86f;
         --gMid:  #f1ad1f;
@@ -155,26 +142,15 @@
         --gLine: rgba(45, 16, 2, 0.38);
       }
 
-      /* 2) Antique Gold (mais escuro, metal velho chique) */
-      body.gold-antique {
-        --gTop:  #fff1c2;
-        --gHi:   #e9c35a;
-        --gMid:  #c48b1a;
-        --gLow:  #8a4708;
-        --gDeep: #311305;
-        --gEdge: rgba(35, 10, 2, 0.72);
-        --gLine: rgba(35, 10, 2, 0.45);
-      }
-
-      /* 3) Bright Gold (mais vivo/brilhante sem ficar bege) */
-      body.gold-bright {
-        --gTop:  #ffffff;
-        --gHi:   #ffe27f;
-        --gMid:  #ffbf2a;
-        --gLow:  #d16f00;
-        --gDeep: #6a2a05;
-        --gEdge: rgba(55, 20, 2, 0.60);
-        --gLine: rgba(55, 20, 2, 0.34);
+      /* ======= PRESET FIXO: ROYAL ======= */
+      body.gold-royal {
+        --gTop:  #fff5cf;
+        --gHi:   #ffd86f;
+        --gMid:  #f1ad1f;
+        --gLow:  #b85c08;
+        --gDeep: #4a2006;
+        --gEdge: rgba(50, 18, 2, 0.62);
+        --gLine: rgba(45, 16, 2, 0.38);
       }
 
       /* ======= UI ======= */
@@ -384,7 +360,7 @@
         text-shadow: 0 0 4px #000;
       }
 
-      /* ====== VERSO: OURO METÁLICO (por preset) ====== */
+      /* ====== VERSO: OURO ROYAL ====== */
       .flip-back {
         transform: rotateY(180deg);
         padding: 12px 12px 14px;
@@ -406,7 +382,6 @@
           0 14px 26px rgba(0, 0, 0, 0.45);
       }
 
-      /* “escovado” metálico (bem sutil, sem cara de amarelo/bege chapado) */
       .flip-back::before {
         content: "";
         position: absolute;
@@ -431,7 +406,6 @@
         pointer-events: none;
       }
 
-      /* borda interna do “brasão” + vinheta quente */
       .flip-back::after {
         content: "";
         position: absolute;
@@ -519,8 +493,6 @@
     </style>
   </head>
 
-  <!-- TROQUE AQUI:
-       gold-royal  | gold-antique | gold-bright -->
   <body class="fundo-inicio gold-royal">
     <div class="background"></div>
     <video autoplay muted loop class="fog">
