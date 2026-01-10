@@ -122,18 +122,12 @@
       /* ======= NOVO: apenas o "miolo" do index, sem mexer no seu estilo base ======= */
       :root {
         --gold: #ffe97f;
-        --gold2: #ffd36a;
         --ink: rgba(240, 237, 210, 0.92);
         --muted: rgba(240, 237, 210, 0.78);
         --panelA: rgba(0, 0, 0, 0.55);
         --panelB: rgba(0, 0, 0, 0.35);
         --line: rgba(255, 204, 102, 0.26);
         --lineStrong: rgba(255, 204, 102, 0.38);
-
-        /* neon dourado FORTE (no brasão) */
-        --neonA: rgba(255, 245, 170, 0.95);
-        --neonB: rgba(255, 221, 80, 0.70);
-        --neonC: rgba(255, 190, 20, 0.45);
       }
 
       .home-info {
@@ -246,7 +240,7 @@
         }
       }
 
-      /* FLIP MAIS DEVAGAR */
+      /* FLIP MAIS DEVAGAR + MAIS DELAY PRA VER O BRILHO */
       .flip-inner {
         width: 100%;
         height: 100%;
@@ -255,8 +249,6 @@
         transition: transform 0.82s cubic-bezier(0.22, 0.8, 0.2, 1);
         transition-delay: 0s;
       }
-
-      /* MAIS TEMPO PRA VER O BRILHO ANTES DE VIRAR */
       .flip-card:hover .flip-inner {
         transition-delay: 0.32s;
         transform: rotateY(180deg);
@@ -282,7 +274,7 @@
         flex-direction: column;
       }
 
-      /* THUMB SEM GLOW ATRÁS (NÃO TEM ::before AQUI) */
+      /* THUMB SEM GLOW "ATRÁS" */
       .thumb {
         height: 62%;
         position: relative;
@@ -302,14 +294,15 @@
         object-position: center;
         display: block;
 
-        transform: translateY(2px) scale(1.06) rotate(0deg);
+        /* sem drop-shadow neon (zero halo de CSS) */
+        filter: none;
 
-        /* BASE: sombra normal (sem “halo” atrás) */
-        filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.60));
+        transform: translateY(2px) scale(1.06) rotate(0deg);
         transition: transform 0.18s ease, filter 0.18s ease;
         will-change: transform, filter;
       }
 
+      /* só escurece a parte de baixo, não é brilho */
       .thumb::after {
         content: "";
         position: absolute;
@@ -318,39 +311,27 @@
         pointer-events: none;
       }
 
-      /* BRILHO NO BRASÃO (FORTE) + GIRO RÁPIDO */
-      @keyframes crestNeonSpinStrong {
+      /* BRILHO “NO BRASÃO” SEM HALO: só brilho/saturação, SEM drop-shadow */
+      @keyframes crestBrightSpinNoHalo {
         0% {
           transform: translateY(2px) scale(1.06) rotate(0deg);
-          filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.60));
+          filter: none;
         }
         55% {
           transform: translateY(0px) scale(1.12) rotate(7deg);
-          filter:
-            brightness(1.35)
-            saturate(1.70)
-            contrast(1.08)
-            drop-shadow(0 14px 22px rgba(0, 0, 0, 0.60))
-            drop-shadow(0 0 12px var(--neonA))
-            drop-shadow(0 0 28px var(--neonB))
-            drop-shadow(0 0 44px var(--neonC));
+          filter: brightness(1.55) saturate(1.85) contrast(1.10);
         }
         100% {
           transform: translateY(0px) scale(1.09) rotate(2deg);
-          filter:
-            brightness(1.28)
-            saturate(1.55)
-            drop-shadow(0 14px 22px rgba(0, 0, 0, 0.60))
-            drop-shadow(0 0 10px rgba(255, 245, 170, 0.80))
-            drop-shadow(0 0 24px rgba(255, 221, 80, 0.55));
+          filter: brightness(1.40) saturate(1.60) contrast(1.06);
         }
       }
 
       .flip-card:hover .thumb img {
-        animation: crestNeonSpinStrong 0.22s ease-out both;
+        animation: crestBrightSpinNoHalo 0.22s ease-out both;
       }
       .flip-card.is-flipped .thumb img {
-        animation: crestNeonSpinStrong 0.22s ease-out both;
+        animation: crestBrightSpinNoHalo 0.22s ease-out both;
       }
 
       .front-bottom {
