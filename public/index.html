@@ -130,9 +130,10 @@
         --line: rgba(255, 204, 102, 0.26);
         --lineStrong: rgba(255, 204, 102, 0.38);
 
-        /* neon dourado */
-        --gold-neon-a: rgba(255, 233, 127, 0.65);
-        --gold-neon-b: rgba(255, 215, 0, 0.35);
+        /* neon dourado (mais forte/amarelo) */
+        --gold-neon-a: rgba(255, 246, 160, 0.80);
+        --gold-neon-b: rgba(255, 220, 60, 0.55);
+        --gold-neon-c: rgba(255, 190, 20, 0.35);
       }
 
       /* barra superior com infos (segue seu padrão, não inventa cores) */
@@ -180,7 +181,11 @@
         padding: 10px 14px;
         border-radius: 10px;
         border: 1px solid var(--lineStrong);
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.38));
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.62),
+          rgba(0, 0, 0, 0.38)
+        );
         color: var(--gold);
         font-family: "Cinzel", serif;
         font-size: 0.95rem;
@@ -279,8 +284,12 @@
         border-radius: 14px;
         overflow: hidden;
         backface-visibility: hidden;
-        border: 1px solid rgba(255, 204, 102, 0.20);
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35));
+        border: 1px solid rgba(255, 204, 102, 0.2);
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.55),
+          rgba(0, 0, 0, 0.35)
+        );
         box-shadow: 0 14px 26px rgba(0, 0, 0, 0.45);
       }
 
@@ -289,7 +298,7 @@
         flex-direction: column;
       }
 
-      /* ====== THUMB: enquadrar melhor o brasão (sem cortar/esticar) ====== */
+      /* ====== THUMB: enquadrar melhor o brasão (sem distorcer) ====== */
       .thumb {
         height: 62%;
         position: relative;
@@ -297,20 +306,45 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 18px 18px 22px;
+        padding: 12px 14px 18px; /* um pouco menos de padding pra “encher” melhor */
+      }
+
+      /* NOVO: glow de fundo (fica por trás do brasão) */
+      .thumb::before {
+        content: "";
+        position: absolute;
+        inset: -10%;
+        background: radial-gradient(
+          circle at 50% 45%,
+          rgba(255, 240, 150, 0.40) 0%,
+          rgba(255, 210, 60, 0.20) 28%,
+          rgba(255, 170, 20, 0.10) 44%,
+          rgba(0, 0, 0, 0.0) 70%
+        );
+        opacity: 0;
+        transform: scale(0.98);
+        filter: blur(10px);
+        transition: opacity 0.18s ease, transform 0.18s ease;
+        pointer-events: none;
+        z-index: 0;
       }
 
       .thumb img {
+        position: relative;
+        z-index: 1;
         width: 100%;
         height: 100%;
-        max-width: 92%;
-        max-height: 92%;
-        object-fit: contain;          /* <— enquadra (não corta) */
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain; /* não corta, não estica */
         object-position: center;
         display: block;
-        transform: translateY(2px) rotate(0deg);
-        filter:
-          drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
+
+        /* mais “cheio” sem distorcer */
+        transform: translateY(2px) scale(1.06) rotate(0deg);
+
+        /* base */
+        filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
         transition: transform 0.18s ease, filter 0.18s ease;
         will-change: transform, filter;
       }
@@ -319,37 +353,57 @@
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(to bottom, transparent 45%, rgba(0, 0, 0, 0.70));
+        background: linear-gradient(
+          to bottom,
+          transparent 45%,
+          rgba(0, 0, 0, 0.70)
+        );
         pointer-events: none;
+        z-index: 2;
       }
 
-      /* ====== Hover: brilho dourado neon + giro rápido sutil ====== */
+      /* ====== Hover: brilho neon dourado + giro rápido sutil ====== */
       @keyframes crestNeonSpin {
         0% {
-          transform: translateY(2px) scale(1) rotate(0deg);
+          transform: translateY(2px) scale(1.06) rotate(0deg);
           filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
         }
-        60% {
-          transform: translateY(0px) scale(1.03) rotate(6deg);
+        55% {
+          transform: translateY(0px) scale(1.10) rotate(7deg);
           filter:
+            brightness(1.28)
+            saturate(1.55)
+            contrast(1.05)
             drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55))
             drop-shadow(0 0 10px var(--gold-neon-a))
-            drop-shadow(0 0 22px var(--gold-neon-b));
+            drop-shadow(0 0 22px var(--gold-neon-b))
+            drop-shadow(0 0 34px var(--gold-neon-c));
         }
         100% {
-          transform: translateY(0px) scale(1.02) rotate(2deg);
+          transform: translateY(0px) scale(1.08) rotate(2deg);
           filter:
+            brightness(1.22)
+            saturate(1.45)
             drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55))
-            drop-shadow(0 0 8px rgba(255, 233, 127, 0.45))
-            drop-shadow(0 0 18px rgba(255, 215, 0, 0.28));
+            drop-shadow(0 0 9px rgba(255, 246, 160, 0.65))
+            drop-shadow(0 0 20px rgba(255, 220, 60, 0.42));
         }
       }
 
+      /* ativa glow de fundo e anima o brasão */
+      .flip-card:hover .thumb::before {
+        opacity: 1;
+        transform: scale(1.02);
+      }
       .flip-card:hover .thumb img {
         animation: crestNeonSpin 0.22s ease-out both; /* rápido mas sutil */
       }
 
       /* em touch/click, também aplica o efeito antes de virar */
+      .flip-card.is-flipped .thumb::before {
+        opacity: 1;
+        transform: scale(1.02);
+      }
       .flip-card.is-flipped .thumb img {
         animation: crestNeonSpin 0.22s ease-out both;
       }
@@ -540,7 +594,11 @@
       <!-- ===== (LEGACY) ranking antigo escondido pra não quebrar seu script.js ===== -->
       <div class="legacy-ranking">
         <div class="filtros-ranking" style="margin-bottom: 20px">
-          <input type="text" id="filtro-nome" placeholder="🔍 Buscar servidor..." />
+          <input
+            type="text"
+            id="filtro-nome"
+            placeholder="🔍 Buscar servidor..."
+          />
           <select id="filtro-versao">
             <option value="">Todas as versões</option>
           </select>
@@ -560,7 +618,9 @@
                 <tr>
                   <th onclick="ordenarPor('Servidor')">Servidor ⬍</th>
                   <th onclick="ordenarPor('Versão')">Versão ⬍</th>
-                  <th onclick="ordenarPor('Jogadores Online')">Jogadores Online ⬍</th>
+                  <th onclick="ordenarPor('Jogadores Online')">
+                    Jogadores Online ⬍
+                  </th>
                   <th>Origem</th>
                   <th>Observação</th>
                 </tr>
@@ -591,9 +651,12 @@
       <!-- ===== BLOCO 1 ===== -->
       <div class="home-block">
         <div class="block-head">
-          <h2 class="block-title">👑 Bloco 1 — Pior jogada do mês (3 jogadas)</h2>
+          <h2 class="block-title">
+            👑 Bloco 1 — Pior jogada do mês (3 jogadas)
+          </h2>
           <p class="block-desc">
-            Passe o mouse para virar o card e ver descrição, personagem, link da stream e o link do seu vídeo na jogada.
+            Passe o mouse para virar o card e ver descrição, personagem, link da
+            stream e o link do seu vídeo na jogada.
           </p>
         </div>
 
@@ -612,17 +675,40 @@
               </div>
 
               <div class="flip-face flip-back">
-                <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
+                <p class="back-desc">
+                  Descrição curta do que aconteceu nessa jogada.
+                </p>
 
                 <div class="meta">
-                  <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
-                  <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
-                  <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
+                  <div class="meta-row">
+                    <span class="meta-key">Personagem</span
+                    ><span>Nome do char</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Stream</span
+                    ><span
+                      ><a href="#" target="_blank" rel="noreferrer"
+                        >link da stream</a
+                      ></span
+                    >
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Seu vídeo</span
+                    ><span
+                      ><a href="#" target="_blank" rel="noreferrer"
+                        >link do seu vídeo</a
+                      ></span
+                    >
+                  </div>
                 </div>
 
                 <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer"
+                    >▶ Ver no YouTube</a
+                  >
+                  <button class="btn-mini" type="button" data-vote>
+                    🗳 Votar
+                  </button>
                 </div>
               </div>
             </div>
@@ -642,17 +728,40 @@
               </div>
 
               <div class="flip-face flip-back">
-                <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
+                <p class="back-desc">
+                  Descrição curta do que aconteceu nessa jogada.
+                </p>
 
                 <div class="meta">
-                  <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
-                  <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
-                  <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
+                  <div class="meta-row">
+                    <span class="meta-key">Personagem</span
+                    ><span>Nome do char</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Stream</span
+                    ><span
+                      ><a href="#" target="_blank" rel="noreferrer"
+                        >link da stream</a
+                      ></span
+                    >
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Seu vídeo</span
+                    ><span
+                      ><a href="#" target="_blank" rel="noreferrer"
+                        >link do seu vídeo</a
+                      ></span
+                    >
+                  </div>
                 </div>
 
                 <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer"
+                    >▶ Ver no YouTube</a
+                  >
+                  <button class="btn-mini" type="button" data-vote>
+                    🗳 Votar
+                  </button>
                 </div>
               </div>
             </div>
@@ -672,17 +781,40 @@
               </div>
 
               <div class="flip-face flip-back">
-                <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
+                <p class="back-desc">
+                  Descrição curta do que aconteceu nessa jogada.
+                </p>
 
                 <div class="meta">
-                  <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
-                  <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
-                  <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
+                  <div class="meta-row">
+                    <span class="meta-key">Personagem</span
+                    ><span>Nome do char</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Stream</span
+                    ><span
+                      ><a href="#" target="_blank" rel="noreferrer"
+                        >link da stream</a
+                      ></span
+                    >
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Seu vídeo</span
+                    ><span
+                      ><a href="#" target="_blank" rel="noreferrer"
+                        >link do seu vídeo</a
+                      ></span
+                    >
+                  </div>
                 </div>
 
                 <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer"
+                    >▶ Ver no YouTube</a
+                  >
+                  <button class="btn-mini" type="button" data-vote>
+                    🗳 Votar
+                  </button>
                 </div>
               </div>
             </div>
@@ -695,7 +827,8 @@
         <div class="block-head">
           <h2 class="block-title">⚔️ Bloco 2 — Duelo rápido (A vs B)</h2>
           <p class="block-desc">
-            Passe o mouse para virar. No verso, aparece a descrição e os botões de voto.
+            Passe o mouse para virar. No verso, aparece a descrição e os botões
+            de voto.
           </p>
         </div>
 
@@ -703,21 +836,33 @@
           <article class="flip-card" data-flip>
             <div class="flip-inner">
               <div class="flip-face face-front">
-                <div class="thumb"><img src="./brasao-novo.png" alt="Duelo 1" /></div>
+                <div class="thumb">
+                  <img src="./brasao-novo.png" alt="Duelo 1" />
+                </div>
                 <div class="front-bottom">
                   <p class="card-title">Duelo 1</p>
                   <p class="card-sub">A vs B — vire para votar</p>
                 </div>
               </div>
               <div class="flip-face flip-back">
-                <p class="back-desc">Descrição do duelo (por que esses dois estão aqui).</p>
+                <p class="back-desc">
+                  Descrição do duelo (por que esses dois estão aqui).
+                </p>
                 <div class="meta">
-                  <div class="meta-row"><span class="meta-key">A</span><span>Streamer A</span></div>
-                  <div class="meta-row"><span class="meta-key">B</span><span>Streamer B</span></div>
+                  <div class="meta-row">
+                    <span class="meta-key">A</span><span>Streamer A</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">B</span><span>Streamer B</span>
+                  </div>
                 </div>
                 <div class="back-actions">
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar A</button>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar B</button>
+                  <button class="btn-mini" type="button" data-vote>
+                    🗳 Votar A
+                  </button>
+                  <button class="btn-mini" type="button" data-vote>
+                    🗳 Votar B
+                  </button>
                 </div>
               </div>
             </div>
@@ -726,21 +871,33 @@
           <article class="flip-card" data-flip>
             <div class="flip-inner">
               <div class="flip-face face-front">
-                <div class="thumb"><img src="./brasao-novo.png" alt="Duelo 2" /></div>
+                <div class="thumb">
+                  <img src="./brasao-novo.png" alt="Duelo 2" />
+                </div>
                 <div class="front-bottom">
                   <p class="card-title">Duelo 2</p>
                   <p class="card-sub">A vs B — vire para votar</p>
                 </div>
               </div>
               <div class="flip-face flip-back">
-                <p class="back-desc">Descrição do duelo (por que esses dois estão aqui).</p>
+                <p class="back-desc">
+                  Descrição do duelo (por que esses dois estão aqui).
+                </p>
                 <div class="meta">
-                  <div class="meta-row"><span class="meta-key">A</span><span>Streamer A</span></div>
-                  <div class="meta-row"><span class="meta-key">B</span><span>Streamer B</span></div>
+                  <div class="meta-row">
+                    <span class="meta-key">A</span><span>Streamer A</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">B</span><span>Streamer B</span>
+                  </div>
                 </div>
                 <div class="back-actions">
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar A</button>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar B</button>
+                  <button class="btn-mini" type="button" data-vote>
+                    🗳 Votar A
+                  </button>
+                  <button class="btn-mini" type="button" data-vote>
+                    🗳 Votar B
+                  </button>
                 </div>
               </div>
             </div>
@@ -749,21 +906,33 @@
           <article class="flip-card" data-flip>
             <div class="flip-inner">
               <div class="flip-face face-front">
-                <div class="thumb"><img src="./brasao-novo.png" alt="Duelo 3" /></div>
+                <div class="thumb">
+                  <img src="./brasao-novo.png" alt="Duelo 3" />
+                </div>
                 <div class="front-bottom">
                   <p class="card-title">Duelo 3</p>
                   <p class="card-sub">A vs B — vire para votar</p>
                 </div>
               </div>
               <div class="flip-face flip-back">
-                <p class="back-desc">Descrição do duelo (por que esses dois estão aqui).</p>
+                <p class="back-desc">
+                  Descrição do duelo (por que esses dois estão aqui).
+                </p>
                 <div class="meta">
-                  <div class="meta-row"><span class="meta-key">A</span><span>Streamer A</span></div>
-                  <div class="meta-row"><span class="meta-key">B</span><span>Streamer B</span></div>
+                  <div class="meta-row">
+                    <span class="meta-key">A</span><span>Streamer A</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">B</span><span>Streamer B</span>
+                  </div>
                 </div>
                 <div class="back-actions">
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar A</button>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar B</button>
+                  <button class="btn-mini" type="button" data-vote>
+                    🗳 Votar A
+                  </button>
+                  <button class="btn-mini" type="button" data-vote>
+                    🗳 Votar B
+                  </button>
                 </div>
               </div>
             </div>
@@ -776,7 +945,8 @@
         <div class="block-head">
           <h2 class="block-title">🏰 Bloco 3 — Melhor OTServer da atualidade</h2>
           <p class="block-desc">
-            Vire o card para ver detalhes e votar. (Você pode trocar isso depois para os servidores reais.)
+            Vire o card para ver detalhes e votar. (Você pode trocar isso depois
+            para os servidores reais.)
           </p>
         </div>
 
@@ -784,7 +954,9 @@
           <article class="flip-card" data-flip>
             <div class="flip-inner">
               <div class="flip-face face-front">
-                <div class="thumb"><img src="./brasao-novo.png" alt="OT 1" /></div>
+                <div class="thumb">
+                  <img src="./brasao-novo.png" alt="OT 1" />
+                </div>
                 <div class="front-bottom">
                   <p class="card-title">OT 1</p>
                   <p class="card-sub">Vire para ver detalhes</p>
@@ -793,13 +965,26 @@
               <div class="flip-face flip-back">
                 <p class="back-desc">Mini descrição do servidor.</p>
                 <div class="meta">
-                  <div class="meta-row"><span class="meta-key">Nome</span><span>Nome do OT</span></div>
-                  <div class="meta-row"><span class="meta-key">Versão</span><span>Ex: 7.4</span></div>
-                  <div class="meta-row"><span class="meta-key">Site</span><span><a href="#" target="_blank" rel="noreferrer">link</a></span></div>
+                  <div class="meta-row">
+                    <span class="meta-key">Nome</span><span>Nome do OT</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Versão</span><span>Ex: 7.4</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Site</span
+                    ><span
+                      ><a href="#" target="_blank" rel="noreferrer">link</a></span
+                    >
+                  </div>
                 </div>
                 <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">🌐 Abrir</a>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer"
+                    >🌐 Abrir</a
+                  >
+                  <button class="btn-mini" type="button" data-vote>
+                    🗳 Votar
+                  </button>
                 </div>
               </div>
             </div>
@@ -808,7 +993,9 @@
           <article class="flip-card" data-flip>
             <div class="flip-inner">
               <div class="flip-face face-front">
-                <div class="thumb"><img src="./brasao-novo.png" alt="OT 2" /></div>
+                <div class="thumb">
+                  <img src="./brasao-novo.png" alt="OT 2" />
+                </div>
                 <div class="front-bottom">
                   <p class="card-title">OT 2</p>
                   <p class="card-sub">Vire para ver detalhes</p>
@@ -817,13 +1004,26 @@
               <div class="flip-face flip-back">
                 <p class="back-desc">Mini descrição do servidor.</p>
                 <div class="meta">
-                  <div class="meta-row"><span class="meta-key">Nome</span><span>Nome do OT</span></div>
-                  <div class="meta-row"><span class="meta-key">Versão</span><span>Ex: 8.6</span></div>
-                  <div class="meta-row"><span class="meta-key">Site</span><span><a href="#" target="_blank" rel="noreferrer">link</a></span></div>
+                  <div class="meta-row">
+                    <span class="meta-key">Nome</span><span>Nome do OT</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Versão</span><span>Ex: 8.6</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Site</span
+                    ><span
+                      ><a href="#" target="_blank" rel="noreferrer">link</a></span
+                    >
+                  </div>
                 </div>
                 <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">🌐 Abrir</a>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer"
+                    >🌐 Abrir</a
+                  >
+                  <button class="btn-mini" type="button" data-vote>
+                    🗳 Votar
+                  </button>
                 </div>
               </div>
             </div>
@@ -832,7 +1032,9 @@
           <article class="flip-card" data-flip>
             <div class="flip-inner">
               <div class="flip-face face-front">
-                <div class="thumb"><img src="./brasao-novo.png" alt="OT 3" /></div>
+                <div class="thumb">
+                  <img src="./brasao-novo.png" alt="OT 3" />
+                </div>
                 <div class="front-bottom">
                   <p class="card-title">OT 3</p>
                   <p class="card-sub">Vire para ver detalhes</p>
@@ -841,13 +1043,26 @@
               <div class="flip-face flip-back">
                 <p class="back-desc">Mini descrição do servidor.</p>
                 <div class="meta">
-                  <div class="meta-row"><span class="meta-key">Nome</span><span>Nome do OT</span></div>
-                  <div class="meta-row"><span class="meta-key">Versão</span><span>Ex: 10.x</span></div>
-                  <div class="meta-row"><span class="meta-key">Site</span><span><a href="#" target="_blank" rel="noreferrer">link</a></span></div>
+                  <div class="meta-row">
+                    <span class="meta-key">Nome</span><span>Nome do OT</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Versão</span><span>Ex: 10.x</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Site</span
+                    ><span
+                      ><a href="#" target="_blank" rel="noreferrer">link</a></span
+                    >
+                  </div>
                 </div>
                 <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">🌐 Abrir</a>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer"
+                    >🌐 Abrir</a
+                  >
+                  <button class="btn-mini" type="button" data-vote>
+                    🗳 Votar
+                  </button>
                 </div>
               </div>
             </div>
@@ -876,7 +1091,9 @@
       const cards = document.querySelectorAll("[data-flip]");
       cards.forEach((card) => {
         card.addEventListener("click", (e) => {
-          const interactive = e.target.closest("a,button,input,select,textarea,label");
+          const interactive = e.target.closest(
+            "a,button,input,select,textarea,label"
+          );
           if (interactive) return;
           card.classList.toggle("is-flipped");
         });
