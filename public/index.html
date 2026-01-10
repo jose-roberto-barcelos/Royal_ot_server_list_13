@@ -5,7 +5,6 @@
     <title>Royal OtServlist</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Google Font -->
     <link
       href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap"
       rel="stylesheet"
@@ -119,26 +118,37 @@
         right: 0.5rem;
       }
 
-      /* ======= NOVO (somente estilo do miolo do index) ======= */
+      /* ======= AQUI É O QUE INTERESSA (miolo do index) ======= */
       :root {
         --gold: #ffe97f;
-        --gold2: #ffd36a;
+        --goldEdge: rgba(255, 204, 102, 0.38);
+        --goldEdgeStrong: rgba(255, 204, 102, 0.52);
+
         --ink: rgba(240, 237, 210, 0.92);
         --muted: rgba(240, 237, 210, 0.78);
 
-        --panelA: rgba(0, 0, 0, 0.55);
-        --panelB: rgba(0, 0, 0, 0.35);
+        --panelA: rgba(0, 0, 0, 0.58);
+        --panelB: rgba(0, 0, 0, 0.40);
 
-        --line: rgba(255, 204, 102, 0.30);
-        --lineStrong: rgba(255, 204, 102, 0.42);
-
-        /* neon dourado (NO BRASÃO) */
-        --gold-neon-1: rgba(255, 238, 120, 0.95);
-        --gold-neon-2: rgba(255, 210, 0, 0.65);
-        --gold-neon-3: rgba(255, 170, 0, 0.25);
+        /* NEON DOURADO (igual “top”) */
+        --neon1: rgba(255, 239, 140, 0.95);
+        --neon2: rgba(255, 215, 0, 0.75);
+        --neon3: rgba(255, 160, 0, 0.30);
       }
 
-      /* ===== Top infos (MESMO ASPECTO "Pacotes e Preços") ===== */
+      /* ===== “ASPECTO PACOTES” ===== */
+      .pacote-chip {
+        background-color: rgba(0, 0, 0, 0.6);
+        border: 1px solid rgba(255, 204, 102, 0.3);
+        border-radius: 10px;
+        color: #ffe97f;
+        text-shadow: 0 0 4px #000, 0 0 6px #ffd700;
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
+        font-family: "Cinzel", serif;
+        letter-spacing: 0.3px;
+      }
+
+      /* pills do topo */
       .home-info {
         display: flex;
         flex-wrap: wrap;
@@ -148,25 +158,15 @@
         margin: 0 auto 14px auto;
         max-width: 980px;
       }
-
       .home-pill {
-        background: linear-gradient(to bottom, rgba(0,0,0,0.62), rgba(0,0,0,0.42));
-        border: 1px solid var(--line);
-        border-radius: 10px;
         padding: 10px 14px;
-        color: var(--gold);
-        text-shadow: 0 0 4px #000;
-        font-family: "Cinzel", serif;
-        font-size: 0.95rem;
-        letter-spacing: 0.3px;
-        box-shadow:
-          0 10px 18px rgba(0, 0, 0, 0.35),
-          inset 0 1px 0 rgba(255, 233, 127, 0.10);
         display: inline-flex;
         gap: 8px;
         align-items: center;
       }
+      .home-pill.pacote-chip { font-size: 0.95rem; }
 
+      /* botões do topo */
       .home-actions {
         display: flex;
         gap: 10px;
@@ -177,48 +177,36 @@
       .home-actions a { text-decoration: none; }
 
       .btn-royal {
+        padding: 10px 16px; /* sem exagero */
+        cursor: pointer;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        padding: 10px 16px; /* NÃO gigante */
-        border-radius: 10px;
-        border: 1px solid var(--lineStrong);
-        background: linear-gradient(to bottom, rgba(0,0,0,0.62), rgba(0,0,0,0.42));
-        color: var(--gold);
-        font-family: "Cinzel", serif;
-        font-size: 0.95rem;
-        text-shadow: 0 0 4px #000;
-        box-shadow:
-          0 10px 18px rgba(0, 0, 0, 0.35),
-          inset 0 1px 0 rgba(255, 233, 127, 0.10);
-        cursor: pointer;
         transition: transform 0.15s ease, filter 0.15s ease;
       }
       .btn-royal:hover {
         transform: translateY(-1px);
         filter: brightness(1.06);
       }
+      .btn-royal.pacote-chip { font-size: 0.95rem; }
 
-      /* ===== Blocos ===== */
+      /* BLOCO (placa) */
       .home-block {
         margin: 16px auto 0 auto;
         max-width: 1100px;
         border-radius: 14px;
-        border: 1px solid var(--line);
+        border: 1px solid rgba(255, 204, 102, 0.26);
         background: linear-gradient(to bottom, var(--panelA), var(--panelB));
         box-shadow: 0 18px 36px rgba(0, 0, 0, 0.45);
         padding: 16px 14px 14px;
       }
 
-      .block-head {
-        text-align: center;
-        margin-bottom: 12px;
-      }
+      .block-head { text-align: center; margin-bottom: 12px; }
       .block-title {
         margin: 0;
         font-family: "Cinzel", serif;
-        font-size: 1.05rem; /* sem exagero */
+        font-size: 1.05rem; /* sem aumentar */
         color: var(--gold);
         text-shadow: 0 0 4px #000, 0 0 6px rgba(255, 215, 0, 0.18);
         letter-spacing: 0.4px;
@@ -242,32 +230,26 @@
         .cards-grid { grid-template-columns: 1fr; }
       }
 
-      /* ===== FLIP CARD (MAIS DEVAGAR + MAIS SUTIL) ===== */
-      .flip-card {
-        perspective: 1100px;
-        height: 360px;
-      }
-      @media (max-width: 980px) {
-        .flip-card { height: 380px; }
-      }
+      /* FLIP */
+      .flip-card { perspective: 1100px; height: 360px; }
+      @media (max-width: 980px) { .flip-card { height: 380px; } }
 
       .flip-inner {
         width: 100%;
         height: 100%;
         position: relative;
         transform-style: preserve-3d;
-        transition: transform 0.78s cubic-bezier(0.2, 0.8, 0.2, 1); /* MAIS DEVAGAR */
+        transition: transform 0.90s cubic-bezier(0.2, 0.8, 0.2, 1); /* mais devagar */
         transition-delay: 0s;
       }
 
       /* brilho primeiro, flip depois */
       .flip-card:hover .flip-inner {
-        transition-delay: 0.26s; /* dá tempo do brilho do brasão */
+        transition-delay: 0.32s;
         transform: rotateY(180deg);
       }
-
       .flip-card.is-flipped .flip-inner {
-        transition-delay: 0.26s;
+        transition-delay: 0.32s;
         transform: rotateY(180deg);
       }
 
@@ -281,20 +263,28 @@
         background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35));
         box-shadow: 0 14px 26px rgba(0, 0, 0, 0.45);
       }
-
       .face-front { display: flex; flex-direction: column; }
 
-      /* ===== Thumb: SEM “brilho atrás” ===== */
+      /* ===== THUMB: ZERO “BRILHO DE FUNDO” =====
+         - sem background chamativo
+         - sem pseudo-elementos
+         - sem box-shadow no container
+      */
       .thumb {
         height: 62%;
         position: relative;
-        background: rgba(0, 0, 0, 0.25); /* neutro, sem glow */
+        background: transparent !important;  /* mata qualquer fundo */
+        box-shadow: none !important;         /* mata glow no container */
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 18px 18px 22px;
+        isolation: isolate;
       }
+      .thumb::before,
+      .thumb::after { display: none !important; } /* mata overlays */
 
+      /* IMAGEM DO BRASÃO NO CARD (FORÇADO) */
       .thumb img {
         width: 100%;
         height: 100%;
@@ -303,47 +293,24 @@
         object-fit: contain;
         object-position: center;
         display: block;
+
         transform: translateY(2px) rotate(0deg);
-        filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
+        transition: transform 0.34s ease, filter 0.34s ease;
+
+        /* base: sombra normal (sem neon) */
+        filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55)) !important;
         will-change: transform, filter;
       }
 
-      /* só um degradê escuro pra leitura, sem brilho */
-      .thumb::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to bottom, transparent 45%, rgba(0, 0, 0, 0.70));
-        pointer-events: none;
-      }
-
-      /* ===== Brilho NEON DOURADO NO BRASÃO (não no fundo) ===== */
-      @keyframes crestNeonSpin {
-        0% {
-          transform: translateY(2px) scale(1) rotate(0deg);
-          filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
-        }
-        60% {
-          transform: translateY(0px) scale(1.03) rotate(4deg);
-          filter:
-            drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55))
-            drop-shadow(0 0 12px var(--gold-neon-1))
-            drop-shadow(0 0 26px var(--gold-neon-2))
-            drop-shadow(0 0 42px var(--gold-neon-3));
-        }
-        100% {
-          transform: translateY(0px) scale(1.02) rotate(1.5deg);
-          filter:
-            drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55))
-            drop-shadow(0 0 10px rgba(255, 238, 120, 0.70))
-            drop-shadow(0 0 22px rgba(255, 210, 0, 0.45));
-        }
-      }
-
-      /* animação um pouco mais longa (pra ver) */
+      /* BRILHO NEON DOURADO NO BRASÃO (FORÇADO) */
       .flip-card:hover .thumb img,
       .flip-card.is-flipped .thumb img {
-        animation: crestNeonSpin 0.34s ease-out both;
+        transform: translateY(0px) rotate(3deg) scale(1.03);
+        filter:
+          drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55))
+          drop-shadow(0 0 10px var(--neon1))
+          drop-shadow(0 0 22px var(--neon2))
+          drop-shadow(0 0 42px var(--neon3)) !important;
       }
 
       .front-bottom {
@@ -377,7 +344,6 @@
         flex-direction: column;
         gap: 10px;
       }
-
       .back-desc {
         margin: 0;
         color: var(--muted);
@@ -387,10 +353,7 @@
         text-align: center;
       }
 
-      .meta {
-        display: grid;
-        gap: 8px;
-      }
+      .meta { display: grid; gap: 8px; }
       .meta-row {
         display: grid;
         grid-template-columns: 110px 1fr;
@@ -415,32 +378,24 @@
         flex-wrap: wrap;
       }
 
+      /* botões do verso no mesmo “pacote” */
       .btn-mini {
+        padding: 9px 12px;
+        cursor: pointer;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        padding: 9px 12px;
-        border-radius: 10px;
-        border: 1px solid var(--lineStrong);
-        background: linear-gradient(to bottom, rgba(0,0,0,0.62), rgba(0,0,0,0.42));
-        color: var(--gold);
-        font-family: "Cinzel", serif;
-        font-size: 0.9rem;
-        text-shadow: 0 0 4px #000;
-        cursor: pointer;
         transition: transform 0.15s ease, filter 0.15s ease;
         text-decoration: none;
-        box-shadow:
-          0 10px 18px rgba(0, 0, 0, 0.30),
-          inset 0 1px 0 rgba(255, 233, 127, 0.08);
       }
       .btn-mini:hover {
         transform: translateY(-1px);
         filter: brightness(1.06);
       }
+      .btn-mini.pacote-chip { font-size: 0.9rem; }
 
-      /* ===== manter ranking escondido (pra não quebrar script.js) ===== */
+      /* manter ranking escondido */
       .legacy-ranking { display: none; }
     </style>
   </head>
@@ -451,7 +406,7 @@
       <source src="./Neblina.webm" type="video/webm" />
     </video>
 
-    <!-- ===== SEU HEADER ORIGINAL (mantido 100%) ===== -->
+    <!-- HEADER (seu original) -->
     <header class="site-header">
       <button id="menu-toggle" aria-label="Abrir menu">MENU ☰</button>
 
@@ -511,7 +466,7 @@
       </div>
     </header>
 
-    <!-- ===== SEU MENU LATERAL ORIGINAL (mantido) ===== -->
+    <!-- MENU LATERAL (seu original) -->
     <aside id="side-menu" aria-hidden="true">
       <button id="menu-close" aria-label="Fechar menu">✕</button>
       <ul>
@@ -525,14 +480,10 @@
     </aside>
 
     <section class="ranking aba ativa espaco-pos-header" id="inicio">
-      <!-- ===== (LEGACY) ranking antigo escondido pra não quebrar seu script.js ===== -->
+      <!-- ranking antigo escondido -->
       <div class="legacy-ranking">
         <div class="filtros-ranking" style="margin-bottom: 20px">
-          <input
-            type="text"
-            id="filtro-nome"
-            placeholder="🔍 Buscar servidor..."
-          />
+          <input type="text" id="filtro-nome" placeholder="🔍 Buscar servidor..." />
           <select id="filtro-versao">
             <option value="">Todas as versões</option>
           </select>
@@ -552,9 +503,7 @@
                 <tr>
                   <th onclick="ordenarPor('Servidor')">Servidor ⬍</th>
                   <th onclick="ordenarPor('Versão')">Versão ⬍</th>
-                  <th onclick="ordenarPor('Jogadores Online')">
-                    Jogadores Online ⬍
-                  </th>
+                  <th onclick="ordenarPor('Jogadores Online')">Jogadores Online ⬍</th>
                   <th>Origem</th>
                   <th>Observação</th>
                 </tr>
@@ -570,19 +519,19 @@
         </div>
       </div>
 
-      <!-- ===== NOVO INDEX ===== -->
+      <!-- TOPO NO “ASPECTO PACOTE” -->
       <div class="home-info">
-        <div class="home-pill">🏆 <span>Votação mensal</span></div>
-        <div class="home-pill">⏳ <span>1 voto a cada 6 horas</span></div>
-        <div class="home-pill">🔒 <span>Logado vale 2 pontos</span></div>
+        <div class="home-pill pacote-chip">🏆 <span>Votação mensal</span></div>
+        <div class="home-pill pacote-chip">⏳ <span>1 voto a cada 6 horas</span></div>
+        <div class="home-pill pacote-chip">🔒 <span>Logado vale 2 pontos</span></div>
       </div>
 
       <div class="home-actions">
-        <a class="btn-royal" href="/envie-clips.html">📩 Envie Clips</a>
-        <a class="btn-royal" href="top.html">📺 Top Live</a>
+        <a class="btn-royal pacote-chip" href="/envie-clips.html">📩 Envie Clips</a>
+        <a class="btn-royal pacote-chip" href="top.html">📺 Top Live</a>
       </div>
 
-      <!-- ===== BLOCO 1 ===== -->
+      <!-- BLOCO 1 -->
       <div class="home-block">
         <div class="block-head">
           <h2 class="block-title">👑 Bloco 1 — Pior jogada do mês (3 jogadas)</h2>
@@ -607,16 +556,14 @@
 
               <div class="flip-face flip-back">
                 <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
-
                 <div class="meta">
                   <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
                   <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
                   <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
                 </div>
-
                 <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                  <a class="btn-mini pacote-chip" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
+                  <button class="btn-mini pacote-chip" type="button" data-vote>🗳 Votar</button>
                 </div>
               </div>
             </div>
@@ -637,16 +584,14 @@
 
               <div class="flip-face flip-back">
                 <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
-
                 <div class="meta">
                   <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
                   <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
                   <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
                 </div>
-
                 <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                  <a class="btn-mini pacote-chip" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
+                  <button class="btn-mini pacote-chip" type="button" data-vote>🗳 Votar</button>
                 </div>
               </div>
             </div>
@@ -667,16 +612,14 @@
 
               <div class="flip-face flip-back">
                 <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
-
                 <div class="meta">
                   <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
                   <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
                   <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
                 </div>
-
                 <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                  <a class="btn-mini pacote-chip" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
+                  <button class="btn-mini pacote-chip" type="button" data-vote>🗳 Votar</button>
                 </div>
               </div>
             </div>
@@ -684,7 +627,7 @@
         </div>
       </div>
 
-      <!-- ===== BLOCO 2 ===== -->
+      <!-- BLOCO 2 -->
       <div class="home-block">
         <div class="block-head">
           <h2 class="block-title">⚔️ Bloco 2 — Duelo rápido (A vs B)</h2>
@@ -710,8 +653,8 @@
                   <div class="meta-row"><span class="meta-key">B</span><span>Streamer B</span></div>
                 </div>
                 <div class="back-actions">
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar A</button>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar B</button>
+                  <button class="btn-mini pacote-chip" type="button" data-vote>🗳 Votar A</button>
+                  <button class="btn-mini pacote-chip" type="button" data-vote>🗳 Votar B</button>
                 </div>
               </div>
             </div>
@@ -733,8 +676,8 @@
                   <div class="meta-row"><span class="meta-key">B</span><span>Streamer B</span></div>
                 </div>
                 <div class="back-actions">
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar A</button>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar B</button>
+                  <button class="btn-mini pacote-chip" type="button" data-vote>🗳 Votar A</button>
+                  <button class="btn-mini pacote-chip" type="button" data-vote>🗳 Votar B</button>
                 </div>
               </div>
             </div>
@@ -756,8 +699,8 @@
                   <div class="meta-row"><span class="meta-key">B</span><span>Streamer B</span></div>
                 </div>
                 <div class="back-actions">
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar A</button>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar B</button>
+                  <button class="btn-mini pacote-chip" type="button" data-vote>🗳 Votar A</button>
+                  <button class="btn-mini pacote-chip" type="button" data-vote>🗳 Votar B</button>
                 </div>
               </div>
             </div>
@@ -765,7 +708,7 @@
         </div>
       </div>
 
-      <!-- ===== BLOCO 3 ===== -->
+      <!-- BLOCO 3 -->
       <div class="home-block">
         <div class="block-head">
           <h2 class="block-title">🏰 Bloco 3 — Melhor OTServer da atualidade</h2>
@@ -792,8 +735,8 @@
                   <div class="meta-row"><span class="meta-key">Site</span><span><a href="#" target="_blank" rel="noreferrer">link</a></span></div>
                 </div>
                 <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">🌐 Abrir</a>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                  <a class="btn-mini pacote-chip" href="#" target="_blank" rel="noreferrer">🌐 Abrir</a>
+                  <button class="btn-mini pacote-chip" type="button" data-vote>🗳 Votar</button>
                 </div>
               </div>
             </div>
@@ -816,8 +759,8 @@
                   <div class="meta-row"><span class="meta-key">Site</span><span><a href="#" target="_blank" rel="noreferrer">link</a></span></div>
                 </div>
                 <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">🌐 Abrir</a>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                  <a class="btn-mini pacote-chip" href="#" target="_blank" rel="noreferrer">🌐 Abrir</a>
+                  <button class="btn-mini pacote-chip" type="button" data-vote>🗳 Votar</button>
                 </div>
               </div>
             </div>
@@ -840,8 +783,8 @@
                   <div class="meta-row"><span class="meta-key">Site</span><span><a href="#" target="_blank" rel="noreferrer">link</a></span></div>
                 </div>
                 <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">🌐 Abrir</a>
-                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                  <a class="btn-mini pacote-chip" href="#" target="_blank" rel="noreferrer">🌐 Abrir</a>
+                  <button class="btn-mini pacote-chip" type="button" data-vote>🗳 Votar</button>
                 </div>
               </div>
             </div>
@@ -853,7 +796,7 @@
     <script type="module" src="./script.js"></script>
 
     <script>
-      // ===== menu lateral (mantido) =====
+      // menu lateral
       const menuToggle = document.getElementById("menu-toggle");
       const menuClose = document.getElementById("menu-close");
       const sideMenu = document.getElementById("side-menu");
@@ -866,7 +809,7 @@
         sideMenu.setAttribute("aria-hidden", "true");
       });
 
-      // ===== flip no toque (mobile) =====
+      // flip no toque (mobile)
       const cards = document.querySelectorAll("[data-flip]");
       cards.forEach((card) => {
         card.addEventListener("click", (e) => {
@@ -881,7 +824,7 @@
         if (!inside) cards.forEach((c) => c.classList.remove("is-flipped"));
       });
 
-      // ===== placeholder voto (sem backend ainda) =====
+      // placeholder voto
       document.querySelectorAll("[data-vote]").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           e.preventDefault();
