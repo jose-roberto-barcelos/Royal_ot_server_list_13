@@ -119,40 +119,26 @@
         right: 0.5rem;
       }
 
-      /* =========================================================
-         A PARTIR DAQUI: SÓ VISUAL (NÃO MEXE EM TAMANHO/FONT-SIZE)
-         ========================================================= */
+      /* ======= NOVO (somente estilo do miolo do index) ======= */
       :root {
-        --pac-gold: #ffe97f;
-        --pac-border: rgba(255, 204, 102, 0.34);
-        --pac-border-strong: rgba(255, 204, 102, 0.46);
-        --pac-bg-a: rgba(0, 0, 0, 0.60);
-        --pac-bg-b: rgba(0, 0, 0, 0.42);
-        --pac-text: rgba(240, 237, 210, 0.92);
-        --pac-muted: rgba(240, 237, 210, 0.78);
-        --pac-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
+        --gold: #ffe97f;
+        --gold2: #ffd36a;
+        --ink: rgba(240, 237, 210, 0.92);
+        --muted: rgba(240, 237, 210, 0.78);
+
+        --panelA: rgba(0, 0, 0, 0.55);
+        --panelB: rgba(0, 0, 0, 0.35);
+
+        --line: rgba(255, 204, 102, 0.30);
+        --lineStrong: rgba(255, 204, 102, 0.42);
+
+        /* neon dourado (NO BRASÃO) */
+        --gold-neon-1: rgba(255, 238, 120, 0.95);
+        --gold-neon-2: rgba(255, 210, 0, 0.65);
+        --gold-neon-3: rgba(255, 170, 0, 0.25);
       }
 
-      /* “Pacotes look” genérico */
-      .pacotes-look {
-        background: linear-gradient(to bottom, var(--pac-bg-a), var(--pac-bg-b));
-        border: 1px solid var(--pac-border-strong);
-        border-radius: 12px;
-        box-shadow: var(--pac-shadow);
-        color: var(--pac-gold);
-        text-shadow: 0 0 4px rgba(0, 0, 0, 0.9);
-        position: relative;
-      }
-      .pacotes-look::after {
-        content: "";
-        position: absolute;
-        inset: 1px;
-        border-radius: 11px;
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        pointer-events: none;
-      }
-
-      /* topo */
+      /* ===== Top infos (MESMO ASPECTO "Pacotes e Preços") ===== */
       .home-info {
         display: flex;
         flex-wrap: wrap;
@@ -162,12 +148,25 @@
         margin: 0 auto 14px auto;
         max-width: 980px;
       }
+
       .home-pill {
+        background: linear-gradient(to bottom, rgba(0,0,0,0.62), rgba(0,0,0,0.42));
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 10px 14px;
+        color: var(--gold);
+        text-shadow: 0 0 4px #000;
+        font-family: "Cinzel", serif;
+        font-size: 0.95rem;
+        letter-spacing: 0.3px;
+        box-shadow:
+          0 10px 18px rgba(0, 0, 0, 0.35),
+          inset 0 1px 0 rgba(255, 233, 127, 0.10);
         display: inline-flex;
+        gap: 8px;
         align-items: center;
-        justify-content: center;
-        gap: 10px;
       }
+
       .home-actions {
         display: flex;
         gap: 10px;
@@ -175,100 +174,273 @@
         flex-wrap: wrap;
         margin: 8px 0 18px 0;
       }
-      .home-actions a {
-        text-decoration: none;
+      .home-actions a { text-decoration: none; }
+
+      .btn-royal {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 16px; /* NÃO gigante */
+        border-radius: 10px;
+        border: 1px solid var(--lineStrong);
+        background: linear-gradient(to bottom, rgba(0,0,0,0.62), rgba(0,0,0,0.42));
+        color: var(--gold);
+        font-family: "Cinzel", serif;
+        font-size: 0.95rem;
+        text-shadow: 0 0 4px #000;
+        box-shadow:
+          0 10px 18px rgba(0, 0, 0, 0.35),
+          inset 0 1px 0 rgba(255, 233, 127, 0.10);
+        cursor: pointer;
+        transition: transform 0.15s ease, filter 0.15s ease;
+      }
+      .btn-royal:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.06);
       }
 
-      /* aplica o aspecto Pacotes sem mexer em tamanho */
-      .home-pill,
-      .btn-royal,
+      /* ===== Blocos ===== */
       .home-block {
-        background: linear-gradient(to bottom, var(--pac-bg-a), var(--pac-bg-b)) !important;
-        border: 1px solid var(--pac-border-strong) !important;
-        box-shadow: var(--pac-shadow) !important;
-        color: var(--pac-gold) !important;
-        text-shadow: 0 0 4px rgba(0, 0, 0, 0.9) !important;
-      }
-
-      /* bloco “placa” (só visual) */
-      .home-block {
-        position: relative;
+        margin: 16px auto 0 auto;
+        max-width: 1100px;
         border-radius: 14px;
-      }
-      .home-block::after {
-        content: "";
-        position: absolute;
-        inset: 8px;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 204, 102, 0.14);
-        pointer-events: none;
+        border: 1px solid var(--line);
+        background: linear-gradient(to bottom, var(--panelA), var(--panelB));
+        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.45);
+        padding: 16px 14px 14px;
       }
 
-      .block-title,
-      .card-title,
-      .meta-key {
-        color: var(--pac-gold) !important;
-        text-shadow: 0 0 4px rgba(0, 0, 0, 0.9) !important;
+      .block-head {
+        text-align: center;
+        margin-bottom: 12px;
       }
-      .block-desc,
-      .card-sub,
-      .back-desc,
-      .meta-row {
-        color: var(--pac-text) !important;
-        text-shadow: 0 0 4px rgba(0, 0, 0, 0.9) !important;
+      .block-title {
+        margin: 0;
+        font-family: "Cinzel", serif;
+        font-size: 1.05rem; /* sem exagero */
+        color: var(--gold);
+        text-shadow: 0 0 4px #000, 0 0 6px rgba(255, 215, 0, 0.18);
+        letter-spacing: 0.4px;
       }
-
-      /* cards: frente e verso com o mesmo “pacotes look” (só visual) */
-      .flip-face {
-        background: linear-gradient(to bottom, var(--pac-bg-a), var(--pac-bg-b)) !important;
-        border: 1px solid rgba(255, 204, 102, 0.22) !important;
-        box-shadow: 0 14px 26px rgba(0, 0, 0, 0.45) !important;
-        position: relative;
-      }
-      .flip-face::after {
-        content: "";
-        position: absolute;
-        inset: 8px;
-        border-radius: 12px;
-        border: 1px solid rgba(255, 204, 102, 0.12);
-        pointer-events: none;
+      .block-desc {
+        margin: 8px auto 0 auto;
+        max-width: 920px;
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.35;
+        text-shadow: 0 0 4px #000;
       }
 
-      /* meta row só visual */
-      .meta-row {
-        background: rgba(0, 0, 0, 0.35) !important;
-        border: 1px solid rgba(255, 204, 102, 0.16) !important;
+      /* 3 cards simétricos */
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+      }
+      @media (max-width: 980px) {
+        .cards-grid { grid-template-columns: 1fr; }
       }
 
-      /* botões mini só visual */
-      .btn-mini {
-        background: linear-gradient(to bottom, rgba(0,0,0,0.62), rgba(0,0,0,0.42)) !important;
-        border: 1px solid var(--pac-border-strong) !important;
-        color: var(--pac-gold) !important;
-        text-shadow: 0 0 4px rgba(0, 0, 0, 0.9) !important;
+      /* ===== FLIP CARD (MAIS DEVAGAR + MAIS SUTIL) ===== */
+      .flip-card {
+        perspective: 1100px;
+        height: 360px;
+      }
+      @media (max-width: 980px) {
+        .flip-card { height: 380px; }
       }
 
-      /* flip mais devagar/sutil (só timing, não muda tamanho) */
       .flip-inner {
-        transition: transform 0.85s cubic-bezier(0.22, 0.8, 0.2, 1) !important;
-      }
-      .flip-card:hover .flip-inner,
-      .flip-card.is-flipped .flip-inner {
-        transition-delay: 0.32s !important;
+        width: 100%;
+        height: 100%;
+        position: relative;
+        transform-style: preserve-3d;
+        transition: transform 0.78s cubic-bezier(0.2, 0.8, 0.2, 1); /* MAIS DEVAGAR */
+        transition-delay: 0s;
       }
 
-      /* brilho do brasão: SOMENTE NO BRASÃO (sem halo atrás) */
-      @keyframes crestBrightSpinNoHalo {
-        0% { transform: translateY(2px) scale(1.06) rotate(0deg); filter: none; }
-        55% { transform: translateY(0px) scale(1.12) rotate(7deg); filter: brightness(1.55) saturate(1.85) contrast(1.10); }
-        100% { transform: translateY(0px) scale(1.09) rotate(2deg); filter: brightness(1.40) saturate(1.60) contrast(1.08); }
+      /* brilho primeiro, flip depois */
+      .flip-card:hover .flip-inner {
+        transition-delay: 0.26s; /* dá tempo do brilho do brasão */
+        transform: rotateY(180deg);
       }
+
+      .flip-card.is-flipped .flip-inner {
+        transition-delay: 0.26s;
+        transform: rotateY(180deg);
+      }
+
+      .flip-face {
+        position: absolute;
+        inset: 0;
+        border-radius: 14px;
+        overflow: hidden;
+        backface-visibility: hidden;
+        border: 1px solid rgba(255, 204, 102, 0.20);
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35));
+        box-shadow: 0 14px 26px rgba(0, 0, 0, 0.45);
+      }
+
+      .face-front { display: flex; flex-direction: column; }
+
+      /* ===== Thumb: SEM “brilho atrás” ===== */
+      .thumb {
+        height: 62%;
+        position: relative;
+        background: rgba(0, 0, 0, 0.25); /* neutro, sem glow */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 18px 18px 22px;
+      }
+
+      .thumb img {
+        width: 100%;
+        height: 100%;
+        max-width: 92%;
+        max-height: 92%;
+        object-fit: contain;
+        object-position: center;
+        display: block;
+        transform: translateY(2px) rotate(0deg);
+        filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
+        will-change: transform, filter;
+      }
+
+      /* só um degradê escuro pra leitura, sem brilho */
+      .thumb::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, transparent 45%, rgba(0, 0, 0, 0.70));
+        pointer-events: none;
+      }
+
+      /* ===== Brilho NEON DOURADO NO BRASÃO (não no fundo) ===== */
+      @keyframes crestNeonSpin {
+        0% {
+          transform: translateY(2px) scale(1) rotate(0deg);
+          filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
+        }
+        60% {
+          transform: translateY(0px) scale(1.03) rotate(4deg);
+          filter:
+            drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 0 12px var(--gold-neon-1))
+            drop-shadow(0 0 26px var(--gold-neon-2))
+            drop-shadow(0 0 42px var(--gold-neon-3));
+        }
+        100% {
+          transform: translateY(0px) scale(1.02) rotate(1.5deg);
+          filter:
+            drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 0 10px rgba(255, 238, 120, 0.70))
+            drop-shadow(0 0 22px rgba(255, 210, 0, 0.45));
+        }
+      }
+
+      /* animação um pouco mais longa (pra ver) */
       .flip-card:hover .thumb img,
       .flip-card.is-flipped .thumb img {
-        animation: crestBrightSpinNoHalo 0.22s ease-out both;
+        animation: crestNeonSpin 0.34s ease-out both;
       }
 
-      /* manter ranking antigo escondido (pra não quebrar script.js) */
+      .front-bottom {
+        height: 38%;
+        padding: 12px 12px 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 10px;
+        text-align: center;
+      }
+      .card-title {
+        margin: 0;
+        color: var(--gold);
+        font-size: 0.98rem;
+        text-shadow: 0 0 4px #000;
+        letter-spacing: 0.3px;
+        font-family: "Cinzel", serif;
+      }
+      .card-sub {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+        text-shadow: 0 0 4px #000;
+      }
+
+      .flip-back {
+        transform: rotateY(180deg);
+        padding: 12px 12px 14px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .back-desc {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.35;
+        text-shadow: 0 0 4px #000;
+        text-align: center;
+      }
+
+      .meta {
+        display: grid;
+        gap: 8px;
+      }
+      .meta-row {
+        display: grid;
+        grid-template-columns: 110px 1fr;
+        gap: 8px;
+        align-items: center;
+        padding: 9px 10px;
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.35);
+        border: 1px solid rgba(255, 204, 102, 0.16);
+        color: var(--ink);
+        font-size: 0.9rem;
+        text-shadow: 0 0 4px #000;
+      }
+      .meta-key { color: var(--gold); }
+      .meta a { color: var(--ink); text-decoration: underline; }
+
+      .back-actions {
+        margin-top: auto;
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .btn-mini {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 9px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--lineStrong);
+        background: linear-gradient(to bottom, rgba(0,0,0,0.62), rgba(0,0,0,0.42));
+        color: var(--gold);
+        font-family: "Cinzel", serif;
+        font-size: 0.9rem;
+        text-shadow: 0 0 4px #000;
+        cursor: pointer;
+        transition: transform 0.15s ease, filter 0.15s ease;
+        text-decoration: none;
+        box-shadow:
+          0 10px 18px rgba(0, 0, 0, 0.30),
+          inset 0 1px 0 rgba(255, 233, 127, 0.08);
+      }
+      .btn-mini:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.06);
+      }
+
+      /* ===== manter ranking escondido (pra não quebrar script.js) ===== */
       .legacy-ranking { display: none; }
     </style>
   </head>
@@ -279,7 +451,7 @@
       <source src="./Neblina.webm" type="video/webm" />
     </video>
 
-    <!-- HEADER ORIGINAL (mantido 100%) -->
+    <!-- ===== SEU HEADER ORIGINAL (mantido 100%) ===== -->
     <header class="site-header">
       <button id="menu-toggle" aria-label="Abrir menu">MENU ☰</button>
 
@@ -339,7 +511,7 @@
       </div>
     </header>
 
-    <!-- MENU LATERAL ORIGINAL (mantido) -->
+    <!-- ===== SEU MENU LATERAL ORIGINAL (mantido) ===== -->
     <aside id="side-menu" aria-hidden="true">
       <button id="menu-close" aria-label="Fechar menu">✕</button>
       <ul>
@@ -353,22 +525,64 @@
     </aside>
 
     <section class="ranking aba ativa espaco-pos-header" id="inicio">
-      <!-- ranking antigo escondido -->
-      <div class="legacy-ranking"></div>
+      <!-- ===== (LEGACY) ranking antigo escondido pra não quebrar seu script.js ===== -->
+      <div class="legacy-ranking">
+        <div class="filtros-ranking" style="margin-bottom: 20px">
+          <input
+            type="text"
+            id="filtro-nome"
+            placeholder="🔍 Buscar servidor..."
+          />
+          <select id="filtro-versao">
+            <option value="">Todas as versões</option>
+          </select>
+          <select id="filtro-origem">
+            <option value="">Todas as origens</option>
+            <option value="Socket">Socket</option>
+            <option value="HTML">HTML</option>
+            <option value="Erro">Erro</option>
+          </select>
+        </div>
 
-      <!-- topo -->
+        <div class="table-container">
+          <h2 class="titulo-dentro">Tibia OtServers Ranking</h2>
+          <div id="servidores-wrapper" class="collapsed">
+            <table>
+              <thead>
+                <tr>
+                  <th onclick="ordenarPor('Servidor')">Servidor ⬍</th>
+                  <th onclick="ordenarPor('Versão')">Versão ⬍</th>
+                  <th onclick="ordenarPor('Jogadores Online')">
+                    Jogadores Online ⬍
+                  </th>
+                  <th>Origem</th>
+                  <th>Observação</th>
+                </tr>
+              </thead>
+              <tbody id="tabela-servidores"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="table-controls outside">
+          <button id="toggle-table" type="button">Expandir</button>
+          <a class="btn-contraste" href="/envie-clips.html">Envie Clips</a>
+        </div>
+      </div>
+
+      <!-- ===== NOVO INDEX ===== -->
       <div class="home-info">
-        <div class="home-pill pacotes-look">🏆 <span>Votação mensal</span></div>
-        <div class="home-pill pacotes-look">⏳ <span>1 voto a cada 6 horas</span></div>
-        <div class="home-pill pacotes-look">🔒 <span>Logado vale 2 pontos</span></div>
+        <div class="home-pill">🏆 <span>Votação mensal</span></div>
+        <div class="home-pill">⏳ <span>1 voto a cada 6 horas</span></div>
+        <div class="home-pill">🔒 <span>Logado vale 2 pontos</span></div>
       </div>
 
       <div class="home-actions">
-        <a class="btn-royal pacotes-look" href="/envie-clips.html">📩 Envie Clips</a>
-        <a class="btn-royal pacotes-look" href="top.html">📺 Top Live</a>
+        <a class="btn-royal" href="/envie-clips.html">📩 Envie Clips</a>
+        <a class="btn-royal" href="top.html">📺 Top Live</a>
       </div>
 
-      <!-- BLOCO 1 -->
+      <!-- ===== BLOCO 1 ===== -->
       <div class="home-block">
         <div class="block-head">
           <h2 class="block-title">👑 Bloco 1 — Pior jogada do mês (3 jogadas)</h2>
@@ -470,7 +684,7 @@
         </div>
       </div>
 
-      <!-- BLOCO 2 -->
+      <!-- ===== BLOCO 2 ===== -->
       <div class="home-block">
         <div class="block-head">
           <h2 class="block-title">⚔️ Bloco 2 — Duelo rápido (A vs B)</h2>
@@ -551,7 +765,7 @@
         </div>
       </div>
 
-      <!-- BLOCO 3 -->
+      <!-- ===== BLOCO 3 ===== -->
       <div class="home-block">
         <div class="block-head">
           <h2 class="block-title">🏰 Bloco 3 — Melhor OTServer da atualidade</h2>
@@ -639,7 +853,7 @@
     <script type="module" src="./script.js"></script>
 
     <script>
-      // menu lateral
+      // ===== menu lateral (mantido) =====
       const menuToggle = document.getElementById("menu-toggle");
       const menuClose = document.getElementById("menu-close");
       const sideMenu = document.getElementById("side-menu");
@@ -652,7 +866,7 @@
         sideMenu.setAttribute("aria-hidden", "true");
       });
 
-      // flip no toque (mobile)
+      // ===== flip no toque (mobile) =====
       const cards = document.querySelectorAll("[data-flip]");
       cards.forEach((card) => {
         card.addEventListener("click", (e) => {
@@ -667,7 +881,7 @@
         if (!inside) cards.forEach((c) => c.classList.remove("is-flipped"));
       });
 
-      // placeholder voto
+      // ===== placeholder voto (sem backend ainda) =====
       document.querySelectorAll("[data-vote]").forEach((btn) => {
         btn.addEventListener("click", (e) => {
           e.preventDefault();
