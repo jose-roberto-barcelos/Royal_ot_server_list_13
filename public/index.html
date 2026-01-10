@@ -13,22 +13,36 @@
     <link rel="stylesheet" href="styles.css" />
 
     <style>
-      /* =========================
-         FIX DO “APARECE E SOME”
-         =========================
-         O script antigo do site (ranking) mexe em .aba e pode esconder a página.
-         Aqui a gente força o conteúdo do index a ficar sempre visível.
-      */
-      body .aba {
-        display: block !important;
-        opacity: 1 !important;
-        visibility: visible !important;
-        pointer-events: auto !important;
+      /* ======= SEU CSS INLINE ORIGINAL (mantido) ======= */
+      #servidores-wrapper.collapsed {
+        max-height: 400px;
+        overflow-y: auto;
+      }
+      #servidores-wrapper thead th {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: linear-gradient(to bottom, #1f2002dc, #0b0b0b);
       }
 
-      /* =========================
-         MENU LATERAL (igual ao seu)
-         ========================= */
+      .tibia-oficial-banner {
+        background-color: rgba(0, 0, 0, 0.6);
+        padding: 8px 16px;
+        border: 1px solid rgba(255, 204, 102, 0.3);
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-family: "Cinzel", serif;
+        color: #ffe97f;
+        text-shadow: 0 0 4px #000, 0 0 6px #ffd700;
+        font-size: 0.95rem;
+        margin: 0 auto 8px auto;
+        width: fit-content;
+        max-width: 100%;
+      }
+
       #menu-toggle {
         background: none;
         border: none;
@@ -105,158 +119,134 @@
         right: 0.5rem;
       }
 
-      /* =========================
-         TOPO (pílulas + botões)
-         ========================= */
-      .home-wrap {
-        width: min(1220px, calc(100% - 28px));
-        margin: 0 auto;
+      /* ======= NOVO: apenas o "miolo" do index, sem mexer no seu estilo base ======= */
+      :root {
+        --gold: #ffe97f;
+        --gold2: #ffd36a;
+        --ink: rgba(240, 237, 210, 0.92);
+        --muted: rgba(240, 237, 210, 0.78);
+        --panelA: rgba(0, 0, 0, 0.55);
+        --panelB: rgba(0, 0, 0, 0.35);
+        --line: rgba(255, 204, 102, 0.26);
+        --lineStrong: rgba(255, 204, 102, 0.38);
+
+        /* neon dourado */
+        --gold-neon-a: rgba(255, 233, 127, 0.65);
+        --gold-neon-b: rgba(255, 215, 0, 0.35);
       }
 
-      .top-pills {
+      /* barra superior com infos (segue seu padrão, não inventa cores) */
+      .home-info {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 14px;
         flex-wrap: wrap;
-        margin-top: 18px;
-      }
-
-      /* estilo “pacotes e preços” (metal/dourado) */
-      .pill-gold {
-        display: inline-flex;
-        align-items: center;
         gap: 10px;
-        padding: 12px 18px;
-        border-radius: 12px;
-        border: 2px solid rgba(255, 204, 102, 0.55);
-        background: rgba(0, 0, 0, 0.35);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35),
-          inset 0 0 0 1px rgba(255, 226, 151, 0.12);
-        color: #ffe6a6;
+        justify-content: center;
+        align-items: center;
+        margin: 0 auto 14px auto;
+        max-width: 980px;
+      }
+      .home-pill {
+        background: rgba(0, 0, 0, 0.55);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 10px 12px;
+        color: var(--gold);
+        text-shadow: 0 0 4px #000;
         font-family: "Cinzel", serif;
+        font-size: 0.95rem;
         letter-spacing: 0.3px;
-        text-shadow: 0 0 10px rgba(255, 215, 0, 0.25),
-          0 0 18px rgba(255, 200, 60, 0.18);
-        user-select: none;
-        line-height: 1;
-      }
-      .pill-gold .ico {
-        filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.25));
-      }
-
-      .top-actions {
-        display: flex;
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
+        display: inline-flex;
+        gap: 8px;
         align-items: center;
-        justify-content: center;
-        gap: 16px;
-        flex-wrap: wrap;
-        margin-top: 14px;
       }
 
-      .btn-gold {
-        appearance: none;
-        border: 2px solid rgba(255, 225, 160, 0.75);
-        background: linear-gradient(
-          180deg,
-          #ffefb8 0%,
-          #e7be58 35%,
-          #c28a1e 100%
-        );
-        color: #2a1c00;
-        font-family: "Cinzel", serif;
-        letter-spacing: 0.6px;
-        padding: 12px 18px;
-        border-radius: 14px;
-        cursor: pointer;
+      .home-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 8px 0 18px 0;
+      }
+      .home-actions a {
         text-decoration: none;
+      }
+
+      .btn-royal {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.38),
-          inset 0 1px 0 rgba(255, 255, 255, 0.6);
-        transition: transform 0.14s ease, filter 0.14s ease,
-          box-shadow 0.14s ease;
-        font-size: 1.05rem;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 1px solid var(--lineStrong);
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.38));
+        color: var(--gold);
+        font-family: "Cinzel", serif;
+        font-size: 0.95rem;
+        text-shadow: 0 0 4px #000;
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
+        cursor: pointer;
+        transition: transform 0.15s ease, filter 0.15s ease;
       }
-      .btn-gold:hover {
+      .btn-royal:hover {
         transform: translateY(-1px);
-        filter: brightness(1.08) saturate(1.06);
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45),
-          0 0 26px rgba(255, 214, 80, 0.18),
-          inset 0 1px 0 rgba(255, 255, 255, 0.65);
-      }
-      .btn-gold:active {
-        transform: translateY(0px);
-        filter: brightness(0.98);
+        filter: brightness(1.06);
       }
 
-      /* =========================
-         BLOCOS
-         ========================= */
-      .block-panel {
-        margin: 22px auto 26px auto;
-        border-radius: 18px;
-        border: 2px solid rgba(255, 204, 102, 0.35);
-        background: rgba(0, 0, 0, 0.34);
-        box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45),
-          inset 0 0 0 1px rgba(255, 226, 151, 0.1);
-        padding: 18px 16px 18px 16px;
-        backdrop-filter: blur(2px);
+      /* BLOCO no estilo "placa" */
+      .home-block {
+        margin: 16px auto 0 auto;
+        max-width: 1100px;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: linear-gradient(to bottom, var(--panelA), var(--panelB));
+        box-shadow: 0 18px 36px rgba(0, 0, 0, 0.45);
+        padding: 16px 14px 14px;
       }
 
       .block-head {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        margin-bottom: 10px;
+        text-align: center;
+        margin-bottom: 12px;
       }
-
       .block-title {
-        font-family: "Cinzel", serif;
-        font-size: 1.22rem; /* não exagerado */
-        color: #ffe6a6;
-        letter-spacing: 0.6px;
-        text-shadow: 0 0 10px rgba(255, 215, 0, 0.22),
-          0 0 16px rgba(255, 200, 60, 0.18);
-        text-align: center;
         margin: 0;
-      }
-
-      .block-sub {
-        text-align: center;
-        margin: 0 auto 14px auto;
-        width: min(900px, 100%);
-        color: rgba(245, 238, 210, 0.92);
         font-family: "Cinzel", serif;
-        font-size: 0.98rem;
-        text-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+        font-size: 1.05rem; /* NÃO exagera */
+        color: var(--gold);
+        text-shadow: 0 0 4px #000, 0 0 6px rgba(255, 215, 0, 0.18);
+        letter-spacing: 0.4px;
+      }
+      .block-desc {
+        margin: 8px auto 0 auto;
+        max-width: 920px;
+        color: var(--muted);
+        font-size: 0.95rem;
+        line-height: 1.35;
+        text-shadow: 0 0 4px #000;
       }
 
+      /* 3 cards simétricos */
       .cards-grid {
         display: grid;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 18px;
+        gap: 14px;
       }
-
       @media (max-width: 980px) {
-        .cards-grid {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
-      }
-      @media (max-width: 640px) {
         .cards-grid {
           grid-template-columns: 1fr;
         }
       }
 
-      /* =========================
-         CARD FLIP (hover gira / sai desgira)
-         ========================= */
+      /* FLIP CARD */
       .flip-card {
+        perspective: 1100px;
         height: 360px;
-        perspective: 1200px;
+      }
+      @media (max-width: 980px) {
+        .flip-card {
+          height: 380px;
+        }
       }
 
       .flip-inner {
@@ -264,159 +254,204 @@
         height: 100%;
         position: relative;
         transform-style: preserve-3d;
-        transition: transform 0.55s ease;
+        transition: transform 0.55s cubic-bezier(0.2, 0.8, 0.2, 1);
+        transition-delay: 0s; /* padrão */
       }
 
-      .flip-card:hover .flip-inner,
-      .flip-card:focus-within .flip-inner {
+      /* >>> SEQUÊNCIA: brilha/gira rápido, DEPOIS o card vira */
+      .flip-card:hover .flip-inner {
+        transition-delay: 0.14s; /* dá tempo do brilho+giro da imagem acontecer primeiro */
+        transform: rotateY(180deg);
+      }
+      .flip-card:not(:hover) .flip-inner {
+        transition-delay: 0s;
+      }
+
+      /* toque no mobile */
+      .flip-card.is-flipped .flip-inner {
+        transition-delay: 0.14s;
         transform: rotateY(180deg);
       }
 
       .flip-face {
         position: absolute;
         inset: 0;
-        border-radius: 18px;
-        border: 2px solid rgba(255, 204, 102, 0.32);
-        background: rgba(0, 0, 0, 0.42);
-        box-shadow: 0 16px 35px rgba(0, 0, 0, 0.45),
-          inset 0 0 0 1px rgba(255, 226, 151, 0.08);
+        border-radius: 14px;
         overflow: hidden;
         backface-visibility: hidden;
+        border: 1px solid rgba(255, 204, 102, 0.20);
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35));
+        box-shadow: 0 14px 26px rgba(0, 0, 0, 0.45);
       }
 
-      .flip-front {
+      .face-front {
         display: flex;
         flex-direction: column;
       }
 
-      .card-image {
-        flex: 1;
-        background: radial-gradient(
-            circle at 30% 20%,
-            rgba(255, 215, 0, 0.12),
-            transparent 55%
-          ),
-          linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.65));
+      /* ====== THUMB: enquadrar melhor o brasão (sem cortar/esticar) ====== */
+      .thumb {
+        height: 62%;
         position: relative;
-      }
-
-      /* Placeholder visual (troque depois por imagem via background-image) */
-      .card-image::after {
-        content: "IMAGEM DO CARD";
-        position: absolute;
-        left: 14px;
-        bottom: 12px;
-        font-family: "Cinzel", serif;
-        color: rgba(255, 235, 180, 0.85);
-        letter-spacing: 0.6px;
-        padding: 8px 12px;
-        border-radius: 12px;
-        border: 2px solid rgba(255, 204, 102, 0.25);
         background: rgba(0, 0, 0, 0.35);
-        text-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
-      }
-
-      .card-front-bottom {
-        padding: 12px 14px 14px 14px;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
+        padding: 18px 18px 22px;
+      }
+
+      .thumb img {
+        width: 100%;
+        height: 100%;
+        max-width: 92%;
+        max-height: 92%;
+        object-fit: contain;          /* <— enquadra (não corta) */
+        object-position: center;
+        display: block;
+        transform: translateY(2px) rotate(0deg);
+        filter:
+          drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
+        transition: transform 0.18s ease, filter 0.18s ease;
+        will-change: transform, filter;
+      }
+
+      .thumb::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to bottom, transparent 45%, rgba(0, 0, 0, 0.70));
+        pointer-events: none;
+      }
+
+      /* ====== Hover: brilho dourado neon + giro rápido sutil ====== */
+      @keyframes crestNeonSpin {
+        0% {
+          transform: translateY(2px) scale(1) rotate(0deg);
+          filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55));
+        }
+        60% {
+          transform: translateY(0px) scale(1.03) rotate(6deg);
+          filter:
+            drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 0 10px var(--gold-neon-a))
+            drop-shadow(0 0 22px var(--gold-neon-b));
+        }
+        100% {
+          transform: translateY(0px) scale(1.02) rotate(2deg);
+          filter:
+            drop-shadow(0 14px 22px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 0 8px rgba(255, 233, 127, 0.45))
+            drop-shadow(0 0 18px rgba(255, 215, 0, 0.28));
+        }
+      }
+
+      .flip-card:hover .thumb img {
+        animation: crestNeonSpin 0.22s ease-out both; /* rápido mas sutil */
+      }
+
+      /* em touch/click, também aplica o efeito antes de virar */
+      .flip-card.is-flipped .thumb img {
+        animation: crestNeonSpin 0.22s ease-out both;
+      }
+
+      .front-bottom {
+        height: 38%;
+        padding: 12px 12px 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         gap: 10px;
+        text-align: center;
       }
-
-      .card-tag {
-        font-family: "Cinzel", serif;
-        color: rgba(245, 238, 210, 0.92);
-        font-size: 0.95rem;
-        text-shadow: 0 0 10px rgba(0, 0, 0, 0.55);
+      .card-title {
+        margin: 0;
+        color: var(--gold);
+        font-size: 0.98rem;
+        text-shadow: 0 0 4px #000;
+        letter-spacing: 0.3px;
       }
-
-      .badge-plus {
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
-        border: 2px solid rgba(255, 204, 102, 0.45);
-        background: rgba(0, 0, 0, 0.35);
-        color: #ffe6a6;
-        display: grid;
-        place-items: center;
-        font-size: 20px;
-        text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
-        box-shadow: inset 0 0 0 1px rgba(255, 226, 151, 0.1);
+      .card-sub {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+        text-shadow: 0 0 4px #000;
       }
 
       .flip-back {
         transform: rotateY(180deg);
-        padding: 16px 16px 16px 16px;
+        padding: 12px 12px 14px;
         display: flex;
         flex-direction: column;
         gap: 10px;
       }
 
-      .back-title {
-        font-family: "Cinzel", serif;
-        color: #ffe6a6;
-        text-shadow: 0 0 10px rgba(255, 215, 0, 0.25);
-        font-size: 1.05rem;
-        margin: 0 0 4px 0;
-        letter-spacing: 0.6px;
-      }
-
-      .back-line {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        font-family: "Cinzel", serif;
-        color: rgba(245, 238, 210, 0.92);
+      .back-desc {
+        margin: 0;
+        color: var(--muted);
         font-size: 0.92rem;
+        line-height: 1.35;
+        text-shadow: 0 0 4px #000;
+        text-align: center;
       }
 
-      .back-line span {
-        color: rgba(255, 230, 166, 0.95);
+      .meta {
+        display: grid;
+        gap: 8px;
+      }
+      .meta-row {
+        display: grid;
+        grid-template-columns: 110px 1fr;
+        gap: 8px;
+        align-items: center;
+        padding: 9px 10px;
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.35);
+        border: 1px solid rgba(255, 204, 102, 0.16);
+        color: var(--ink);
+        font-size: 0.9rem;
+        text-shadow: 0 0 4px #000;
+      }
+      .meta-key {
+        color: var(--gold);
+      }
+      .meta a {
+        color: var(--ink);
+        text-decoration: underline;
       }
 
       .back-actions {
         margin-top: auto;
         display: flex;
-        gap: 10px;
+        gap: 8px;
+        justify-content: center;
         flex-wrap: wrap;
       }
 
       .btn-mini {
-        font-family: "Cinzel", serif;
-        border-radius: 12px;
-        border: 2px solid rgba(255, 225, 160, 0.7);
-        background: linear-gradient(
-          180deg,
-          #ffefb8 0%,
-          #e7be58 35%,
-          #c28a1e 100%
-        );
-        color: #2a1c00;
-        padding: 10px 12px;
-        cursor: pointer;
-        text-decoration: none;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 8px;
-        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.35),
-          inset 0 1px 0 rgba(255, 255, 255, 0.55);
-        transition: transform 0.14s ease, filter 0.14s ease;
-        font-size: 0.98rem;
-        min-width: 150px;
+        padding: 9px 12px;
+        border-radius: 10px;
+        border: 1px solid var(--lineStrong);
+        background: rgba(0, 0, 0, 0.45);
+        color: var(--gold);
+        font-family: "Cinzel", serif;
+        font-size: 0.9rem;
+        text-shadow: 0 0 4px #000;
+        cursor: pointer;
+        transition: transform 0.15s ease, filter 0.15s ease;
+        text-decoration: none;
       }
       .btn-mini:hover {
         transform: translateY(-1px);
-        filter: brightness(1.06) saturate(1.06);
+        filter: brightness(1.06);
       }
 
-      .btn-mini.secondary {
-        background: rgba(0, 0, 0, 0.35);
-        color: #ffe6a6;
-        border-color: rgba(255, 204, 102, 0.5);
-        box-shadow: inset 0 0 0 1px rgba(255, 226, 151, 0.1),
-          0 10px 22px rgba(0, 0, 0, 0.35);
+      /* ===== manter ranking escondido (pra não quebrar script.js) ===== */
+      .legacy-ranking {
+        display: none;
       }
     </style>
   </head>
@@ -427,7 +462,7 @@
       <source src="./Neblina.webm" type="video/webm" />
     </video>
 
-    <!-- HEADER ORIGINAL (mantido) -->
+    <!-- ===== SEU HEADER ORIGINAL (mantido 100%) ===== -->
     <header class="site-header">
       <button id="menu-toggle" aria-label="Abrir menu">MENU ☰</button>
 
@@ -487,6 +522,7 @@
       </div>
     </header>
 
+    <!-- ===== SEU MENU LATERAL ORIGINAL (mantido) ===== -->
     <aside id="side-menu" aria-hidden="true">
       <button id="menu-close" aria-label="Fechar menu">✕</button>
       <ul>
@@ -499,268 +535,331 @@
       </ul>
     </aside>
 
-    <!-- CONTEÚDO -->
+    <!-- ===== SUA SECTION ORIGINAL (mantida), só que com miolo novo ===== -->
     <section class="ranking aba ativa espaco-pos-header" id="inicio">
-      <div class="home-wrap">
-        <div class="top-pills">
-          <div class="pill-gold"><span class="ico">🏆</span> VOTAÇÃO MENSAL</div>
-          <div class="pill-gold"><span class="ico">⏳</span> 1 VOTO A CADA 6 HORAS</div>
-          <div class="pill-gold"><span class="ico">🔒</span> LOGADO VALE 2 PONTOS</div>
+      <!-- ===== (LEGACY) ranking antigo escondido pra não quebrar seu script.js ===== -->
+      <div class="legacy-ranking">
+        <div class="filtros-ranking" style="margin-bottom: 20px">
+          <input type="text" id="filtro-nome" placeholder="🔍 Buscar servidor..." />
+          <select id="filtro-versao">
+            <option value="">Todas as versões</option>
+          </select>
+          <select id="filtro-origem">
+            <option value="">Todas as origens</option>
+            <option value="Socket">Socket</option>
+            <option value="HTML">HTML</option>
+            <option value="Erro">Erro</option>
+          </select>
         </div>
 
-        <div class="top-actions">
-          <a class="btn-gold" href="/envie-clips.html">📩 Envie Clips</a>
-          <a class="btn-gold" href="top.html">📺 Top Live</a>
-        </div>
-
-        <!-- BLOCO 1 -->
-        <div class="block-panel" style="margin-top: 18px">
-          <div class="block-head">
-            <h2 class="block-title">👑 BLOCO 1 — PIOR JOGADA DO MÊS (3 JOGADAS)</h2>
+        <div class="table-container">
+          <h2 class="titulo-dentro">Tibia OtServers Ranking</h2>
+          <div id="servidores-wrapper" class="collapsed">
+            <table>
+              <thead>
+                <tr>
+                  <th onclick="ordenarPor('Servidor')">Servidor ⬍</th>
+                  <th onclick="ordenarPor('Versão')">Versão ⬍</th>
+                  <th onclick="ordenarPor('Jogadores Online')">Jogadores Online ⬍</th>
+                  <th>Origem</th>
+                  <th>Observação</th>
+                </tr>
+              </thead>
+              <tbody id="tabela-servidores"></tbody>
+            </table>
           </div>
-          <p class="block-sub">
-            Passe o mouse para virar o card e ver <b>personagem</b>, <b>stream</b> e o
-            <b>link do seu vídeo</b>. Ao tirar o mouse, ele volta.
+        </div>
+
+        <div class="table-controls outside">
+          <button id="toggle-table" type="button">Expandir</button>
+          <a class="btn-contraste" href="/envie-clips.html">Envie Clips</a>
+        </div>
+      </div>
+
+      <!-- ===== NOVO INDEX (os 3 blocos) ===== -->
+      <div class="home-info">
+        <div class="home-pill">🏆 <span>Votação mensal</span></div>
+        <div class="home-pill">⏳ <span>1 voto a cada 6 horas</span></div>
+        <div class="home-pill">🔒 <span>Logado vale 2 pontos</span></div>
+      </div>
+
+      <div class="home-actions">
+        <a class="btn-royal" href="/envie-clips.html">📩 Envie Clips</a>
+        <a class="btn-royal" href="top.html">📺 Top Live</a>
+      </div>
+
+      <!-- ===== BLOCO 1 ===== -->
+      <div class="home-block">
+        <div class="block-head">
+          <h2 class="block-title">👑 Bloco 1 — Pior jogada do mês (3 jogadas)</h2>
+          <p class="block-desc">
+            Passe o mouse para virar o card e ver descrição, personagem, link da stream e o link do seu vídeo na jogada.
           </p>
-
-          <div class="cards-grid">
-            <!-- Card 1 -->
-            <div class="flip-card" tabindex="0">
-              <div class="flip-inner">
-                <div class="flip-face flip-front">
-                  <div class="card-image"></div>
-                  <div class="card-front-bottom">
-                    <div class="card-tag">Jogada 1</div>
-                    <div class="badge-plus">＋</div>
-                  </div>
-                </div>
-                <div class="flip-face flip-back">
-                  <h3 class="back-title">Jogada 1</h3>
-                  <div class="back-line"><span>Personagem:</span> Ex: Knight Zika</div>
-                  <div class="back-line"><span>Stream:</span> https://twitch.tv/...</div>
-                  <div class="back-line"><span>Vídeo (ponto exato):</span> https://youtube.com/...&t=123</div>
-                  <div class="back-actions">
-                    <a class="btn-mini" href="#" onclick="return false;">▶ Ver jogada</a>
-                    <button class="btn-mini secondary" type="button">🗳️ Votar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Card 2 -->
-            <div class="flip-card" tabindex="0">
-              <div class="flip-inner">
-                <div class="flip-face flip-front">
-                  <div class="card-image"></div>
-                  <div class="card-front-bottom">
-                    <div class="card-tag">Jogada 2</div>
-                    <div class="badge-plus">＋</div>
-                  </div>
-                </div>
-                <div class="flip-face flip-back">
-                  <h3 class="back-title">Jogada 2</h3>
-                  <div class="back-line"><span>Personagem:</span> Ex: Sorcerer X</div>
-                  <div class="back-line"><span>Stream:</span> https://twitch.tv/...</div>
-                  <div class="back-line"><span>Vídeo (ponto exato):</span> https://youtube.com/...&t=123</div>
-                  <div class="back-actions">
-                    <a class="btn-mini" href="#" onclick="return false;">▶ Ver jogada</a>
-                    <button class="btn-mini secondary" type="button">🗳️ Votar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Card 3 -->
-            <div class="flip-card" tabindex="0">
-              <div class="flip-inner">
-                <div class="flip-face flip-front">
-                  <div class="card-image"></div>
-                  <div class="card-front-bottom">
-                    <div class="card-tag">Jogada 3</div>
-                    <div class="badge-plus">＋</div>
-                  </div>
-                </div>
-                <div class="flip-face flip-back">
-                  <h3 class="back-title">Jogada 3</h3>
-                  <div class="back-line"><span>Personagem:</span> Ex: Paladin Y</div>
-                  <div class="back-line"><span>Stream:</span> https://twitch.tv/...</div>
-                  <div class="back-line"><span>Vídeo (ponto exato):</span> https://youtube.com/...&t=123</div>
-                  <div class="back-actions">
-                    <a class="btn-mini" href="#" onclick="return false;">▶ Ver jogada</a>
-                    <button class="btn-mini secondary" type="button">🗳️ Votar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
-        <!-- BLOCO 2 -->
-        <div class="block-panel">
-          <div class="block-head">
-            <h2 class="block-title">⚔️ BLOCO 2 — DUELO RÁPIDO (3 OPÇÕES)</h2>
-          </div>
-          <p class="block-sub">
-            Aqui você coloca <b>3 duelos</b> do mês (ex.: A vs B / C vs D / E vs F). Cada card vira e mostra a descrição.
+        <div class="cards-grid">
+          <!-- Card 1 -->
+          <article class="flip-card" data-flip>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb">
+                  <img src="./brasao-novo.png" alt="Jogada 1" />
+                </div>
+                <div class="front-bottom">
+                  <p class="card-title">Jogada 1</p>
+                  <p class="card-sub">Passe o mouse para virar</p>
+                </div>
+              </div>
+
+              <div class="flip-face flip-back">
+                <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
+
+                <div class="meta">
+                  <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
+                  <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
+                  <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
+                </div>
+
+                <div class="back-actions">
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 2 -->
+          <article class="flip-card" data-flip>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb">
+                  <img src="./brasao-novo.png" alt="Jogada 2" />
+                </div>
+                <div class="front-bottom">
+                  <p class="card-title">Jogada 2</p>
+                  <p class="card-sub">Passe o mouse para virar</p>
+                </div>
+              </div>
+
+              <div class="flip-face flip-back">
+                <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
+
+                <div class="meta">
+                  <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
+                  <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
+                  <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
+                </div>
+
+                <div class="back-actions">
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3 -->
+          <article class="flip-card" data-flip>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb">
+                  <img src="./brasao-novo.png" alt="Jogada 3" />
+                </div>
+                <div class="front-bottom">
+                  <p class="card-title">Jogada 3</p>
+                  <p class="card-sub">Passe o mouse para virar</p>
+                </div>
+              </div>
+
+              <div class="flip-face flip-back">
+                <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
+
+                <div class="meta">
+                  <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
+                  <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
+                  <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
+                </div>
+
+                <div class="back-actions">
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- ===== BLOCO 2 ===== -->
+      <div class="home-block">
+        <div class="block-head">
+          <h2 class="block-title">⚔️ Bloco 2 — Duelo rápido (A vs B)</h2>
+          <p class="block-desc">
+            Passe o mouse para virar. No verso, aparece a descrição e os botões de voto.
           </p>
-
-          <div class="cards-grid">
-            <div class="flip-card" tabindex="0">
-              <div class="flip-inner">
-                <div class="flip-face flip-front">
-                  <div class="card-image"></div>
-                  <div class="card-front-bottom">
-                    <div class="card-tag">Duelo 1</div>
-                    <div class="badge-plus">＋</div>
-                  </div>
-                </div>
-                <div class="flip-face flip-back">
-                  <h3 class="back-title">Duelo 1</h3>
-                  <div class="back-line"><span>Criador A:</span> Nome + link</div>
-                  <div class="back-line"><span>Criador B:</span> Nome + link</div>
-                  <div class="back-line"><span>Descrição:</span> Mini descrição do duelo.</div>
-                  <div class="back-actions">
-                    <button class="btn-mini secondary" type="button">🗳️ Votar A</button>
-                    <button class="btn-mini secondary" type="button">🗳️ Votar B</button>
-                    <a class="btn-mini" href="#" onclick="return false;">🔗 Abrir canal</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="flip-card" tabindex="0">
-              <div class="flip-inner">
-                <div class="flip-face flip-front">
-                  <div class="card-image"></div>
-                  <div class="card-front-bottom">
-                    <div class="card-tag">Duelo 2</div>
-                    <div class="badge-plus">＋</div>
-                  </div>
-                </div>
-                <div class="flip-face flip-back">
-                  <h3 class="back-title">Duelo 2</h3>
-                  <div class="back-line"><span>Criador A:</span> Nome + link</div>
-                  <div class="back-line"><span>Criador B:</span> Nome + link</div>
-                  <div class="back-line"><span>Descrição:</span> Mini descrição do duelo.</div>
-                  <div class="back-actions">
-                    <button class="btn-mini secondary" type="button">🗳️ Votar A</button>
-                    <button class="btn-mini secondary" type="button">🗳️ Votar B</button>
-                    <a class="btn-mini" href="#" onclick="return false;">🔗 Abrir canal</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="flip-card" tabindex="0">
-              <div class="flip-inner">
-                <div class="flip-face flip-front">
-                  <div class="card-image"></div>
-                  <div class="card-front-bottom">
-                    <div class="card-tag">Duelo 3</div>
-                    <div class="badge-plus">＋</div>
-                  </div>
-                </div>
-                <div class="flip-face flip-back">
-                  <h3 class="back-title">Duelo 3</h3>
-                  <div class="back-line"><span>Criador A:</span> Nome + link</div>
-                  <div class="back-line"><span>Criador B:</span> Nome + link</div>
-                  <div class="back-line"><span>Descrição:</span> Mini descrição do duelo.</div>
-                  <div class="back-actions">
-                    <button class="btn-mini secondary" type="button">🗳️ Votar A</button>
-                    <button class="btn-mini secondary" type="button">🗳️ Votar B</button>
-                    <a class="btn-mini" href="#" onclick="return false;">🔗 Abrir canal</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
-        <!-- BLOCO 3 -->
-        <div class="block-panel" style="margin-bottom: 30px">
-          <div class="block-head">
-            <h2 class="block-title">🏰 BLOCO 3 — MELHOR OTSERVER DA ATUALIDADE (3 OPÇÕES)</h2>
-          </div>
-          <p class="block-sub">
-            3 candidatos do mês. Cada card vira e mostra descrição e botões.
+        <div class="cards-grid">
+          <article class="flip-card" data-flip>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb"><img src="./brasao-novo.png" alt="Duelo 1" /></div>
+                <div class="front-bottom">
+                  <p class="card-title">Duelo 1</p>
+                  <p class="card-sub">A vs B — vire para votar</p>
+                </div>
+              </div>
+              <div class="flip-face flip-back">
+                <p class="back-desc">Descrição do duelo (por que esses dois estão aqui).</p>
+                <div class="meta">
+                  <div class="meta-row"><span class="meta-key">A</span><span>Streamer A</span></div>
+                  <div class="meta-row"><span class="meta-key">B</span><span>Streamer B</span></div>
+                </div>
+                <div class="back-actions">
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar A</button>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar B</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="flip-card" data-flip>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb"><img src="./brasao-novo.png" alt="Duelo 2" /></div>
+                <div class="front-bottom">
+                  <p class="card-title">Duelo 2</p>
+                  <p class="card-sub">A vs B — vire para votar</p>
+                </div>
+              </div>
+              <div class="flip-face flip-back">
+                <p class="back-desc">Descrição do duelo (por que esses dois estão aqui).</p>
+                <div class="meta">
+                  <div class="meta-row"><span class="meta-key">A</span><span>Streamer A</span></div>
+                  <div class="meta-row"><span class="meta-key">B</span><span>Streamer B</span></div>
+                </div>
+                <div class="back-actions">
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar A</button>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar B</button>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <article class="flip-card" data-flip>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb"><img src="./brasao-novo.png" alt="Duelo 3" /></div>
+                <div class="front-bottom">
+                  <p class="card-title">Duelo 3</p>
+                  <p class="card-sub">A vs B — vire para votar</p>
+                </div>
+              </div>
+              <div class="flip-face flip-back">
+                <p class="back-desc">Descrição do duelo (por que esses dois estão aqui).</p>
+                <div class="meta">
+                  <div class="meta-row"><span class="meta-key">A</span><span>Streamer A</span></div>
+                  <div class="meta-row"><span class="meta-key">B</span><span>Streamer B</span></div>
+                </div>
+                <div class="back-actions">
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar A</button>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar B</button>
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- ===== BLOCO 3 ===== -->
+      <div class="home-block">
+        <div class="block-head">
+          <h2 class="block-title">🏰 Bloco 3 — Melhor OTServer da atualidade</h2>
+          <p class="block-desc">
+            Vire o card para ver detalhes e votar. (Você pode trocar isso depois para os servidores reais.)
           </p>
+        </div>
 
-          <div class="cards-grid">
-            <div class="flip-card" tabindex="0">
-              <div class="flip-inner">
-                <div class="flip-face flip-front">
-                  <div class="card-image"></div>
-                  <div class="card-front-bottom">
-                    <div class="card-tag">OTServer 1</div>
-                    <div class="badge-plus">＋</div>
-                  </div>
+        <div class="cards-grid">
+          <article class="flip-card" data-flip>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb"><img src="./brasao-novo.png" alt="OT 1" /></div>
+                <div class="front-bottom">
+                  <p class="card-title">OT 1</p>
+                  <p class="card-sub">Vire para ver detalhes</p>
                 </div>
-                <div class="flip-face flip-back">
-                  <h3 class="back-title">OTServer 1</h3>
-                  <div class="back-line"><span>Site:</span> https://...</div>
-                  <div class="back-line"><span>Versão:</span> 7.4 / 8.0 / etc</div>
-                  <div class="back-line"><span>Descrição:</span> Mini texto do servidor.</div>
-                  <div class="back-actions">
-                    <button class="btn-mini secondary" type="button">🗳️ Votar</button>
-                    <a class="btn-mini" href="#" onclick="return false;">📣 Divulgar</a>
-                  </div>
+              </div>
+              <div class="flip-face flip-back">
+                <p class="back-desc">Mini descrição do servidor.</p>
+                <div class="meta">
+                  <div class="meta-row"><span class="meta-key">Nome</span><span>Nome do OT</span></div>
+                  <div class="meta-row"><span class="meta-key">Versão</span><span>Ex: 7.4</span></div>
+                  <div class="meta-row"><span class="meta-key">Site</span><span><a href="#" target="_blank" rel="noreferrer">link</a></span></div>
+                </div>
+                <div class="back-actions">
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">🌐 Abrir</a>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
                 </div>
               </div>
             </div>
+          </article>
 
-            <div class="flip-card" tabindex="0">
-              <div class="flip-inner">
-                <div class="flip-face flip-front">
-                  <div class="card-image"></div>
-                  <div class="card-front-bottom">
-                    <div class="card-tag">OTServer 2</div>
-                    <div class="badge-plus">＋</div>
-                  </div>
+          <article class="flip-card" data-flip>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb"><img src="./brasao-novo.png" alt="OT 2" /></div>
+                <div class="front-bottom">
+                  <p class="card-title">OT 2</p>
+                  <p class="card-sub">Vire para ver detalhes</p>
                 </div>
-                <div class="flip-face flip-back">
-                  <h3 class="back-title">OTServer 2</h3>
-                  <div class="back-line"><span>Site:</span> https://...</div>
-                  <div class="back-line"><span>Versão:</span> 7.4 / 8.0 / etc</div>
-                  <div class="back-line"><span>Descrição:</span> Mini texto do servidor.</div>
-                  <div class="back-actions">
-                    <button class="btn-mini secondary" type="button">🗳️ Votar</button>
-                    <a class="btn-mini" href="#" onclick="return false;">📣 Divulgar</a>
-                  </div>
+              </div>
+              <div class="flip-face flip-back">
+                <p class="back-desc">Mini descrição do servidor.</p>
+                <div class="meta">
+                  <div class="meta-row"><span class="meta-key">Nome</span><span>Nome do OT</span></div>
+                  <div class="meta-row"><span class="meta-key">Versão</span><span>Ex: 8.6</span></div>
+                  <div class="meta-row"><span class="meta-key">Site</span><span><a href="#" target="_blank" rel="noreferrer">link</a></span></div>
+                </div>
+                <div class="back-actions">
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">🌐 Abrir</a>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
                 </div>
               </div>
             </div>
+          </article>
 
-            <div class="flip-card" tabindex="0">
-              <div class="flip-inner">
-                <div class="flip-face flip-front">
-                  <div class="card-image"></div>
-                  <div class="card-front-bottom">
-                    <div class="card-tag">OTServer 3</div>
-                    <div class="badge-plus">＋</div>
-                  </div>
+          <article class="flip-card" data-flip>
+            <div class="flip-inner">
+              <div class="flip-face face-front">
+                <div class="thumb"><img src="./brasao-novo.png" alt="OT 3" /></div>
+                <div class="front-bottom">
+                  <p class="card-title">OT 3</p>
+                  <p class="card-sub">Vire para ver detalhes</p>
                 </div>
-                <div class="flip-face flip-back">
-                  <h3 class="back-title">OTServer 3</h3>
-                  <div class="back-line"><span>Site:</span> https://...</div>
-                  <div class="back-line"><span>Versão:</span> 7.4 / 8.0 / etc</div>
-                  <div class="back-line"><span>Descrição:</span> Mini texto do servidor.</div>
-                  <div class="back-actions">
-                    <button class="btn-mini secondary" type="button">🗳️ Votar</button>
-                    <a class="btn-mini" href="#" onclick="return false;">📣 Divulgar</a>
-                  </div>
+              </div>
+              <div class="flip-face flip-back">
+                <p class="back-desc">Mini descrição do servidor.</p>
+                <div class="meta">
+                  <div class="meta-row"><span class="meta-key">Nome</span><span>Nome do OT</span></div>
+                  <div class="meta-row"><span class="meta-key">Versão</span><span>Ex: 10.x</span></div>
+                  <div class="meta-row"><span class="meta-key">Site</span><span><a href="#" target="_blank" rel="noreferrer">link</a></span></div>
+                </div>
+                <div class="back-actions">
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">🌐 Abrir</a>
+                  <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
                 </div>
               </div>
             </div>
-          </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- mantém seu script principal -->
     <script type="module" src="./script.js"></script>
 
     <script>
-      // menu lateral (igual ao seu)
+      // ===== seu menu lateral (mantido) =====
       const menuToggle = document.getElementById("menu-toggle");
       const menuClose = document.getElementById("menu-close");
       const sideMenu = document.getElementById("side-menu");
@@ -773,10 +872,28 @@
         sideMenu.setAttribute("aria-hidden", "true");
       });
 
-      // reforço extra: se algum JS antigo tentar esconder a aba, traz de volta
-      window.addEventListener("load", () => {
-        const s = document.getElementById("inicio");
-        if (s) s.classList.add("ativa");
+      // ===== flip no toque (mobile) =====
+      const cards = document.querySelectorAll("[data-flip]");
+      cards.forEach((card) => {
+        card.addEventListener("click", (e) => {
+          const interactive = e.target.closest("a,button,input,select,textarea,label");
+          if (interactive) return;
+          card.classList.toggle("is-flipped");
+        });
+      });
+
+      document.addEventListener("click", (e) => {
+        const inside = e.target.closest("[data-flip]");
+        if (!inside) cards.forEach((c) => c.classList.remove("is-flipped"));
+      });
+
+      // ===== placeholder voto (sem backend ainda) =====
+      document.querySelectorAll("[data-vote]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          alert("Votação ainda não está ligada no banco. Aqui é só o layout + flip.");
+        });
       });
     </script>
   </body>
