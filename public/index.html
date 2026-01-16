@@ -266,6 +266,9 @@
         transform: rotateY(180deg);
       }
 
+      /* ✅ AQUI FOI A CORREÇÃO PRINCIPAL:
+         antes a .flip-face tinha background gradiente (criava “1º fundo”).
+         agora ela fica transparente e o background fica só no FRONT. */
       .flip-face {
         position: absolute;
         inset: 0;
@@ -273,13 +276,14 @@
         overflow: hidden;
         backface-visibility: hidden;
         border: 1px solid rgba(255, 204, 102, 0.20);
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35));
+        background: transparent; /* <- remove o “fundo 1” */
         box-shadow: 0 14px 26px rgba(0, 0, 0, 0.45);
       }
 
       .face-front {
         display: flex;
         flex-direction: column;
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35));
       }
 
       .thumb {
@@ -346,8 +350,7 @@
       }
 
       /* ============================================================
-         VERSO: MESMO ASPECTO DO PLAYER (igual ao print)
-         (mudei SOMENTE o verso e elementos de dentro)
+         VERSO: estilo player, sem vazamento (OPACO, sem “3º fundo”)
       ============================================================ */
       .flip-back {
         transform: rotateY(180deg);
@@ -357,13 +360,9 @@
         gap: 10px;
         position: relative;
 
-        /* OUTER igual ao player */
-        background: linear-gradient(
-          180deg,
-          rgba(120, 86, 36, 0.96) 0%,
-          rgba(58, 36, 13, 0.96) 100%
-        );
-        border: 2px solid rgba(202, 162, 74, 0.95);
+        /* Outer (bronze/marrom) — OPACO */
+        background: linear-gradient(180deg, #785624 0%, #3a240d 100%);
+        border: 2px solid #caa24a;
 
         box-shadow:
           inset 0 1px 0 rgba(255, 255, 255, 0.18),
@@ -371,7 +370,7 @@
           0 14px 26px rgba(0, 0, 0, 0.45);
       }
 
-      /* “MIolo” igual ao player: placa escura com brilho no topo */
+      /* Miolo escuro — OPACO (pra não deixar o bloco atrás “aparecer”) */
       .flip-back::before {
         content: "";
         position: absolute;
@@ -382,14 +381,10 @@
 
         background:
           radial-gradient(120% 90% at 50% 10%,
-            rgba(255, 255, 255, 0.12) 0%,
-            rgba(255, 255, 255, 0.00) 60%
+            rgba(255,255,255,0.12) 0%,
+            rgba(255,255,255,0.00) 60%
           ),
-          linear-gradient(
-            180deg,
-            rgba(10, 7, 4, 0.55) 0%,
-            rgba(0, 0, 0, 0.62) 100%
-          );
+          linear-gradient(180deg, #0b0704 0%, #000000 100%);
 
         border: 1px solid rgba(202, 162, 74, 0.28);
 
@@ -398,10 +393,7 @@
           inset 0 -18px 28px rgba(0,0,0,0.55);
       }
 
-      .flip-back > * {
-        position: relative;
-        z-index: 1;
-      }
+      .flip-back > * { position: relative; z-index: 1; }
 
       .back-desc {
         margin: 0;
@@ -412,12 +404,8 @@
         text-align: center;
       }
 
-      .meta {
-        display: grid;
-        gap: 8px;
-      }
+      .meta { display: grid; gap: 8px; }
 
-      /* Barras internas no MESMO clima do player */
       .meta-row {
         display: grid;
         grid-template-columns: 110px 1fr;
@@ -426,12 +414,7 @@
         padding: 9px 10px;
         border-radius: 10px;
 
-        background: linear-gradient(
-          180deg,
-          rgba(25, 15, 7, 0.92) 0%,
-          rgba(10, 6, 3, 0.88) 100%
-        );
-
+        background: linear-gradient(180deg, #1a1007 0%, #090603 100%);
         border: 1px solid rgba(202, 162, 74, 0.30);
 
         box-shadow:
@@ -444,15 +427,12 @@
       }
 
       .meta-key {
-        color: rgba(232, 206, 140, 0.95); /* menos “amarelão” */
+        color: rgba(232, 206, 140, 0.95);
         font-weight: 700;
         letter-spacing: 0.2px;
       }
 
-      .meta a {
-        color: rgba(240, 237, 210, 0.92);
-        text-decoration: underline;
-      }
+      .meta a { color: rgba(240, 237, 210, 0.92); text-decoration: underline; }
 
       .back-actions {
         margin-top: auto;
@@ -462,7 +442,6 @@
         flex-wrap: wrap;
       }
 
-      /* Botões no MESMO estilo do player (redondo/bronze/escuro) */
       .btn-mini {
         display: inline-flex;
         align-items: center;
@@ -471,13 +450,7 @@
         padding: 9px 12px;
         border-radius: 10px;
 
-        background: radial-gradient(
-          circle at 30% 30%,
-          rgba(138, 106, 44, 0.96) 0%,
-          rgba(59, 36, 13, 0.96) 62%,
-          rgba(27, 15, 6, 0.96) 100%
-        );
-
+        background: radial-gradient(circle at 30% 30%, #8a6a2c 0%, #3b240d 62%, #1b0f06 100%);
         border: 2px solid rgba(202, 162, 74, 0.75);
         color: rgba(240, 237, 210, 0.96);
 
@@ -494,11 +467,7 @@
         transition: transform 0.15s ease, filter 0.15s ease;
         text-decoration: none;
       }
-
-      .btn-mini:hover {
-        transform: translateY(-1px);
-        filter: brightness(1.06);
-      }
+      .btn-mini:hover { transform: translateY(-1px); filter: brightness(1.06); }
 
       .legacy-ranking { display: none; }
     </style>
