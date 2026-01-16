@@ -183,11 +183,7 @@
         padding: 10px 14px;
         border-radius: 10px;
         border: 1px solid var(--lineStrong);
-        background: linear-gradient(
-          to bottom,
-          rgba(0, 0, 0, 0.62),
-          rgba(0, 0, 0, 0.38)
-        );
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.38));
         color: var(--gold);
         font-family: "Cinzel", serif;
         font-size: 0.95rem;
@@ -276,12 +272,8 @@
         border-radius: 14px;
         overflow: hidden;
         backface-visibility: hidden;
-        border: 1px solid rgba(255, 204, 102, 0.2);
-        background: linear-gradient(
-          to bottom,
-          rgba(0, 0, 0, 0.55),
-          rgba(0, 0, 0, 0.35)
-        );
+        border: 1px solid rgba(255, 204, 102, 0.20);
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35));
         box-shadow: 0 14px 26px rgba(0, 0, 0, 0.45);
       }
 
@@ -318,35 +310,17 @@
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(
-          to bottom,
-          transparent 45%,
-          rgba(0, 0, 0, 0.7)
-        );
+        background: linear-gradient(to bottom, transparent 45%, rgba(0, 0, 0, 0.70));
         pointer-events: none;
       }
 
-      /* brilho NO BRASÃO, sem “halo” atrás */
       @keyframes crestBrightSpinNoHalo {
-        0% {
-          transform: translateY(2px) scale(1.06) rotate(0deg);
-          filter: none;
-        }
-        55% {
-          transform: translateY(0px) scale(1.12) rotate(7deg);
-          filter: brightness(1.55) saturate(1.85) contrast(1.12);
-        }
-        100% {
-          transform: translateY(0px) scale(1.09) rotate(2deg);
-          filter: brightness(1.4) saturate(1.6) contrast(1.08);
-        }
+        0% { transform: translateY(2px) scale(1.06) rotate(0deg); filter: none; }
+        55% { transform: translateY(0px) scale(1.12) rotate(7deg); filter: brightness(1.55) saturate(1.85) contrast(1.12); }
+        100% { transform: translateY(0px) scale(1.09) rotate(2deg); filter: brightness(1.40) saturate(1.60) contrast(1.08); }
       }
-      .flip-card:hover .thumb img {
-        animation: crestBrightSpinNoHalo 0.22s ease-out both;
-      }
-      .flip-card.is-flipped .thumb img {
-        animation: crestBrightSpinNoHalo 0.22s ease-out both;
-      }
+      .flip-card:hover .thumb img { animation: crestBrightSpinNoHalo 0.22s ease-out both; }
+      .flip-card.is-flipped .thumb img { animation: crestBrightSpinNoHalo 0.22s ease-out both; }
 
       .front-bottom {
         height: 38%;
@@ -372,8 +346,8 @@
       }
 
       /* ============================================================
-         VERSO: MESMO ASPECTO DO PLAYER (marrom/dourado, brilho, borda)
-         (única mudança pedida)
+         VERSO: MESMO ASPECTO DO PLAYER (igual ao print)
+         (mudei SOMENTE o verso e elementos de dentro)
       ============================================================ */
       .flip-back {
         transform: rotateY(180deg);
@@ -383,7 +357,7 @@
         gap: 10px;
         position: relative;
 
-        /* skin igual ao player */
+        /* OUTER igual ao player */
         background: linear-gradient(
           180deg,
           rgba(120, 86, 36, 0.96) 0%,
@@ -397,26 +371,33 @@
           0 14px 26px rgba(0, 0, 0, 0.45);
       }
 
-      /* brilho interno + “placa” escura (pra ficar premium e legível) */
+      /* “MIolo” igual ao player: placa escura com brilho no topo */
       .flip-back::before {
         content: "";
         position: absolute;
-        inset: 8px;
+        inset: 7px;
         border-radius: 12px;
         pointer-events: none;
         z-index: 0;
 
         background:
-          radial-gradient(120% 90% at 50% 10%, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.00) 55%),
-          linear-gradient(180deg, rgba(18, 8, 2, 0.62) 0%, rgba(10, 6, 3, 0.55) 100%);
+          radial-gradient(120% 90% at 50% 10%,
+            rgba(255, 255, 255, 0.12) 0%,
+            rgba(255, 255, 255, 0.00) 60%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(10, 7, 4, 0.55) 0%,
+            rgba(0, 0, 0, 0.62) 100%
+          );
 
-        border: 1px solid rgba(202, 162, 74, 0.35);
+        border: 1px solid rgba(202, 162, 74, 0.28);
+
         box-shadow:
           inset 0 1px 0 rgba(255,255,255,0.10),
-          inset 0 -20px 30px rgba(0,0,0,0.42);
+          inset 0 -18px 28px rgba(0,0,0,0.55);
       }
 
-      /* garante que conteúdo fique acima */
       .flip-back > * {
         position: relative;
         z-index: 1;
@@ -424,10 +405,10 @@
 
       .back-desc {
         margin: 0;
-        color: var(--backText);
+        color: rgba(240, 237, 210, 0.92);
         font-size: 0.92rem;
         line-height: 1.35;
-        text-shadow: 0 1px 0 rgba(0, 0, 0, 0.6);
+        text-shadow: 0 0 3px rgba(0,0,0,0.70);
         text-align: center;
       }
 
@@ -435,6 +416,8 @@
         display: grid;
         gap: 8px;
       }
+
+      /* Barras internas no MESMO clima do player */
       .meta-row {
         display: grid;
         grid-template-columns: 110px 1fr;
@@ -443,22 +426,29 @@
         padding: 9px 10px;
         border-radius: 10px;
 
-        /* placas internas com o MESMO clima do player */
         background: linear-gradient(
           180deg,
-          rgba(40, 24, 10, 0.92) 0%,
-          rgba(18, 10, 4, 0.88) 100%
+          rgba(25, 15, 7, 0.92) 0%,
+          rgba(10, 6, 3, 0.88) 100%
         );
-        border: 1px solid rgba(202, 162, 74, 0.55);
+
+        border: 1px solid rgba(202, 162, 74, 0.30);
+
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.08),
+          inset 0 -10px 14px rgba(0,0,0,0.55);
 
         color: rgba(240, 237, 210, 0.92);
         font-size: 0.9rem;
         text-shadow: 0 0 3px rgba(0,0,0,0.70);
       }
+
       .meta-key {
-        color: rgba(255, 233, 160, 0.96);
+        color: rgba(232, 206, 140, 0.95); /* menos “amarelão” */
         font-weight: 700;
+        letter-spacing: 0.2px;
       }
+
       .meta a {
         color: rgba(240, 237, 210, 0.92);
         text-decoration: underline;
@@ -467,11 +457,12 @@
       .back-actions {
         margin-top: auto;
         display: flex;
-        gap: 8px;
+        gap: 10px;
         justify-content: center;
         flex-wrap: wrap;
       }
 
+      /* Botões no MESMO estilo do player (redondo/bronze/escuro) */
       .btn-mini {
         display: inline-flex;
         align-items: center;
@@ -480,28 +471,33 @@
         padding: 9px 12px;
         border-radius: 10px;
 
-        border: 2px solid rgba(202, 162, 74, 0.75);
         background: radial-gradient(
           circle at 30% 30%,
-          rgba(138, 106, 44, 0.95) 0%,
-          rgba(59, 36, 13, 0.95) 62%,
-          rgba(27, 15, 6, 0.95) 100%
+          rgba(138, 106, 44, 0.96) 0%,
+          rgba(59, 36, 13, 0.96) 62%,
+          rgba(27, 15, 6, 0.96) 100%
         );
+
+        border: 2px solid rgba(202, 162, 74, 0.75);
         color: rgba(240, 237, 210, 0.96);
 
         font-family: "Cinzel", serif;
         font-size: 0.9rem;
-        text-shadow: 0 0 3px rgba(0,0,0,0.7);
+        text-shadow: 0 0 3px rgba(0,0,0,0.70);
+
+        box-shadow:
+          inset 0 1px 0 rgba(255,255,255,0.16),
+          inset 0 -10px 14px rgba(0,0,0,0.50),
+          0 6px 12px rgba(0,0,0,0.45);
+
         cursor: pointer;
         transition: transform 0.15s ease, filter 0.15s ease;
         text-decoration: none;
-        box-shadow:
-          inset 0 1px 0 rgba(255,255,255,0.16),
-          inset 0 -10px 14px rgba(0,0,0,0.50);
       }
+
       .btn-mini:hover {
         transform: translateY(-1px);
-        filter: brightness(1.08);
+        filter: brightness(1.06);
       }
 
       .legacy-ranking { display: none; }
