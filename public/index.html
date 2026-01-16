@@ -129,8 +129,8 @@
         --line: rgba(255, 204, 102, 0.26);
         --lineStrong: rgba(255, 204, 102, 0.38);
 
-        /* >>> TOM BASE DO PLAYER (mais escuro) <<< */
-        --playerBrown: #4f320f; /* ajuste fino aqui se quiser mais escuro/claro */
+        /* >>> TOM BASE DO PLAYER (ajustado pra bater com o print) <<< */
+        --playerBrown: #5c3a22; /* ERA #4f320f */
         --playerGold: #caa24a;
       }
 
@@ -179,7 +179,11 @@
         padding: 10px 14px;
         border-radius: 10px;
         border: 1px solid var(--lineStrong);
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.38));
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.62),
+          rgba(0, 0, 0, 0.38)
+        );
         color: var(--gold);
         font-family: "Cinzel", serif;
         font-size: 0.95rem;
@@ -212,7 +216,8 @@
         font-family: "Cinzel", serif;
         font-size: 1.05rem;
         color: var(--gold);
-        text-shadow: 0 0 4px #000, 0 0 6px rgba(255, 215, 0, 0.18);
+        text-shadow: 0 0 4px #000,
+          0 0 6px rgba(255, 215, 0, 0.18);
         letter-spacing: 0.4px;
       }
       .block-desc {
@@ -268,7 +273,7 @@
         border-radius: 14px;
         overflow: hidden;
         backface-visibility: hidden;
-        border: 1px solid rgba(255, 204, 102, 0.20);
+        border: 1px solid rgba(255, 204, 102, 0.2);
         background: transparent;
         box-shadow: 0 14px 26px rgba(0, 0, 0, 0.45);
       }
@@ -276,7 +281,11 @@
       .face-front {
         display: flex;
         flex-direction: column;
-        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35));
+        background: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.55),
+          rgba(0, 0, 0, 0.35)
+        );
       }
 
       .thumb {
@@ -307,17 +316,34 @@
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(to bottom, transparent 45%, rgba(0, 0, 0, 0.70));
+        background: linear-gradient(
+          to bottom,
+          transparent 45%,
+          rgba(0, 0, 0, 0.7)
+        );
         pointer-events: none;
       }
 
       @keyframes crestBrightSpinNoHalo {
-        0% { transform: translateY(2px) scale(1.06) rotate(0deg); filter: none; }
-        55% { transform: translateY(0px) scale(1.12) rotate(7deg); filter: brightness(1.55) saturate(1.85) contrast(1.12); }
-        100% { transform: translateY(0px) scale(1.09) rotate(2deg); filter: brightness(1.40) saturate(1.60) contrast(1.08); }
+        0% {
+          transform: translateY(2px) scale(1.06) rotate(0deg);
+          filter: none;
+        }
+        55% {
+          transform: translateY(0px) scale(1.12) rotate(7deg);
+          filter: brightness(1.55) saturate(1.85) contrast(1.12);
+        }
+        100% {
+          transform: translateY(0px) scale(1.09) rotate(2deg);
+          filter: brightness(1.4) saturate(1.6) contrast(1.08);
+        }
       }
-      .flip-card:hover .thumb img { animation: crestBrightSpinNoHalo 0.22s ease-out both; }
-      .flip-card.is-flipped .thumb img { animation: crestBrightSpinNoHalo 0.22s ease-out both; }
+      .flip-card:hover .thumb img {
+        animation: crestBrightSpinNoHalo 0.22s ease-out both;
+      }
+      .flip-card.is-flipped .thumb img {
+        animation: crestBrightSpinNoHalo 0.22s ease-out both;
+      }
 
       .front-bottom {
         height: 38%;
@@ -344,7 +370,6 @@
 
       /* =========================
          VERSO: CHAPADO igual base do player
-         (sem gradiente, sem sombras, sem variação)
       ========================= */
       .flip-back {
         transform: rotateY(180deg);
@@ -358,7 +383,9 @@
         border: 2px solid var(--playerGold);
         box-shadow: none;
       }
-      .flip-back::before { content: none; }
+      .flip-back::before {
+        content: none;
+      }
 
       .back-desc {
         margin: 0;
@@ -369,7 +396,10 @@
         text-shadow: none;
       }
 
-      .meta { display: grid; gap: 8px; }
+      .meta {
+        display: grid;
+        gap: 8px;
+      }
 
       .meta-row {
         display: grid;
@@ -380,10 +410,10 @@
         border-radius: 10px;
 
         background: var(--playerBrown);
-        border: 1px solid rgba(202,162,74,0.55);
+        border: 1px solid rgba(202, 162, 74, 0.55);
         box-shadow: none;
 
-        color: rgba(240,237,210,0.94);
+        color: rgba(240, 237, 210, 0.94);
         font-size: 0.9rem;
         text-shadow: none;
       }
@@ -395,7 +425,7 @@
       }
 
       .meta a {
-        color: rgba(240,237,210,0.94);
+        color: rgba(240, 237, 210, 0.94);
         text-decoration: underline;
       }
 
@@ -416,8 +446,8 @@
         border-radius: 10px;
 
         background: var(--playerBrown);
-        border: 2px solid rgba(202,162,74,0.85);
-        color: rgba(240,237,210,0.96);
+        border: 2px solid rgba(202, 162, 74, 0.85);
+        color: rgba(240, 237, 210, 0.96);
 
         font-family: "Cinzel", serif;
         font-size: 0.9rem;
@@ -432,7 +462,9 @@
         transform: translateY(-1px);
       }
 
-      .legacy-ranking { display: none; }
+      .legacy-ranking {
+        display: none;
+      }
     </style>
   </head>
 
@@ -446,7 +478,11 @@
       <button id="menu-toggle" aria-label="Abrir menu">MENU ☰</button>
 
       <div class="titulo-container">
-        <img src="./tituloprincipal.png" alt="Royal OtServlist" class="titulo-imagem" />
+        <img
+          src="./tituloprincipal.png"
+          alt="Royal OtServlist"
+          class="titulo-imagem"
+        />
       </div>
 
       <div class="brasao-centro">
@@ -456,7 +492,10 @@
       </div>
 
       <div class="bloco-direita">
-        <select id="language-select" style="margin-right: 16px; font-size: 0.9rem; padding: 4px">
+        <select
+          id="language-select"
+          style="margin-right: 16px; font-size: 0.9rem; padding: 4px"
+        >
           <option value="pt">PT</option>
           <option value="en">EN</option>
           <option value="es">ES</option>
@@ -468,14 +507,27 @@
             <img src="./icon-login.png" alt="Login" width="24" height="24" />
           </button>
           <button type="button" class="btn-imagem registrar-btn">
-            <img src="./icon-registrar.png" alt="Registrar" width="24" height="24" />
+            <img
+              src="./icon-registrar.png"
+              alt="Registrar"
+              width="24"
+              height="24"
+            />
           </button>
         </div>
 
         <div class="radio-player-bottom" aria-label="Player de rádio">
           <button id="btn-playpause" aria-label="Play/Pause">▶</button>
           <button id="btn-skip" aria-label="Próxima faixa">⏭</button>
-          <input id="slider-volume" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volume" />
+          <input
+            id="slider-volume"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="1"
+            aria-label="Volume"
+          />
           <audio id="radio-audio" preload="metadata" style="display:none"></audio>
         </div>
       </div>
@@ -520,21 +572,43 @@
           <article class="flip-card" data-flip>
             <div class="flip-inner">
               <div class="flip-face face-front">
-                <div class="thumb"><img src="./brasao-novo.png" alt="Jogada 1" /></div>
+                <div class="thumb">
+                  <img src="./brasao-novo.png" alt="Jogada 1" />
+                </div>
                 <div class="front-bottom">
                   <p class="card-title">Jogada 1</p>
                   <p class="card-sub">Passe o mouse para virar</p>
                 </div>
               </div>
               <div class="flip-face flip-back">
-                <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
+                <p class="back-desc">
+                  Descrição curta do que aconteceu nessa jogada.
+                </p>
                 <div class="meta">
-                  <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
-                  <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
-                  <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
+                  <div class="meta-row">
+                    <span class="meta-key">Personagem</span><span>Nome do char</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Stream</span
+                    ><span
+                      ><a href="#" target="_blank" rel="noreferrer"
+                        >link da stream</a
+                      ></span
+                    >
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Seu vídeo</span
+                    ><span
+                      ><a href="#" target="_blank" rel="noreferrer"
+                        >link do seu vídeo</a
+                      ></span
+                    >
+                  </div>
                 </div>
                 <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer"
+                    >▶ Ver no YouTube</a
+                  >
                   <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
                 </div>
               </div>
@@ -544,21 +618,43 @@
           <article class="flip-card" data-flip>
             <div class="flip-inner">
               <div class="flip-face face-front">
-                <div class="thumb"><img src="./brasao-novo.png" alt="Jogada 2" /></div>
+                <div class="thumb">
+                  <img src="./brasao-novo.png" alt="Jogada 2" />
+                </div>
                 <div class="front-bottom">
                   <p class="card-title">Jogada 2</p>
                   <p class="card-sub">Passe o mouse para virar</p>
                 </div>
               </div>
               <div class="flip-face flip-back">
-                <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
+                <p class="back-desc">
+                  Descrição curta do que aconteceu nessa jogada.
+                </p>
                 <div class="meta">
-                  <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
-                  <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
-                  <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
+                  <div class="meta-row">
+                    <span class="meta-key">Personagem</span><span>Nome do char</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Stream</span
+                    ><span
+                      ><a href="#" target="_blank" rel="noreferrer"
+                        >link da stream</a
+                      ></span
+                    >
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Seu vídeo</span
+                    ><span
+                      ><a href="#" target="_blank" rel="noreferrer"
+                        >link do seu vídeo</a
+                      ></span
+                    >
+                  </div>
                 </div>
                 <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer"
+                    >▶ Ver no YouTube</a
+                  >
                   <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
                 </div>
               </div>
@@ -568,21 +664,43 @@
           <article class="flip-card" data-flip>
             <div class="flip-inner">
               <div class="flip-face face-front">
-                <div class="thumb"><img src="./brasao-novo.png" alt="Jogada 3" /></div>
+                <div class="thumb">
+                  <img src="./brasao-novo.png" alt="Jogada 3" />
+                </div>
                 <div class="front-bottom">
                   <p class="card-title">Jogada 3</p>
                   <p class="card-sub">Passe o mouse para virar</p>
                 </div>
               </div>
               <div class="flip-face flip-back">
-                <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
+                <p class="back-desc">
+                  Descrição curta do que aconteceu nessa jogada.
+                </p>
                 <div class="meta">
-                  <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
-                  <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#" target="_blank" rel="noreferrer">link da stream</a></span></div>
-                  <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#" target="_blank" rel="noreferrer">link do seu vídeo</a></span></div>
+                  <div class="meta-row">
+                    <span class="meta-key">Personagem</span><span>Nome do char</span>
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Stream</span
+                    ><span
+                      ><a href="#" target="_blank" rel="noreferrer"
+                        >link da stream</a
+                      ></span
+                    >
+                  </div>
+                  <div class="meta-row">
+                    <span class="meta-key">Seu vídeo</span
+                    ><span
+                      ><a href="#" target="_blank" rel="noreferrer"
+                        >link do seu vídeo</a
+                      ></span
+                    >
+                  </div>
                 </div>
                 <div class="back-actions">
-                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer">▶ Ver no YouTube</a>
+                  <a class="btn-mini" href="#" target="_blank" rel="noreferrer"
+                    >▶ Ver no YouTube</a
+                  >
                   <button class="btn-mini" type="button" data-vote>🗳 Votar</button>
                 </div>
               </div>
@@ -595,21 +713,27 @@
       <div class="home-block">
         <div class="block-head">
           <h2 class="block-title">⚔️ Bloco 2 — Duelo rápido (A vs B)</h2>
-          <p class="block-desc">Passe o mouse para virar. No verso, aparece a descrição e os botões de voto.</p>
+          <p class="block-desc">
+            Passe o mouse para virar. No verso, aparece a descrição e os botões de voto.
+          </p>
         </div>
 
         <div class="cards-grid">
           <article class="flip-card" data-flip>
             <div class="flip-inner">
               <div class="flip-face face-front">
-                <div class="thumb"><img src="./brasao-novo.png" alt="Duelo 1" /></div>
+                <div class="thumb">
+                  <img src="./brasao-novo.png" alt="Duelo 1" />
+                </div>
                 <div class="front-bottom">
                   <p class="card-title">Duelo 1</p>
                   <p class="card-sub">A vs B — vire para votar</p>
                 </div>
               </div>
               <div class="flip-face flip-back">
-                <p class="back-desc">Descrição do duelo (por que esses dois estão aqui).</p>
+                <p class="back-desc">
+                  Descrição do duelo (por que esses dois estão aqui).
+                </p>
                 <div class="meta">
                   <div class="meta-row"><span class="meta-key">A</span><span>Streamer A</span></div>
                   <div class="meta-row"><span class="meta-key">B</span><span>Streamer B</span></div>
@@ -625,14 +749,18 @@
           <article class="flip-card" data-flip>
             <div class="flip-inner">
               <div class="flip-face face-front">
-                <div class="thumb"><img src="./brasao-novo.png" alt="Duelo 2" /></div>
+                <div class="thumb">
+                  <img src="./brasao-novo.png" alt="Duelo 2" />
+                </div>
                 <div class="front-bottom">
                   <p class="card-title">Duelo 2</p>
                   <p class="card-sub">A vs B — vire para votar</p>
                 </div>
               </div>
               <div class="flip-face flip-back">
-                <p class="back-desc">Descrição do duelo (por que esses dois estão aqui).</p>
+                <p class="back-desc">
+                  Descrição do duelo (por que esses dois estão aqui).
+                </p>
                 <div class="meta">
                   <div class="meta-row"><span class="meta-key">A</span><span>Streamer A</span></div>
                   <div class="meta-row"><span class="meta-key">B</span><span>Streamer B</span></div>
@@ -648,14 +776,18 @@
           <article class="flip-card" data-flip>
             <div class="flip-inner">
               <div class="flip-face face-front">
-                <div class="thumb"><img src="./brasao-novo.png" alt="Duelo 3" /></div>
+                <div class="thumb">
+                  <img src="./brasao-novo.png" alt="Duelo 3" />
+                </div>
                 <div class="front-bottom">
                   <p class="card-title">Duelo 3</p>
                   <p class="card-sub">A vs B — vire para votar</p>
                 </div>
               </div>
               <div class="flip-face flip-back">
-                <p class="back-desc">Descrição do duelo (por que esses dois estão aqui).</p>
+                <p class="back-desc">
+                  Descrição do duelo (por que esses dois estão aqui).
+                </p>
                 <div class="meta">
                   <div class="meta-row"><span class="meta-key">A</span><span>Streamer A</span></div>
                   <div class="meta-row"><span class="meta-key">B</span><span>Streamer B</span></div>
