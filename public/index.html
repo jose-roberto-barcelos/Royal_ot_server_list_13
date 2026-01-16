@@ -357,44 +357,35 @@
         text-shadow: 0 0 4px #000;
       }
 
-      /* ====== VERSO: PEDRA + RUNAS SD ANIMADAS + CAVEIRAS NAS BORDAS (macabro) ====== */
+      /* =========================
+         VERSO — 3D MACABRO / CINEMATOGRÁFICO
+         Pedra entalhada + runas SD “vivas” + caveira em relevo nas bordas
+         (sem ícones repetidos 2D)
+      ========================== */
 
-      /* anima do “fluxo” das runas */
-      @keyframes runeShift {
-        0%   { background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%; }
-        100% { background-position: 120% 0%, -120% 0%, 0% 0%, 0% 0%; }
+      @keyframes infernalBreath {
+        0%, 100% { opacity: 0.58; filter: blur(0.6px) brightness(1.0) saturate(1.05); }
+        45%      { opacity: 0.92; filter: blur(0.9px) brightness(1.14) saturate(1.25); }
+        70%      { opacity: 0.68; filter: blur(0.7px) brightness(1.03) saturate(1.12); }
       }
 
-      /* pulsar/flicker macabro */
-      @keyframes runePulse {
-        0%, 100% { opacity: 0.55; filter: saturate(1.0) brightness(1.0); }
-        45%      { opacity: 0.88; filter: saturate(1.25) brightness(1.12); }
-        65%      { opacity: 0.62; filter: saturate(1.05) brightness(0.98); }
+      @keyframes smokeDrift {
+        0%   { transform: translate3d(-8px, 6px, 0) scale(1.02); opacity: 0.55; }
+        50%  { transform: translate3d(10px, -6px, 0) scale(1.05); opacity: 0.78; }
+        100% { transform: translate3d(-6px, 8px, 0) scale(1.03); opacity: 0.60; }
       }
 
-      /* caveiras rastejando nas bordas */
-      @keyframes skullCrawl {
-        0% {
-          background-position:
-            0px 6px,
-            0px calc(100% - 28px),
-            6px 0px,
-            calc(100% - 28px) 0px;
-        }
-        100% {
-          background-position:
-            180px 6px,
-            -180px calc(100% - 28px),
-            6px 180px,
-            calc(100% - 28px) -180px;
-        }
+      @keyframes edgeCreep {
+        0%, 100% { background-position: 0% 0%; }
+        50%      { background-position: 100% 100%; }
       }
 
-      @keyframes skullFlicker {
-        0%, 100% { opacity: 0.42; }
-        35%      { opacity: 0.68; }
-        55%      { opacity: 0.50; }
-        78%      { opacity: 0.72; }
+      @keyframes emberFlicker {
+        0%, 100% { opacity: 0.25; }
+        22%      { opacity: 0.42; }
+        47%      { opacity: 0.30; }
+        63%      { opacity: 0.46; }
+        82%      { opacity: 0.28; }
       }
 
       .flip-back {
@@ -405,137 +396,159 @@
         gap: 10px;
         position: relative;
 
-        /* pedra escura + padrões “rúnicos” */
+        /* base pedra: “cinematográfico” com profundidade e vinheta */
         background:
-          /* glow vermelho central sutil */
-          radial-gradient(120% 90% at 50% 35%, rgba(170, 0, 0, 0.20) 0%, rgba(0,0,0,0.00) 62%),
-          /* sombra profunda */
-          radial-gradient(140% 120% at 50% 95%, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.00) 62%),
+          radial-gradient(160% 120% at 50% 20%, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.00) 55%),
+          radial-gradient(180% 140% at 50% 95%, rgba(0,0,0,0.86) 0%, rgba(0,0,0,0.00) 58%),
+          linear-gradient(145deg, rgba(55,50,46,1) 0%, rgba(30,26,24,1) 38%, rgba(10,9,9,1) 100%);
 
-          /* runas diagonais (camada 1) */
-          repeating-linear-gradient(
-            135deg,
-            rgba(140, 0, 0, 0.22) 0px,
-            rgba(140, 0, 0, 0.22) 2px,
-            rgba(0,0,0,0.00) 14px,
-            rgba(0,0,0,0.00) 28px
-          ),
-
-          /* base pedra */
-          linear-gradient(145deg, #2b2621 0%, #1b1713 45%, #0e0b09 100%);
-
-        border: 1px solid rgba(0,0,0,0.90);
+        border: 1px solid rgba(0,0,0,0.92);
         box-shadow:
-          inset 0 0 92px rgba(0,0,0,0.78),
           inset 0 0 0 1px rgba(255,255,255,0.04),
-          0 14px 26px rgba(0,0,0,0.55);
+          inset 0 22px 32px rgba(255,255,255,0.05),
+          inset 0 -70px 120px rgba(0,0,0,0.70),
+          inset 0 0 120px rgba(0,0,0,0.55),
+          0 14px 28px rgba(0,0,0,0.60);
 
-        /* animação do “andar” das runas */
-        animation: runeShift 6.2s linear infinite;
+        /* garante que pseudo-elementos fiquem “por baixo” do conteúdo */
+        isolation: isolate;
       }
 
-      /* textura de pedra + runas pulsando por cima (overlay) */
+      /* Camada 1: “runas SD” como energia (luz vindo de dentro da pedra) */
       .flip-back::before {
         content: "";
         position: absolute;
         inset: 0;
         border-radius: 14px;
-        z-index: 0;
         pointer-events: none;
+        z-index: 0;
 
         background:
-          /* rachaduras / grão */
-          repeating-linear-gradient(
-            25deg,
-            rgba(255,255,255,0.02) 0px,
-            rgba(255,255,255,0.02) 1px,
-            rgba(0,0,0,0.00) 8px,
-            rgba(0,0,0,0.00) 14px
-          ),
-          radial-gradient(60% 50% at 20% 30%, rgba(0,0,0,0.35), transparent 70%),
-          radial-gradient(60% 50% at 80% 70%, rgba(0,0,0,0.45), transparent 75%),
+          /* brilho infernal central */
+          radial-gradient(120% 80% at 50% 40%, rgba(190,0,0,0.28) 0%, rgba(190,0,0,0.00) 62%),
 
-          /* runas “cintilando” (camada 2) */
+          /* trilhas rúnicas (não repetição de ícones; textura de energia) */
+          repeating-linear-gradient(
+            135deg,
+            rgba(255, 25, 25, 0.11) 0px,
+            rgba(255, 25, 25, 0.11) 2px,
+            rgba(0,0,0,0) 18px,
+            rgba(0,0,0,0) 36px
+          ),
           repeating-linear-gradient(
             45deg,
-            rgba(255, 0, 0, 0.14) 0px,
-            rgba(255, 0, 0, 0.14) 1px,
-            rgba(0,0,0,0.00) 10px,
-            rgba(0,0,0,0.00) 20px
-          );
+            rgba(255, 25, 25, 0.08) 0px,
+            rgba(255, 25, 25, 0.08) 1px,
+            rgba(0,0,0,0) 14px,
+            rgba(0,0,0,0) 30px
+          ),
+
+          /* rachaduras iluminadas (screen) */
+          radial-gradient(70% 55% at 20% 30%, rgba(255,0,0,0.14) 0%, rgba(255,0,0,0.00) 70%),
+          radial-gradient(70% 55% at 80% 75%, rgba(255,0,0,0.12) 0%, rgba(255,0,0,0.00) 72%);
 
         mix-blend-mode: screen;
-        opacity: 0.55;
-        filter: blur(0.0px);
-        animation: runePulse 2.8s ease-in-out infinite;
+        opacity: 0.65;
+        filter: blur(0.6px);
+        animation: infernalBreath 2.8s ease-in-out infinite;
       }
 
-      /* caveiras nas bordas (SVG inline via data URI) */
+      /* Camada 2: moldura 3D + caveiras “entalhadas” nas bordas + fumaça */
       .flip-back::after {
         content: "";
         position: absolute;
         inset: 0;
         border-radius: 14px;
         pointer-events: none;
-        z-index: 0;
+        z-index: 1;
 
-        /* skull SVG (simples, mas funciona e dá vibe) */
-        --skull: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Cg%20fill%3D%27%23e6dcc6%27%20fill-opacity%3D%270.95%27%3E%3Cpath%20d%3D%27M32%206c-12.7%200-23%2010.3-23%2023%200%208.4%204.5%2015.7%2011.2%2019.7V56c0%202%201.6%203.6%203.6%203.6h2.8c1.3%200%202.4-.7%203-1.8l2.4-4.4h0.1l2.4%204.4c.6%201.1%201.7%201.8%203%201.8h2.8c2%200%203.6-1.6%203.6-3.6v-7.3C50.5%2044.7%2055%2037.4%2055%2029%2055%2016.3%2044.7%206%2032%206z%27/%3E%3Ccircle%20cx%3D%2724%27%20cy%3D%2727%27%20r%3D%275%27%20fill%3D%27%230b0b0b%27%20fill-opacity%3D%270.92%27/%3E%3Ccircle%20cx%3D%2740%27%20cy%3D%2727%27%20r%3D%275%27%20fill%3D%27%230b0b0b%27%20fill-opacity%3D%270.92%27/%3E%3Cpath%20d%3D%27M32%2032l-4%206h8l-4-6z%27%20fill%3D%27%230b0b0b%27%20fill-opacity%3D%270.9%27/%3E%3Cpath%20d%3D%27M24%2046h16v2H24zM26%2050h12v2H26z%27%20fill%3D%27%230b0b0b%27%20fill-opacity%3D%270.75%27/%3E%3C/g%3E%3C/svg%3E");
+        /* Tudo aqui é “cinema 3D”: frame, bevel, skull relief e fumaça */
+        background:
+          /* ===== Frame de pedra (bevel) ===== */
+          linear-gradient(to bottom, rgba(255,255,255,0.08), rgba(255,255,255,0.00) 45%, rgba(0,0,0,0.42)),
+          radial-gradient(140% 120% at 50% 15%, rgba(255,255,255,0.08), rgba(255,255,255,0.00) 58%),
 
-        background-image:
-          var(--skull), /* topo */
-          var(--skull), /* baixo */
-          var(--skull), /* esquerda */
-          var(--skull); /* direita */
+          /* ===== Vinheta pesada nas bordas ===== */
+          radial-gradient(120% 100% at 50% 50%, rgba(0,0,0,0.00) 52%, rgba(0,0,0,0.72) 100%),
 
-        background-repeat:
-          repeat-x,
-          repeat-x,
-          repeat-y,
-          repeat-y;
+          /* ===== Entalhe de caveira (4 cantos) — “relevo” (sockets/nose/jaw) ===== */
+          /* canto sup-esq */
+          radial-gradient(34px 28px at 22px 22px, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.00) 62%),
+          radial-gradient(26px 22px at 26px 26px, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.00) 70%),
+          radial-gradient(8px 8px at 18px 24px, rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.00) 72%),
+          radial-gradient(8px 8px at 32px 24px, rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.00) 72%),
+          radial-gradient(6px 9px at 25px 34px, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.00) 76%),
+          radial-gradient(18px 10px at 25px 44px, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.00) 78%),
 
-        background-size:
-          22px 22px,
-          22px 22px,
-          22px 22px,
-          22px 22px;
+          /* canto sup-dir */
+          radial-gradient(34px 28px at calc(100% - 22px) 22px, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.00) 62%),
+          radial-gradient(26px 22px at calc(100% - 26px) 26px, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.00) 70%),
+          radial-gradient(8px 8px at calc(100% - 18px) 24px, rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.00) 72%),
+          radial-gradient(8px 8px at calc(100% - 32px) 24px, rgba(0,0,0,0.90) 0%, rgba(0,0,0,0.00) 72%),
+          radial-gradient(6px 9px at calc(100% - 25px) 34px, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.00) 76%),
+          radial-gradient(18px 10px at calc(100% - 25px) 44px, rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.00) 78%),
 
-        background-position:
-          0px 6px,
-          0px calc(100% - 28px),
-          6px 0px,
-          calc(100% - 28px) 0px;
+          /* canto inf-esq */
+          radial-gradient(34px 28px at 22px calc(100% - 22px), rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.00) 62%),
+          radial-gradient(26px 22px at 26px calc(100% - 26px), rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.00) 70%),
+          radial-gradient(8px 8px at 18px calc(100% - 32px), rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.00) 72%),
+          radial-gradient(8px 8px at 32px calc(100% - 32px), rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.00) 72%),
+          radial-gradient(6px 9px at 25px calc(100% - 22px), rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.00) 76%),
+          radial-gradient(18px 10px at 25px calc(100% - 12px), rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.00) 78%),
 
-        filter:
-          drop-shadow(0 0 8px rgba(255,0,0,0.22))
-          drop-shadow(0 0 2px rgba(0,0,0,0.95));
+          /* canto inf-dir */
+          radial-gradient(34px 28px at calc(100% - 22px) calc(100% - 22px), rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.00) 62%),
+          radial-gradient(26px 22px at calc(100% - 26px) calc(100% - 26px), rgba(0,0,0,0.70) 0%, rgba(0,0,0,0.00) 70%),
+          radial-gradient(8px 8px at calc(100% - 18px) calc(100% - 32px), rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.00) 72%),
+          radial-gradient(8px 8px at calc(100% - 32px) calc(100% - 32px), rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.00) 72%),
+          radial-gradient(6px 9px at calc(100% - 25px) calc(100% - 22px), rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.00) 76%),
+          radial-gradient(18px 10px at calc(100% - 25px) calc(100% - 12px), rgba(0,0,0,0.62) 0%, rgba(0,0,0,0.00) 78%),
 
-        mix-blend-mode: screen;
-        opacity: 0.52;
+          /* ===== Embers (brasas) discretas ===== */
+          radial-gradient(2px 2px at 25% 55%, rgba(255,90,40,0.40), rgba(255,90,40,0.00)),
+          radial-gradient(2px 2px at 62% 38%, rgba(255,90,40,0.35), rgba(255,90,40,0.00)),
+          radial-gradient(2px 2px at 75% 70%, rgba(255,90,40,0.32), rgba(255,90,40,0.00));
 
+        /* “moldura 3D” (inset frame) */
+        box-shadow:
+          inset 0 0 0 2px rgba(0,0,0,0.55),
+          inset 0 0 0 1px rgba(255,255,255,0.05),
+          inset 0 18px 26px rgba(255,255,255,0.04),
+          inset 0 -36px 60px rgba(0,0,0,0.55);
+
+        mix-blend-mode: multiply;
+        opacity: 0.92;
+
+        /* movimento “vivo” (não sprite andando) */
         animation:
-          skullCrawl 5.2s linear infinite,
-          skullFlicker 3.1s ease-in-out infinite;
+          smokeDrift 5.6s ease-in-out infinite,
+          edgeCreep 7.8s ease-in-out infinite,
+          emberFlicker 3.2s ease-in-out infinite;
+      }
+
+      /* Conteúdo acima das camadas */
+      .back-desc,
+      .meta,
+      .back-actions {
+        position: relative;
+        z-index: 2;
       }
 
       .back-desc {
         margin: 0;
-        color: rgba(230, 220, 198, 0.96);
+        color: rgba(235, 226, 206, 0.96);
         font-size: 0.92rem;
         line-height: 1.35;
-        text-shadow: 0 0 6px rgba(0,0,0,0.90);
+        text-shadow: 0 2px 10px rgba(0,0,0,0.85);
         text-align: center;
-        position: relative;
-        z-index: 1;
       }
 
       .meta {
         display: grid;
         gap: 8px;
-        position: relative;
-        z-index: 1;
       }
 
+      /* placas de pedra — não “verniz” */
       .meta-row {
         display: grid;
         grid-template-columns: 110px 1fr;
@@ -544,40 +557,43 @@
         padding: 9px 10px;
         border-radius: 10px;
 
-        background: linear-gradient(145deg, #3a332b, #1f1a16);
-        border: 1px solid rgba(0,0,0,0.90);
+        background:
+          radial-gradient(120% 80% at 30% 20%, rgba(255,255,255,0.06), rgba(255,255,255,0.00) 55%),
+          linear-gradient(145deg, rgba(54,48,44,0.92), rgba(22,18,16,0.92));
+
+        border: 1px solid rgba(0,0,0,0.85);
         box-shadow:
           inset 0 1px 2px rgba(255,255,255,0.05),
-          inset 0 -3px 6px rgba(0,0,0,0.60);
+          inset 0 -10px 18px rgba(0,0,0,0.55);
 
-        color: rgba(230, 220, 198, 0.92);
+        color: rgba(235, 226, 206, 0.92);
         font-size: 0.9rem;
-        text-shadow: 0 0 3px rgba(0,0,0,0.65);
+        text-shadow: 0 0 6px rgba(0,0,0,0.70);
         position: relative;
+        overflow: hidden;
       }
 
-      /* “fissuras” vermelhas discretas dentro das meta-rows */
+      /* fissuras vermelhas MUITO sutis (cinema, não neon) */
       .meta-row::after {
         content: "";
         position: absolute;
         inset: 0;
-        border-radius: 10px;
         pointer-events: none;
         background:
-          radial-gradient(90% 70% at 30% 40%, rgba(255,0,0,0.10), transparent 60%),
-          repeating-linear-gradient(115deg, rgba(255,0,0,0.10) 0px, rgba(255,0,0,0.10) 1px, transparent 9px, transparent 16px);
-        opacity: 0.28;
+          radial-gradient(80% 60% at 35% 50%, rgba(255,0,0,0.10), rgba(255,0,0,0.00) 70%),
+          repeating-linear-gradient(115deg, rgba(255,0,0,0.06) 0px, rgba(255,0,0,0.06) 1px, rgba(0,0,0,0) 12px, rgba(0,0,0,0) 22px);
+        opacity: 0.22;
         mix-blend-mode: screen;
       }
 
       .meta-key {
-        color: rgba(255, 70, 70, 0.96);
+        color: rgba(255, 90, 90, 0.92);
         font-weight: 700;
-        text-shadow: 0 0 6px rgba(255,0,0,0.35);
+        text-shadow: 0 0 10px rgba(120,0,0,0.55);
       }
 
       .meta a {
-        color: rgba(255, 180, 180, 0.92);
+        color: rgba(255, 200, 200, 0.92);
         text-decoration: underline;
       }
 
@@ -587,8 +603,6 @@
         gap: 8px;
         justify-content: center;
         flex-wrap: wrap;
-        position: relative;
-        z-index: 1;
       }
 
       .btn-mini {
@@ -599,20 +613,31 @@
         padding: 9px 12px;
         border-radius: 10px;
 
-        border: 1px solid rgba(0,0,0,0.90);
-        background: linear-gradient(to bottom, #2a1a12, #140b07);
-        color: rgba(255, 185, 185, 0.95);
+        border: 1px solid rgba(0,0,0,0.88);
+        background:
+          radial-gradient(120% 90% at 50% 20%, rgba(255,255,255,0.06), rgba(255,255,255,0.00) 60%),
+          linear-gradient(to bottom, rgba(36,18,12,0.96), rgba(12,8,7,0.96));
+        color: rgba(255, 205, 205, 0.96);
 
         font-family: "Cinzel", serif;
         font-size: 0.9rem;
-        text-shadow: 0 0 3px rgba(0,0,0,0.70);
+        text-shadow: 0 2px 10px rgba(0,0,0,0.75);
         cursor: pointer;
         transition: transform 0.15s ease, filter 0.15s ease;
         text-decoration: none;
       }
       .btn-mini:hover {
         transform: translateY(-1px);
-        filter: brightness(1.12);
+        filter: brightness(1.08);
+      }
+
+      /* acessibilidade */
+      @media (prefers-reduced-motion: reduce) {
+        .flip-back::before,
+        .flip-back::after,
+        .flip-back {
+          animation: none !important;
+        }
       }
 
       .legacy-ranking { display: none; }
