@@ -1,125 +1,203 @@
-<!-- TRECHO ANTERIOR DO ARQUIVO PERMANECE IGUAL ATÉ CHEGAR NO CSS DO FLIP -->
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Royal OtServlist</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<style>
-/* ===================== VERSO DO CARD — PEDRA + FOGO (SEM PERGAMINHO) ===================== */
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 
-.flip-back {
-  transform: rotateY(180deg);
-  padding: 26px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  position: relative;
+  <style>
+    body {
+      margin: 0;
+      font-family: "Cinzel", serif;
+      background: #000;
+      color: #e6dcc6;
+    }
 
-  /* PEDRA ESCURA */
-  background:
-    radial-gradient(140% 120% at 50% 20%, rgba(255,120,0,0.10) 0%, rgba(0,0,0,0.85) 75%),
-    linear-gradient(145deg, #2b2621 0%, #1b1713 40%, #0e0b09 100%);
-  
-  border: 1px solid rgba(0,0,0,0.8);
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.04),
-    inset 0 0 80px rgba(0,0,0,0.75),
-    0 16px 32px rgba(0,0,0,0.55);
-}
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 1100px;
+      margin: 60px auto;
+    }
 
-/* BRASAS / FOGO NAS BORDAS */
-.flip-back::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
+    .flip-card {
+      perspective: 1200px;
+      height: 360px;
+    }
 
-  background:
-    radial-gradient(220px 160px at 10% 10%, rgba(255,90,0,0.35) 0%, transparent 70%),
-    radial-gradient(260px 180px at 90% 15%, rgba(255,60,0,0.30) 0%, transparent 72%),
-    radial-gradient(240px 200px at 15% 90%, rgba(255,140,40,0.28) 0%, transparent 72%),
-    radial-gradient(280px 220px at 90% 90%, rgba(255,80,0,0.25) 0%, transparent 74%);
-  
-  mix-blend-mode: screen;
-  opacity: 0.85;
-}
+    .flip-inner {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(.22,.8,.2,1);
+    }
 
-/* TEXTO DIRETO NA PEDRA */
-.back-desc {
-  color: #e6dcc6;
-  font-size: 0.92rem;
-  text-align: center;
-  line-height: 1.35;
-  text-shadow: 0 0 6px rgba(0,0,0,0.9);
-  position: relative;
-  z-index: 1;
-}
+    .flip-card:hover .flip-inner {
+      transform: rotateY(180deg);
+    }
 
-/* BLOCOS DE INFO — GRAVADOS NA PEDRA (SEM PAINEL CLARO) */
-.meta {
-  display: grid;
-  gap: 10px;
-  position: relative;
-  z-index: 1;
-}
+    .flip-face {
+      position: absolute;
+      inset: 0;
+      border-radius: 14px;
+      backface-visibility: hidden;
+      overflow: hidden;
+      box-shadow: 0 18px 36px rgba(0,0,0,.6);
+    }
 
-.meta-row {
-  display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 8px;
-  align-items: center;
-  padding: 10px 12px;
+    /* FRENTE */
+    .face-front {
+      background: linear-gradient(180deg, #111, #000);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
 
-  background:
-    linear-gradient(145deg, #3a322a, #241f1a);
-  
-  border: 1px solid rgba(0,0,0,0.8);
-  box-shadow:
-    inset 0 1px 2px rgba(255,255,255,0.05),
-    inset 0 -3px 6px rgba(0,0,0,0.6);
+    .face-front img {
+      width: 120px;
+    }
 
-  color: #e6dcc6;
-  font-size: 0.9rem;
-}
+    /* ======= VERSO — PEDRA + FOGO (SEM FUNDO CLARO) ======= */
+    .flip-back {
+      transform: rotateY(180deg);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      position: relative;
 
-.meta-key {
-  color: #ffcc66;
-  font-weight: 700;
-  text-shadow: 0 0 4px #000;
-}
+      background:
+        radial-gradient(140% 120% at 50% 15%, rgba(255,100,0,0.15), rgba(0,0,0,0.85) 75%),
+        linear-gradient(145deg, #2b2621 0%, #1a1511 50%, #0b0907 100%);
 
-.meta a {
-  color: #ffd27d;
-  text-decoration: underline;
-}
+      border: 1px solid rgba(0,0,0,.9);
+      box-shadow:
+        inset 0 0 80px rgba(0,0,0,.75),
+        0 16px 32px rgba(0,0,0,.6);
+    }
 
-/* BOTÕES — METAL ESCURO FORJADO */
-.back-actions {
-  margin-top: auto;
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  position: relative;
-  z-index: 1;
-}
+    /* BRASAS */
+    .flip-back::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
 
-.btn-mini {
-  padding: 10px 14px;
-  border-radius: 10px;
+      background:
+        radial-gradient(200px 150px at 10% 10%, rgba(255,80,0,.35), transparent 70%),
+        radial-gradient(260px 180px at 90% 15%, rgba(255,60,0,.30), transparent 72%),
+        radial-gradient(240px 200px at 15% 90%, rgba(255,140,40,.28), transparent 72%),
+        radial-gradient(280px 220px at 90% 90%, rgba(255,80,0,.25), transparent 74%);
 
-  background:
-    linear-gradient(to bottom, #3a2a1a, #1d120a);
+      mix-blend-mode: screen;
+      opacity: .9;
+    }
 
-  border: 1px solid rgba(0,0,0,0.9);
-  color: #ffd27d;
+    .back-desc {
+      text-align: center;
+      font-size: .95rem;
+      line-height: 1.35;
+      text-shadow: 0 0 6px #000;
+      z-index: 1;
+    }
 
-  font-family: "Cinzel", serif;
-  font-size: 0.9rem;
-  text-shadow: 0 0 4px #000;
+    .meta {
+      display: grid;
+      gap: 10px;
+      z-index: 1;
+    }
 
-  cursor: pointer;
-  transition: transform 0.15s ease, filter 0.15s ease;
-}
+    .meta-row {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 8px;
+      padding: 10px 12px;
 
-.btn-mini:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.15);
-}
-</style>
+      background: linear-gradient(145deg, #3a322a, #241f1a);
+      border: 1px solid rgba(0,0,0,.85);
+
+      color: #e6dcc6;
+      font-size: .9rem;
+      box-shadow:
+        inset 0 1px 2px rgba(255,255,255,.05),
+        inset 0 -3px 6px rgba(0,0,0,.6);
+    }
+
+    .meta-key {
+      color: #ffcc66;
+      font-weight: 700;
+    }
+
+    .meta a {
+      color: #ffd27d;
+      text-decoration: underline;
+    }
+
+    .back-actions {
+      margin-top: auto;
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .btn-mini {
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: linear-gradient(to bottom, #3a2a1a, #1d120a);
+      border: 1px solid rgba(0,0,0,.9);
+      color: #ffd27d;
+      cursor: pointer;
+      transition: transform .15s, filter .15s;
+    }
+
+    .btn-mini:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.15);
+    }
+
+    @media (max-width: 900px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="cards-grid">
+    <div class="flip-card">
+      <div class="flip-inner">
+        <div class="flip-face face-front">
+          <img src="./brasao-novo.png" alt="Jogada">
+          <div>Passe o mouse</div>
+        </div>
+
+        <div class="flip-face flip-back">
+          <p class="back-desc">Descrição curta do que aconteceu nessa jogada.</p>
+
+          <div class="meta">
+            <div class="meta-row"><span class="meta-key">Personagem</span><span>Nome do char</span></div>
+            <div class="meta-row"><span class="meta-key">Stream</span><span><a href="#">link da stream</a></span></div>
+            <div class="meta-row"><span class="meta-key">Seu vídeo</span><span><a href="#">link do vídeo</a></span></div>
+          </div>
+
+          <div class="back-actions">
+            <a class="btn-mini" href="#">▶ YouTube</a>
+            <button class="btn-mini">🗳 Votar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
