@@ -356,6 +356,7 @@
         font-size: 0.92rem;
         text-shadow: 0 0 4px #000;
       }
+
       /* ====== VERSO: PEDRA + PERGAMINHO (medieval) ====== */
       .flip-back {
         transform: rotateY(180deg);
@@ -365,14 +366,14 @@
         gap: 10px;
         position: relative;
 
-        /* MOLDURA DE PEDRA (blocos + sombra + volume) */
+        /* MOLDURA DE PEDRA (blocos + volume) */
         background:
           /* luz no topo (relevo) */
           radial-gradient(140% 90% at 50% 18%, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.00) 55%),
           /* sombra embaixo (profundidade) */
           radial-gradient(140% 90% at 50% 95%, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.00) 58%),
 
-          /* linhas horizontais (fiadas de pedra) */
+          /* fiadas horizontais (pedra) */
           repeating-linear-gradient(
             0deg,
             rgba(0,0,0,0.00) 0px,
@@ -381,7 +382,7 @@
             rgba(0,0,0,0.22) 28px
           ),
 
-          /* linhas verticais (junções de blocos) */
+          /* junções verticais (blocos) */
           repeating-linear-gradient(
             90deg,
             rgba(0,0,0,0.00) 0px,
@@ -390,7 +391,7 @@
             rgba(0,0,0,0.18) 58px
           ),
 
-          /* base de pedra */
+          /* base da pedra */
           linear-gradient(
             135deg,
             rgba(92, 86, 78, 0.98) 0%,
@@ -418,11 +419,9 @@
         pointer-events: none;
 
         background:
-          /* manchas suaves */
           radial-gradient(55% 45% at 20% 30%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.00) 60%),
           radial-gradient(55% 45% at 78% 78%, rgba(0,0,0,0.24) 0%, rgba(0,0,0,0.00) 62%),
 
-          /* fibras/ruído */
           repeating-linear-gradient(
             115deg,
             rgba(255,255,255,0.00) 0px,
@@ -432,7 +431,6 @@
             rgba(255,255,255,0.00) 14px
           ),
 
-          /* trincas finas diagonais */
           repeating-linear-gradient(
             25deg,
             rgba(0,0,0,0.00) 0px,
@@ -458,7 +456,6 @@
           radial-gradient(120% 90% at 50% 18%, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0.00) 55%),
           radial-gradient(120% 90% at 50% 95%, rgba(60, 24, 4, 0.22) 0%, rgba(60, 24, 4, 0.00) 58%),
 
-          /* base pergaminho */
           linear-gradient(
             180deg,
             rgba(246, 236, 214, 0.98) 0%,
@@ -466,7 +463,6 @@
             rgba(216, 189, 145, 0.98) 100%
           ),
 
-          /* textura fibras */
           repeating-linear-gradient(
             90deg,
             rgba(120, 88, 54, 0.03) 0px,
