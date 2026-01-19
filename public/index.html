@@ -123,17 +123,12 @@
         --gold: #ffe97f;
         --muted: rgba(240, 237, 210, 0.78);
 
-        /* FUNDO 3 (BLOCOS 1/2/3) MAIS ESCURO */
+        /* FUNDO 3 (BLOCOS 1/2/3) */
         --panelA: rgba(0, 0, 0, 0.66);
         --panelB: rgba(0, 0, 0, 0.46);
 
         --line: rgba(255, 204, 102, 0.26);
         --lineStrong: rgba(255, 204, 102, 0.38);
-
-        --royalBase: #5c3a22;
-        --royalGold: #caa24a;
-
-        --grain: url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%27300%27%20height%3D%27300%27%3E%3Cfilter%20id%3D%27n%27%3E%3CfeTurbulence%20type%3D%27fractalNoise%27%20baseFrequency%3D%270.9%27%20numOctaves%3D%272%27%20stitchTiles%3D%27stitch%27/%3E%3C/filter%3E%3Crect%20width%3D%27100%25%27%20height%3D%27100%25%27%20filter%3D%27url(%2523n)%27%20opacity%3D%270.65%27/%3E%3C/svg%3E");
       }
 
       .home-info {
@@ -146,50 +141,36 @@
         max-width: 980px;
       }
 
-      /* ==========================
-         AQUI: HOME-PILL IGUAL AO MENU
-         ========================== */
+      /* HOME-PILL (igual ao menu) */
       .home-pill {
         position: relative;
         overflow: hidden;
-
         border-radius: 12px;
         padding: 12px 16px;
-
-        /* fundo escuro “premium” */
         background: linear-gradient(
           to bottom,
           rgba(42, 32, 18, 0.92),
           rgba(16, 12, 8, 0.92)
         );
-
-        /* borda dourada do menu */
         border: 1px solid rgba(202, 162, 74, 0.70);
-
-        /* relevo/vidro como no menu */
         box-shadow:
           inset 0 0 0 1px rgba(255, 235, 175, 0.06),
           inset 0 10px 16px rgba(255, 255, 255, 0.04),
           inset 0 -18px 28px rgba(0, 0, 0, 0.65),
           0 10px 18px rgba(0, 0, 0, 0.45);
-
         color: rgba(255, 233, 160, 0.96);
         text-shadow: 0 0 4px rgba(0,0,0,0.85);
-
         font-family: "Cinzel", serif;
         font-size: 0.95rem;
         letter-spacing: 0.35px;
-
         display: inline-flex;
         gap: 10px;
         align-items: center;
         justify-content: center;
-
         min-height: 44px;
         min-width: 220px;
       }
 
-      /* brilho sutil no topo igual ao acabamento do menu */
       .home-pill::before {
         content: "";
         position: absolute;
@@ -320,7 +301,7 @@
         border-radius: 14px;
         overflow: hidden;
         backface-visibility: hidden;
-        border: 1px solid rgba(255, 204, 102, 0.2);
+        border: 1px solid rgba(255, 204, 102, 0.20);
         background: linear-gradient(
           to bottom,
           rgba(0, 0, 0, 0.55),
@@ -365,31 +346,18 @@
         background: linear-gradient(
           to bottom,
           transparent 45%,
-          rgba(0, 0, 0, 0.7)
+          rgba(0, 0, 0, 0.70)
         );
         pointer-events: none;
       }
 
       @keyframes crestBrightSpinNoHalo {
-        0% {
-          transform: translateY(2px) scale(1.06) rotate(0deg);
-          filter: none;
-        }
-        55% {
-          transform: translateY(0px) scale(1.12) rotate(7deg);
-          filter: brightness(1.55) saturate(1.85) contrast(1.12);
-        }
-        100% {
-          transform: translateY(0px) scale(1.09) rotate(2deg);
-          filter: brightness(1.4) saturate(1.6) contrast(1.08);
-        }
+        0% { transform: translateY(2px) scale(1.06) rotate(0deg); filter: none; }
+        55% { transform: translateY(0px) scale(1.12) rotate(7deg); filter: brightness(1.55) saturate(1.85) contrast(1.12); }
+        100% { transform: translateY(0px) scale(1.09) rotate(2deg); filter: brightness(1.40) saturate(1.60) contrast(1.08); }
       }
-      .flip-card:hover .thumb img {
-        animation: crestBrightSpinNoHalo 0.22s ease-out both;
-      }
-      .flip-card.is-flipped .thumb img {
-        animation: crestBrightSpinNoHalo 0.22s ease-out both;
-      }
+      .flip-card:hover .thumb img { animation: crestBrightSpinNoHalo 0.22s ease-out both; }
+      .flip-card.is-flipped .thumb img { animation: crestBrightSpinNoHalo 0.22s ease-out both; }
 
       .front-bottom {
         height: 38%;
@@ -413,7 +381,10 @@
         text-shadow: 0 0 4px #000;
       }
 
-      /* ========= VERSO ========= */
+      /* ============================================================
+         VERSO: PRATEADO COM TEXTURA (SEM FUNDO 2 / SEM DUPLICAR LAYERS)
+         Coloque a imagem em /public como: bg-prata-tijolo.png
+         ============================================================ */
       .flip-back {
         transform: rotateY(180deg);
         padding: 12px 12px 14px;
@@ -422,60 +393,45 @@
         gap: 10px;
         position: relative;
 
-        background: var(--royalBase);
-        border: 2px solid var(--royalGold);
+        /* OVERRIDE total do background do .flip-face (mata o fundo escuro que “atrapalha”) */
+        background:
+          url("./bg-prata-tijolo.png") center/cover no-repeat;
+
+        border: 1px solid rgba(230, 230, 230, 0.70);
+
+        /* brilho/volume sutil (realeza, mas SEM gradiente “manchado”) */
         box-shadow:
-          0 16px 34px rgba(0,0,0,0.50),
-          inset 0 0 0 1px rgba(255,235,175,0.06);
+          inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+          inset 0 18px 30px rgba(0, 0, 0, 0.18),
+          inset 0 -28px 46px rgba(0, 0, 0, 0.26),
+          0 14px 26px rgba(0, 0, 0, 0.45);
       }
 
+      /* remove qualquer "fundo 2" que existia */
+      .flip-back::before,
       .flip-back::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: 14px;
-        pointer-events: none;
-        z-index: 0;
-
-        background-image:
-          linear-gradient(115deg,
-            rgba(255,220,140,0.00) 0%,
-            rgba(255,220,140,0.00) 38%,
-            rgba(255,220,140,0.18) 46%,
-            rgba(255,220,140,0.00) 56%,
-            rgba(255,220,140,0.00) 100%
-          ),
-          radial-gradient(120% 90% at 50% 10%, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.00) 55%),
-          radial-gradient(120% 95% at 50% 100%, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.00) 52%),
-          var(--grain);
-
-        background-size: 240% 240%, 140% 140%, 140% 140%, 300px 300px;
-        background-position: -60% 0%, 0% 0%, 0% 0%, 0 0;
-
-        opacity: 0.42;
-        filter: contrast(1.10) saturate(1.08);
-        animation: royalSheen 3.2s ease-in-out infinite;
+        content: none !important;
       }
 
-      @keyframes royalSheen {
-        0%   { background-position: -70% 0%, 0% 0%, 0% 0%, 0 0; opacity: 0.36; }
-        50%  { background-position:  70% 0%, 8% 0%, -8% 6%, 55px 35px; opacity: 0.46; }
-        100% { background-position: -70% 0%, 0% 0%, 0% 0%, 0 0; opacity: 0.38; }
+      /* texto sempre por cima */
+      .flip-back > * {
+        position: relative;
+        z-index: 1;
       }
-
-      .flip-back::before { content: none !important; }
-
-      .flip-back > * { position: relative; z-index: 1; }
 
       .back-desc {
         margin: 0;
-        color: rgba(240, 237, 210, 0.94);
+        color: rgba(18, 18, 18, 0.92);
         font-size: 0.92rem;
         line-height: 1.35;
         text-align: center;
+        text-shadow: 0 1px 0 rgba(255,255,255,0.30);
       }
 
-      .meta { display: grid; gap: 8px; }
+      .meta {
+        display: grid;
+        gap: 8px;
+      }
 
       .meta-row {
         display: grid;
@@ -485,14 +441,23 @@
         padding: 9px 10px;
         border-radius: 10px;
 
-        background: rgba(0,0,0,0.14);
-        border: 1px solid rgba(202,162,74,0.58);
-        color: rgba(240,237,210,0.94);
+        /* caixas internas em prata mais “liso” (sem variação feia) */
+        background: rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(40, 40, 40, 0.22);
+
+        color: rgba(18, 18, 18, 0.92);
         font-size: 0.9rem;
+        text-shadow: 0 1px 0 rgba(255,255,255,0.22);
       }
 
-      .meta-key { color: rgba(255,235,175,0.98); font-weight: 700; }
-      .meta a { color: rgba(240,237,210,0.94); text-decoration: underline; }
+      .meta-key {
+        color: rgba(10, 10, 10, 0.92);
+        font-weight: 700;
+      }
+      .meta a {
+        color: rgba(10, 10, 10, 0.92);
+        text-decoration: underline;
+      }
 
       .back-actions {
         margin-top: auto;
@@ -510,9 +475,9 @@
         padding: 9px 12px;
         border-radius: 10px;
 
-        background: rgba(0,0,0,0.14);
-        border: 2px solid rgba(202,162,74,0.88);
-        color: rgba(240,237,210,0.96);
+        background: rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(40, 40, 40, 0.30);
+        color: rgba(10, 10, 10, 0.92);
 
         font-family: "Cinzel", serif;
         font-size: 0.9rem;
@@ -520,7 +485,10 @@
         transition: transform 0.15s ease, filter 0.15s ease;
         text-decoration: none;
       }
-      .btn-mini:hover { transform: translateY(-1px); filter: brightness(1.04); }
+      .btn-mini:hover {
+        transform: translateY(-1px);
+        filter: brightness(1.03);
+      }
 
       .legacy-ranking { display: none; }
     </style>
