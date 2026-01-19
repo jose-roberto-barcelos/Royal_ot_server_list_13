@@ -123,7 +123,7 @@
         --gold: #ffe97f;
         --muted: rgba(240, 237, 210, 0.78);
 
-        /* ✅ FUNDO 3 (BLOCOS 1/2/3) MAIS ESCURO */
+        /* FUNDO 3 (BLOCOS 1/2/3) MAIS ESCURO */
         --panelA: rgba(0, 0, 0, 0.66);
         --panelB: rgba(0, 0, 0, 0.46);
 
@@ -145,20 +145,67 @@
         margin: 0 auto 14px auto;
         max-width: 980px;
       }
+
+      /* ==========================
+         AQUI: HOME-PILL IGUAL AO MENU
+         ========================== */
       .home-pill {
-        background: rgba(0, 0, 0, 0.55);
-        border: 1px solid var(--line);
-        border-radius: 10px;
-        padding: 10px 12px;
-        color: var(--gold);
-        text-shadow: 0 0 4px #000;
+        position: relative;
+        overflow: hidden;
+
+        border-radius: 12px;
+        padding: 12px 16px;
+
+        /* fundo escuro “premium” */
+        background: linear-gradient(
+          to bottom,
+          rgba(42, 32, 18, 0.92),
+          rgba(16, 12, 8, 0.92)
+        );
+
+        /* borda dourada do menu */
+        border: 1px solid rgba(202, 162, 74, 0.70);
+
+        /* relevo/vidro como no menu */
+        box-shadow:
+          inset 0 0 0 1px rgba(255, 235, 175, 0.06),
+          inset 0 10px 16px rgba(255, 255, 255, 0.04),
+          inset 0 -18px 28px rgba(0, 0, 0, 0.65),
+          0 10px 18px rgba(0, 0, 0, 0.45);
+
+        color: rgba(255, 233, 160, 0.96);
+        text-shadow: 0 0 4px rgba(0,0,0,0.85);
+
         font-family: "Cinzel", serif;
         font-size: 0.95rem;
-        letter-spacing: 0.3px;
-        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
+        letter-spacing: 0.35px;
+
         display: inline-flex;
-        gap: 8px;
+        gap: 10px;
         align-items: center;
+        justify-content: center;
+
+        min-height: 44px;
+        min-width: 220px;
+      }
+
+      /* brilho sutil no topo igual ao acabamento do menu */
+      .home-pill::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: linear-gradient(
+          to bottom,
+          rgba(255, 235, 175, 0.08),
+          rgba(255, 235, 175, 0.00) 55%
+        );
+        opacity: 1;
+      }
+
+      .home-pill span {
+        position: relative;
+        z-index: 1;
       }
 
       .home-actions {
@@ -382,7 +429,6 @@
           inset 0 0 0 1px rgba(255,235,175,0.06);
       }
 
-      /* ✅ FUNDO 2 (BRILHO/TEXTURA) VOLTA MAIS FORTE */
       .flip-back::after {
         content: "";
         position: absolute;
@@ -406,7 +452,7 @@
         background-size: 240% 240%, 140% 140%, 140% 140%, 300px 300px;
         background-position: -60% 0%, 0% 0%, 0% 0%, 0 0;
 
-        opacity: 0.42; /* <-- voltou pra ver o brilho */
+        opacity: 0.42;
         filter: contrast(1.10) saturate(1.08);
         animation: royalSheen 3.2s ease-in-out infinite;
       }
