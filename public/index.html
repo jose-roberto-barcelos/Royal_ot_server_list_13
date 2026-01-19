@@ -119,18 +119,25 @@
         right: 0.5rem;
       }
 
+      /* ======= BASE DO Miolo ======= */
       :root {
         --gold: #ffe97f;
+        --ink: rgba(240, 237, 210, 0.92);
         --muted: rgba(240, 237, 210, 0.78);
-
-        /* FUNDO 3 (BLOCOS 1/2/3) */
-        --panelA: rgba(0, 0, 0, 0.66);
-        --panelB: rgba(0, 0, 0, 0.46);
-
+        --panelA: rgba(0, 0, 0, 0.55);
+        --panelB: rgba(0, 0, 0, 0.35);
         --line: rgba(255, 204, 102, 0.26);
         --lineStrong: rgba(255, 204, 102, 0.38);
+
+        /* texto no verso */
+        --backText: rgba(245, 245, 245, 0.92);
+        --backMuted: rgba(245, 245, 245, 0.78);
+
+        --lacquer: rgba(18, 8, 2, 0.78);
+        --lacquer2: rgba(18, 8, 2, 0.62);
       }
 
+      /* ======= UI ======= */
       .home-info {
         display: flex;
         flex-wrap: wrap;
@@ -140,53 +147,20 @@
         margin: 0 auto 14px auto;
         max-width: 980px;
       }
-
-      /* HOME-PILL (igual ao menu) */
       .home-pill {
-        position: relative;
-        overflow: hidden;
-        border-radius: 12px;
-        padding: 12px 16px;
-        background: linear-gradient(
-          to bottom,
-          rgba(42, 32, 18, 0.92),
-          rgba(16, 12, 8, 0.92)
-        );
-        border: 1px solid rgba(202, 162, 74, 0.70);
-        box-shadow:
-          inset 0 0 0 1px rgba(255, 235, 175, 0.06),
-          inset 0 10px 16px rgba(255, 255, 255, 0.04),
-          inset 0 -18px 28px rgba(0, 0, 0, 0.65),
-          0 10px 18px rgba(0, 0, 0, 0.45);
-        color: rgba(255, 233, 160, 0.96);
-        text-shadow: 0 0 4px rgba(0,0,0,0.85);
+        background: rgba(0, 0, 0, 0.55);
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 10px 12px;
+        color: var(--gold);
+        text-shadow: 0 0 4px #000;
         font-family: "Cinzel", serif;
         font-size: 0.95rem;
-        letter-spacing: 0.35px;
+        letter-spacing: 0.3px;
+        box-shadow: 0 10px 18px rgba(0, 0, 0, 0.35);
         display: inline-flex;
-        gap: 10px;
+        gap: 8px;
         align-items: center;
-        justify-content: center;
-        min-height: 44px;
-        min-width: 220px;
-      }
-
-      .home-pill::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        background: linear-gradient(
-          to bottom,
-          rgba(255, 235, 175, 0.08),
-          rgba(255, 235, 175, 0.00) 55%
-        );
-        opacity: 1;
-      }
-
-      .home-pill span {
-        position: relative;
-        z-index: 1;
       }
 
       .home-actions {
@@ -208,11 +182,7 @@
         padding: 10px 14px;
         border-radius: 10px;
         border: 1px solid var(--lineStrong);
-        background: linear-gradient(
-          to bottom,
-          rgba(0, 0, 0, 0.62),
-          rgba(0, 0, 0, 0.38)
-        );
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.38));
         color: var(--gold);
         font-family: "Cinzel", serif;
         font-size: 0.95rem;
@@ -302,11 +272,7 @@
         overflow: hidden;
         backface-visibility: hidden;
         border: 1px solid rgba(255, 204, 102, 0.20);
-        background: linear-gradient(
-          to bottom,
-          rgba(0, 0, 0, 0.55),
-          rgba(0, 0, 0, 0.35)
-        );
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35));
         box-shadow: 0 14px 26px rgba(0, 0, 0, 0.45);
       }
 
@@ -343,11 +309,7 @@
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(
-          to bottom,
-          transparent 45%,
-          rgba(0, 0, 0, 0.70)
-        );
+        background: linear-gradient(to bottom, transparent 45%, rgba(0, 0, 0, 0.70));
         pointer-events: none;
       }
 
@@ -373,6 +335,7 @@
         color: var(--gold);
         font-size: 0.98rem;
         text-shadow: 0 0 4px #000;
+        letter-spacing: 0.3px;
       }
       .card-sub {
         margin: 0;
@@ -382,8 +345,10 @@
       }
 
       /* ============================================================
-         VERSO: PRATEADO COM TEXTURA (SEM FUNDO 2 / SEM DUPLICAR LAYERS)
-         Coloque a imagem em /public como: bg-prata-tijolo.png
+         VERSO: PRATA + TEXTURA backg.png + BRILHO MOVIMENTANDO
+         - sem fundo 2
+         - sem gradiente marrom
+         - texto mais claro e legível
          ============================================================ */
       .flip-back {
         transform: rotateY(180deg);
@@ -393,44 +358,87 @@
         gap: 10px;
         position: relative;
 
-        /* OVERRIDE total do background do .flip-face (mata o fundo escuro que “atrapalha”) */
+        /* substitui TOTAL o fundo escuro do .flip-face */
         background:
-          url("./bg-prata-tijolo.png") center/cover no-repeat;
+          /* prata lisa (base) */
+          linear-gradient(180deg, rgba(205,205,205,0.92), rgba(165,165,165,0.92)),
+          /* textura (nome exato que você pediu) */
+          url("./backg.png");
 
-        border: 1px solid rgba(230, 230, 230, 0.70);
+        background-size:
+          cover,
+          cover;
+        background-position:
+          center,
+          center;
+        background-repeat:
+          no-repeat,
+          no-repeat;
 
-        /* brilho/volume sutil (realeza, mas SEM gradiente “manchado”) */
+        background-blend-mode: overlay;
+
+        border: 1px solid rgba(240, 240, 240, 0.55);
         box-shadow:
-          inset 0 0 0 1px rgba(255, 255, 255, 0.18),
-          inset 0 18px 30px rgba(0, 0, 0, 0.18),
-          inset 0 -28px 46px rgba(0, 0, 0, 0.26),
-          0 14px 26px rgba(0, 0, 0, 0.45);
+          inset 0 0 0 1px rgba(255,255,255,0.18),
+          inset 0 18px 30px rgba(0,0,0,0.18),
+          inset 0 -28px 46px rgba(0,0,0,0.26),
+          0 14px 26px rgba(0,0,0,0.45);
       }
 
-      /* remove qualquer "fundo 2" que existia */
-      .flip-back::before,
+      /* brilho movimentando (shimmer) por cima do prata */
+      @keyframes royalSilverShimmer {
+        0%   { transform: translateX(-35%) skewX(-16deg); opacity: 0.0; }
+        15%  { opacity: 0.22; }
+        50%  { opacity: 0.18; }
+        85%  { opacity: 0.22; }
+        100% { transform: translateX(135%) skewX(-16deg); opacity: 0.0; }
+      }
+
       .flip-back::after {
-        content: none !important;
+        content: "";
+        position: absolute;
+        inset: -20%;
+        pointer-events: none;
+        z-index: 0;
+
+        /* faixa de luz “cinema” */
+        background: linear-gradient(
+          90deg,
+          rgba(255,255,255,0) 0%,
+          rgba(255,255,255,0.08) 35%,
+          rgba(255,255,255,0.22) 50%,
+          rgba(255,255,255,0.08) 65%,
+          rgba(255,255,255,0) 100%
+        );
+
+        filter: blur(1.2px);
+        mix-blend-mode: screen;
+        animation: royalSilverShimmer 3.8s linear infinite;
       }
 
-      /* texto sempre por cima */
-      .flip-back > * {
-        position: relative;
-        z-index: 1;
-      }
+      /* remove qualquer outro overlay antigo (caso tenha sobrado) */
+      .flip-back::before { content: none !important; }
 
+      /* texto SEMPRE acima do brilho */
+      .flip-back > * { position: relative; z-index: 1; }
+
+      /* texto mais claro e com sombra pra ler no prata */
       .back-desc {
         margin: 0;
-        color: rgba(18, 18, 18, 0.92);
+        color: rgba(250,250,250,0.94);
         font-size: 0.92rem;
         line-height: 1.35;
         text-align: center;
-        text-shadow: 0 1px 0 rgba(255,255,255,0.30);
+        text-shadow:
+          0 2px 6px rgba(0,0,0,0.65),
+          0 1px 0 rgba(0,0,0,0.40);
       }
 
       .meta {
         display: grid;
         gap: 8px;
+        position: relative;
+        z-index: 1;
       }
 
       .meta-row {
@@ -441,30 +449,34 @@
         padding: 9px 10px;
         border-radius: 10px;
 
-        /* caixas internas em prata mais “liso” (sem variação feia) */
-        background: rgba(255, 255, 255, 0.18);
-        border: 1px solid rgba(40, 40, 40, 0.22);
+        /* “placas” internas discretas (sem marrom) */
+        background: rgba(0,0,0,0.28);
+        border: 1px solid rgba(255,255,255,0.16);
 
-        color: rgba(18, 18, 18, 0.92);
+        color: rgba(250,250,250,0.92);
         font-size: 0.9rem;
-        text-shadow: 0 1px 0 rgba(255,255,255,0.22);
+        text-shadow: 0 2px 6px rgba(0,0,0,0.70);
       }
 
       .meta-key {
-        color: rgba(10, 10, 10, 0.92);
+        color: rgba(255,240,190,0.96);
         font-weight: 700;
       }
+
       .meta a {
-        color: rgba(10, 10, 10, 0.92);
+        color: rgba(255,255,255,0.95);
         text-decoration: underline;
+        text-shadow: 0 2px 6px rgba(0,0,0,0.70);
       }
 
       .back-actions {
         margin-top: auto;
         display: flex;
-        gap: 10px;
+        gap: 8px;
         justify-content: center;
         flex-wrap: wrap;
+        position: relative;
+        z-index: 1;
       }
 
       .btn-mini {
@@ -475,19 +487,21 @@
         padding: 9px 12px;
         border-radius: 10px;
 
-        background: rgba(255, 255, 255, 0.18);
-        border: 1px solid rgba(40, 40, 40, 0.30);
-        color: rgba(10, 10, 10, 0.92);
+        background: rgba(0,0,0,0.30);
+        border: 1px solid rgba(255,255,255,0.18);
+        color: rgba(255,255,255,0.95);
 
         font-family: "Cinzel", serif;
         font-size: 0.9rem;
+        text-shadow: 0 2px 6px rgba(0,0,0,0.75);
         cursor: pointer;
         transition: transform 0.15s ease, filter 0.15s ease;
         text-decoration: none;
       }
+
       .btn-mini:hover {
         transform: translateY(-1px);
-        filter: brightness(1.03);
+        filter: brightness(1.06);
       }
 
       .legacy-ranking { display: none; }
