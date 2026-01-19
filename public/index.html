@@ -122,8 +122,11 @@
       :root {
         --gold: #ffe97f;
         --muted: rgba(240, 237, 210, 0.78);
-        --panelA: rgba(0, 0, 0, 0.55);
-        --panelB: rgba(0, 0, 0, 0.35);
+
+        /* ✅ FUNDO 3 (BLOCOS 1/2/3) MAIS ESCURO */
+        --panelA: rgba(0, 0, 0, 0.66);
+        --panelB: rgba(0, 0, 0, 0.46);
+
         --line: rgba(255, 204, 102, 0.26);
         --lineStrong: rgba(255, 204, 102, 0.38);
 
@@ -363,7 +366,7 @@
         text-shadow: 0 0 4px #000;
       }
 
-      /* ========= VERSO (sem 2º fundo) ========= */
+      /* ========= VERSO ========= */
       .flip-back {
         transform: rotateY(180deg);
         padding: 12px 12px 14px;
@@ -379,7 +382,7 @@
           inset 0 0 0 1px rgba(255,235,175,0.06);
       }
 
-      /* FUNDO ÚNICO: textura + brilho sutil “royal” (MAIS ESCURO) */
+      /* ✅ FUNDO 2 (BRILHO/TEXTURA) VOLTA MAIS FORTE */
       .flip-back::after {
         content: "";
         position: absolute;
@@ -392,33 +395,30 @@
           linear-gradient(115deg,
             rgba(255,220,140,0.00) 0%,
             rgba(255,220,140,0.00) 38%,
-            rgba(255,220,140,0.12) 46%,
+            rgba(255,220,140,0.18) 46%,
             rgba(255,220,140,0.00) 56%,
             rgba(255,220,140,0.00) 100%
           ),
-          radial-gradient(120% 90% at 50% 10%, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.00) 55%),
-          radial-gradient(120% 95% at 50% 100%, rgba(0,0,0,0.50) 0%, rgba(0,0,0,0.00) 52%),
+          radial-gradient(120% 90% at 50% 10%, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.00) 55%),
+          radial-gradient(120% 95% at 50% 100%, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.00) 52%),
           var(--grain);
 
         background-size: 240% 240%, 140% 140%, 140% 140%, 300px 300px;
         background-position: -60% 0%, 0% 0%, 0% 0%, 0 0;
 
-        opacity: 0.28; /* <-- ESCURECE mesmo */
-        filter: contrast(1.10) saturate(1.06);
+        opacity: 0.42; /* <-- voltou pra ver o brilho */
+        filter: contrast(1.10) saturate(1.08);
         animation: royalSheen 3.2s ease-in-out infinite;
       }
 
-      /* ⚠️ AQUI era o “travamento”: a animação sobrescrevia a opacidade */
       @keyframes royalSheen {
-        0%   { background-position: -70% 0%, 0% 0%, 0% 0%, 0 0; opacity: 0.22; }
-        50%  { background-position:  70% 0%, 8% 0%, -8% 6%, 55px 35px; opacity: 0.30; }
-        100% { background-position: -70% 0%, 0% 0%, 0% 0%, 0 0; opacity: 0.24; }
+        0%   { background-position: -70% 0%, 0% 0%, 0% 0%, 0 0; opacity: 0.36; }
+        50%  { background-position:  70% 0%, 8% 0%, -8% 6%, 55px 35px; opacity: 0.46; }
+        100% { background-position: -70% 0%, 0% 0%, 0% 0%, 0 0; opacity: 0.38; }
       }
 
-      /* removido 2º fundo */
       .flip-back::before { content: none !important; }
 
-      /* Conteúdo acima do fundo */
       .flip-back > * { position: relative; z-index: 1; }
 
       .back-desc {
