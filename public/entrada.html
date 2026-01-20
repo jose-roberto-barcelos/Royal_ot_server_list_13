@@ -14,15 +14,15 @@
       :root{
         --gold1:#fff2b0;
         --gold2:#ffcc66;
-        --bgShadow:rgba(0,0,0,.72);
+        --panelBorder: rgba(255,204,102,0.26);
       }
 
       *{ box-sizing:border-box; }
       html,body{ height:100%; margin:0; }
       body{
         font-family:"Cinzel", serif;
-        overflow:hidden;
         background:#000;
+        overflow:hidden;
       }
 
       .hero{
@@ -36,25 +36,29 @@
         padding:24px;
       }
 
-      .bg{
+      /* VIDEO BACKGROUND */
+      .bg-video{
         position:absolute;
         inset:0;
-        background-image:url("./entrada-bg.png"); /* sua imagem limpa */
-        background-size:cover;
-        background-position:center;
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        object-position:center;
         transform:scale(1.02);
-        filter:contrast(1.05) saturate(1.05);
+        filter:contrast(1.04) saturate(1.03);
       }
 
+      /* overlays (cinema + legibilidade) */
       .vignette{
         position:absolute;
         inset:0;
-        background:
-          radial-gradient(1100px 700px at 50% 40%, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.65) 68%, rgba(0,0,0,0.88) 100%),
-          linear-gradient(to bottom, rgba(0,0,0,0.35), rgba(0,0,0,0.78));
         pointer-events:none;
+        background:
+          radial-gradient(1100px 700px at 50% 40%, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.65) 68%, rgba(0,0,0,0.90) 100%),
+          linear-gradient(to bottom, rgba(0,0,0,0.28), rgba(0,0,0,0.70));
       }
 
+      /* Content card */
       .content{
         position:relative;
         z-index:2;
@@ -62,10 +66,11 @@
         padding:28px 22px 26px;
         border-radius:22px;
         background:linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.40));
-        border:1px solid rgba(255,204,102,0.26);
+        border:1px solid var(--panelBorder);
         box-shadow:
           0 24px 60px rgba(0,0,0,0.55),
           inset 0 0 0 1px rgba(255,255,255,0.05);
+        backdrop-filter: blur(2px);
       }
 
       .title{
@@ -94,6 +99,7 @@
       }
 
       .btn-site{
+        position:relative;
         display:inline-flex;
         align-items:center;
         justify-content:center;
@@ -111,17 +117,57 @@
           0 18px 36px rgba(0,0,0,0.55),
           inset 0 0 0 1px rgba(255,255,255,0.30);
         transition:transform .15s ease, filter .15s ease;
+        overflow:hidden;
       }
       .btn-site:hover{
         transform:translateY(-1px);
         filter:brightness(1.05);
+      }
+
+      /* brilho animado sutil no botão */
+      @keyframes btnShimmer {
+        0% { transform: translateX(-140%) skewX(-18deg); opacity:0; }
+        15% { opacity:0.35; }
+        55% { opacity:0.20; }
+        100% { transform: translateX(140%) skewX(-18deg); opacity:0; }
+      }
+
+      .btn-site::after{
+        content:"";
+        position:absolute;
+        inset:-40%;
+        background:linear-gradient(
+          90deg,
+          rgba(255,255,255,0) 0%,
+          rgba(255,255,255,0.10) 35%,
+          rgba(255,255,255,0.35) 50%,
+          rgba(255,255,255,0.10) 65%,
+          rgba(255,255,255,0) 100%
+        );
+        mix-blend-mode: screen;
+        filter: blur(1px);
+        animation: btnShimmer 3.6s linear infinite;
+        pointer-events:none;
+      }
+
+      @media (max-width: 600px){
+        .content{ padding:22px 16px 20px; border-radius:18px; }
       }
     </style>
   </head>
 
   <body>
     <main class="hero">
-      <div class="bg"></div>
+      <!--
+        Coloque seus arquivos em /public com estes nomes:
+        - entrada.webm (recomendado, melhor no Chrome/Edge)
+        - entrada.mp4  (fallback)
+      -->
+      <video class="bg-video" autoplay muted loop playsinline>
+        <source src="./entrada.webm" type="video/webm" />
+        <source src="./entrada.mp4" type="video/mp4" />
+      </video>
+
       <div class="vignette"></div>
 
       <section class="content">
