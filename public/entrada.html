@@ -68,7 +68,7 @@
       will-change: opacity;
     }
 
-    /* ===== BLACKOUT BEM CURTO ===== */
+    /* ===== BLACKOUT CURTO ===== */
     .fade-black{
       position:absolute;
       inset:0;
@@ -105,7 +105,7 @@
     }
 
     /* =============================== */
-    /* ===== BOTÃO REAL (MELHOR) ===== */
+    /* ========= BOTÃO REAL ========= */
     /* =============================== */
 
     .plate-button{
@@ -124,7 +124,7 @@
       color: rgba(255, 248, 226, 0.98);
       text-shadow:
         0 1px 0 rgba(0,0,0,0.72),
-        0 0 18px rgba(255, 204, 102, 0.18);
+        0 0 18px rgba(255, 204, 102, 0.14);
 
       background:
         radial-gradient(120% 160% at 50% 0%, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.00) 55%),
@@ -133,7 +133,7 @@
           rgba(28, 20, 14, 0.96) 48%,
           rgba(18, 12, 8, 0.96) 100%);
 
-      border: 1px solid rgba(255, 204, 102, 0.70);
+      border: 1px solid rgba(255, 204, 102, 0.62);
 
       box-shadow:
         inset 0 0 0 1px rgba(0,0,0,0.76),
@@ -143,6 +143,9 @@
 
       overflow:hidden;
       transition: transform 140ms ease, filter 140ms ease;
+      text-decoration:none;
+      cursor:pointer;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .plate-button::before{
@@ -150,20 +153,20 @@
       position:absolute;
       inset: 8px;
       border-radius: 8px;
-      border: 1px solid rgba(255, 204, 102, 0.30);
+      border: 1px solid rgba(255, 204, 102, 0.26);
       box-shadow:
         inset 0 0 0 1px rgba(0,0,0,0.82),
-        inset 0 0 0 2px rgba(255, 204, 102, 0.12),
+        inset 0 0 0 2px rgba(255, 204, 102, 0.10),
         inset 0 12px 16px rgba(255,255,255,0.05),
         inset 0 -18px 26px rgba(0,0,0,0.82);
       pointer-events:none;
     }
 
-    /* shimmer metálico discreto */
+    /* brilho metálico discreto */
     @keyframes metalShimmer {
       0%   { transform: translateX(-160%) skewX(-18deg); opacity: 0; }
-      18%  { opacity: 0.18; }
-      60%  { opacity: 0.10; }
+      18%  { opacity: 0.14; }
+      60%  { opacity: 0.08; }
       100% { transform: translateX(160%) skewX(-18deg); opacity: 0; }
     }
     .plate-button::after{
@@ -173,9 +176,9 @@
       background: linear-gradient(
         90deg,
         rgba(255,255,255,0) 0%,
-        rgba(255,255,255,0.06) 40%,
-        rgba(255,255,255,0.16) 50%,
-        rgba(255,255,255,0.06) 60%,
+        rgba(255,255,255,0.05) 40%,
+        rgba(255,255,255,0.14) 50%,
+        rgba(255,255,255,0.05) 60%,
         rgba(255,255,255,0) 100%
       );
       mix-blend-mode: screen;
@@ -186,100 +189,26 @@
     }
 
     .plate-button:hover{
-      filter: brightness(1.10);
+      filter: brightness(1.08);
       transform: translateY(-1px);
     }
 
-    /* ===== DETALHE “SELO REAL” NO TOPO ===== */
-    .seal{
+    /* ===== DETALHEZINHO PEQUENO (VOLTOU) ===== */
+    .orn{
       position:absolute;
-      top:-28px;
+      top:-14px;
       left:50%;
       transform:translateX(-50%);
-      width: 62px;
-      height: 62px;
-      display:grid;
-      place-items:center;
+      font-size:18px;
+      color: rgba(255, 204, 102, 0.82);
+      text-shadow: 0 2px 7px rgba(0,0,0,0.92), 0 0 14px rgba(255,204,102,0.12);
       pointer-events:none;
-      z-index: 10;
-
-      filter:
-        drop-shadow(0 10px 18px rgba(0,0,0,0.78))
-        drop-shadow(0 0 16px rgba(255,204,102,0.22));
-    }
-
-    /* base do selo (ouro metálico) */
-    .seal::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at 35% 30%, rgba(255,255,255,0.25), rgba(255,255,255,0.00) 45%),
-        conic-gradient(
-          from 180deg,
-          #fff1c6,
-          #f6c34a,
-          #c47a12,
-          #f7d06a,
-          #d08a18,
-          #fff1c6
-        );
-      border: 1px solid rgba(20,10,2,0.70);
-      box-shadow:
-        inset 0 0 0 2px rgba(255,204,102,0.18),
-        inset 0 -10px 18px rgba(0,0,0,0.55),
-        inset 0 10px 14px rgba(255,255,255,0.08);
-    }
-
-    /* brilho pulsando (chamativo, mas não infantil) */
-    @keyframes sealPulse {
-      0%, 100% { transform: translateX(-50%) scale(1); opacity: 1; }
-      50% { transform: translateX(-50%) scale(1.05); opacity: 1; }
-    }
-    .seal{
-      animation: sealPulse 2.2s ease-in-out infinite;
-    }
-
-    /* estrela/insígnia no centro */
-    .seal svg{
-      width: 34px;
-      height: 34px;
-      position: relative;
-      z-index: 1;
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.7));
-    }
-
-    /* brilho que “passa” no selo */
-    @keyframes sealShimmer {
-      0%   { transform: translateX(-140%) skewX(-18deg); opacity: 0; }
-      18%  { opacity: 0.22; }
-      60%  { opacity: 0.10; }
-      100% { transform: translateX(140%) skewX(-18deg); opacity: 0; }
-    }
-    .seal::after{
-      content:"";
-      position:absolute;
-      inset:-40%;
-      background: linear-gradient(
-        90deg,
-        rgba(255,255,255,0) 0%,
-        rgba(255,255,255,0.08) 45%,
-        rgba(255,255,255,0.18) 50%,
-        rgba(255,255,255,0.08) 55%,
-        rgba(255,255,255,0) 100%
-      );
-      mix-blend-mode: screen;
-      filter: blur(1px);
-      animation: sealShimmer 3.2s linear infinite;
-      pointer-events:none;
-      opacity: 0.9;
+      user-select:none;
     }
 
     @media (max-width: 600px){
       .plate-button{ padding:16px 34px; font-size:16px; }
-      .seal{ width: 56px; height: 56px; top:-26px; }
-      .seal svg{ width: 30px; height: 30px; }
+      .orn{ top:-13px; font-size:16px; }
     }
 
     /* ===================== */
@@ -299,8 +228,7 @@
 
     @media (prefers-reduced-motion: reduce){
       .bg-video, .overlay, .vignette, .content, .fade-black{ transition:none !important; }
-      .plate-button::after, .seal::after{ animation:none !important; }
-      .seal{ animation:none !important; }
+      .plate-button::after{ animation:none !important; }
     }
   </style>
 </head>
@@ -318,26 +246,12 @@
 
     <section class="content">
       <h1 class="title">
-        Welcome.
+        Bem-vindo ao Royal OtServlist,<br>
+        a arena de honra e glória dos melhores servidores.
       </h1>
 
       <a href="./index.html" class="plate-button" id="enterBtn">
-        <span class="seal" aria-hidden="true">
-          <!-- insígnia/estrela -->
-          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="g" x1="0" x2="1">
-                <stop offset="0" stop-color="#fff1c6"/>
-                <stop offset="0.5" stop-color="#f6c34a"/>
-                <stop offset="1" stop-color="#fff1c6"/>
-              </linearGradient>
-            </defs>
-            <path d="M32 6l6.2 15.4L54 24l-12 10 3.6 16-13.6-8.2L18.4 50 22 34 10 24l15.8-2.6L32 6z"
-              fill="url(#g)" stroke="rgba(20,10,2,0.75)" stroke-width="2"/>
-            <circle cx="32" cy="32" r="6.5" fill="rgba(0,0,0,0.25)" stroke="rgba(255,235,180,0.55)" stroke-width="1.5"/>
-          </svg>
-        </span>
-
+        <span class="orn" aria-hidden="true">✦</span>
         Entrar no Site ▶
       </a>
     </section>
@@ -356,7 +270,6 @@
         document.body.classList.add("is-blackout");
       });
 
-      // navega rápido pra não ficar preto parado
       setTimeout(() => {
         window.location.href = btn.getAttribute("href");
       }, 90);
