@@ -5,7 +5,6 @@
   <title>Royal OtServlist — Entrada</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Fonte medieval (mais ornamentada que Cinzel normal) -->
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet" />
 
   <style>
@@ -69,7 +68,7 @@
       will-change: opacity;
     }
 
-    /* ===== BLACKOUT BEM CURTO (só “piscar”) ===== */
+    /* ===== BLACKOUT BEM CURTO ===== */
     .fade-black{
       position:absolute;
       inset:0;
@@ -106,26 +105,8 @@
     }
 
     /* =============================== */
-    /* ===== BOTÃO REAL (REFEITO) ===== */
+    /* ===== BOTÃO REAL (MELHOR) ===== */
     /* =============================== */
-
-    .cta{
-      position:relative;
-      display:inline-flex;
-      flex-direction:column;
-      align-items:center;
-      gap:10px;
-      text-decoration:none;
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    /* Coroa colossal */
-    .crown{
-      width: 86px;
-      height: 56px;
-      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.75));
-    }
 
     .plate-button{
       position:relative;
@@ -135,57 +116,54 @@
       padding: 18px 58px;
       border-radius: 10px;
 
-      /* fonte mais medieval */
       font-family: "Cinzel Decorative", "Cinzel", serif;
       font-size: 18px;
       letter-spacing: 1.2px;
       text-transform: uppercase;
 
-      color: rgba(255, 245, 220, 0.98);
+      color: rgba(255, 248, 226, 0.98);
       text-shadow:
-        0 1px 0 rgba(0,0,0,0.70),
-        0 0 18px rgba(255, 204, 102, 0.14);
+        0 1px 0 rgba(0,0,0,0.72),
+        0 0 18px rgba(255, 204, 102, 0.18);
 
-      /* base escura (placa) + ouro metálico */
       background:
         radial-gradient(120% 160% at 50% 0%, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.00) 55%),
         linear-gradient(to bottom,
-          rgba(42, 30, 20, 0.95) 0%,
-          rgba(28, 20, 14, 0.95) 48%,
-          rgba(18, 12, 8, 0.95) 100%);
+          rgba(42, 30, 20, 0.96) 0%,
+          rgba(28, 20, 14, 0.96) 48%,
+          rgba(18, 12, 8, 0.96) 100%);
 
-      border: 1px solid rgba(255, 204, 102, 0.62);
+      border: 1px solid rgba(255, 204, 102, 0.70);
 
       box-shadow:
-        inset 0 0 0 1px rgba(0,0,0,0.72),
-        inset 0 10px 18px rgba(255,255,255,0.06),
-        inset 0 -18px 26px rgba(0,0,0,0.78),
+        inset 0 0 0 1px rgba(0,0,0,0.76),
+        inset 0 12px 18px rgba(255,255,255,0.06),
+        inset 0 -18px 26px rgba(0,0,0,0.80),
         0 20px 44px rgba(0,0,0,0.78);
 
       overflow:hidden;
       transition: transform 140ms ease, filter 140ms ease;
     }
 
-    /* entalhe interno + filete dourado */
     .plate-button::before{
       content:"";
       position:absolute;
       inset: 8px;
       border-radius: 8px;
-      border: 1px solid rgba(255, 204, 102, 0.26);
+      border: 1px solid rgba(255, 204, 102, 0.30);
       box-shadow:
-        inset 0 0 0 1px rgba(0,0,0,0.78),
-        inset 0 0 0 2px rgba(255, 204, 102, 0.10),
-        inset 0 12px 16px rgba(255,255,255,0.04),
-        inset 0 -18px 26px rgba(0,0,0,0.80);
+        inset 0 0 0 1px rgba(0,0,0,0.82),
+        inset 0 0 0 2px rgba(255, 204, 102, 0.12),
+        inset 0 12px 16px rgba(255,255,255,0.05),
+        inset 0 -18px 26px rgba(0,0,0,0.82);
       pointer-events:none;
     }
 
-    /* shimmer metálico bem discreto */
+    /* shimmer metálico discreto */
     @keyframes metalShimmer {
       0%   { transform: translateX(-160%) skewX(-18deg); opacity: 0; }
-      22%  { opacity: 0.14; }
-      60%  { opacity: 0.08; }
+      18%  { opacity: 0.18; }
+      60%  { opacity: 0.10; }
       100% { transform: translateX(160%) skewX(-18deg); opacity: 0; }
     }
     .plate-button::after{
@@ -195,9 +173,9 @@
       background: linear-gradient(
         90deg,
         rgba(255,255,255,0) 0%,
-        rgba(255,255,255,0.05) 40%,
-        rgba(255,255,255,0.14) 50%,
-        rgba(255,255,255,0.05) 60%,
+        rgba(255,255,255,0.06) 40%,
+        rgba(255,255,255,0.16) 50%,
+        rgba(255,255,255,0.06) 60%,
         rgba(255,255,255,0) 100%
       );
       mix-blend-mode: screen;
@@ -208,20 +186,106 @@
     }
 
     .plate-button:hover{
-      filter: brightness(1.08);
+      filter: brightness(1.10);
       transform: translateY(-1px);
     }
 
+    /* ===== DETALHE “SELO REAL” NO TOPO ===== */
+    .seal{
+      position:absolute;
+      top:-28px;
+      left:50%;
+      transform:translateX(-50%);
+      width: 62px;
+      height: 62px;
+      display:grid;
+      place-items:center;
+      pointer-events:none;
+      z-index: 10;
+
+      filter:
+        drop-shadow(0 10px 18px rgba(0,0,0,0.78))
+        drop-shadow(0 0 16px rgba(255,204,102,0.22));
+    }
+
+    /* base do selo (ouro metálico) */
+    .seal::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(255,255,255,0.25), rgba(255,255,255,0.00) 45%),
+        conic-gradient(
+          from 180deg,
+          #fff1c6,
+          #f6c34a,
+          #c47a12,
+          #f7d06a,
+          #d08a18,
+          #fff1c6
+        );
+      border: 1px solid rgba(20,10,2,0.70);
+      box-shadow:
+        inset 0 0 0 2px rgba(255,204,102,0.18),
+        inset 0 -10px 18px rgba(0,0,0,0.55),
+        inset 0 10px 14px rgba(255,255,255,0.08);
+    }
+
+    /* brilho pulsando (chamativo, mas não infantil) */
+    @keyframes sealPulse {
+      0%, 100% { transform: translateX(-50%) scale(1); opacity: 1; }
+      50% { transform: translateX(-50%) scale(1.05); opacity: 1; }
+    }
+    .seal{
+      animation: sealPulse 2.2s ease-in-out infinite;
+    }
+
+    /* estrela/insígnia no centro */
+    .seal svg{
+      width: 34px;
+      height: 34px;
+      position: relative;
+      z-index: 1;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.7));
+    }
+
+    /* brilho que “passa” no selo */
+    @keyframes sealShimmer {
+      0%   { transform: translateX(-140%) skewX(-18deg); opacity: 0; }
+      18%  { opacity: 0.22; }
+      60%  { opacity: 0.10; }
+      100% { transform: translateX(140%) skewX(-18deg); opacity: 0; }
+    }
+    .seal::after{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: linear-gradient(
+        90deg,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.08) 45%,
+        rgba(255,255,255,0.18) 50%,
+        rgba(255,255,255,0.08) 55%,
+        rgba(255,255,255,0) 100%
+      );
+      mix-blend-mode: screen;
+      filter: blur(1px);
+      animation: sealShimmer 3.2s linear infinite;
+      pointer-events:none;
+      opacity: 0.9;
+    }
+
     @media (max-width: 600px){
-      .crown{ width: 74px; height: 50px; }
       .plate-button{ padding:16px 34px; font-size:16px; }
+      .seal{ width: 56px; height: 56px; top:-26px; }
+      .seal svg{ width: 30px; height: 30px; }
     }
 
     /* ===================== */
     /* ===== ENTER FX ====== */
     /* ===================== */
 
-    /* Zoom mais forte (voltou) */
     body.is-entering .bg-video{
       transform: scale(1.26) translate3d(0,-1.6%,0);
     }
@@ -231,12 +295,12 @@
       transform: translate3d(0,-18px,0) scale(0.95);
       opacity:0;
     }
-
     body.is-entering.is-blackout .fade-black{ opacity:1; }
 
     @media (prefers-reduced-motion: reduce){
       .bg-video, .overlay, .vignette, .content, .fade-black{ transition:none !important; }
-      .plate-button::after{ animation:none !important; }
+      .plate-button::after, .seal::after{ animation:none !important; }
+      .seal{ animation:none !important; }
     }
   </style>
 </head>
@@ -254,52 +318,27 @@
 
     <section class="content">
       <h1 class="title">
-        Bem-vindo ao Royal OtServlist,<br>
-        a arena de honra e glória dos melhores servidores.
+        Welcome.
       </h1>
 
-      <a href="./index.html" class="cta" id="enterBtn" aria-label="Entrar no site">
-        <!-- Coroa colossal (SVG metálico) -->
-        <svg class="crown" viewBox="0 0 128 80" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <defs>
-            <linearGradient id="gold" x1="0" x2="1">
-              <stop offset="0" stop-color="#fbe8a3"/>
-              <stop offset="0.28" stop-color="#f6c34a"/>
-              <stop offset="0.55" stop-color="#d08a18"/>
-              <stop offset="0.78" stop-color="#f7d06a"/>
-              <stop offset="1" stop-color="#fff1c6"/>
-            </linearGradient>
-            <linearGradient id="goldDark" x1="0" x2="0" y1="0" y2="1">
-              <stop offset="0" stop-color="#6a3a05" stop-opacity="0.35"/>
-              <stop offset="1" stop-color="#000" stop-opacity="0.45"/>
-            </linearGradient>
-          </defs>
+      <a href="./index.html" class="plate-button" id="enterBtn">
+        <span class="seal" aria-hidden="true">
+          <!-- insígnia/estrela -->
+          <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="g" x1="0" x2="1">
+                <stop offset="0" stop-color="#fff1c6"/>
+                <stop offset="0.5" stop-color="#f6c34a"/>
+                <stop offset="1" stop-color="#fff1c6"/>
+              </linearGradient>
+            </defs>
+            <path d="M32 6l6.2 15.4L54 24l-12 10 3.6 16-13.6-8.2L18.4 50 22 34 10 24l15.8-2.6L32 6z"
+              fill="url(#g)" stroke="rgba(20,10,2,0.75)" stroke-width="2"/>
+            <circle cx="32" cy="32" r="6.5" fill="rgba(0,0,0,0.25)" stroke="rgba(255,235,180,0.55)" stroke-width="1.5"/>
+          </svg>
+        </span>
 
-          <!-- brilho -->
-          <path d="M14 62 L114 62 L108 72 L20 72 Z" fill="url(#gold)" opacity="0.22"/>
-          <!-- corpo da coroa -->
-          <path d="M12 60
-                   L22 22
-                   L42 44
-                   L64 14
-                   L86 44
-                   L106 22
-                   L116 60
-                   Q64 70 12 60 Z"
-                fill="url(#gold)" stroke="rgba(20,10,2,0.75)" stroke-width="2" />
-          <!-- base -->
-          <path d="M14 60 L114 60 L110 74 L18 74 Z"
-                fill="url(#gold)" stroke="rgba(20,10,2,0.78)" stroke-width="2"/>
-          <!-- sombra interna -->
-          <path d="M14 60 L114 60 L110 74 L18 74 Z" fill="url(#goldDark)" opacity="0.55"/>
-
-          <!-- gemas -->
-          <circle cx="64" cy="45" r="5.8" fill="#7a0b0b" stroke="rgba(255,220,160,0.65)" stroke-width="1.5"/>
-          <circle cx="42" cy="52" r="4.6" fill="#0d5a3a" stroke="rgba(255,220,160,0.55)" stroke-width="1.3"/>
-          <circle cx="86" cy="52" r="4.6" fill="#0d3b5a" stroke="rgba(255,220,160,0.55)" stroke-width="1.3"/>
-        </svg>
-
-        <span class="plate-button">Entrar no Site ▶</span>
+        Entrar no Site ▶
       </a>
     </section>
   </main>
@@ -313,12 +352,11 @@
 
       document.body.classList.add("is-entering");
 
-      // blackout só pra dar acabamento (rápido)
       requestAnimationFrame(() => {
         document.body.classList.add("is-blackout");
       });
 
-      // navega rápido pra não ficar “preto parado”
+      // navega rápido pra não ficar preto parado
       setTimeout(() => {
         window.location.href = btn.getAttribute("href");
       }, 90);
