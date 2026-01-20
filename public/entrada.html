@@ -12,18 +12,23 @@
 
     <style>
       :root{
-        --goldA:#fff2b0;
-        --goldB:#ffcc66;
-        --goldC:#a8741a;
+        /* ouro “real” */
+        --gold-hi:#fff4c9;
+        --gold:#ffcc66;
+        --gold-lo:#a8741a;
 
-        --ink: rgba(255,255,255,0.92);
-        --muted: rgba(255,255,255,0.75);
+        /* placa / metal */
+        --plate-hi: rgba(255,255,255,0.16);
+        --plate: rgba(0,0,0,0.52);
+        --plate-lo: rgba(0,0,0,0.72);
 
-        --panelA: rgba(0,0,0,0.58);
-        --panelB: rgba(0,0,0,0.38);
+        /* linhas */
+        --line: rgba(255,204,102,0.28);
+        --line2: rgba(255,204,102,0.45);
+        --shadow: rgba(0,0,0,0.72);
 
-        --line: rgba(255,204,102,0.26);
-        --lineStrong: rgba(255,204,102,0.42);
+        --text: rgba(255,255,255,0.92);
+        --muted: rgba(255,255,255,0.76);
       }
 
       *{ box-sizing:border-box; }
@@ -34,7 +39,9 @@
         overflow:hidden;
       }
 
-      /* ===== Background video/image ===== */
+      /* ===================== */
+      /* Background (video)    */
+      /* ===================== */
       .stage{
         position:relative;
         width:100%;
@@ -53,122 +60,134 @@
         object-fit:cover;
         object-position:center;
         transform: scale(1.03);
-        filter: contrast(1.05) saturate(1.05);
+        filter: contrast(1.06) saturate(1.06);
       }
 
-      /* se ainda não tiver video, esse fundo garante que não fica “preto feio” */
-      .bg-fallback{
-        position:absolute;
-        inset:0;
-        background:
-          radial-gradient(1000px 650px at 50% 35%, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0.70) 70%, rgba(0,0,0,0.92) 100%),
-          linear-gradient(to bottom, rgba(0,0,0,0.28), rgba(0,0,0,0.78));
-      }
-
-      /* Vinheta + “cinema” */
       .vignette{
         position:absolute;
         inset:0;
         pointer-events:none;
         background:
-          radial-gradient(1100px 750px at 50% 38%, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.62) 70%, rgba(0,0,0,0.90) 100%),
-          linear-gradient(to bottom, rgba(0,0,0,0.20), rgba(0,0,0,0.78));
+          radial-gradient(1100px 720px at 50% 35%, rgba(0,0,0,0.02) 0%, rgba(0,0,0,0.64) 70%, rgba(0,0,0,0.92) 100%),
+          linear-gradient(to bottom, rgba(0,0,0,0.18), rgba(0,0,0,0.78));
       }
 
-      /* brilho suave se movendo (super sutil) */
-      @keyframes slowGlowSweep {
-        0% { transform: translateX(-40%) skewX(-16deg); opacity: 0; }
-        18% { opacity: 0.10; }
-        50% { opacity: 0.06; }
-        82% { opacity: 0.10; }
-        100% { transform: translateX(140%) skewX(-16deg); opacity: 0; }
-      }
-      .glow-sweep{
+      /* fallback caso não tenha vídeo ainda */
+      .fallback{
         position:absolute;
-        inset:-30%;
-        pointer-events:none;
-        background: linear-gradient(
-          90deg,
-          rgba(255,255,255,0) 0%,
-          rgba(255,255,255,0.06) 38%,
-          rgba(255,255,255,0.14) 50%,
-          rgba(255,255,255,0.06) 62%,
-          rgba(255,255,255,0) 100%
-        );
-        filter: blur(2px);
-        mix-blend-mode: screen;
-        animation: slowGlowSweep 6.5s linear infinite;
-        opacity: .9;
+        inset:0;
+        background:
+          radial-gradient(1100px 720px at 50% 35%, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.70) 72%, rgba(0,0,0,0.92) 100%),
+          linear-gradient(to bottom, rgba(0,0,0,0.22), rgba(0,0,0,0.82));
       }
 
-      /* ===== Content ===== */
-      .panel{
+      /* ===================== */
+      /* “Placa” medieval (UI) */
+      /* ===================== */
+      .plaque-wrap{
         position:relative;
         z-index:2;
         width:min(980px, 92vw);
-        border-radius:22px;
-        padding:28px 22px 22px;
+      }
 
-        background: linear-gradient(to bottom, var(--panelA), var(--panelB));
-        border: 1px solid var(--line);
-        box-shadow:
-          0 26px 64px rgba(0,0,0,0.62),
-          inset 0 0 0 1px rgba(255,255,255,0.05);
-
-        backdrop-filter: blur(2px);
+      .plaque{
+        position:relative;
+        border-radius: 22px;
+        padding: 30px 26px 22px;
         text-align:center;
         overflow:hidden;
+
+        /* placa com profundidade */
+        background:
+          radial-gradient(120% 100% at 50% 0%, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.00) 55%),
+          linear-gradient(180deg, var(--plate-hi) 0%, var(--plate) 28%, var(--plate-lo) 100%);
+
+        border: 1px solid var(--line);
+        box-shadow:
+          0 30px 70px rgba(0,0,0,0.62),
+          inset 0 0 0 1px rgba(255,255,255,0.05),
+          inset 0 18px 32px rgba(255,255,255,0.05),
+          inset 0 -26px 44px rgba(0,0,0,0.55);
+        backdrop-filter: blur(2px);
       }
 
-      /* detalhe “royal” no topo do painel */
-      .panel::before{
+      /* borda dupla “entalhada” */
+      .plaque::before{
         content:"";
         position:absolute;
-        left:18px;
-        right:18px;
-        top:14px;
-        height:1px;
-        background: linear-gradient(90deg, rgba(255,204,102,0), rgba(255,204,102,0.65), rgba(255,204,102,0));
-        opacity:.65;
+        inset: 10px;
+        border-radius: 18px;
         pointer-events:none;
+
+        background:
+          radial-gradient(110% 90% at 50% 10%, rgba(255,204,102,0.12) 0%, rgba(255,204,102,0.00) 60%),
+          linear-gradient(180deg, rgba(255,204,102,0.12), rgba(0,0,0,0.00));
+
+        border: 1px solid rgba(255,204,102,0.18);
+        box-shadow:
+          inset 0 0 0 1px rgba(0,0,0,0.55),
+          inset 0 12px 18px rgba(255,255,255,0.03),
+          inset 0 -20px 26px rgba(0,0,0,0.45);
       }
 
-      .brand{
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        gap:12px;
-        margin-bottom:10px;
-        flex-wrap:wrap;
+      /* cantos ornamentados (tipo a arte) */
+      .orn{
+        position:absolute;
+        width: 64px;
+        height: 64px;
+        pointer-events:none;
+        opacity: 0.95;
+        filter: drop-shadow(0 10px 16px rgba(0,0,0,0.55));
       }
 
-      .sigil{
-        width:44px;
-        height:44px;
-        border-radius:12px;
-        border:1px solid rgba(255,204,102,0.30);
-        background: linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0.25));
-        box-shadow: 0 10px 24px rgba(0,0,0,0.45), inset 0 0 0 1px rgba(255,255,255,0.05);
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        color: var(--goldB);
-        text-shadow: 0 0 10px rgba(255,204,102,0.18);
-        font-weight:700;
+      .orn::before{
+        content:"";
+        position:absolute;
+        inset:0;
+        border-radius: 18px;
+        background:
+          radial-gradient(70% 70% at 30% 30%, rgba(255,244,202,0.30) 0%, rgba(255,244,202,0.00) 60%),
+          radial-gradient(80% 80% at 70% 70%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.00) 60%),
+          linear-gradient(180deg, rgba(255,244,202,0.12), rgba(0,0,0,0.00)),
+          linear-gradient(135deg, rgba(255,204,102,0.30), rgba(168,116,26,0.18));
+
+        border: 1px solid rgba(255,204,102,0.26);
+        box-shadow:
+          inset 0 0 0 1px rgba(0,0,0,0.55),
+          inset 0 10px 16px rgba(255,255,255,0.05),
+          inset 0 -14px 18px rgba(0,0,0,0.55);
+        clip-path: polygon(0 0, 100% 0, 100% 38%, 62% 38%, 62% 100%, 0 100%);
       }
 
+      .orn.tl{ top:-10px; left:-10px; transform: rotate(0deg); }
+      .orn.tr{ top:-10px; right:-10px; transform: rotate(90deg); }
+      .orn.br{ bottom:-10px; right:-10px; transform: rotate(180deg); }
+      .orn.bl{ bottom:-10px; left:-10px; transform: rotate(270deg); }
+
+      /* linha dourada central (bem “arte gerada”) */
+      .gold-rule{
+        width:min(720px, 92%);
+        height:1px;
+        margin: 14px auto 18px;
+        background: linear-gradient(90deg, rgba(255,204,102,0), rgba(255,204,102,0.58), rgba(255,204,102,0));
+        opacity: .8;
+      }
+
+      /* ===================== */
+      /* Tipografia            */
+      /* ===================== */
       .title{
         margin:0;
-        font-size: clamp(26px, 3.6vw, 46px);
-        color: var(--goldA);
-        letter-spacing: .6px;
+        font-size: clamp(26px, 3.8vw, 48px);
+        color: var(--gold-hi);
+        letter-spacing: .7px;
         text-shadow:
           0 2px 14px rgba(0,0,0,0.90),
           0 0 22px rgba(255,204,102,0.10);
       }
 
       .subtitle{
-        margin:10px auto 18px;
+        margin:10px auto 0;
         max-width: 860px;
         color: var(--muted);
         font-size: clamp(14px, 1.6vw, 18px);
@@ -176,69 +195,83 @@
         text-shadow: 0 2px 12px rgba(0,0,0,0.85);
       }
 
-      .divider{
-        height:1px;
-        width:min(640px, 92%);
-        margin: 0 auto 18px;
-        background: linear-gradient(90deg, rgba(255,204,102,0), rgba(255,204,102,0.42), rgba(255,204,102,0));
-        opacity:.55;
-      }
-
+      /* ===================== */
+      /* Botão “placa” (idêntico vibe) */
+      /* ===================== */
       .actions{
         display:flex;
         justify-content:center;
         gap:12px;
         flex-wrap:wrap;
+        margin-top:18px;
       }
 
-      .btn-site{
+      .btn-royal{
         position:relative;
         display:inline-flex;
         align-items:center;
         justify-content:center;
-        gap:10px;
-        padding:14px 22px;
-        border-radius:14px;
-        border:1px solid var(--lineStrong);
+        min-width: 220px;
+        padding: 14px 22px;
+        border-radius: 16px;
         text-decoration:none;
-
-        color:#241404;
         font-weight:700;
-        letter-spacing:.6px;
+        letter-spacing: .8px;
 
-        background: linear-gradient(to bottom, rgba(255,244,202,0.96), rgba(255,204,102,0.92));
+        color: #1a0f05;
+
+        /* “metal entalhado” */
+        background:
+          radial-gradient(120% 120% at 30% 10%, rgba(255,244,202,0.55) 0%, rgba(255,244,202,0.00) 55%),
+          linear-gradient(180deg, rgba(255,244,202,0.98) 0%, rgba(255,204,102,0.92) 46%, rgba(168,116,26,0.92) 100%);
+
+        border: 1px solid rgba(255,204,102,0.55);
         box-shadow:
-          0 18px 40px rgba(0,0,0,0.58),
-          inset 0 0 0 1px rgba(255,255,255,0.28);
+          0 20px 42px rgba(0,0,0,0.60),
+          inset 0 0 0 1px rgba(255,255,255,0.25),
+          inset 0 10px 14px rgba(255,255,255,0.10),
+          inset 0 -16px 22px rgba(0,0,0,0.35);
 
         transition: transform .15s ease, filter .15s ease;
         overflow:hidden;
-        min-width: 170px;
       }
 
-      .btn-site:hover{
+      .btn-royal:hover{
         transform: translateY(-1px);
         filter: brightness(1.06);
       }
 
-      /* shimmer no botão (sutil) */
+      /* borda interna (relevo) */
+      .btn-royal::before{
+        content:"";
+        position:absolute;
+        inset: 7px;
+        border-radius: 12px;
+        border: 1px solid rgba(0,0,0,0.38);
+        box-shadow:
+          inset 0 0 0 1px rgba(255,255,255,0.16),
+          inset 0 -10px 14px rgba(0,0,0,0.18);
+        pointer-events:none;
+      }
+
+      /* shimmer no botão (sutil, “reflexo”) */
       @keyframes btnShimmer {
         0% { transform: translateX(-140%) skewX(-18deg); opacity:0; }
-        16% { opacity:0.32; }
+        16% { opacity:0.28; }
         52% { opacity:0.18; }
         100% { transform: translateX(140%) skewX(-18deg); opacity:0; }
       }
 
-      .btn-site::after{
+      .btn-royal::after{
         content:"";
         position:absolute;
         inset:-40%;
         background: linear-gradient(
           90deg,
           rgba(255,255,255,0) 0%,
-          rgba(255,255,255,0.10) 36%,
-          rgba(255,255,255,0.34) 50%,
-          rgba(255,255,255,0.10) 64%,
+          rgba(255,255,255,0.10) 38%,
+          rgba(255,255,255,0.30) 50%,
+          rgba(255,255,255,0.10) 62%,
           rgba(255,255,255,0) 100%
         );
         mix-blend-mode: screen;
@@ -249,61 +282,54 @@
 
       .micro{
         margin-top:14px;
-        color: rgba(255,255,255,0.60);
+        color: rgba(255,255,255,0.62);
         font-size: 12px;
         text-shadow: 0 2px 10px rgba(0,0,0,0.9);
       }
 
-      /* Mobile */
+      /* mobile */
       @media (max-width: 600px){
-        .panel{
-          padding:22px 16px 18px;
-          border-radius:18px;
-        }
-        .sigil{
-          width:40px;height:40px;border-radius:12px;
-        }
-        .btn-site{
-          width:100%;
-          max-width:360px;
-        }
+        .plaque{ padding: 22px 16px 18px; border-radius: 18px; }
+        .plaque::before{ inset: 8px; border-radius: 16px; }
+        .orn{ width: 56px; height: 56px; }
+        .btn-royal{ width: 100%; max-width: 380px; min-width: 0; }
       }
     </style>
   </head>
 
   <body>
     <main class="stage">
-      <!-- Se o vídeo ainda não existir, isso não quebra a página -->
+      <!-- Vídeo: quando você subir, ele aparece. Enquanto não tiver, não quebra. -->
       <video class="bg-video" autoplay muted loop playsinline poster="./entrada-poster.jpg">
         <source src="./entrada.webm" type="video/webm" />
         <source src="./entrada.mp4" type="video/mp4" />
       </video>
 
-      <!-- fallback visual + overlays -->
-      <div class="bg-fallback"></div>
+      <div class="fallback"></div>
       <div class="vignette"></div>
 
-      <section class="panel" aria-label="Entrada do site">
-        <div class="glow-sweep"></div>
+      <section class="plaque-wrap" aria-label="Entrada do site">
+        <div class="plaque">
+          <div class="orn tl"></div>
+          <div class="orn tr"></div>
+          <div class="orn br"></div>
+          <div class="orn bl"></div>
 
-        <div class="brand">
-          <div class="sigil">👑</div>
           <h1 class="title">Royal OtServlist</h1>
-        </div>
+          <p class="subtitle">
+            Entre no salão real e descubra os servidores em destaque.
+            Ranking, votação e conteúdo da comunidade.
+          </p>
 
-        <p class="subtitle">
-          Entre no salão real e descubra os servidores em destaque.
-          Votação mensal, ranking e conteúdo da comunidade.
-        </p>
+          <div class="gold-rule"></div>
 
-        <div class="divider"></div>
+          <div class="actions">
+            <a class="btn-royal" href="./index.html">SITE ➜</a>
+          </div>
 
-        <div class="actions">
-          <a class="btn-site" href="./index.html">SITE ➜</a>
-        </div>
-
-        <div class="micro">
-          Dica: quando você subir <b>entrada.webm</b>, o fundo vira vídeo automaticamente.
+          <div class="micro">
+            Quando você subir <b>entrada.webm</b>, o fundo vira vídeo automaticamente.
+          </div>
         </div>
       </section>
     </main>
