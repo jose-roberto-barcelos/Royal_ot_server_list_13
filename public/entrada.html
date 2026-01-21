@@ -86,7 +86,6 @@
       z-index:3;
       height:100%;
       display:flex;
-      flex-direction:column;
       align-items:center;
       justify-content:center;
       text-align:center;
@@ -95,21 +94,12 @@
       will-change: transform, opacity;
     }
 
-    .title{
-      font-size: clamp(26px, 3.2vw, 42px);
-      color:#f3e6c2;
-      text-shadow: 0 3px 14px rgba(0,0,0,0.9);
-      margin-bottom: 18px;
-      max-width: 950px;
-      line-height: 1.22;
-    }
-
-    /* wrapper pra descer o botão sem mexer no resto */
+    /* desce o conjunto (botão + texto) */
     .cta-wrap{
-      margin-top: 18px; /* 👈 desce o botão (ajuste aqui se quiser mais) */
       display:flex;
       flex-direction:column;
       align-items:center;
+      margin-top: 72px; /* 👈 botão mais pra baixo (ajuste se quiser) */
     }
 
     /* =============================== */
@@ -202,7 +192,7 @@
       transform: translateY(-1px);
     }
 
-    /* detalhe pequeno (igual estava) */
+    /* detalhe pequeno */
     .orn{
       position:absolute;
       top:-14px;
@@ -215,7 +205,7 @@
       user-select:none;
     }
 
-    /* texto pequeno abaixo (fora do botão) — mantém “igual está” */
+    /* texto abaixo do botão */
     .tagline{
       margin-top: 12px;
       font-family: "Cinzel", serif;
@@ -231,7 +221,7 @@
       .plate-button{ padding:16px 34px; font-size:16px; }
       .orn{ top:-13px; font-size:16px; }
       .tagline{ font-size: 11px; letter-spacing: 1.3px; }
-      .cta-wrap{ margin-top: 16px; }
+      .cta-wrap{ margin-top: 60px; }
     }
 
     /* ===================== */
@@ -268,10 +258,6 @@
     <div class="fade-black" id="fadeBlack"></div>
 
     <section class="content">
-      <h1 class="title">
-        
-      </h1>
-
       <div class="cta-wrap">
         <a href="./index.html" class="plate-button" id="enterBtn">
           <span class="orn" aria-hidden="true">✦</span>
