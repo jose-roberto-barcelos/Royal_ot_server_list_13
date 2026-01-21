@@ -5,9 +5,7 @@
   <title>Royal OtServlist — Entrada</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Base do site (mantém) + fonte gótica para o botão -->
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css2?family=UnifrakturCook:wght@700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet" />
 
   <style>
     * { box-sizing: border-box; }
@@ -97,11 +95,25 @@
       will-change: transform, opacity;
     }
 
-    /* >>> título removido (você pediu texto pequeno embaixo do botão, não dentro) <<< */
-    .title { display:none; }
+    .title{
+      font-size: clamp(26px, 3.2vw, 42px);
+      color:#f3e6c2;
+      text-shadow: 0 3px 14px rgba(0,0,0,0.9);
+      margin-bottom: 18px;
+      max-width: 950px;
+      line-height: 1.22;
+    }
+
+    /* wrapper pra descer o botão sem mexer no resto */
+    .cta-wrap{
+      margin-top: 18px; /* 👈 desce o botão (ajuste aqui se quiser mais) */
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
 
     /* =============================== */
-    /* ========= BOTÃO ENTER ========= */
+    /* ========= BOTÃO REAL ========= */
     /* =============================== */
 
     .plate-button{
@@ -109,23 +121,19 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding: 18px 78px;
+      padding: 18px 58px;
       border-radius: 10px;
 
-      /* fonte gótica do botão */
-      font-family: "UnifrakturCook", serif;
-      font-size: 48px;
-      letter-spacing: 1px;
-      text-transform: lowercase; /* para ficar mais parecido com gótico do print */
-      line-height: 1;
+      font-family: "Cinzel Decorative", "Cinzel", serif;
+      font-size: 18px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
 
-      /* cor e “peso” */
-      color: rgba(235, 235, 235, 0.96);
+      color: rgba(255, 248, 226, 0.98);
       text-shadow:
-        0 2px 0 rgba(0,0,0,0.65),
-        0 0 22px rgba(255, 215, 140, 0.10);
+        0 1px 0 rgba(0,0,0,0.72),
+        0 0 18px rgba(255, 204, 102, 0.14);
 
-      /* base da placa (mantém o estilo do seu botão) */
       background:
         radial-gradient(120% 160% at 50% 0%, rgba(255,255,255,0.12) 0%, rgba(255,255,255,0.00) 55%),
         linear-gradient(to bottom,
@@ -149,7 +157,6 @@
       user-select:none;
     }
 
-    /* entalhe interno */
     .plate-button::before{
       content:"";
       position:absolute;
@@ -164,7 +171,7 @@
       pointer-events:none;
     }
 
-    /* shimmer metálico discreto na placa */
+    /* brilho metálico discreto */
     @keyframes metalShimmer {
       0%   { transform: translateX(-160%) skewX(-18deg); opacity: 0; }
       18%  { opacity: 0.14; }
@@ -190,34 +197,29 @@
       opacity: 0.9;
     }
 
-    /* “desgaste” no texto (parecido com o print) */
-    .plate-button .label{
-      position:relative;
-      z-index:1;
-      display:inline-block;
-    }
-    .plate-button .label::after{
-      content:"";
-      position:absolute;
-      inset:-6px -14px;
-      pointer-events:none;
-      opacity:0.20;
-      mix-blend-mode: overlay;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='90'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='90' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
-      background-size: 260px 90px;
-      border-radius: 10px;
-    }
-
     .plate-button:hover{
       filter: brightness(1.08);
       transform: translateY(-1px);
     }
 
-    /* texto pequeno abaixo do botão */
+    /* detalhe pequeno (igual estava) */
+    .orn{
+      position:absolute;
+      top:-14px;
+      left:50%;
+      transform:translateX(-50%);
+      font-size:18px;
+      color: rgba(255, 204, 102, 0.82);
+      text-shadow: 0 2px 7px rgba(0,0,0,0.92), 0 0 14px rgba(255,204,102,0.12);
+      pointer-events:none;
+      user-select:none;
+    }
+
+    /* texto pequeno abaixo (fora do botão) — mantém “igual está” */
     .tagline{
       margin-top: 12px;
       font-family: "Cinzel", serif;
-      font-size: 12px;            /* bem pequeno */
+      font-size: 12px;
       letter-spacing: 1.6px;
       text-transform: lowercase;
       color: rgba(240, 230, 205, 0.70);
@@ -226,8 +228,10 @@
     }
 
     @media (max-width: 600px){
-      .plate-button{ padding:16px 42px; font-size: 40px; }
+      .plate-button{ padding:16px 34px; font-size:16px; }
+      .orn{ top:-13px; font-size:16px; }
       .tagline{ font-size: 11px; letter-spacing: 1.3px; }
+      .cta-wrap{ margin-top: 16px; }
     }
 
     /* ===================== */
@@ -264,11 +268,19 @@
     <div class="fade-black" id="fadeBlack"></div>
 
     <section class="content">
-      <a href="./index.html" class="plate-button" id="enterBtn" aria-label="Enter">
-        <span class="label">Enter</span>
-      </a>
+      <h1 class="title">
+        Bem-vindo ao Royal OtServlist,<br>
+        a arena de honra e glória dos melhores servidores.
+      </h1>
 
-      <div class="tagline">go ahead and enjoy the battle</div>
+      <div class="cta-wrap">
+        <a href="./index.html" class="plate-button" id="enterBtn">
+          <span class="orn" aria-hidden="true">✦</span>
+          Entrar no Site ▶
+        </a>
+
+        <div class="tagline">go ahead and enjoy the battle</div>
+      </div>
     </section>
   </main>
 
